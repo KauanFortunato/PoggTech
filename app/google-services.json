@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "643613078871",
+    "project_id": "poggtech-mdk360",
+    "storage_bucket": "poggtech-mdk360.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:643613078871:android:db5a087eba64c4ff94ba12",
+        "android_client_info": {
+          "package_name": "com.mordekai.poggtech"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLjzA3YMlkwLc-FpKORfDwP41BYx8iUMU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
