@@ -1,4 +1,4 @@
-package com.example.poggtech;
+package com.mordekai.poggtech;
 
 import org.junit.Test;
 
