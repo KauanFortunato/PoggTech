@@ -7,4 +7,8 @@
     <string name="googleLogin">Entrar com Google</string>
     <string name="naoTemConta">Não tem uma conta? Crie aqui!</string>
     <string name="entrar">Iniciar Sessão</string>
+    <string name="cadastro">Cadastro</string>
+    <string name="nome">Nome</string>
+    <string name="sobrenome">Sobrenome</string>
+    <string name="confirmarPalavraPasse">Confirmar Palavra passe</string>"
 </resources>
