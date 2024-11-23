@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">PoggTech</string>
+    <string name="login">Login</string>
+    <string name="enderecoEmail">Endereço de email</string>
+    <string name="palavraPasse">Palavra passe</string>
+    <string name="esqueceuSenha">Esqueceu a sua senha?</string>
+    <string name="googleLogin">Entrar com Google</string>
+    <string name="naoTemConta">Não tem uma conta? Crie aqui!</string>
+    <string name="entrar">Iniciar Sessão</string>
 </resources>
