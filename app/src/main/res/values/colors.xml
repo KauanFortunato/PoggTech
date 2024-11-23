@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!--Cores do APP-->
+    <color name="principal_1">#2196F3</color>
+    <color name="principal_2">#FFFFFFFF</color>
+    <color name="secundaria_1">#1565C0</color>
+    <color name="secundaria_2">#F5F5F5</color>
+    <color name="suporte_1">#F5F5F5</color>
+    <color name="suporte_2">#616161</color>
+    <color name="feedback_1">#4CAF50</color>
+    <color name="feedback_2">#F44336</color>
+    <color name="black">#FF000000</color>
+    <color name="yellow">#F9E400</color>
 </resources>
