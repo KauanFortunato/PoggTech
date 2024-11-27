@@ -1,5 +1,6 @@
 [versions]
-agp = "8.7.0"
+agp = "8.7.2"
+converterGson = "2.9.0"
 firebaseBom = "33.6.0"
 junit = "4.13.2"
 junitVersion = "1.1.5"
@@ -10,8 +11,10 @@ activity = "1.8.0"
 constraintlayout = "2.1.4"
 playServicesAds = "23.5.0"
 firebaseAuth = "23.1.0"
+retrofit = "2.9.0"
 
 [libraries]
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -23,6 +26,7 @@ activity = { group = "androidx.activity", name = "activity", version.ref = "acti
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 play-services-ads = { group = "com.google.android.gms", name = "play-services-ads", version.ref = "playServicesAds" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

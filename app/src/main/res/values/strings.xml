@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">PoggTech</string>
     <string name="login">Login</string>
+    <string name="cadastrar">Cadastrar</string>
+    <string name="conta">Conta</string>
     <string name="enderecoEmail">Endereço de email</string>
     <string name="palavraPasse">Palavra passe</string>
     <string name="esqueceuSenha">Esqueceu a sua senha?</string>

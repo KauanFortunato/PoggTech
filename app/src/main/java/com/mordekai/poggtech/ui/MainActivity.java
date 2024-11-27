@@ -1,4 +1,4 @@
-package com.mordekai.poggtech;
+package com.mordekai.poggtech.ui;
 
 import android.os.Bundle;
 

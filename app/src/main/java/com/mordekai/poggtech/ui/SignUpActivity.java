@@ -1,4 +1,4 @@
-package com.mordekai.poggtech;
+package com.mordekai.poggtech.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,24 +6,31 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.mordekai.poggtech.R;
+import com.mordekai.poggtech.network.ApiService;
+import com.mordekai.poggtech.network.RetrofitClient;
 
 public class SignUpActivity extends AppCompatActivity  {
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private EditText inputEmail, inputPassword, inputName, inputLastName, inputConfirmPassword;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        // Verificar se o usuário já está logado
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             // Usuário já está logado, redirecionar para a tela principal
@@ -95,18 +102,13 @@ public class SignUpActivity extends AppCompatActivity  {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
+                    ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+
                     // Conta criada com sucesso
                     FirebaseUser user = mAuth.getCurrentUser();
 
-                    // Exibir mensagem de sucesso
-                    Toast.makeText(SignUpActivity.this,
-                            "Conta criada com sucesso", Toast.LENGTH_SHORT).show();
-
-                    Toast.makeText(SignUpActivity.this,
-                            " ID: " + user.getUid(), Toast.LENGTH_SHORT).show();
-
-                    Toast.makeText(SignUpActivity.this,
-                            " Email: " + user.getEmail(), Toast.LENGTH_SHORT).show();
+                    apiService.insertUser(user.getUid(), inputName.getText().toString(),
+                            inputLastName.getText().toString(), inputEmail.getText().toString());
                 } else {
                     if (task.getException() != null) {
                         String errorMessage = task.getException().getMessage();

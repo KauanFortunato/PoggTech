@@ -1,4 +1,4 @@
-package com.mordekai.poggtech;
+package com.mordekai.poggtech.ui;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.mordekai.poggtech.R;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText inputEmail, inputPassword;
