@@ -3,9 +3,9 @@
     <color name="white">#FFFFFFFF</color>
 
     <!--Cores do APP-->
-    <color name="principal_1">#2196F3</color>
+    <color name="principal_1">#1565C0</color>
     <color name="principal_2">#FFFFFFFF</color>
-    <color name="secundaria_1">#1565C0</color>
+    <color name="secundaria_1">#2196F3</color>
     <color name="secundaria_2">#F5F5F5</color>
     <color name="suporte_1">#F5F5F5</color>
     <color name="suporte_2">#616161</color>

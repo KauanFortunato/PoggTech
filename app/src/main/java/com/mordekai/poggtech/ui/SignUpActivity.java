@@ -19,6 +19,11 @@ import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.network.ApiService;
 import com.mordekai.poggtech.network.RetrofitClient;
 
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class SignUpActivity extends AppCompatActivity  {
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
@@ -34,7 +39,7 @@ public class SignUpActivity extends AppCompatActivity  {
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             // Usuário já está logado, redirecionar para a tela principal
-            startActivity(new Intent(SignUpActivity.this, MainActivity.class));
+            startActivity(new Intent(SignUpActivity.this, UserAccountActivity.class));
             finish();
             return;
         }
@@ -107,8 +112,31 @@ public class SignUpActivity extends AppCompatActivity  {
                     // Conta criada com sucesso
                     FirebaseUser user = mAuth.getCurrentUser();
 
+                    Log.d("Variaveis", "Nome: " + inputName.getText().toString()
+                            + "\tLastName: " + inputLastName.getText().toString()
+                            + "\tEmail: " + inputEmail.getText().toString()
+                            + "\tPassword: " + password
+                            + "\tUid: " + user.getUid());
+
                     apiService.insertUser(user.getUid(), inputName.getText().toString(),
-                            inputLastName.getText().toString(), inputEmail.getText().toString());
+                            inputLastName.getText().toString(), inputEmail.getText().toString()).enqueue(new Callback<ResponseBody>() {
+
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            if (response.isSuccessful()) {
+                                Log.d("Sucesso", "Pessoa cadastrada com sucesso! Response: " + response.body());
+                                startActivity(new Intent(SignUpActivity.this, UserAccountActivity.class));
+                            } else {
+                                Log.e("Erro", "Erro ao cadastrar: " + response.message());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            Log.e("Erro", "Erro na requisição: " + t.getMessage());
+                        }
+                    });
+
                 } else {
                     if (task.getException() != null) {
                         String errorMessage = task.getException().getMessage();

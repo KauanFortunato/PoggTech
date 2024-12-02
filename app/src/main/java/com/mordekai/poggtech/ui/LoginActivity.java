@@ -1,9 +1,12 @@
 package com.mordekai.poggtech.ui;
 
+import com.mordekai.poggtech.R;
+
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -11,7 +14,15 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.mordekai.poggtech.R;
+
+import com.mordekai.poggtech.network.ApiService;
+import com.mordekai.poggtech.network.RetrofitClient;
+import com.mordekai.poggtech.model.User;
+import com.mordekai.poggtech.utils.SharedPrefHelper;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText inputEmail, inputPassword;
@@ -28,13 +39,13 @@ public class LoginActivity extends AppCompatActivity {
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             // Usuário já está logado, redirecionar para a tela principal
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            startActivity(new Intent(LoginActivity.this, UserAccountActivity.class));
             finish();
             return;
         }
 
-
         IniciarComponentes();
+
         // Inicializar Firebase auth
         mAuth = FirebaseAuth.getInstance();
 
@@ -67,14 +78,44 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        // Usuário logado com sucesso
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        Toast.makeText(LoginActivity.this, "Login bem-sucedido", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(LoginActivity.this, " ID: " + user.getUid(), Toast.LENGTH_SHORT).show();
-                        Toast.makeText(LoginActivity.this, " Email: " + user.getEmail(), Toast.LENGTH_SHORT).show();
+                        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
 
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        finish();
+                        String firebase_uid = mAuth.getCurrentUser().getUid();
+                        Log.d("Variaveis", "Uid: " + firebase_uid);
+
+                        Call<User> call = apiService.getUser(firebase_uid);
+                        call.enqueue(new Callback<User>() {
+                            @Override
+                            public void onResponse(Call<User> call, Response<User> response) {
+                                if (response.isSuccessful() && response.body() != null) {
+                                    User user = response.body();
+
+                                    if (user.getError() != null) {
+                                        Toast.makeText(LoginActivity.this, user.getError(), Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        // Usuário encontrado com sucesso
+                                        String name = user.getName();
+                                        String email = user.getEmail();
+                                        Log.d("Variaveis", "Nome: " + name + ", Email: " + email);
+
+                                        SharedPrefHelper sharedPrefHelper = new SharedPrefHelper(LoginActivity.this);
+
+                                        sharedPrefHelper.saveUser(user);
+
+                                        startActivity(new Intent(LoginActivity.this, UserAccountActivity.class));
+                                        finish();
+                                    }
+                                } else {
+                                    Toast.makeText(LoginActivity.this, "Erro na resposta do Servidor", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<User> call, Throwable t) {
+                                Log.d("Erro", "erro ao fazer login: " + t.getMessage());
+                            }
+                        });
+
                     } else {
                         // Falha no login
                         Toast.makeText(LoginActivity.this, "Falha no login", Toast.LENGTH_SHORT).show();

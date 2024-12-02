@@ -12,5 +12,15 @@
     <string name="cadastro">Cadastro</string>
     <string name="nome">Nome</string>
     <string name="sobrenome">Sobrenome</string>
-    <string name="confirmarPalavraPasse">Confirmar Palavra passe</string>"
+    <string name="confirmarPalavraPasse">Confirmar Palavra passe</string>
+    <string name="configuracoes">Configurações</string>
+    <string name="infoPessoais">Informacoes pessoais</string>
+    <string name="contacto">Contacto</string>
+    <string name="edit">Edit</string>
+
+    <!-- Examples texts -->
+    <string name="primeiroNome">Kauan</string>
+    <string name="ultimoNome">Fortunato</string>
+    <string name="contactoExample">123 XXX XXX</string>
+    <string name="emailExample">meuemailboladao@gmail.com</string>
 </resources>
