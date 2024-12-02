@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.network.ApiService;
 import com.mordekai.poggtech.network.RetrofitClient;
+import com.mordekai.poggtech.utils.SharedPrefHelper;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -124,8 +125,12 @@ public class SignUpActivity extends AppCompatActivity  {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                             if (response.isSuccessful()) {
+
+                                // TODO: 02/12/2024 Fazer com que quando a pessoa cadastrar ser colocado sharedPred
+
                                 Log.d("Sucesso", "Pessoa cadastrada com sucesso! Response: " + response.body());
                                 startActivity(new Intent(SignUpActivity.this, UserAccountActivity.class));
+                                finish();
                             } else {
                                 Log.e("Erro", "Erro ao cadastrar: " + response.message());
                             }

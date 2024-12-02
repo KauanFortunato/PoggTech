@@ -17,6 +17,8 @@
     <string name="infoPessoais">Informacoes pessoais</string>
     <string name="contacto">Contacto</string>
     <string name="edit">Edit</string>
+    <string name="voltar">Voltar</string>
+    <string name="redefinir">Redefinir Passe</string>
 
     <!-- Examples texts -->
     <string name="primeiroNome">Kauan</string>
