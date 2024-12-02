@@ -40,7 +40,7 @@ public class SignUpActivity extends AppCompatActivity  {
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             // Usuário já está logado, redirecionar para a tela principal
-            startActivity(new Intent(SignUpActivity.this, UserAccountActivity.class));
+            startActivity(new Intent(SignUpActivity.this, MainActivity.class));
             finish();
             return;
         }
@@ -129,7 +129,7 @@ public class SignUpActivity extends AppCompatActivity  {
                                 // TODO: 02/12/2024 Fazer com que quando a pessoa cadastrar ser colocado sharedPred
 
                                 Log.d("Sucesso", "Pessoa cadastrada com sucesso! Response: " + response.body());
-                                startActivity(new Intent(SignUpActivity.this, UserAccountActivity.class));
+                                startActivity(new Intent(SignUpActivity.this, MainActivity.class));
                                 finish();
                             } else {
                                 Log.e("Erro", "Erro ao cadastrar: " + response.message());

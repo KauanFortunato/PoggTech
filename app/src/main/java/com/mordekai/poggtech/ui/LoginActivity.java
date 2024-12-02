@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             // Usuário já está logado, redirecionar para a tela principal
-            startActivity(new Intent(LoginActivity.this, UserAccountActivity.class));
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
             return;
         }
@@ -102,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                         sharedPrefHelper.saveUser(user);
 
-                                        startActivity(new Intent(LoginActivity.this, UserAccountActivity.class));
+                                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                         finish();
                                     }
                                 } else {
