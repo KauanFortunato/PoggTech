@@ -22,6 +22,7 @@ public class SharedPrefHelper {
 
     // TODO: 02/12/2024 Sempre que for criar um novo usuário, é importante apagar o ultimo
     public void saveUser(User user) {
+        clearUser();
         String userJson = gson.toJson(user);
         editor.putString("user", userJson);
         editor.apply();
