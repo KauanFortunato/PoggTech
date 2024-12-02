@@ -55,7 +55,7 @@
         android:layout_height="48dp"
         android:layout_marginTop="28dp"
         android:background="@drawable/rounded_button_small"
-        android:contentDescription="Configurações"
+        android:contentDescription="@string/configuracoes"
         android:src="@drawable/ic_settings_filled"
         app:layout_constraintEnd_toStartOf="@+id/buttonMyPurchases"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,7 +65,7 @@
         android:id="@+id/textConfig"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Configurações"
+        android:text="@string/configuracoes"
         android:textSize="12sp"
         android:fontFamily="@font/roboto_bold"
         android:textColor="@color/black"
@@ -156,5 +156,18 @@
         android:background="@color/suporte_2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textMyPurchases" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/bottom_nav_menu"
+        app:labelVisibilityMode="labeled"
+        android:elevation="12dp"
+        android:background="@drawable/nav_bar_backgorund"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
