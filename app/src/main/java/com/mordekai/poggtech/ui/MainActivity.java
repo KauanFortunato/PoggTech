@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mordekai.poggtech.R;
+import com.mordekai.poggtech.fragments.HomeFragment;
+import com.mordekai.poggtech.fragments.UserAccountFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,11 +19,20 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.containerFrame, new HomeFragment())
+                .commit();
+
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             Fragment selectedFragment = null;
             if (item.getItemId() == R.id.home) {
-
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.containerFrame, new HomeFragment())
+                        .addToBackStack(null)
+                        .commit();
             } else if (item.getItemId() == R.id.cart) {
                 getSupportFragmentManager()
                         .beginTransaction()

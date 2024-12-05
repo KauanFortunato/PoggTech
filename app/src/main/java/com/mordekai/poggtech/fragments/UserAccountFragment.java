@@ -1,4 +1,4 @@
-package com.mordekai.poggtech.ui;
+package com.mordekai.poggtech.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.mordekai.poggtech.R;
+import com.mordekai.poggtech.ui.LoginActivity;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 import com.mordekai.poggtech.model.User;
 

@@ -19,10 +19,16 @@
     <string name="edit">Edit</string>
     <string name="voltar">Voltar</string>
     <string name="redefinir">Redefinir Passe</string>
+    <string name="pesquisaHint">O que queres comprar?</string>
 
     <!-- Examples texts -->
     <string name="primeiroNome">Kauan</string>
     <string name="ultimoNome">Fortunato</string>
     <string name="contactoExample">123 XXX XXX</string>
     <string name="emailExample">meuemailboladao@gmail.com</string>
+
+    <!-- Descriptions -->
+    <string name="menu_lateral">Menu lateral</string>
+    <string name="menu_lateral_perfil">Ícone de perfil</string>
+
 </resources>
