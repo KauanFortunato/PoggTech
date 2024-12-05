@@ -87,15 +87,19 @@
     
     <style name="SearchBar">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">45dp</item>
+        <item name="android:layout_height">50dp</item>
         <item name="android:layout_marginStart">8dp</item>
         <item name="android:layout_marginEnd">8dp</item>
-        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginTop">0dp</item>
         <item name="android:background">@drawable/rounded_menu</item>
         <item name="android:paddingTop">12dp</item>
-        <item name="android:paddingEnd">16dp</item>
         <item name="android:paddingBottom">12dp</item>
         <item name="android:elevation">8dp</item>
-
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingEnd">10dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 </resources>

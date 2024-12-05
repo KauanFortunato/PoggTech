@@ -1,4 +1,4 @@
-package com.mordekai.poggtech.ui;
+package com.mordekai.poggtech.fragments;
 
 import android.os.Bundle;
 import android.util.Log;
