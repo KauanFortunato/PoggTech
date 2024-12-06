@@ -1,4 +1,4 @@
-package com.mordekai.poggtech.model;
+package com.mordekai.poggtech.data.model;
 
 public class User {
     private int user_id;
@@ -10,8 +10,7 @@ public class User {
     private String created_at;
     private String error;
 
-    private User(int userId, String name, String lastName, String email) {
-        this.user_id = userId;
+    public User(String name, String lastName, String email) {
         this.name = name;
         this.last_name = lastName;
         this.email = email;

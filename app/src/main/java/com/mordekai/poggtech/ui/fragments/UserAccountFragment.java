@@ -1,4 +1,4 @@
-package com.mordekai.poggtech.fragments;
+package com.mordekai.poggtech.ui.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,9 +15,9 @@ import androidx.fragment.app.Fragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.mordekai.poggtech.R;
-import com.mordekai.poggtech.ui.LoginActivity;
+import com.mordekai.poggtech.ui.activity.LoginActivity;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
-import com.mordekai.poggtech.model.User;
+import com.mordekai.poggtech.data.model.User;
 
 public class UserAccountFragment extends Fragment {
     private TextView helloUser, numberAccount;

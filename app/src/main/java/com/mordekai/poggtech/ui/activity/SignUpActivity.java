@@ -1,4 +1,4 @@
-package com.mordekai.poggtech.ui;
+package com.mordekai.poggtech.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,8 +16,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.mordekai.poggtech.R;
-import com.mordekai.poggtech.network.ApiService;
-import com.mordekai.poggtech.network.RetrofitClient;
+import com.mordekai.poggtech.data.callback.RepositoryCallback;
+import com.mordekai.poggtech.data.model.User;
+import com.mordekai.poggtech.data.remote.ApiService;
+import com.mordekai.poggtech.data.remote.RetrofitClient;
+import com.mordekai.poggtech.data.repository.FirebaseUserRepository;
+import com.mordekai.poggtech.data.repository.MySqlUserRepository;
+import com.mordekai.poggtech.domain.UserManager;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
 import okhttp3.ResponseBody;
@@ -56,11 +61,14 @@ public class SignUpActivity extends AppCompatActivity  {
         inputConfirmPassword = findViewById(R.id.inputConfirmPassword);
 
         findViewById(R.id.buttonSignUp).setOnClickListener(view -> {
+
             String email = inputEmail.getText().toString();
             String password = inputPassword.getText().toString();
             String name = inputName.getText().toString();
             String lastName = inputLastName.getText().toString();
             String confirmPassword = inputConfirmPassword.getText().toString();
+
+            User user = new User(name, lastName, email);
 
             if (name.isEmpty()) {
                 inputName.setError("Digite o nome");
@@ -98,67 +106,29 @@ public class SignUpActivity extends AppCompatActivity  {
                 return;
             }
 
-            CreateAccount(email, password);
+            CreateAccount(user, password);
         });
     }
 
-    private void CreateAccount(String email, String password) {
-        mAuth.createUserWithEmailAndPassword(email, password)
-        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+    private void CreateAccount(User user, String password) {
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        UserManager userManager = new UserManager(new FirebaseUserRepository(), new MySqlUserRepository(apiService));
+
+        userManager.createUser(user, password, new RepositoryCallback<User>() {
             @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+            public void onSuccess(User result) {
+                Log.d("Sucesso", "Usuário criado com sucesso! Response: " + result.getName());
 
-                    // Conta criada com sucesso
-                    FirebaseUser user = mAuth.getCurrentUser();
+                SharedPrefHelper sharedPrefHelper = new SharedPrefHelper(SignUpActivity.this);
+                sharedPrefHelper.saveUser(result);
 
-                    Log.d("Variaveis", "Nome: " + inputName.getText().toString()
-                            + "\tLastName: " + inputLastName.getText().toString()
-                            + "\tEmail: " + inputEmail.getText().toString()
-                            + "\tPassword: " + password
-                            + "\tUid: " + user.getUid());
+                startActivity(new Intent(SignUpActivity.this, MainActivity.class));
+                finish();
+            }
 
-                    apiService.insertUser(user.getUid(), inputName.getText().toString(),
-                            inputLastName.getText().toString(), inputEmail.getText().toString()).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onFailure(Throwable t) {
 
-                        @Override
-                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                            if (response.isSuccessful()) {
-
-                                // TODO: 02/12/2024 Fazer com que quando a pessoa cadastrar ser colocado sharedPred
-
-                                Log.d("Sucesso", "Pessoa cadastrada com sucesso! Response: " + response.body());
-                                startActivity(new Intent(SignUpActivity.this, MainActivity.class));
-                                finish();
-                            } else {
-                                Log.e("Erro", "Erro ao cadastrar: " + response.message());
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-                            Log.e("Erro", "Erro na requisição: " + t.getMessage());
-                        }
-                    });
-
-                } else {
-                    if (task.getException() != null) {
-                        String errorMessage = task.getException().getMessage();
-                        Toast.makeText(SignUpActivity.this, "Erro: " + errorMessage, Toast.LENGTH_SHORT).show();
-
-                        if (errorMessage.contains("The email address is alredy in use")) {
-                            Toast.makeText(SignUpActivity.this,
-                                    "Este email já possui uma conta cadastrada.", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(SignUpActivity.this,
-                                    "Falha na criação da conta", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Toast.makeText(SignUpActivity.this,
-                                "Erro desconhecido ao criar a conta", Toast.LENGTH_SHORT).show();
-                    }
-                }
             }
         });
     }

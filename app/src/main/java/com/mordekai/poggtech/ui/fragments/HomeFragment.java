@@ -1,6 +1,5 @@
-package com.mordekai.poggtech.fragments;
+package com.mordekai.poggtech.ui.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.mordekai.poggtech.R;
-import com.mordekai.poggtech.model.User;
+import com.mordekai.poggtech.data.model.User;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
 public class HomeFragment extends Fragment {

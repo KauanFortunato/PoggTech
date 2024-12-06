@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
-import com.mordekai.poggtech.model.User;
+import com.mordekai.poggtech.data.model.User;
 
 
 public class SharedPrefHelper {
