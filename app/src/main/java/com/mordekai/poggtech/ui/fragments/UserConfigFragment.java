@@ -1,4 +1,4 @@
-package com.mordekai.poggtech.fragments;
+package com.mordekai.poggtech.ui.fragments;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.mordekai.poggtech.R;
-import com.mordekai.poggtech.model.User;
+import com.mordekai.poggtech.data.model.User;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
 import java.util.Objects;

@@ -1,6 +1,6 @@
-package com.mordekai.poggtech.network;
+package com.mordekai.poggtech.data.remote;
 
-import com.mordekai.poggtech.model.User;
+import com.mordekai.poggtech.data.model.User;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;

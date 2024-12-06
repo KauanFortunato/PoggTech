@@ -1,4 +1,4 @@
-package com.mordekai.poggtech.ui;
+package com.mordekai.poggtech.ui.activity;
 
 import android.os.Bundle;
 
@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mordekai.poggtech.R;
-import com.mordekai.poggtech.fragments.HomeFragment;
-import com.mordekai.poggtech.fragments.UserAccountFragment;
+import com.mordekai.poggtech.ui.fragments.HomeFragment;
+import com.mordekai.poggtech.ui.fragments.UserAccountFragment;
 
 public class MainActivity extends AppCompatActivity {
 
