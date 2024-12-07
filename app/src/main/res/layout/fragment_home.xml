@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -10,7 +11,7 @@
         android:layout_height="130dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/headerText"
@@ -29,16 +30,15 @@
 
         <ImageButton
             android:id="@+id/menuLateral"
-            android:contentDescription="@string/menu_lateral"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/ic_menu"
-            android:background="@drawable/rounded_menu"
-            android:layout_alignParentStart="true"
             android:layout_below="@id/headerText"
+            android:layout_alignParentStart="true"
             android:layout_marginStart="16dp"
+            android:background="@drawable/rounded_menu"
+            android:contentDescription="@string/menu_lateral"
             android:elevation="8dp"
-            />
+            android:src="@drawable/ic_menu" />
 
         <EditText
             android:id="@+id/searchProd"
@@ -62,11 +62,83 @@
             android:layout_alignParentEnd="true"
             android:layout_below="@id/headerText"
             android:layout_marginEnd="16dp"
-            android:elevation="8dp"
-            />
+            android:elevation="8dp" />
     </RelativeLayout>
 
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/contentScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="120dp"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:fillViewport="true">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
+            <!-- Seção Para Você -->
+            <TextView
+                android:id="@+id/forYou"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Para você"
+                android:textSize="24sp"
+                android:fontFamily="@font/roboto_bold"
+                android:textColor="@color/black"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="30dp" />
+
+            <HorizontalScrollView
+                android:id="@+id/horizontalScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/fragment_card_product" />
+                    <include layout="@layout/fragment_card_product" />
+                    <include layout="@layout/fragment_card_product" />
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <!-- Seção Consoles -->
+            <TextView
+                android:id="@+id/section1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Consoles"
+                android:textSize="24sp"
+                android:fontFamily="@font/roboto_bold"
+                android:textColor="@color/black"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp" />
+
+            <HorizontalScrollView
+                android:id="@+id/asdd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/fragment_card_product" />
+                    <include layout="@layout/fragment_card_product" />
+                    <include layout="@layout/fragment_card_product" />
+                </LinearLayout>
+            </HorizontalScrollView>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

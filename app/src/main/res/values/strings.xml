@@ -30,5 +30,6 @@
     <!-- Descriptions -->
     <string name="menu_lateral">Menu lateral</string>
     <string name="menu_lateral_perfil">Ícone de perfil</string>
-
+    <string name="add_favoritos">Adicionar aos favoritos</string>
+    <string name="add_cart">Adicionar ao carrinho</string>
 </resources>

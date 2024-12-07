@@ -1,8 +1,10 @@
 package com.mordekai.poggtech.ui.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -48,6 +50,7 @@ public class UserAccountFragment extends Fragment {
         return view;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void StartComponents(View view) {
         helloUser = view.findViewById(R.id.helloUser);
         numberAccount = view.findViewById(R.id.numberAccount);
@@ -55,6 +58,46 @@ public class UserAccountFragment extends Fragment {
         buttonConfig = view.findViewById(R.id.buttonConfig);
         buttonMyPurchases = view.findViewById(R.id.buttonMyPurchases);
         buttonMyAds = view.findViewById(R.id.buttonMyAds);
+        ImageButton btn_back = view.findViewById(R.id.btn_back);
+
+        buttonConfig.setOnTouchListener((v, event) -> {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    v.animate().scaleX(0.9f).scaleY(0.9f).setDuration(50).start();
+                    break;
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL:
+                    v.animate().scaleX(1f).scaleY(1f).setDuration(100).start();
+                    break;
+            }
+            return false;
+        });
+
+        buttonMyPurchases.setOnTouchListener((v, event) -> {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    v.animate().scaleX(0.9f).scaleY(0.9f).setDuration(50).start();
+                    break;
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL:
+                    v.animate().scaleX(1f).scaleY(1f).setDuration(100).start();
+                    break;
+            }
+            return false;
+        });
+
+        buttonMyAds.setOnTouchListener((v, event) -> {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    v.animate().scaleX(0.9f).scaleY(0.9f).setDuration(50).start();
+                    break;
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL:
+                    v.animate().scaleX(1f).scaleY(1f).setDuration(100).start();
+                    break;
+            }
+            return false;
+        });
 
         buttonConfig.setOnClickListener(v -> {
             UserConfigFragment userConfigFragment = new UserConfigFragment();
@@ -63,6 +106,10 @@ public class UserAccountFragment extends Fragment {
                     .replace(R.id.containerFrame, userConfigFragment)
                     .addToBackStack(null)
                     .commit();
+        });
+
+        btn_back.setOnClickListener(v -> {
+            requireActivity().getSupportFragmentManager().popBackStack();
         });
     }
 }

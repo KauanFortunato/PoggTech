@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             Fragment selectedFragment = null;
+
             if (item.getItemId() == R.id.home) {
                 getSupportFragmentManager()
                         .beginTransaction()
@@ -34,11 +35,7 @@ public class MainActivity extends AppCompatActivity {
                         .addToBackStack(null)
                         .commit();
             } else if (item.getItemId() == R.id.cart) {
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.containerFrame, new UserAccountFragment())
-                        .addToBackStack(null)
-                        .commit();
+
             } else if (item.getItemId() == R.id.favorite) {
 
             } else if (item.getItemId() == R.id.chat) {
