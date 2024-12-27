@@ -2,16 +2,20 @@ package com.mordekai.poggtech.ui.fragments;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import com.mordekai.poggtech.R;
@@ -33,9 +37,10 @@ public class UserConfigFragment extends Fragment {
     private TextView textEmail;
     private EditText editName, editSurname, editContact;
     private ImageButton btn_back;
-    private AppCompatButton buttonEditPersonInfo, buttonEditEmail, buttonResetPass;
+    private AppCompatButton buttonEditPersonInfo, buttonCancelPersonInfo, buttonEditEmail, buttonResetPass;
     private SharedPrefHelper sharedPrefHelper;
     private User user;
+    private boolean isEditing = false;
 
     @Nullable
     @Override
@@ -60,27 +65,49 @@ public class UserConfigFragment extends Fragment {
         }
 
         buttonEditPersonInfo.setOnClickListener(v -> {
-            Call<ApiResponse> call = apiService.updateUser(user);
-            call.enqueue(new Callback<ApiResponse>() {
-                @Override
-                public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
-                    if (response.isSuccessful() && response.body() != null) {
-                        ApiResponse apiResponse = response.body();
-                        if (apiResponse.isSuccess() != null && apiResponse.isSuccess()) {
-                            Log.d("API_SUCCESS", "Usuário atualizado com sucesso: " + apiResponse.getMessage());
-                        } else {
-                            Log.e("API_ERROR", "Erro na atualização: " + apiResponse.getMessage());
-                        }
-                    } else {
-                        Log.e("API_ERROR", "Resposta não foi bem-sucedida. Código: " + response.code());
-                    }
-                }
+            if (!isEditing) {
+                isEditing = true;
+                buttonEditPersonInfo.setText(R.string.salvar);
+                buttonCancelPersonInfo.setVisibility(View.VISIBLE);
 
-                @Override
-                public void onFailure(Call<ApiResponse> call, Throwable t) {
-                    Log.e("API_FAILURE", "Falha ao comunicar com a API: " + t.getMessage());
-                }
-            });
+                enableEditingMode(editName);
+                enableEditingMode(editSurname);
+                enableEditingMode(editContact);
+            } else {
+                isEditing = false;
+                buttonEditPersonInfo.setText(R.string.edit);
+                buttonCancelPersonInfo.setVisibility(View.GONE);
+
+                resetToInitialState(editName);
+                resetToInitialState(editSurname);
+                resetToInitialState(editContact);
+
+                // Atualizar o objeto user
+                user.setName(editName.getText().toString());
+                user.setLastName(editSurname.getText().toString());
+                user.setPhone(editContact.getText().toString());
+
+                // Salvar alterações no servidor ou localmente
+                saveUserChanges();
+            }
+        });
+
+        buttonCancelPersonInfo.setOnClickListener(v -> {
+            // Cancelar alterações
+            isEditing = false;
+            buttonEditPersonInfo.setText(R.string.edit);
+            buttonCancelPersonInfo.setVisibility(View.GONE);
+
+            resetToInitialState(editName);
+            resetToInitialState(editSurname);
+            resetToInitialState(editContact);
+
+            // Restaurar os dados antigos do utilizador
+            if (user != null) {
+                editName.setText(user.getName());
+                editSurname.setText(user.getLastName());
+                editContact.setText(user.getPhone());
+            }
         });
 
         return view;
@@ -95,6 +122,7 @@ public class UserConfigFragment extends Fragment {
 
         btn_back = view.findViewById(R.id.btn_back);
         buttonEditPersonInfo = view.findViewById(R.id.buttonEditPersonInfo);
+        buttonCancelPersonInfo = view.findViewById(R.id.buttonCancelPersonInfo);
         buttonEditEmail = view.findViewById(R.id.buttonEditEmail);
         buttonResetPass = view.findViewById(R.id.buttonResetPass);
 
@@ -102,4 +130,65 @@ public class UserConfigFragment extends Fragment {
             requireActivity().getSupportFragmentManager().popBackStack();
         });
     }
+
+    private void enableEditingMode(EditText editText) {
+        editText.setEnabled(true);
+        editText.setFocusable(true);
+        editText.setFocusableInTouchMode(true);
+        editText.setClickable(true);
+        editText.setEnabled(true);
+        editText.setCursorVisible(true);
+
+        editText.setBackgroundResource(R.drawable.rounded_edittext_info_edit);
+        applyEditingStyle(editText);
+    }
+
+    private void resetToInitialState(EditText editText) {
+        editText.setEnabled(false);
+        editText.setFocusable(false);
+        editText.setFocusableInTouchMode(false);
+        editText.setClickable(false);
+        editText.setEnabled(false);
+        editText.setCursorVisible(false);
+
+        editText.setBackgroundResource(R.drawable.rounded_edittext_info);
+        applyStaticStyle(editText);
+    }
+
+    private void applyEditingStyle(EditText editText) {
+        editText.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+        editText.setTypeface(ResourcesCompat.getFont(requireContext(), R.font.roboto_medium));
+        editText.setTextColor(ContextCompat.getColor(requireContext(), R.color.black));
+        editText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+    }
+
+    private void applyStaticStyle(EditText editText) {
+        editText.setTypeface(ResourcesCompat.getFont(requireContext(), R.font.roboto_black));
+        editText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+    }
+
+    private void saveUserChanges() {
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        Call<ApiResponse> call = apiService.updateUser(user);
+        call.enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
+                    sharedPrefHelper.saveUser(user);
+                    Log.d("API_SUCCESS", "Usuário atualizado com sucesso: " + response.body().getMessage());
+                } else {
+                    Log.e("API_ERROR", "Erro na atualização: " + (response.body() != null ? response.body().getMessage() : "Erro desconhecido"));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
+                Log.e("API_FAILURE", "Falha ao comunicar com a API: " + t.getMessage());
+            }
+        });
+    }
 }
+
+

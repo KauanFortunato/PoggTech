@@ -16,11 +16,12 @@
     <string name="configuracoes">Configurações</string>
     <string name="infoPessoais">Informações pessoais</string>
     <string name="contacto">Contacto</string>
-    <string name="edit">Edit</string>
+    <string name="edit">Editar</string>
     <string name="voltar">Voltar</string>
     <string name="redefinir">Redefinir Passe</string>
     <string name="pesquisaHint">O que queres comprar?</string>
     <string name="salvar">Salvar</string>
+    <string name="cancelar">Cancelar</string>
 
     <!-- Examples texts -->
     <string name="primeiroNome">Kauan</string>

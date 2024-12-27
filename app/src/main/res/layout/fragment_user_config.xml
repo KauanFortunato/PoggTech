@@ -65,16 +65,18 @@
 
             <EditText
                 android:id="@+id/editName"
-                style="@style/ConfigText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
+                android:text="@string/primeiroNome"
+
+                style="@style/ConfigText"
+                android:background="@drawable/rounded_edittext_info"
+
                 android:cursorVisible="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:clickable="false"
-                android:enabled="false"
-                android:text="@string/primeiroNome" />
+                android:enabled="false" />
 
             <TextView
                 android:id="@+id/titleSurname"
@@ -87,7 +89,8 @@
                 style="@style/ConfigText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
+
+                android:background="@drawable/rounded_edittext_info"
                 android:cursorVisible="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
@@ -106,7 +109,7 @@
                 style="@style/ConfigText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
+                android:background="@drawable/rounded_edittext_info"
                 android:cursorVisible="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
@@ -114,17 +117,43 @@
                 android:enabled="false"
                 android:text="@string/contactoExample" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/buttonEditPersonInfo"
-                style="@style/Button"
-                android:layout_width="130dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="20dp"
-                android:backgroundTint="@color/black"
-                android:text="@string/edit"
-                android:textAllCaps="false"
-                android:textColor="@color/principal_2"
-                android:textSize="12sp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="2dp">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonEditPersonInfo"
+                    style="@style/Button"
+                    android:layout_width="130dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="5dp"
+                    android:backgroundTint="@color/black"
+                    android:text="@string/edit"
+                    android:textAllCaps="false"
+                    android:textColor="@color/principal_2"
+                    android:textSize="12sp" />
+
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonCancelPersonInfo"
+                    style="@style/ButtonCancel"
+                    android:layout_width="130dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_toEndOf="@id/buttonEditPersonInfo"
+                    android:backgroundTint="@color/suporte_1"
+                    android:text="@string/cancelar"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:visibility="invisible" />
+            </RelativeLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
