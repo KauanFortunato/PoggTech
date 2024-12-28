@@ -22,6 +22,7 @@
     <string name="pesquisaHint">O que queres comprar?</string>
     <string name="salvar">Salvar</string>
     <string name="cancelar">Cancelar</string>
+    <string name="logout">Sair da Conta</string>
 
     <!-- Examples texts -->
     <string name="primeiroNome">Kauan</string>

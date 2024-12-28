@@ -23,10 +23,6 @@ import com.mordekai.poggtech.data.repository.MySqlUserRepository;
 import com.mordekai.poggtech.domain.UserManager;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class LoginActivity extends AppCompatActivity {
     private EditText inputEmail, inputPassword;
     private TextView textNaoTemConta;

@@ -62,6 +62,11 @@ public class MySqlUserRepository implements UserRepository {
     }
 
     @Override
+    public void logoutUser() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void loginUser(String email, String password, RepositoryCallback<String> callback) {
         throw new UnsupportedOperationException();
     }

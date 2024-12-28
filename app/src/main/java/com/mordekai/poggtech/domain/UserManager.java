@@ -5,8 +5,7 @@ import android.util.Log;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.User;
 import com.mordekai.poggtech.data.repository.UserRepository;
-import com.mordekai.poggtech.ui.activity.LoginActivity;
-import com.mordekai.poggtech.utils.SharedPrefHelper;
+
 
 public class UserManager {
 
@@ -80,6 +79,10 @@ public class UserManager {
                 callback.onFailure(t);
             }
         });
+    }
+
+    public void logoutUser() {
+        firebaseRepo.logoutUser();
     }
 
     public void getUser(String firebaseUid, RepositoryCallback<User> callback) {
