@@ -1,5 +1,6 @@
 package com.mordekai.poggtech.ui.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -22,6 +23,11 @@ import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.model.ApiResponse;
 import com.mordekai.poggtech.data.model.User;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
+import com.mordekai.poggtech.data.repository.FirebaseUserRepository;
+import com.mordekai.poggtech.data.repository.MySqlUserRepository;
+import com.mordekai.poggtech.domain.UserManager;
+import com.mordekai.poggtech.ui.activity.LoginActivity;
+import com.mordekai.poggtech.ui.activity.MainActivity;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
 import com.mordekai.poggtech.data.remote.ApiService;
@@ -37,8 +43,9 @@ public class UserConfigFragment extends Fragment {
     private TextView textEmail;
     private EditText editName, editSurname, editContact;
     private ImageButton btn_back;
-    private AppCompatButton buttonEditPersonInfo, buttonCancelPersonInfo, buttonEditEmail, buttonResetPass;
+    private AppCompatButton buttonEditPersonInfo, buttonCancelPersonInfo, buttonLogout, buttonEditEmail, buttonResetPass;
     private SharedPrefHelper sharedPrefHelper;
+    private UserManager userManager;
     private User user;
     private boolean isEditing = false;
 
@@ -47,8 +54,10 @@ public class UserConfigFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_config, container, false);
 
-        sharedPrefHelper = new SharedPrefHelper(requireContext());
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        userManager = new UserManager(new FirebaseUserRepository(), new MySqlUserRepository(apiService));
+
+        sharedPrefHelper = new SharedPrefHelper(requireContext());
         user = sharedPrefHelper.getUser();
 
         startComponents(view);
@@ -125,6 +134,14 @@ public class UserConfigFragment extends Fragment {
         buttonCancelPersonInfo = view.findViewById(R.id.buttonCancelPersonInfo);
         buttonEditEmail = view.findViewById(R.id.buttonEditEmail);
         buttonResetPass = view.findViewById(R.id.buttonResetPass);
+
+        buttonLogout = view.findViewById(R.id.buttonLogout);
+
+        buttonLogout.setOnClickListener(v -> {
+            userManager.logoutUser();
+            sharedPrefHelper.clearUser();
+            startActivity(new Intent(requireContext(), LoginActivity.class));
+        });
 
         btn_back.setOnClickListener(v -> {
             requireActivity().getSupportFragmentManager().popBackStack();

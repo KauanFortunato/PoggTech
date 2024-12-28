@@ -1,5 +1,7 @@
 package com.mordekai.poggtech.data.repository;
 
+import android.util.Log;
+
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -44,6 +46,12 @@ public class FirebaseUserRepository implements UserRepository {
                         callback.onFailure(task.getException());
                     }
                 });
+    }
+
+    @Override
+    public void logoutUser() {
+        firebaseAuth.signOut();
+        Log.d("Sucesso", "Usuário deslogado com sucesso!");
     }
 
     public void getUser(String firebaseUid, RepositoryCallback<User> callback) {
