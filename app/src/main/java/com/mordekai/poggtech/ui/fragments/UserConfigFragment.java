@@ -122,7 +122,6 @@ public class UserConfigFragment extends Fragment {
         return view;
     }
 
-
     private void startComponents(View view) {
         editName = view.findViewById(R.id.editName);
         editSurname = view.findViewById(R.id.editSurname);
