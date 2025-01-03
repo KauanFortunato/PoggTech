@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -72,10 +73,12 @@ public class LoginActivity extends AppCompatActivity {
 
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
         UserManager userManager = new UserManager(new FirebaseUserRepository(), new MySqlUserRepository(apiService));
+        Toast.makeText(LoginActivity.this, "Sucesso", Toast.LENGTH_SHORT).show();
 
         userManager.loginUser(email, password, new RepositoryCallback<User>() {
             @Override
             public void onSuccess(User result) {
+                Toast.makeText(LoginActivity.this, "Sucesso", Toast.LENGTH_SHORT).show();
                 Log.d("Sucesso", "Usuário logado com sucesso! Response: " + result.getName());
 
                 SharedPrefHelper sharedPrefHelper = new SharedPrefHelper(LoginActivity.this);
