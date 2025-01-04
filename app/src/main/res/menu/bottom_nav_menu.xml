@@ -7,6 +7,13 @@
         android:title="Início"
         android:icon="@drawable/nav_icon_home"
         android:titleCondensed="Ini" />
+
+    <item
+        android:id="@+id/account"
+        android:icon="@drawable/nav_icon_persona"
+        android:title="Conta"
+        android:titleCondensed="Conta" />
+
     <item
         android:id="@+id/cart"
         android:icon="@drawable/nav_icon_cart"
