@@ -46,7 +46,6 @@ public class UserAccountFragment extends Fragment {
         StartComponents(view);
         helloUser.setText("Olá, " + user.getName());
         numberAccount.setText("Número Da Conta: " + user.getUserId());
-
         return view;
     }
 
@@ -58,7 +57,6 @@ public class UserAccountFragment extends Fragment {
         buttonConfig = view.findViewById(R.id.buttonConfig);
         buttonMyPurchases = view.findViewById(R.id.buttonMyPurchases);
         buttonMyAds = view.findViewById(R.id.buttonMyAds);
-        ImageButton btn_back = view.findViewById(R.id.btn_back);
 
         buttonConfig.setOnTouchListener((v, event) -> {
             switch (event.getAction()) {
@@ -106,10 +104,6 @@ public class UserAccountFragment extends Fragment {
                     .replace(R.id.containerFrame, userConfigFragment)
                     .addToBackStack(null)
                     .commit();
-        });
-
-        btn_back.setOnClickListener(v -> {
-            requireActivity().getSupportFragmentManager().popBackStack();
         });
     }
 }
