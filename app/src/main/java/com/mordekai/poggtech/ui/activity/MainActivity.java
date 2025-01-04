@@ -1,6 +1,7 @@
 package com.mordekai.poggtech.ui.activity;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mordekai.poggtech.R;
+import com.mordekai.poggtech.ui.fragments.HeaderFragment;
 import com.mordekai.poggtech.ui.fragments.HomeFragment;
 import com.mordekai.poggtech.ui.fragments.OfflineFragment;
 import com.mordekai.poggtech.ui.fragments.UserAccountFragment;
@@ -23,6 +25,11 @@ public class MainActivity extends AppCompatActivity {
 
         loadFragmentBasedOnNetwork();
 
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.headerContainer, new HeaderFragment())
+                .commit();
+
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             Fragment selectedFragment = null;
@@ -32,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 if (item.getItemId() == R.id.home) {
                     selectedFragment = new HomeFragment();
+                    findViewById(R.id.headerContainer).setVisibility(View.VISIBLE);
+                } else if (item.getItemId() == R.id.account) {
+                    selectedFragment = new UserAccountFragment();
+                    findViewById(R.id.headerContainer).setVisibility(View.GONE);
                 } else if (item.getItemId() == R.id.cart) {
                     // ToDo: Adicionar tela de Carrinho
                 } else if (item.getItemId() == R.id.favorite) {
