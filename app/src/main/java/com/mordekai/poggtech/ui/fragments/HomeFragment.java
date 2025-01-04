@@ -32,8 +32,6 @@ public class HomeFragment extends Fragment {
         user = sharedPrefHelper.getUser();
 
         iniciarComponentes(view);
-
-
         return view;
     }
 

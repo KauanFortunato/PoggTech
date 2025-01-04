@@ -23,6 +23,10 @@
     <string name="salvar">Salvar</string>
     <string name="cancelar">Cancelar</string>
     <string name="logout">Sair da Conta</string>
+    <string name="tentarNovamente">Tentar Novamente</string>
+    <string name="verfInternet">Verifique a sua conexão de Internet</string>
+    <string name="naoTemInternet">Ops!\nNão tem Internet</string>
+
 
     <!-- Examples texts -->
     <string name="primeiroNome">Kauan</string>

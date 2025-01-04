@@ -9,7 +9,9 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.ui.fragments.HomeFragment;
+import com.mordekai.poggtech.ui.fragments.OfflineFragment;
 import com.mordekai.poggtech.ui.fragments.UserAccountFragment;
+import com.mordekai.poggtech.utils.NetworkUtil;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,27 +21,24 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.containerFrame, new HomeFragment())
-                .commit();
+        loadFragmentBasedOnNetwork();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             Fragment selectedFragment = null;
 
-            if (item.getItemId() == R.id.home) {
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.containerFrame, new HomeFragment())
-                        .addToBackStack(null)
-                        .commit();
-            } else if (item.getItemId() == R.id.cart) {
-
-            } else if (item.getItemId() == R.id.favorite) {
-
-            } else if (item.getItemId() == R.id.chat) {
-
+            if (!NetworkUtil.isConnected(this)) {
+                selectedFragment = new OfflineFragment();
+            } else {
+                if (item.getItemId() == R.id.home) {
+                    selectedFragment = new HomeFragment();
+                } else if (item.getItemId() == R.id.cart) {
+                    // ToDo: Adicionar tela de Carrinho
+                } else if (item.getItemId() == R.id.favorite) {
+                    // ToDo: Adicionar tela de Favoritos
+                } else if (item.getItemId() == R.id.chat) {
+                    // ToDo: Adicionar tela de Chat
+                }
             }
 
             if (selectedFragment != null) {
@@ -51,5 +50,20 @@ public class MainActivity extends AppCompatActivity {
         });
 
         bottomNavigationView.setSelectedItemId(R.id.home);
+    }
+
+    private void loadFragmentBasedOnNetwork() {
+        Fragment fragment;
+        if (NetworkUtil.isConnected(this)) {
+            fragment = new HomeFragment();
+        } else {
+            fragment = new OfflineFragment();
+        }
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.containerFrame, fragment)
+                .commit();
+
     }
 }
