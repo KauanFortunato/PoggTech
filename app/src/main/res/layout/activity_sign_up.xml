@@ -20,6 +20,7 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginLeft="12dp"
+            android:layout_marginBottom="6dp"
             android:layout_alignParentBottom="true"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/voltar"
@@ -30,11 +31,10 @@
             style="@style/TextHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="10dp"
-            android:text="@string/cadastro" />
+            android:layout_centerHorizontal="true"
+            android:text="@string/cadastro"
+            android:textAlignment="center" />
     </RelativeLayout>
 
     <LinearLayout

@@ -12,7 +12,7 @@
         <item name="colorOnBackground">@color/suporte_1</item>
 
         <!-- Status Bar -->
-        <item name="android:statusBarColor">@color/principal_1</item>
+        <item name="android:statusBarColor">@color/black</item>
         <!-- Ativar texto escuro na Status Bar -->
         <item name="android:windowLightStatusBar">true</item>
 
