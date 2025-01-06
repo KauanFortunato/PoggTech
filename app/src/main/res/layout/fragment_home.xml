@@ -5,15 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCategories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:background="@drawable/rounded_corners"
+        android:elevation="2dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/contentScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="120dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:fillViewport="true">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvCategories">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,18 +36,17 @@
                 android:id="@+id/forYou"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Para você"
-                android:textSize="24sp"
-                android:fontFamily="@font/roboto_bold"
-                android:textColor="@color/black"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="30dp" />
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="Para você"
+                android:textColor="@color/black"
+                android:textSize="24sp" />
 
             <HorizontalScrollView
                 android:id="@+id/horizontalScrollView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -44,7 +54,9 @@
                     android:orientation="horizontal">
 
                     <include layout="@layout/fragment_card_product" />
+
                     <include layout="@layout/fragment_card_product" />
+
                     <include layout="@layout/fragment_card_product" />
                 </LinearLayout>
             </HorizontalScrollView>
@@ -54,18 +66,17 @@
                 android:id="@+id/section1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Consoles"
-                android:textSize="24sp"
-                android:fontFamily="@font/roboto_bold"
-                android:textColor="@color/black"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="20dp" />
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="Consoles"
+                android:textColor="@color/black"
+                android:textSize="24sp" />
 
             <HorizontalScrollView
-                android:id="@+id/asdd"
+                android:id="@+id/section2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -73,7 +84,9 @@
                     android:orientation="horizontal">
 
                     <include layout="@layout/fragment_card_product" />
+
                     <include layout="@layout/fragment_card_product" />
+
                     <include layout="@layout/fragment_card_product" />
                 </LinearLayout>
             </HorizontalScrollView>
