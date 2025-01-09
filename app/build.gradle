@@ -34,10 +34,22 @@ dependencies {
     implementation platform(libs.firebase.bom)
     implementation libs.firebase.analytics
 
+    // Retrofit
+    implementation libs.retrofit
+    implementation libs.converter.gson
+
+    implementation libs.flexbox
+
+    // Glide
+    implementation libs.github.glide
+    annotationProcessor libs.compiler
+
+    implementation libs.cardview
     implementation libs.appcompat
     implementation libs.material
     implementation libs.activity
     implementation libs.constraintlayout
+    implementation libs.firebase.auth
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core

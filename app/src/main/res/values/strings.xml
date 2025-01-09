@@ -1,10 +1,42 @@
 <resources>
     <string name="app_name">PoggTech</string>
     <string name="login">Login</string>
+    <string name="cadastrar">Cadastrar</string>
+    <string name="conta">Conta</string>
     <string name="enderecoEmail">Endereço de email</string>
     <string name="palavraPasse">Palavra passe</string>
     <string name="esqueceuSenha">Esqueceu a sua senha?</string>
     <string name="googleLogin">Entrar com Google</string>
     <string name="naoTemConta">Não tem uma conta? Crie aqui!</string>
     <string name="entrar">Iniciar Sessão</string>
+    <string name="cadastro">Cadastro</string>
+    <string name="nome">Nome</string>
+    <string name="sobrenome">Sobrenome</string>
+    <string name="confirmarPalavraPasse">Confirmar Palavra passe</string>
+    <string name="configuracoes">Configurações</string>
+    <string name="infoPessoais">Informações pessoais</string>
+    <string name="contacto">Contacto</string>
+    <string name="edit">Editar</string>
+    <string name="voltar">Voltar</string>
+    <string name="redefinir">Redefinir Passe</string>
+    <string name="pesquisaHint">Pesquise aqui</string>
+    <string name="salvar">Salvar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="logout">Sair da Conta</string>
+    <string name="tentarNovamente">Tentar Novamente</string>
+    <string name="verfInternet">Verifique a sua conexão de Internet</string>
+    <string name="naoTemInternet">Ops!\nNão tem Internet</string>
+
+
+    <!-- Examples texts -->
+    <string name="primeiroNome">Kauan</string>
+    <string name="ultimoNome">Fortunato</string>
+    <string name="contactoExample">123 XXX XXX</string>
+    <string name="emailExample">meuemailboladao@gmail.com</string>
+
+    <!-- Descriptions -->
+    <string name="menu_lateral">Menu lateral</string>
+    <string name="menu_lateral_perfil">Ícone de perfil</string>
+    <string name="add_favoritos">Adicionar aos favoritos</string>
+    <string name="add_cart">Adicionar ao carrinho</string>
 </resources>

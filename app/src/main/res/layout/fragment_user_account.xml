@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/secundaria_2">
+
+    <RelativeLayout
+        android:id="@+id/header"
+        style="@style/Header"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <TextView
+            android:id="@+id/headerText"
+            style="@style/TextHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:text="@string/conta" />
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/helloUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Olá, KAUAN"
+        android:textSize="24sp"
+        android:fontFamily="@font/roboto_bold"
+        android:textColor="@color/black"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header" />
+
+    <TextView
+        android:id="@+id/numberAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Número Da Conta: 1A2B3C"
+        android:textSize="14sp"
+        android:fontFamily="@font/roboto_bold"
+        android:textColor="@color/suporte_2"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/helloUser" />
+
+    <ImageButton
+        android:id="@+id/buttonConfig"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/rounded_button_small"
+        android:contentDescription="@string/configuracoes"
+        android:src="@drawable/ic_settings_filled"
+        app:layout_constraintEnd_toStartOf="@+id/buttonMyPurchases"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/numberAccount" />
+
+    <TextView
+        android:id="@+id/textConfig"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/configuracoes"
+        android:textSize="12sp"
+        android:fontFamily="@font/roboto_bold"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@id/buttonConfig"
+        app:layout_constraintEnd_toEndOf="@id/buttonConfig"
+        app:layout_constraintTop_toBottomOf="@id/buttonConfig"
+
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:lineSpacingExtra="4dp"
+        android:hyphenationFrequency="full"
+        android:breakStrategy="balanced"
+        android:textAlignment="center"
+        />
+
+    <ImageButton
+        android:id="@+id/buttonMyPurchases"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/rounded_button_small"
+        android:contentDescription="As Minhas Compras"
+        android:src="@drawable/ic_package_filled"
+        android:textAllCaps="false"
+        android:textColor="@color/principal_2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/numberAccount" />
+
+    <TextView
+        android:id="@+id/textMyPurchases"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:text="As Minhas Compras"
+        android:textSize="12sp"
+        android:fontFamily="@font/roboto_bold"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@id/buttonMyPurchases"
+        app:layout_constraintEnd_toEndOf="@id/buttonMyPurchases"
+        app:layout_constraintTop_toBottomOf="@id/buttonMyPurchases"
+
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:lineSpacingExtra="4dp"
+        android:hyphenationFrequency="full"
+        android:breakStrategy="balanced"
+        android:textAlignment="center"
+        />
+
+    <ImageButton
+        android:id="@+id/buttonMyAds"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/rounded_button_small"
+        android:src="@drawable/ic_sell_filled"
+        android:contentDescription="Os Meus Anúncios"
+        android:textAllCaps="false"
+        android:textColor="@color/principal_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/buttonMyPurchases"
+        app:layout_constraintTop_toBottomOf="@id/numberAccount" />
+
+    <TextView
+        android:id="@+id/textMyAds"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:text="Os Meus Anúncios"
+        android:textSize="12sp"
+        android:fontFamily="@font/roboto_bold"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@id/buttonMyAds"
+        app:layout_constraintEnd_toEndOf="@id/buttonMyAds"
+        app:layout_constraintTop_toBottomOf="@id/buttonMyAds"
+
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:lineSpacingExtra="4dp"
+        android:hyphenationFrequency="full"
+        android:breakStrategy="balanced"
+        android:textAlignment="center"
+        />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_marginTop="24dp"
+        android:background="@color/suporte_2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textMyPurchases" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
