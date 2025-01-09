@@ -40,6 +40,10 @@ dependencies {
 
     implementation libs.flexbox
 
+    // Glide
+    implementation libs.github.glide
+    annotationProcessor libs.compiler
+
     implementation libs.cardview
     implementation libs.appcompat
     implementation libs.material

@@ -18,6 +18,7 @@
 
         <activity
             android:name=".ui.activity.LoginActivity"
+            android:theme="@style/Theme.PoggTech"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,11 +29,13 @@
 
         <activity
             android:name=".ui.activity.SignUpActivity"
+            android:theme="@style/Theme.PoggTech"
             android:exported="true">
         </activity>
 
         <activity
             android:name=".ui.activity.MainActivity"
+            android:theme="@style/Theme.PoggTech"
             android:exported="true">
         </activity>
 

@@ -6,13 +6,13 @@
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
     app:cardCornerRadius="15dp"
-    app:cardElevation="4dp">
+    app:cardElevation="0dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/white"
+        android:background="@drawable/card_product_background"
         android:padding="8dp">
 
         <!-- Imagem do Produto -->
@@ -20,7 +20,8 @@
             android:id="@+id/productImage"
             android:layout_width="match_parent"
             android:layout_height="180dp"
-            android:scaleType="centerCrop"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
             android:src="@drawable/xbox_series_x" />
 
         <!-- Botão de Favoritos -->

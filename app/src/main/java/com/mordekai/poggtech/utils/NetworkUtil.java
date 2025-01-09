@@ -14,4 +14,9 @@ public class NetworkUtil {
         }
         return false;
     }
+
+    // TODO: 09/01/2025 Testar conexão com o xampp
+    public static boolean isConnectedXampp() {
+        return true;
+    }
 }
