@@ -22,10 +22,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.common.api.Api;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.adapter.CategoryAdapter;
+import com.mordekai.poggtech.data.adapter.ProductAdapter;
+import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.Category;
+import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.model.User;
 import com.mordekai.poggtech.data.remote.ApiService;
+import com.mordekai.poggtech.data.remote.ProductApi;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
+import com.mordekai.poggtech.domain.ProductManager;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
 import java.util.ArrayList;
@@ -39,8 +44,14 @@ public class HomeFragment extends Fragment {
 
     private SharedPrefHelper sharedPrefHelper;
     private RecyclerView rvCategories;
+    private RecyclerView rvProducts;
     private CategoryAdapter categoryAdapter;
+    private ProductAdapter productAdapter;
+
     private ApiService apiService;
+    private ProductApi productApi;
+    private List<Product> productList = new ArrayList<>();
+    private ProductManager productManager;
     private List<Category> categoryList = new ArrayList<>();
     private User user;
 
@@ -57,9 +68,18 @@ public class HomeFragment extends Fragment {
 
         categoryAdapter = new CategoryAdapter(categoryList);
         rvCategories.setAdapter(categoryAdapter);
-
         apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
         fetchCategories();
+
+        rvProducts = view.findViewById(R.id.rvProducts);
+        rvProducts.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        rvProducts.setNestedScrollingEnabled(false);
+
+        productApi = RetrofitClient.getRetrofitInstance().create(ProductApi.class);
+        productManager = new ProductManager(productApi);
+        productAdapter = new ProductAdapter(productList);
+        rvProducts.setAdapter(productAdapter);
+        fetchAllProducts();
 
         return view;
     }
@@ -81,6 +101,27 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(Call<List<Category>> call, Throwable t) {
                 Toast.makeText(getContext(), "Erro ao buscar categorias", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void fetchAllProducts() {
+        productManager.fetchAllProduct(new RepositoryCallback<List<Product>>() {
+            @Override
+            public void onSuccess(List<Product> result) {
+                if (result.isEmpty()) {
+                    Log.d("API_RESPONSE", "Nenhum produto encontrado");
+                } else {
+                    productList.clear();
+                    productList.addAll(result);
+                    productAdapter.notifyDataSetChanged();
+                    Log.d("API_RESPONSE", "Item 0: " + productList.get(0).getTitle());
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("API_RESPONSE", "Erro ao buscar produtos", t);
             }
         });
     }

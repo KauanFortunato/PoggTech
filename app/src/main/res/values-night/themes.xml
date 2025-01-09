@@ -3,5 +3,30 @@
     <style name="Base.Theme.PoggTech" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+
+        <item name="colorPrimary">@color/principal_1</item>
+        <!-- Variação da Cor Primária -->
+        <item name="colorPrimaryVariant">@color/secundaria_1</item>
+
+        <!-- Cor Secundária -->
+        <item name="colorSecondary">@color/secundaria_2</item>
+        <!-- Variação da Cor Secundária -->
+        <item name="colorOnBackground">@color/suporte_1</item>
+
+        <!-- Status Bar -->
+        <item name="android:statusBarColor">@color/principal_2</item>
+        <!-- Ativar texto escuro na Status Bar -->
+        <item name="android:windowLightStatusBar">true</item>
+
+        <!-- Navigation Bar -->
+        <item name="android:navigationBarColor">@color/secundaria_2</item>
+
+        <!-- Fundo de Janela -->
+        <item name="android:windowBackground">@color/secundaria_2</item>
+
+        <!-- Feedback -->
+        <item name="colorError">@color/feedback_2</item>
     </style>
+
+    <style name="Theme.PoggTech" parent="Base.Theme.PoggTech" />
 </resources>
