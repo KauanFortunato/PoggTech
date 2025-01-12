@@ -57,4 +57,24 @@ public class ProductManager {
                     }
                 });
     }
+
+    public void fetchProductsByCategory(String category, RepositoryCallback<List<Product>> callback) {
+        productApi.getProductsByCategory(category)
+                .enqueue(new Callback<List<Product>>() {
+                    @Override
+                    public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                        if(response.isSuccessful() && response.body() != null) {
+                            List<Product> products = response.body();
+                            callback.onSuccess(products);
+                        } else {
+                            callback.onFailure(new Exception("Erro ao buscar produtos"));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Product>> call, Throwable t) {
+                        callback.onFailure(new Exception("Erro ao buscar produtos da categoria " + category + ": " + t.getMessage()));
+                    }
+                });
+    }
 }

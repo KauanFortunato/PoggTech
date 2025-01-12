@@ -1,16 +1,11 @@
 package com.mordekai.poggtech.ui.fragments;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 
 import androidx.annotation.NonNull;
@@ -19,7 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.common.api.Api;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.adapter.CategoryAdapter;
 import com.mordekai.poggtech.data.adapter.ProductAdapter;
@@ -43,11 +39,10 @@ import retrofit2.Response;
 public class HomeFragment extends Fragment {
 
     private SharedPrefHelper sharedPrefHelper;
-    private RecyclerView rvCategories;
-    private RecyclerView rvProducts;
+    private RecyclerView rvCategories, rvProducts, rvConsolas, rvJogos, rvAcessory;
     private CategoryAdapter categoryAdapter;
-    private ProductAdapter productAdapter;
-
+    private ProductAdapter productAdapter, consolasAdapter, jogosAdapter, acessoryAdapter;
+    private FirebaseAuth auth;
     private ApiService apiService;
     private ProductApi productApi;
     private List<Product> productList = new ArrayList<>();
@@ -63,6 +58,22 @@ public class HomeFragment extends Fragment {
         sharedPrefHelper = new SharedPrefHelper(requireContext());
         user = sharedPrefHelper.getUser();
 
+        rvConsolas = view.findViewById(R.id.rvConsolas);
+        rvJogos = view.findViewById(R.id.rvJogos);
+        rvAcessory = view.findViewById(R.id.rvAcessory);
+
+        consolasAdapter = new ProductAdapter(new ArrayList<>());
+        jogosAdapter = new ProductAdapter(new ArrayList<>());
+        acessoryAdapter = new ProductAdapter(new ArrayList<>());
+
+        rvConsolas.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        rvJogos.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        rvAcessory.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+        rvConsolas.setAdapter(consolasAdapter);
+        rvJogos.setAdapter(jogosAdapter);
+        rvAcessory.setAdapter(acessoryAdapter);
+
         rvCategories = view.findViewById(R.id.rvCategories);
         rvCategories.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
@@ -71,7 +82,7 @@ public class HomeFragment extends Fragment {
         apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
         fetchCategories();
 
-        rvProducts = view.findViewById(R.id.rvProducts);
+        rvProducts = view.findViewById(R.id.rvForYou);
         rvProducts.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rvProducts.setNestedScrollingEnabled(false);
 
@@ -80,6 +91,7 @@ public class HomeFragment extends Fragment {
         productAdapter = new ProductAdapter(productList);
         rvProducts.setAdapter(productAdapter);
         fetchAllProducts();
+        fetchCategoryProducts();
 
         return view;
     }
@@ -124,5 +136,54 @@ public class HomeFragment extends Fragment {
                 Log.e("API_RESPONSE", "Erro ao buscar produtos", t);
             }
         });
+    }
+
+    private void fetchCategoryProducts() {
+        productManager.fetchProductsByCategory("Consolas", new RepositoryCallback<List<Product>>() {
+            @Override
+            public void onSuccess(List<Product> products) {
+                consolasAdapter = new ProductAdapter(products);
+                rvConsolas.setAdapter(consolasAdapter);
+                consolasAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("API_RESPONSE", "Erro ao buscar produtos da categoria", t);
+            }
+        });
+
+        productManager.fetchProductsByCategory("Jogos", new RepositoryCallback<List<Product>>() {
+            @Override
+            public void onSuccess(List<Product> products) {
+                jogosAdapter = new ProductAdapter(products);
+                rvJogos.setAdapter(jogosAdapter);
+                jogosAdapter.notifyDataSetChanged();
+                }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("API_RESPONSE", "Erro ao buscar produtos da categoria", t);
+            }
+        });
+
+        productManager.fetchProductsByCategory("Acessórios", new RepositoryCallback<List<Product>>() {
+            @Override
+            public void onSuccess(List<Product> products) {
+                acessoryAdapter = new ProductAdapter(products);
+                rvAcessory.setAdapter(acessoryAdapter);
+                acessoryAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("API_RESPONSE", "Erro ao buscar produtos da categoria", t);
+            }
+        });
+
+    }
+
+    private void resetPassword() {
+
     }
 }

@@ -4,29 +4,29 @@
 
     <item
         android:id="@+id/home"
-        android:title="Início"
+        android:title="@string/inicio"
         android:icon="@drawable/nav_icon_home"
         android:titleCondensed="Ini" />
 
     <item
         android:id="@+id/account"
         android:icon="@drawable/nav_icon_persona"
-        android:title="Conta"
-        android:titleCondensed="Conta" />
+        android:title="@string/conta"
+        android:titleCondensed="@string/conta" />
 
     <item
         android:id="@+id/cart"
         android:icon="@drawable/nav_icon_cart"
-        android:title="Carrinho"
+        android:title="@string/carrinho"
         android:titleCondensed="Carri" />
     <item
         android:id="@+id/favorite"
         android:icon="@drawable/nav_icon_favorite"
-        android:title="Favoritos"
+        android:title="@string/favoritos"
         android:titleCondensed="Fav" />
     <item
         android:id="@+id/chat"
         android:icon="@drawable/nav_icon_chat"
-        android:title="Chat"
+        android:title="@string/chat"
         android:titleCondensed="Chat" />
 </menu>

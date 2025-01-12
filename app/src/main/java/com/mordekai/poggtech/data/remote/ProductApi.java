@@ -11,10 +11,14 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface ProductApi {
     @GET("GetAllProducts.php")
     Call<List<Product>> getAllProducts();
+
+    @GET("GetProductsByCategory.php")
+    Call<List<Product>> getProductsByCategory(@Query("category") String category);
 
     @FormUrlEncoded
     @POST("GetProduct.php")

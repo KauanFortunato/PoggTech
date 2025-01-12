@@ -3,6 +3,7 @@
     <string name="login">Login</string>
     <string name="cadastrar">Cadastrar</string>
     <string name="conta">Conta</string>
+    <string name="enviar">Enviar</string>
     <string name="enderecoEmail">Endereço de email</string>
     <string name="palavraPasse">Palavra passe</string>
     <string name="esqueceuSenha">Esqueceu a sua senha?</string>
@@ -26,13 +27,27 @@
     <string name="tentarNovamente">Tentar Novamente</string>
     <string name="verfInternet">Verifique a sua conexão de Internet</string>
     <string name="naoTemInternet">Ops!\nNão tem Internet</string>
+    <string name="carrinho">Carrinho</string>
+    <string name="favoritos">Favoritos</string>
+    <string name="chat" translatable="false">Chat</string>
+    <string name="inicio">Início</string>
+    <string name="minhasCompras">As Minhas Compras</string>
+    <string name="meusAnuncios">Os Meus Anúncios</string>
+    <string name="linkDeRecuperacao">Um link para redefinir sua senha será enviado para o e-mail cadastrado em sua conta</string>
 
+
+    <!-- Home -->
+    <string name="paraVoce">Para você</string>
+    <string name="consolas" translatable="false">Consoles</string>
+    <string name="jogos">Jogos</string>
+    <string name="acessorios">Acessorios</string>
 
     <!-- Examples texts -->
-    <string name="primeiroNome">Kauan</string>
-    <string name="ultimoNome">Fortunato</string>
-    <string name="contactoExample">123 XXX XXX</string>
-    <string name="emailExample">meuemailboladao@gmail.com</string>
+    <string name="primeiroNome" translatable="false">Kauan</string>
+    <string name="ultimoNome" translatable="false">Fortunato</string>
+    <string name="contactoExample" translatable="false">123 XXX XXX</string>
+    <string name="emailExample" translatable="false">meuemailboladao@gmail.com</string>
+    <string name="numContaExample">Número Da Conta: 1A2B3C</string>
 
     <!-- Descriptions -->
     <string name="menu_lateral">Menu lateral</string>

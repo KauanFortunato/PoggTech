@@ -2,17 +2,19 @@ package com.mordekai.poggtech.ui.activity;
 
 import com.mordekai.poggtech.R;
 
+import android.content.Context;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.HapticFeedbackConstants;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatButton;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,10 +27,11 @@ import com.mordekai.poggtech.data.repository.FirebaseUserRepository;
 import com.mordekai.poggtech.data.repository.MySqlUserRepository;
 import com.mordekai.poggtech.domain.UserManager;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
+import com.mordekai.poggtech.utils.SnackbarUtil;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText inputEmail, inputPassword;
-    private TextView textNaoTemConta;
+    private TextView textNaoTemConta, forgotPassword;
     private FirebaseUser currentUser;
 
     @Override
@@ -54,6 +57,10 @@ public class LoginActivity extends AppCompatActivity {
         inputPassword = findViewById(R.id.inputPassword);
 
         buttonLogin.setOnClickListener(view -> {
+            if (buttonLogin.isHapticFeedbackEnabled()) {
+                view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+            }
+            hideKeyboard();
             buttonLogin.setEnabled(false);
             buttonLogin.setText("");
             buttonProgress.setVisibility(View.VISIBLE);
@@ -61,14 +68,7 @@ public class LoginActivity extends AppCompatActivity {
             loginUser(buttonLogin, buttonProgress);
         });
 
-//        findViewById(R.id.buttonLogin).setOnClickListener(view -> loginUser());
 
-        textNaoTemConta.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
-            }
-        });
     }
 
     private void loginUser(AppCompatButton buttonLogin, ProgressBar buttonProgress) {
@@ -100,9 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                 buttonLogin.setText(R.string.entrar);
                 buttonLogin.setEnabled(true);
 
-                Toast.makeText(LoginActivity.this, "Sucesso", Toast.LENGTH_SHORT).show();
                 Log.d("Sucesso", "Usuário logado com sucesso! Response: " + result.getName());
-
                 SharedPrefHelper sharedPrefHelper = new SharedPrefHelper(LoginActivity.this);
                 sharedPrefHelper.saveUser(result);
 
@@ -115,6 +113,8 @@ public class LoginActivity extends AppCompatActivity {
                 buttonProgress.setVisibility(View.GONE);
                 buttonLogin.setText(R.string.entrar);
                 buttonLogin.setEnabled(true);
+
+                SnackbarUtil.showErrorSnackbar(getWindow().getDecorView().getRootView(), "Senha ou email incorretos!", LoginActivity.this);
                 Log.e("Erro", "Erro ao fazer login: " + t.getMessage());
             }
         });
@@ -122,5 +122,28 @@ public class LoginActivity extends AppCompatActivity {
 
     private void IniciarComponentes() {
         textNaoTemConta = findViewById(R.id.textNaoTemConta);
+        forgotPassword = findViewById(R.id.forgotPassword);
+
+        textNaoTemConta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
+            }
+        });
+
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
+            }
+        });
+    }
+
+    private void hideKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }

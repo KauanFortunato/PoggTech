@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PoggTech</string>
+    <string name="login">Login</string>
+    <string name="cadastrar">Register</string>
+    <string name="conta">Account</string>
+    <string name="enviar">Send</string>
+    <string name="enderecoEmail">Email Address</string>
+    <string name="palavraPasse">Password</string>
+    <string name="esqueceuSenha">Forgot your password?</string>
+    <string name="googleLogin">Login with Google</string>
+    <string name="naoTemConta">Don\'t have an account? Create here!</string>
+    <string name="entrar">Login</string>
+    <string name="cadastro">Sign up</string>
+    <string name="nome">Name</string>
+    <string name="sobrenome">Surname</string>
+    <string name="confirmarPalavraPasse">Confirm Password</string>
+    <string name="configuracoes">Settings</string>
+    <string name="infoPessoais">Personal information</string>
+    <string name="contacto">Contact</string>
+    <string name="edit">Edit</string>
+    <string name="voltar">Back</string>
+    <string name="redefinir">Reset Password</string>
+    <string name="pesquisaHint">Search here</string>
+    <string name="salvar">Save</string>
+    <string name="cancelar">Cancel</string>
+    <string name="logout">Log Out</string>
+    <string name="tentarNovamente">Try Again</string>
+    <string name="verfInternet">Check your Internet connection</string>
+    <string name="numContaExample">Account ID: 1A2B3C</string>
+    <string name="menu_lateral">Side menu</string>
+    <string name="menu_lateral_perfil">Profile icon</string>
+    <string name="add_favoritos">Add to favorites</string>
+    <string name="add_cart">Add to cart</string>
+    <string name="carrinho">Cart</string>
+    <string name="favoritos">Favorites</string>
+    <string name="inicio">Home</string>
+    <string name="meusAnuncios">My Ads</string>
+    <string name="paraVoce">For you</string>
+    <string name="jogos">Games</string>
+    <string name="minhasCompras">My Purchases</string>
+    <string name="acessorios">Acessories</string>
+    <string name="naoTemInternet">Ops!\nYou don\'t have Internet</string>
+    <string name="linkDeRecuperacao">A link to reset your password will be sent to the email address registered in your account.</string>
+</resources>
