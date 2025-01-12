@@ -40,6 +40,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.productTitle.setText(product.getTitle());
         // Todo Colocar a categoria correta do produto
         holder.productPrice.setText("€ " + product.getPrice());
+        holder.productType.setText(product.getCategory());
 
         Glide.with(
                 holder.productImage.getContext())
@@ -67,7 +68,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             productImage = itemView.findViewById(R.id.productImage);
 //            favoriteButton = itemView.findViewById(R.id.favoriteButton);
             productTitle = itemView.findViewById(R.id.productTitle);
-//            productType = itemView.findViewById(R.id.productType);
+            productType = itemView.findViewById(R.id.productType);
             productPrice = itemView.findViewById(R.id.productPrice);
 //            buttonAddToCart = itemView.findViewById(R.id.buttonAddToCart);
         }

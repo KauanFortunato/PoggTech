@@ -33,7 +33,8 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         style="@style/BottomNav"
-        android:background="@drawable/rounded_corners"
+        android:background="@drawable/nav_menu"
+        android:elevation="10dp"
         app:itemIconTint="@color/bottom_nav_colors"
         app:itemTextColor="@color/bottom_nav_colors"
         app:labelVisibilityMode="labeled"

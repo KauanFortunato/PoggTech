@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,10 +28,10 @@ import com.mordekai.poggtech.data.repository.FirebaseUserRepository;
 import com.mordekai.poggtech.data.repository.MySqlUserRepository;
 import com.mordekai.poggtech.domain.UserManager;
 import com.mordekai.poggtech.ui.activity.LoginActivity;
-import com.mordekai.poggtech.ui.activity.MainActivity;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
 import com.mordekai.poggtech.data.remote.ApiService;
+import com.mordekai.poggtech.utils.SnackbarUtil;
 
 import java.util.Objects;
 
@@ -74,6 +75,10 @@ public class UserConfigFragment extends Fragment {
         }
 
         buttonEditPersonInfo.setOnClickListener(v -> {
+            if (buttonEditPersonInfo.isHapticFeedbackEnabled()) {
+                v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+            }
+
             if (!isEditing) {
                 isEditing = true;
                 buttonEditPersonInfo.setText(R.string.salvar);
@@ -102,6 +107,9 @@ public class UserConfigFragment extends Fragment {
         });
 
         buttonCancelPersonInfo.setOnClickListener(v -> {
+            if (buttonCancelPersonInfo.isHapticFeedbackEnabled()) {
+                v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+            }
             // Cancelar alterações
             isEditing = false;
             buttonEditPersonInfo.setText(R.string.edit);
@@ -137,6 +145,9 @@ public class UserConfigFragment extends Fragment {
         buttonLogout = view.findViewById(R.id.buttonLogout);
 
         buttonLogout.setOnClickListener(v -> {
+            if (buttonLogout.isHapticFeedbackEnabled()) {
+                v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+            }
             userManager.logoutUser();
             sharedPrefHelper.clearUser();
             startActivity(new Intent(requireContext(), LoginActivity.class));
@@ -193,6 +204,8 @@ public class UserConfigFragment extends Fragment {
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
                     sharedPrefHelper.saveUser(user);
+
+                    SnackbarUtil.showSuccessSnackbar(requireView(), "Usuário atualizado!", requireContext());
                     Log.d("API_SUCCESS", "Usuário atualizado com sucesso: " + response.body().getMessage());
                 } else {
                     Log.e("API_ERROR", "Erro na atualização: " + (response.body() != null ? response.body().getMessage() : "Erro desconhecido"));

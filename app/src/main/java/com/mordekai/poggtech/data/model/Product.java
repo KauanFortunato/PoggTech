@@ -6,7 +6,7 @@ public class Product {
     private String title;
     private String description;
     private Float price;
-    private int category_id;
+    private String category;
     private String image_url;
     private String created_at;
     private String updated_at;
@@ -33,8 +33,8 @@ public class Product {
         return price;
     }
 
-    public int getCategory_id() {
-        return category_id;
+    public String getCategory() {
+        return category;
     }
 
     public String getImage_url() {
