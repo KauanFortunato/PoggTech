@@ -26,6 +26,7 @@ import com.mordekai.poggtech.data.model.User;
 import com.mordekai.poggtech.data.repository.FirebaseUserRepository;
 import com.mordekai.poggtech.data.repository.MySqlUserRepository;
 import com.mordekai.poggtech.domain.UserManager;
+import com.mordekai.poggtech.utils.AppConfig;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 import com.mordekai.poggtech.utils.SnackbarUtil;
 
@@ -38,6 +39,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_login);
+
+        AppConfig.initialize(this);
 
         AppCompatButton buttonLogin = findViewById(R.id.buttonLogin);
         ProgressBar buttonProgress = findViewById(R.id.buttonProgress);

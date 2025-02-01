@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="110dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    app:cardCornerRadius="15dp"
+    app:cardElevation="0dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/card_product_background"
+        android:padding="10dp">
+
+        <!-- Imagem do Produto -->
+        <ImageView
+            android:id="@+id/productImage"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:src="@drawable/xbox_series_x" />
+
+        <!-- Título do Produto -->
+        <TextView
+            android:id="@+id/productTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Continuar a comprar ..."
+            android:textColor="@color/black"
+            android:fontFamily="@font/roboto"
+            android:textSize="13sp"
+            android:paddingTop="4dp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:scrollHorizontally="false"
+            android:layout_below="@id/productImage"/>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
