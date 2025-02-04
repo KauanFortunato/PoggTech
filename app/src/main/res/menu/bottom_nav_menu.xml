@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/home"
@@ -9,24 +8,20 @@
         android:titleCondensed="Ini" />
 
     <item
-        android:id="@+id/account"
-        android:icon="@drawable/nav_icon_persona"
-        android:title="@string/conta"
-        android:titleCondensed="@string/conta" />
-
-    <item
         android:id="@+id/cart"
         android:icon="@drawable/nav_icon_cart"
         android:title="@string/carrinho"
         android:titleCondensed="Carri" />
-    <item
-        android:id="@+id/favorite"
-        android:icon="@drawable/nav_icon_favorite"
-        android:title="@string/favoritos"
-        android:titleCondensed="Fav" />
+
     <item
         android:id="@+id/chat"
         android:icon="@drawable/nav_icon_chat"
         android:title="@string/chat"
         android:titleCondensed="Chat" />
+
+    <item
+        android:id="@+id/account"
+        android:icon="@drawable/nav_icon_persona"
+        android:title="@string/conta"
+        android:titleCondensed="@string/conta" />
 </menu>

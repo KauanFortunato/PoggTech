@@ -65,9 +65,12 @@
 
     <style name="BottomNav">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">75dp</item>
         <item name="android:background">@color/principal_2</item>
         <item name="android:elevation">12dp</item>
+    </style>
+
+    <style name="ItemMenuActive">
     </style>
 
     <style name="ViewRounded">

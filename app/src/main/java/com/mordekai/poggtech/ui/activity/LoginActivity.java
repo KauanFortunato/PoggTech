@@ -2,13 +2,16 @@ package com.mordekai.poggtech.ui.activity;
 
 import com.mordekai.poggtech.R;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.HapticFeedbackConstants;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -34,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText inputEmail, inputPassword;
     private TextView textNaoTemConta, forgotPassword;
     private FirebaseUser currentUser;
+    boolean isPasswordVisible = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +60,6 @@ public class LoginActivity extends AppCompatActivity {
 
         IniciarComponentes();
 
-        inputEmail = findViewById(R.id.inputEmail);
-        inputPassword = findViewById(R.id.inputPassword);
-
         buttonLogin.setOnClickListener(view -> {
             if (buttonLogin.isHapticFeedbackEnabled()) {
                 view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
@@ -70,8 +71,6 @@ public class LoginActivity extends AppCompatActivity {
 
             loginUser(buttonLogin, buttonProgress);
         });
-
-
     }
 
     private void loginUser(AppCompatButton buttonLogin, ProgressBar buttonProgress) {
@@ -123,9 +122,26 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void IniciarComponentes() {
+        inputEmail = findViewById(R.id.inputEmail);
+        inputPassword = findViewById(R.id.inputPassword);
         textNaoTemConta = findViewById(R.id.textNaoTemConta);
         forgotPassword = findViewById(R.id.forgotPassword);
+
+        inputPassword.setOnTouchListener((v, event) -> {
+            if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                int drawableEndPosition = inputPassword.getRight() - inputPassword.getCompoundDrawables()[2].getBounds().width();
+                if(event.getRawX() >= drawableEndPosition) {
+                    togglePasswordVisibility();
+                    if (inputPassword.isHapticFeedbackEnabled()) {
+                        v.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
+                    }
+                    return true;
+                }
+            }
+            return false;
+        });
 
         textNaoTemConta.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,6 +156,18 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
             }
         });
+    }
+
+    private void togglePasswordVisibility() {
+        if (isPasswordVisible) {
+            inputPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            inputPassword.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_key, 0, R.drawable.ic_eye_off, 0);
+        } else {
+            inputPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            inputPassword.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_key, 0, R.drawable.ic_eye_on, 0);
+        }
+        isPasswordVisible = !isPasswordVisible;
+        inputPassword.setSelection(inputPassword.getText().length());
     }
 
     private void hideKeyboard() {

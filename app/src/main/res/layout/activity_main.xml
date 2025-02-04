@@ -35,12 +35,14 @@
         style="@style/BottomNav"
         android:background="@drawable/nav_menu"
         android:elevation="10dp"
+        app:itemActiveIndicatorStyle="@style/ItemMenuActive"
+        app:itemIconSize="26dp"
         app:itemIconTint="@color/bottom_nav_colors"
         app:itemTextColor="@color/bottom_nav_colors"
-        app:labelVisibilityMode="labeled"
+        app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

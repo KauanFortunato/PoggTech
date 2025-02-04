@@ -61,47 +61,12 @@
             android:paddingTop="2dp"
             android:layout_below="@id/productTitle"/>
 
-        <!-- Avaliação com Estrelas -->
-        <LinearLayout
-            android:id="@+id/productRating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="4dp"
-            android:layout_below="@id/productType">
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:src="@drawable/ic_star_filled" />
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:src="@drawable/ic_star_filled" />
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:src="@drawable/ic_star_filled" />
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:src="@drawable/ic_star_filled" />
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:src="@drawable/ic_star_half" />
-        </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:orientation="horizontal"
             android:layout_marginTop="4dp"
-            android:layout_below="@id/productRating"
+            android:layout_below="@id/productType"
             android:gravity="center_vertical">
 
             <!-- Preço -->
