@@ -57,6 +57,9 @@
             android:id="@+id/inputNome"
             style="@style/Edit_Text"
             android:hint="@string/nome"
+            android:drawableStart="@drawable/ic_persona_outline"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/edit_text_icon_color"
             android:inputType="textEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -74,10 +77,14 @@
         <EditText
             android:id="@+id/inputSobrenome"
             style="@style/Edit_Text"
-            android:hint="@string/sobrenome"
-            android:inputType="textEmailAddress"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_persona_outline"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/edit_text_icon_color"
+
+            android:hint="@string/sobrenome"
+            android:inputType="textEmailAddress" />
 
         <TextView
             android:id="@+id/titleEmail"
@@ -93,6 +100,9 @@
             android:id="@+id/inputEmail"
             style="@style/Edit_Text"
             android:hint="@string/enderecoEmail"
+            android:drawableStart="@drawable/ic_email"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/edit_text_icon_color"
             android:inputType="textEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -112,7 +122,10 @@
             style="@style/Edit_Text"
             android:hint="@string/palavraPasse"
             android:inputType="textPassword"
-            android:drawableEnd="@drawable/ic_eye"
+            android:drawableStart="@drawable/ic_key"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/edit_text_icon_color"
+            android:drawableEnd="@drawable/ic_eye_off"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -131,7 +144,10 @@
             style="@style/Edit_Text"
             android:hint="@string/confirmarPalavraPasse"
             android:inputType="textPassword"
-            android:drawableEnd="@drawable/ic_eye"
+            android:drawableStart="@drawable/ic_key"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/edit_text_icon_color"
+            android:drawableEnd="@drawable/ic_eye_off"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

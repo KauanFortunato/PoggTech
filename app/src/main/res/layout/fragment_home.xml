@@ -45,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/secundaria_2"
-                android:elevation="9dp">
+                android:elevation="2dp">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvContinueBuy"
@@ -60,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/productContainer"
-                android:elevation="4dp">
+                android:elevation="2dp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -89,7 +89,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/productContainer"
-                android:elevation="4dp">
+                android:elevation="2dp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -117,7 +117,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/productContainer"
-                android:elevation="4dp">
+                android:elevation="2dp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -145,7 +145,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/productContainer"
-                android:elevation="4dp">
+                android:elevation="2dp">
 
                 <TextView
                     android:layout_width="match_parent"

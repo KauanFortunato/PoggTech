@@ -63,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
                     findViewById(R.id.headerContainer).setVisibility(View.GONE);
                 } else if (item.getItemId() == R.id.cart) {
                     // ToDo: Adicionar tela de Carrinho
-                } else if (item.getItemId() == R.id.favorite) {
-                    // ToDo: Adicionar tela de Favoritos
+//                } else if (item.getItemId() == R.id.favorite) {
+//                    // ToDo: Adicionar tela de Favoritos
                 } else if (item.getItemId() == R.id.chat) {
                     // ToDo: Adicionar tela de Chat
                 }

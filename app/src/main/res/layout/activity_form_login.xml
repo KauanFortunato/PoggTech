@@ -51,7 +51,7 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/roboto_bold"
             android:text="@string/enderecoEmail"
-            android:textColor="@color/black"
+            android:textColor="@color/text_color_tertiary"
             android:textSize="14sp" />
 
         <EditText
@@ -59,7 +59,9 @@
             style="@style/Edit_Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableEnd="@drawable/ic_email"
+            android:drawableStart="@drawable/ic_email"
+            android:drawableTint="@color/edit_text_icon_color"
+            android:drawablePadding="15dp"
             android:hint="@string/enderecoEmail"
             android:inputType="textEmailAddress"
             android:textColorHighlight="@color/suporte_3" />
@@ -71,7 +73,7 @@
             android:layout_marginTop="12dp"
             android:fontFamily="@font/roboto_bold"
             android:text="@string/palavraPasse"
-            android:textColor="@color/black"
+            android:textColor="@color/text_color_tertiary"
             android:textSize="14sp" />
 
         <EditText
@@ -79,7 +81,10 @@
             style="@style/Edit_Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableEnd="@drawable/ic_eye"
+            android:drawablePadding="15dp"
+            android:drawableTint="@color/edit_text_icon_color"
+            android:drawableStart="@drawable/ic_key"
+            android:drawableEnd="@drawable/ic_eye_off"
             android:hint="@string/palavraPasse"
             android:inputType="textPassword" />
 
@@ -90,7 +95,7 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/roboto_bold"
             android:text="@string/esqueceuSenha"
-            android:textColor="@color/suporte_2"
+            android:textColor="@color/text_color_secondary"
             android:textSize="14sp" />
 
         <FrameLayout
@@ -128,7 +133,7 @@
             android:layout_marginTop="5dp"
             android:fontFamily="@font/roboto"
             android:text="@string/naoTemConta"
-            android:textColor="@color/suporte_2" />
+            android:textColor="@color/text_color_secondary" />
 
         <View
             android:id="@+id/divider"

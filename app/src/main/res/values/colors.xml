@@ -10,6 +10,9 @@
     <color name="suporte_1">#F5F5F5</color>
     <color name="suporte_2">#616161</color>
     <color name="suporte_3">#D3D3D3</color>
+    <color name="text_color_primary">#000000</color>
+    <color name="text_color_secondary">#616161</color>
+    <color name="text_color_tertiary">#848484</color>
     <color name="feedback_1">#4CAF50</color>
     <color name="feedback_2">#F44336</color>
     <color name="black">#FF000000</color>
