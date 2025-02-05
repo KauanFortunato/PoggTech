@@ -9,10 +9,11 @@
         <item name="colorSecondaryVariant">#1C1C1C</item>
         <item name="colorOnSecondary">#FFFFFF</item>
 
-        <item name="colorSurface">#121212</item>
+        <item name="colorSurface">#202020</item>
         <item name="colorOnSurface">#FFFFFF</item>
+        <item name="colorOnSurfaceVariant">#464646</item>
 
-        <item name="backgroundColor">#121212</item>
+        <item name="backgroundColor">#181818</item>
         <item name="colorOnBackground">#FFFFFF</item>
 
         <item name="colorError">#EF5350</item>
@@ -22,7 +23,10 @@
         <item name="android:textColorSecondary">#E0E0E0</item>
         <item name="android:textColorTertiary">#B0B0B0</item>
 
+        <item name="android:navigationBarColor">?attr/colorSurface</item>
+
         <item name="colorAccent">#66BB6A</item> <!-- Verde de feedback -->
-        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:statusBarColor">?attr/backgroundColor</item>
+        <item name="android:windowLightStatusBar">false</item> <!-- Ícones escuros -->
     </style>
 </resources>

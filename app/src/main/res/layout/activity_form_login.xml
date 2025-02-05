@@ -4,27 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/secundaria_2"
+    android:background="?attr/colorSurface"
     tools:context=".ui.activity.LoginActivity">
 
     <RelativeLayout
         android:id="@+id/header"
         style="@style/Header"
+        android:layout_height="60dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <ImageButton
-            android:id="@+id/btn_back"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="12dp"
-            android:layout_marginBottom="6dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/voltar"
-            android:src="@drawable/ic_back" />
 
         <TextView
             android:id="@+id/headerText"
@@ -46,13 +36,10 @@
 
         <TextView
             android:id="@+id/titleEmail"
+            style="@style/Label_Edit_Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/roboto_bold"
-            android:text="@string/enderecoEmail"
-            android:textColor="@color/text_color_tertiary"
-            android:textSize="14sp" />
+            android:text="@string/enderecoEmail" />
 
         <EditText
             android:id="@+id/inputEmail"
@@ -60,31 +47,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_email"
-            android:drawableTint="@color/edit_text_icon_color"
             android:drawablePadding="15dp"
+            android:drawableTint="@color/edit_text_icon_color"
             android:hint="@string/enderecoEmail"
             android:inputType="textEmailAddress"
-            android:textColorHighlight="@color/suporte_3" />
+            android:textColorHighlight="?attr/android:textColorTertiary" />
 
         <TextView
             android:id="@+id/titlePassword"
+            style="@style/Label_Edit_Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:fontFamily="@font/roboto_bold"
             android:text="@string/palavraPasse"
-            android:textColor="@color/text_color_tertiary"
-            android:textSize="14sp" />
+            />
 
         <EditText
             android:id="@+id/inputPassword"
             style="@style/Edit_Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawablePadding="15dp"
-            android:drawableTint="@color/edit_text_icon_color"
             android:drawableStart="@drawable/ic_key"
             android:drawableEnd="@drawable/ic_eye_off"
+            android:drawablePadding="15dp"
+            android:drawableTint="@color/edit_text_icon_color"
             android:hint="@string/palavraPasse"
             android:inputType="textPassword" />
 
@@ -95,16 +80,16 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/roboto_bold"
             android:text="@string/esqueceuSenha"
-            android:textColor="@color/text_color_secondary"
+            android:textColor="?attr/android:textColorSecondary"
             android:textSize="14sp" />
 
         <FrameLayout
             android:id="@+id/loginButtonContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="50dp">
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="40dp" >
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/buttonLogin"
@@ -113,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/entrar"
                 android:textAllCaps="false"
-                android:textColor="@color/principal_2" />
+                android:textColor="?attr/colorOnPrimary" />
 
             <ProgressBar
                 android:id="@+id/buttonProgress"
@@ -121,7 +106,7 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_gravity="center"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </FrameLayout>
 
 
@@ -133,7 +118,7 @@
             android:layout_marginTop="5dp"
             android:fontFamily="@font/roboto"
             android:text="@string/naoTemConta"
-            android:textColor="@color/text_color_secondary" />
+            android:textColor="?attr/android:textColorTertiary" />
 
         <View
             android:id="@+id/divider"
@@ -142,16 +127,16 @@
             android:layout_marginStart="14dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="14dp"
-            android:background="@color/suporte_2" />
+            android:background="?attr/colorOnSurfaceVariant" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_login_google"
             style="@style/ButtonGoogle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
             android:layout_marginTop="15dp"
-            android:layout_marginEnd="50dp"
             android:layout_marginBottom="10dp"
             android:drawableStart="@drawable/ic_google"
             android:paddingStart="10dp"
