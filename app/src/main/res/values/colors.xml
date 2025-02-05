@@ -15,6 +15,6 @@
     <color name="text_color_tertiary">#848484</color>
     <color name="feedback_1">#4CAF50</color>
     <color name="feedback_2">#F44336</color>
-    <color name="black">#FF000000</color>
+    <color name="black">#000000</color>
     <color name="yellow">#F9E400</color>
 </resources>
