@@ -11,6 +11,7 @@
 
         <item name="colorSurface">#FFFFFF</item>
         <item name="colorOnSurface">#000000</item>
+        <item name="colorOnSurfaceVariant">#E1E1E1</item>
 
         <item name="backgroundColor">#FFFFFF</item>
         <item name="colorOnBackground">#000000</item>
@@ -24,6 +25,9 @@
 
         <item name="colorAccent">#F9E400</item> <!-- Amarelo de destaque -->
 
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">?attr/colorSurface</item>
+
+        <item name="android:statusBarColor">?attr/backgroundColor</item>
+        <item name="android:windowLightStatusBar">true</item> <!-- Ícones escuros -->
     </style>
 </resources>

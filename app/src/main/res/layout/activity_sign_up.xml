@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/secundaria_2"
+    android:background="?attr/colorSurface"
     tools:context=".ui.activity.SignUpActivity">
 
     <RelativeLayout
         android:id="@+id/header"
         style="@style/Header"
+        android:layout_height="60dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,12 +20,14 @@
             android:id="@+id/btn_back"
             android:layout_width="45dp"
             android:layout_height="45dp"
+            android:layout_alignParentBottom="true"
             android:layout_marginLeft="12dp"
             android:layout_marginBottom="6dp"
-            android:layout_alignParentBottom="true"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/voltar"
-            android:src="@drawable/ic_back" />
+            android:src="@drawable/ic_back"
+            android:tint="?attr/colorOnBackground"
+            tools:ignore="UseAppTint" />
 
         <TextView
             android:id="@+id/headerText"
@@ -48,10 +51,8 @@
             android:id="@+id/titleNome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_bold"
-            android:text="@string/nome"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
+            style="@style/Label_Edit_Text"
+            android:text="@string/nome" />
 
         <EditText
             android:id="@+id/inputNome"
@@ -68,11 +69,8 @@
             android:id="@+id/titleSobrenome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:fontFamily="@font/roboto_bold"
-            android:text="@string/sobrenome"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
+            style="@style/Label_Edit_Text"
+            android:text="@string/sobrenome" />
 
         <EditText
             android:id="@+id/inputSobrenome"
@@ -90,11 +88,8 @@
             android:id="@+id/titleEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:fontFamily="@font/roboto_bold"
-            android:text="@string/enderecoEmail"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
+            style="@style/Label_Edit_Text"
+            android:text="@string/enderecoEmail" />
 
         <EditText
             android:id="@+id/inputEmail"
@@ -111,11 +106,8 @@
             android:id="@+id/titlePassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:fontFamily="@font/roboto_bold"
-            android:text="@string/palavraPasse"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
+            style="@style/Label_Edit_Text"
+            android:text="@string/palavraPasse" />
 
         <EditText
             android:id="@+id/inputPassword"
@@ -133,11 +125,8 @@
             android:id="@+id/titleConfirmPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:fontFamily="@font/roboto_bold"
-            android:text="@string/confirmarPalavraPasse"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
+            style="@style/Label_Edit_Text"
+            android:text="@string/confirmarPalavraPasse" />
 
         <EditText
             android:id="@+id/inputConfirmPassword"
@@ -158,7 +147,7 @@
             android:layout_marginBottom="10dp"
             android:text="@string/cadastrar"
             android:textAllCaps="false"
-            android:textColor="@color/principal_2"
+            android:textColor="?attr/colorOnPrimary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
