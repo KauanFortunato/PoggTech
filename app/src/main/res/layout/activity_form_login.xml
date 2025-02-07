@@ -165,7 +165,6 @@
             android:fontFamily="@font/roboto"
             android:textColor="@color/textTertiary"
             android:textAlignment="center"/>
-
     </LinearLayout>
 
 

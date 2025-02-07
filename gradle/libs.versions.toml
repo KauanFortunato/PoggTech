@@ -16,6 +16,7 @@ constraintlayout = "2.1.4"
 playServicesAds = "23.5.0"
 firebaseAuth = "23.1.0"
 retrofit = "2.9.0"
+swiperefreshlayout = "1.1.0"
 
 [libraries]
 cardview = { module = "androidx.cardview:cardview", version.ref = "cardview" }
@@ -35,6 +36,7 @@ constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayo
 play-services-ads = { group = "com.google.android.gms", name = "play-services-ads", version.ref = "playServicesAds" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swiperefreshlayout" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

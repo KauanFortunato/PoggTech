@@ -9,20 +9,18 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
-        style="@style/Header"
+        android:layout_height="78dp"
         android:layout_width="match_parent"
-        android:background="@color/backgroundColor"
         android:paddingTop="30dp"
         app:tabGravity="fill"
         app:tabIndicatorColor="@color/colorPrimaryVariant"
         app:tabIndicatorFullWidth="true"
-        app:tabTextAppearance="@style/TabTextStyle"
         app:tabMode="fixed"
         app:tabRippleColor="#00FFFFFF"
         app:tabSelectedTextColor="@color/textPrimary"
+        app:tabTextAppearance="@style/TabTextStyle"
         app:tabTextColor="@color/textTertiary"
         app:tabUnboundedRipple="false" />
-
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"

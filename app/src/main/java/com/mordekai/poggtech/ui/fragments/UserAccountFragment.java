@@ -103,7 +103,7 @@ public class UserAccountFragment extends Fragment {
             requireActivity().getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.containerFrame, userConfigFragment)
-                    .addToBackStack(null)
+                    .addToBackStack(null) // Permite voltar com o botão de voltar do sistema
                     .commit();
         });
     }
