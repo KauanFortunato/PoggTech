@@ -29,7 +29,7 @@
             android:text="@string/naoTemInternet"
             android:textAlignment="center"
             android:textAllCaps="true"
-            android:textColor="@color/black"
+            android:textColor="@color/textPrimary"
             android:textSize="24sp" />
 
         <TextView
@@ -39,7 +39,7 @@
             android:layout_marginTop="8dp"
             android:fontFamily="@font/roboto"
             android:text="@string/verfInternet"
-            android:textColor="@color/black"
+            android:textColor="@color/textPrimary"
             android:textSize="15sp" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -52,7 +52,7 @@
             android:background="@drawable/rounded_button_light"
             android:fontFamily="@font/roboto_bold"
             android:text="@string/tentarNovamente"
-            android:textColor="@color/black" />
+            android:textColor="@color/textPrimary" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

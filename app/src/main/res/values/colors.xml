@@ -1,20 +1,36 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="white">#FFFFFFFF</color>
+    <color name="colorPrimary">#1565C0</color>
+    <color name="colorPrimaryVariant">#2196F3</color>
+    <color name="colorOnPrimary">#FFFFFF</color>
 
-    <!--Cores do APP-->
-    <color name="principal_1">#1565C0</color>
-    <color name="principal_2">#FFFFFFFF</color>
-    <color name="secundaria_1">#2196F3</color>
-    <color name="secundaria_2">#F5F5F5</color>
-    <color name="suporte_1">#F5F5F5</color>
-    <color name="suporte_2">#616161</color>
-    <color name="suporte_3">#D3D3D3</color>
-    <color name="text_color_primary">#000000</color>
-    <color name="text_color_secondary">#616161</color>
-    <color name="text_color_tertiary">#848484</color>
-    <color name="feedback_1">#4CAF50</color>
-    <color name="feedback_2">#F44336</color>
-    <color name="black">#000000</color>
-    <color name="yellow">#F9E400</color>
+    <color name="colorSecondary">#2196F3</color>
+    <color name="colorSecondaryVariant">#F5F5F5</color>
+    <color name="colorOnSecondary">#000000</color>
+
+    <color name="colorSurface">#FFFFFF</color>
+    <color name="colorOnSurface">#000000</color>
+    <color name="colorOnSurfaceVariant">#E1E1E1</color>
+
+    <color name="backgroundColor">#FFFFFF</color>
+    <color name="colorOnBackground">#000000</color>
+
+    <!-- Cores de Feedback -->
+    <color name="colorError">#F44336</color>
+    <color name="colorOnError">#FFFFFF</color>
+
+    <color name="colorSuccess">#4CAF50</color>
+    <color name="colorOnSuccess">#FFFFFF</color>
+
+    <color name="colorAccent">#F9E400</color>
+
+    <!-- Cores para Divisões e Bordas -->
+    <color name="colorDivider">#E0E0E0</color>
+    <color name="colorOnDivider">#9E9E9E</color>
+    <color name="colorBorder">#BDBDBD</color>
+    <color name="colorBorderVariant">#D8D6D6</color>
+
+    <!-- Cores de Texto -->
+    <color name="textPrimary">#000000</color>
+    <color name="textSecondary">#616161</color>
+    <color name="textTertiary">#848484</color>
 </resources>

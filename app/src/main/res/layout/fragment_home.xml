@@ -44,7 +44,7 @@
                 android:id="@+id/continueContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/secundaria_2"
+                android:background="@color/colorSurface"
                 android:elevation="2dp">
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -80,34 +80,6 @@
                         android:layout_height="wrap_content"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-                </LinearLayout>
-            </LinearLayout>
-
-            <!-- Container "Consolas" -->
-            <LinearLayout
-                android:id="@+id/consolasContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/productContainer"
-                android:elevation="2dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/productSectionTitle"
-                    android:text="@string/consolas" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="10dp">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvConsolas"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -167,6 +139,33 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <!-- Container "Consolas" -->
+            <LinearLayout
+                android:id="@+id/consolasContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/productContainer"
+                android:elevation="2dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/productSectionTitle"
+                    android:text="@string/consolas" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="10dp">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvConsolas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

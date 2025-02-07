@@ -17,8 +17,8 @@ public class SnackbarUtil {
             view.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
         }
         Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
-        snackbar.setBackgroundTint(ContextCompat.getColor(context, R.color.feedback_1));
-        customizeTextView(snackbar, context, R.color.white); // Cor do texto branca
+        snackbar.setBackgroundTint(ContextCompat.getColor(context, R.color.colorSuccess));
+        customizeTextView(snackbar, context, R.color.colorOnSuccess); // Cor do texto branca
         snackbar.show();
     }
 
@@ -27,8 +27,8 @@ public class SnackbarUtil {
             view.performHapticFeedback(HapticFeedbackConstants.REJECT);
         }
         Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
-        snackbar.setBackgroundTint(ContextCompat.getColor(context, R.color.feedback_2));
-        customizeTextView(snackbar, context, R.color.white);
+        snackbar.setBackgroundTint(ContextCompat.getColor(context, R.color.colorError));
+        customizeTextView(snackbar, context, R.color.colorOnError);
         snackbar.show();
     }
 

@@ -8,10 +8,11 @@
     </item>
 
     <!-- Borda inferior -->
-    <item android:top="1dp">
+    <item android:bottom="1dp">
         <shape android:shape="rectangle">
             <size android:height="1dp"/>
-            <solid android:color="@color/backgroundColor"/>
+            <solid android:color="@color/colorSecondaryVariant"/>
         </shape>
     </item>
+
 </layer-list>

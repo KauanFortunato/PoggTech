@@ -38,7 +38,7 @@
 
     <!-- Home -->
     <string name="paraVoce">Para você</string>
-    <string name="consolas" translatable="false">Consoles</string>
+    <string name="consolas" translatable="false">Consolas</string>
     <string name="jogos">Jogos</string>
     <string name="acessorios">Acessorios</string>
 
@@ -48,6 +48,7 @@
     <string name="contactoExample" translatable="false">123 XXX XXX</string>
     <string name="emailExample" translatable="false">meuemailboladao@gmail.com</string>
     <string name="numContaExample">Número Da Conta: 1A2B3C</string>
+    <string name="termosDeCondicoes">Ao acessar a PogTech, concorda em cumprir estes termos de serviço e política de privacidade.</string>
 
     <!-- Descriptions -->
     <string name="menu_lateral">Menu lateral</string>
