@@ -25,4 +25,15 @@ public interface ProductApi {
     Call<Product> getProductById(
             @Field("product_id") int product_id
     );
+
+    @FormUrlEncoded
+    @POST("AddProductOnCart.php")
+    Call<ResponseBody> addToCart(
+            @Field("product_id") int product_id,
+            @Field("user_id") int user_id,
+            @Field("tipo") int tipo
+    );
+
+    @GET("GetProductsFromCart.php")
+    Call<List<Product>> getCartProducts(@Query("user_id") int user_id);
 }

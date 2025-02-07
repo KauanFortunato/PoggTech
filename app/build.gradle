@@ -42,6 +42,7 @@ dependencies {
 
     // Glide
     implementation libs.github.glide
+    implementation libs.swiperefreshlayout
     annotationProcessor libs.compiler
 
     implementation libs.cardview

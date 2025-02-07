@@ -5,57 +5,118 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.adapter.CartProductAdapter;
+import com.mordekai.poggtech.data.adapter.ProductAdapter;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
+import com.mordekai.poggtech.data.model.Category;
 import com.mordekai.poggtech.data.model.Product;
+import com.mordekai.poggtech.data.model.User;
 import com.mordekai.poggtech.data.remote.ProductApi;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
+import com.mordekai.poggtech.domain.CartManager;
 import com.mordekai.poggtech.domain.ProductManager;
+import com.mordekai.poggtech.utils.SharedPrefHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class ShoppingCartFragment extends Fragment {
 
-    CartProductAdapter cartProductAdapter;
-    RecyclerView rvItemsCart;
+    private SharedPrefHelper sharedPrefHelper;
+    private User user;
+    private CartProductAdapter cartProductAdapter;
+    private RecyclerView rvItemsCart;
     private ProductApi productApi;
     private ProductManager productManager;
-    private List<Product> productList = new ArrayList<>();
+    private CartManager cartManager;
+    private List<Product> productList;
+    private ProgressBar progressBar;
+    private boolean isLoading = true;
+    private boolean isEmpty = false;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_shopping_cart, container, false);
 
+        sharedPrefHelper = new SharedPrefHelper(requireContext());
+        user = sharedPrefHelper.getUser();
+
+        // Componentes
+        progressBar = view.findViewById(R.id.progressBarItems);
         rvItemsCart = view.findViewById(R.id.rvItemsCart);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
 
-        cartProductAdapter = new CartProductAdapter(new ArrayList<>());
-
+        // Recycler View
+        productList = new ArrayList<>();
+        cartProductAdapter = new CartProductAdapter(productList);
         rvItemsCart.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         rvItemsCart.setNestedScrollingEnabled(false);
+        rvItemsCart.setAdapter(cartProductAdapter);
 
+        // Iniciar API e gerenciador de produtos
         productApi = RetrofitClient.getRetrofitInstance().create(ProductApi.class);
         productManager = new ProductManager(productApi);
-        cartProductAdapter = new CartProductAdapter(productList);
-        rvItemsCart.setAdapter(cartProductAdapter);
-        fetchAllProducts();
+        cartManager = new CartManager(productApi);
+
+        swipeRefreshLayout.setOnRefreshListener(this::fetchCartProducts);
+
+        // Carregar produtos
+        progressBar.setVisibility(View.VISIBLE);
+        fetchCartProducts();
+
         return view;
     }
 
-    private void fetchCartProducts () {
+    // ToDo: Não está funcioanndo pq precisa de criar uma view na database juntando os favorites e os produtos, para ter todas as informações
 
+    private void fetchCartProducts () {
+        cartManager.fetchCartProducts(user.getUserId(), new RepositoryCallback<List<Product>>() {
+            @Override
+            public void onSuccess(List<Product> products) {
+                if (products.isEmpty()) {
+                    Log.d("API_RESPONSE", "Nenhum produto encontrado");
+                } else {
+                    productList.clear();
+                    productList.addAll(products);
+                    cartProductAdapter.notifyDataSetChanged();
+                    Log.d("API_RESPONSE", "Item 0: " + productList.get(0).getTitle());
+                }
+
+                progressBar.setVisibility(View.GONE);
+                swipeRefreshLayout.setRefreshing(false);
+                isLoading = false;
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("API_RESPONSE", "Erro ao buscar produtos", t);
+
+                progressBar.setVisibility(View.GONE);
+                swipeRefreshLayout.setRefreshing(false);
+                isLoading = false;
+            }
+        });
     }
 
     private void fetchAllProducts() {
+        isLoading = true;
         productManager.fetchAllProduct(new RepositoryCallback<List<Product>>() {
             @Override
             public void onSuccess(List<Product> result) {
@@ -67,11 +128,19 @@ public class ShoppingCartFragment extends Fragment {
                     cartProductAdapter.notifyDataSetChanged();
                     Log.d("API_RESPONSE", "Item 0: " + productList.get(0).getTitle());
                 }
+
+                progressBar.setVisibility(View.GONE);
+                swipeRefreshLayout.setRefreshing(false);
+                isLoading = false;
             }
 
             @Override
             public void onFailure(Throwable t) {
                 Log.e("API_RESPONSE", "Erro ao buscar produtos", t);
+
+                progressBar.setVisibility(View.GONE);
+                swipeRefreshLayout.setRefreshing(false);
+                isLoading = false;
             }
         });
     }

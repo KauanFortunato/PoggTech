@@ -18,155 +18,170 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- ScrollView que contém os LinearLayouts -->
-    <androidx.core.widget.NestedScrollView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:fillViewport="true"
         app:layout_constraintTop_toBottomOf="@id/rvCategories"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <LinearLayout
+        <!-- ScrollView que contém os LinearLayouts -->
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/img" />
-
-            <!-- Container "Continuar a comprar" -->
             <LinearLayout
-                android:id="@+id/continueContainer"
+                android:id="@+id/containerProductsHome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorSurface"
-                android:elevation="2dp">
+                android:orientation="vertical">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvContinueBuy"
+                <ImageView
+                    android:id="@+id/imageView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-            </LinearLayout>
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/img" />
 
-            <!-- Container "Para Você" -->
-            <LinearLayout
-                android:id="@+id/forYouContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/productContainer"
-                android:elevation="2dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/productSectionTitle"
-                    android:text="@string/paraVoce" />
-
+                <!-- Container "Continuar a comprar" -->
                 <LinearLayout
+                    android:id="@+id/continueContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="10dp">
+                    android:background="@color/colorSurface"
+                    android:elevation="2dp">
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvForYou"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <!-- Container "Jogos" -->
-            <LinearLayout
-                android:id="@+id/jogosContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/productContainer"
-                android:elevation="2dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/productSectionTitle"
-                    android:text="@string/jogos" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="10dp">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvJogos"
+                        android:id="@+id/rvContinueBuy"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
                 </LinearLayout>
-            </LinearLayout>
 
-            <!-- Container "Acessórios" -->
-            <LinearLayout
-                android:id="@+id/acessoryContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/productContainer"
-                android:elevation="2dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/productSectionTitle"
-                    android:text="@string/acessorios" />
-
+                <!-- Container "Para Você" -->
                 <LinearLayout
+                    android:id="@+id/forYouContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="10dp">
+                    style="@style/productContainer"
+                    android:elevation="2dp">
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvAcessory"
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-                </LinearLayout>
-            </LinearLayout>
+                        style="@style/productSectionTitle"
+                        android:text="@string/paraVoce" />
 
-            <!-- Container "Consolas" -->
-            <LinearLayout
-                android:id="@+id/consolasContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/productContainer"
-                android:elevation="2dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/productSectionTitle"
-                    android:text="@string/consolas" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="10dp">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvConsolas"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                        android:orientation="horizontal"
+                        android:paddingBottom="10dp">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvForYou"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Container "Jogos" -->
+                <LinearLayout
+                    android:id="@+id/jogosContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/productContainer"
+                    android:elevation="2dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/productSectionTitle"
+                        android:text="@string/jogos" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingBottom="10dp">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvJogos"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Container "Acessórios" -->
+                <LinearLayout
+                    android:id="@+id/acessoryContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/productContainer"
+                    android:elevation="2dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/productSectionTitle"
+                        android:text="@string/acessorios" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingBottom="10dp">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvAcessory"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Container "Consolas" -->
+                <LinearLayout
+                    android:id="@+id/consolasContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/productContainer"
+                    android:elevation="2dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/productSectionTitle"
+                        android:text="@string/consolas" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingBottom="10dp">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvConsolas"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+    </FrameLayout>
+    
 
 </androidx.constraintlayout.widget.ConstraintLayout>

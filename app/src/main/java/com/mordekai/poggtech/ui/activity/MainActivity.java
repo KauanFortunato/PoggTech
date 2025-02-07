@@ -14,8 +14,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mordekai.poggtech.R;
@@ -30,10 +28,6 @@ import com.mordekai.poggtech.utils.NetworkUtil;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FragmentManager fragmentManager;
-    private Fragment homeFragment, cartFragment, accountFragment, offlineFragment;
-    private Fragment activeFragment;
-
     @RequiresApi(api = Build.VERSION_CODES.O_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,25 +38,7 @@ public class MainActivity extends AppCompatActivity {
         AppConfig.initialize(this);
         showIpInputDialog();
 
-        fragmentManager = getSupportFragmentManager();
-
-        homeFragment = new HomeFragment();
-        cartFragment = new CartFragment();
-        accountFragment = new UserAccountFragment();
-        offlineFragment = new OfflineFragment();
-
-        if (NetworkUtil.isConnected(this)) {
-            activeFragment = homeFragment;
-        } else {
-            activeFragment = offlineFragment;
-        }
-
-        fragmentManager.beginTransaction()
-                .add(R.id.containerFrame, offlineFragment, "OFFLINE").hide(offlineFragment)
-                .add(R.id.containerFrame, accountFragment, "ACCOUNT").hide(accountFragment)
-                .add(R.id.containerFrame, cartFragment, "CART").hide(cartFragment)
-                .add(R.id.containerFrame, homeFragment, "HOME")
-                .commit();
+        loadFragmentBasedOnNetwork();
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -75,17 +51,29 @@ public class MainActivity extends AppCompatActivity {
                 bottomNavigationView.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
             }
 
-            if(item.getItemId() == R.id.home){
-                switchFragment(homeFragment);
-                findViewById(R.id.headerContainer).setVisibility(View.VISIBLE);
-            } else if (item.getItemId() == R.id.account){
-                switchFragment(accountFragment);
-                findViewById(R.id.headerContainer).setVisibility(View.GONE);
-            } else if (item.getItemId() == R.id.cart){
-                switchFragment(cartFragment);
-                findViewById(R.id.headerContainer).setVisibility(View.GONE);
-            } else if (item.getItemId() == R.id.chat){
-                // ToDo: Adicionar tela de Chat
+            Fragment selectedFragment = null;
+
+            if (!NetworkUtil.isConnected(this)) {
+                selectedFragment = new OfflineFragment();
+            } else {
+                if (item.getItemId() == R.id.home) {
+                    selectedFragment = new HomeFragment();
+                    findViewById(R.id.headerContainer).setVisibility(View.VISIBLE);
+                } else if (item.getItemId() == R.id.account) {
+                    selectedFragment = new UserAccountFragment();
+                    findViewById(R.id.headerContainer).setVisibility(View.GONE);
+                } else if (item.getItemId() == R.id.cart) {
+                    selectedFragment = new CartFragment();
+                    findViewById(R.id.headerContainer).setVisibility(View.GONE);
+                } else if (item.getItemId() == R.id.chat) {
+                    // ToDo: Adicionar tela de Chat
+                }
+            }
+
+            if (selectedFragment != null) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.containerFrame, selectedFragment)
+                        .commit();
             }
             return true;
         });
@@ -93,12 +81,19 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.home);
     }
 
-    private void switchFragment(Fragment newFragment) {
-        if (newFragment != activeFragment) {
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.hide(activeFragment).show(newFragment).commit();
-            activeFragment = newFragment;
+    private void loadFragmentBasedOnNetwork() {
+        Fragment fragment;
+        if (NetworkUtil.isConnected(this)) {
+            fragment = new HomeFragment();
+        } else {
+            fragment = new OfflineFragment();
         }
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.containerFrame, fragment)
+                .commit();
+
     }
 
     private void showIpInputDialog() {
