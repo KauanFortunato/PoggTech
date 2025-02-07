@@ -1,33 +1,30 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Tema Claro -->
     <style name="Theme.PoggTech" parent="Theme.Material3.Light.NoActionBar">
-        <item name="colorPrimary">#1565C0</item>
-        <item name="colorPrimaryVariant">#2196F3</item>
-        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
 
-        <item name="colorSecondary">#2196F3</item>
-        <item name="colorSecondaryVariant">#F5F5F5</item>
-        <item name="colorOnSecondary">#000000</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
+        <item name="colorOnSecondary">@color/colorOnSecondary</item>
 
-        <item name="colorSurface">#FFFFFF</item>
-        <item name="colorOnSurface">#000000</item>
-        <item name="colorOnSurfaceVariant">#E1E1E1</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorOnSurface">@color/colorOnSurface</item>
+        <item name="colorOnSurfaceVariant">@color/colorOnSurfaceVariant</item>
 
-        <item name="backgroundColor">#FFFFFF</item>
-        <item name="colorOnBackground">#000000</item>
+        <item name="android:windowBackground">@color/backgroundColor</item>
+        <item name="colorOnBackground">@color/colorOnBackground</item>
 
-        <item name="colorError">#F44336</item>
-        <item name="colorOnError">#FFFFFF</item>
+        <item name="colorError">@color/colorError</item>
+        <item name="colorOnError">@color/colorOnError</item>
 
-        <item name="android:textColorPrimary">#000000</item>
-        <item name="android:textColorSecondary">#616161</item>
-        <item name="android:textColorTertiary">#848484</item>
+        <!-- Cores de texto -->
+        <item name="android:textColorPrimary">@color/textPrimary</item>
+        <item name="android:textColorSecondary">@color/textSecondary</item>
+        <item name="android:textColorTertiary">@color/textTertiary</item>
 
-        <item name="colorAccent">#F9E400</item> <!-- Amarelo de destaque -->
-
-        <item name="android:navigationBarColor">?attr/colorSurface</item>
-
-        <item name="android:statusBarColor">?attr/backgroundColor</item>
-        <item name="android:windowLightStatusBar">true</item> <!-- Ícones escuros -->
+        <item name="android:navigationBarColor">@color/colorSurface</item>
+        <item name="android:statusBarColor">@color/backgroundColor</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 </resources>

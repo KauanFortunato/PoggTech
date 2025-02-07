@@ -15,10 +15,10 @@ import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.model.Product;
 import java.util.List;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
+public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.ViewHolder> {
     private final List<Product> products;
 
-    public ProductAdapter(List<Product> products) {
+    public CartProductAdapter(List<Product> products) {
         this.products = products;
     }
 
@@ -27,27 +27,20 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Infla o layout do card
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_product, parent, false);
+                .inflate(R.layout.card_product_cart, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProductAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CartProductAdapter.ViewHolder holder, int position) {
         Product product = products.get(position);
 
         holder.productTitle.setText(product.getTitle());
         holder.productPrice.setText("€ " + product.getPrice());
         holder.productType.setText(product.getCategory());
 
-        holder.buttonAddToCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // ToDo: Adicionar ao carrinho
-            }
-        });
-
         Glide.with(
-                holder.productImage.getContext())
+                        holder.productImage.getContext())
                 .load(product.getImage_url())
                 .into(holder.productImage);
     }
@@ -59,22 +52,20 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView productImage;
-        ImageButton favoriteButton;
         TextView productTitle;
         TextView productType;
         TextView productPrice;
-        ImageView buttonAddToCart;
+        ImageView buttonRemove;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             // Inicializa os componentes do layout
             productImage = itemView.findViewById(R.id.productImage);
-//            favoriteButton = itemView.findViewById(R.id.favoriteButton);
             productTitle = itemView.findViewById(R.id.productTitle);
             productType = itemView.findViewById(R.id.productType);
             productPrice = itemView.findViewById(R.id.productPrice);
-            buttonAddToCart = itemView.findViewById(R.id.buttonAddToCart);
+            buttonRemove = itemView.findViewById(R.id.buttonRemove);
         }
     }
 }

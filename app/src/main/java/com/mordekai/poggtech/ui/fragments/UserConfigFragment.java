@@ -187,7 +187,7 @@ public class UserConfigFragment extends Fragment {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         editText.setTypeface(ResourcesCompat.getFont(requireContext(), R.font.roboto_medium));
-        editText.setTextColor(ContextCompat.getColor(requireContext(), R.color.black));
+        editText.setTextColor(ContextCompat.getColor(requireContext(), R.color.textPrimary));
         editText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
     }
 

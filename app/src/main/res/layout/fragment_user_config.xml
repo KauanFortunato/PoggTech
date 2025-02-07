@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/secundaria_2" >
+    android:background="@color/colorSecondaryVariant" >
 
     <RelativeLayout
         android:id="@+id/header"
@@ -57,7 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                app:cardBackgroundColor="@color/secundaria_2"
+                app:cardBackgroundColor="@color/colorSecondaryVariant"
                 app:cardElevation="0dp">
 
                 <LinearLayout
@@ -147,12 +147,10 @@
                             android:layout_width="130dp"
                             android:layout_height="30dp"
                             android:layout_alignParentTop="true"
-                            android:layout_marginTop="2dp"
+                            android:layout_marginTop="10dp"
                             android:layout_marginBottom="5dp"
-                            android:backgroundTint="@color/black"
                             android:text="@string/edit"
                             android:textAllCaps="false"
-                            android:textColor="@color/principal_2"
                             android:textSize="12sp" />
 
 
@@ -163,15 +161,15 @@
                             android:layout_height="30dp"
                             android:layout_alignParentTop="true"
                             android:layout_marginStart="15dp"
-                            android:layout_marginTop="2dp"
+                            android:layout_marginTop="10dp"
                             android:layout_marginBottom="5dp"
                             android:layout_toEndOf="@id/buttonEditPersonInfo"
-                            android:backgroundTint="@color/suporte_1"
+                            android:backgroundTint="@color/colorOnSurface"
                             android:text="@string/cancelar"
                             android:textAllCaps="false"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorSurface"
                             android:textSize="12sp"
-                            android:visibility="invisible" />
+                            android:visibility="invisible"/>
                     </RelativeLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -180,7 +178,7 @@
                 android:id="@+id/cardEmailInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/secundaria_2"
+                app:cardBackgroundColor="@color/colorSecondaryVariant"
                 app:cardElevation="0dp"
                 android:layout_marginBottom="20dp">
 
@@ -218,10 +216,8 @@
                         android:layout_width="130dp"
                         android:layout_height="30dp"
                         android:layout_marginTop="20dp"
-                        android:backgroundTint="@color/black"
                         android:text="@string/edit"
                         android:textAllCaps="false"
-                        android:textColor="@color/principal_2"
                         android:textSize="12sp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -230,8 +226,8 @@
                 android:id="@+id/cardPassReset"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/secundaria_2"
                 app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/colorSecondaryVariant"
                 android:layout_marginBottom="10dp">
 
                 <LinearLayout
@@ -255,10 +251,8 @@
                         android:layout_width="130dp"
                         android:layout_height="30dp"
                         android:layout_marginTop="20dp"
-                        android:backgroundTint="@color/black"
                         android:text="@string/redefinir"
                         android:textAllCaps="false"
-                        android:textColor="@color/principal_2"
                         android:textSize="12sp" />
 
                 </LinearLayout>
@@ -271,10 +265,10 @@
                 android:layout_height="30dp"
                 android:layout_marginTop="20dp"
                 android:layout_alignParentTop="true"
-                android:backgroundTint="@color/feedback_2"
+                android:backgroundTint="@color/colorError"
+                android:textColor="@color/colorOnError"
                 android:text="@string/logout"
                 android:textAllCaps="false"
-                android:textColor="@color/principal_2"
                 android:textSize="13sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/secundaria_2"
+    android:background="@color/colorSecondaryVariant"
     tools:context=".ui.activity.MainActivity">
 
     <LinearLayout
@@ -37,8 +37,9 @@
         android:elevation="10dp"
         app:itemActiveIndicatorStyle="@style/ItemMenuActive"
         app:itemIconSize="26dp"
-        app:itemIconTint="@android:color/black"
-        app:itemTextColor="@android:color/black"
+        app:itemIconTint="@color/bottom_nav_colors"
+        app:itemRippleColor="#00FFFFFF"
+        app:itemTextColor="@color/bottom_nav_colors"
         app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/secundaria_2">
+    android:background="@color/colorSurface">
 
     <RelativeLayout
         android:id="@+id/header"
@@ -32,7 +32,7 @@
         android:text="Olá, KAUAN"
         android:textSize="24sp"
         android:fontFamily="@font/roboto_bold"
-        android:textColor="@color/black"
+        android:textColor="@color/textPrimary"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +45,7 @@
         android:text="Número Da Conta: 1A2B3C"
         android:textSize="14sp"
         android:fontFamily="@font/roboto_bold"
-        android:textColor="@color/suporte_2"
+        android:textColor="@color/textSecondary"
         android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/helloUser" />
@@ -69,7 +69,7 @@
         android:text="@string/configuracoes"
         android:textSize="12sp"
         android:fontFamily="@font/roboto_bold"
-        android:textColor="@color/black"
+        android:textColor="@color/textPrimary"
         app:layout_constraintStart_toStartOf="@id/buttonConfig"
         app:layout_constraintEnd_toEndOf="@id/buttonConfig"
         app:layout_constraintTop_toBottomOf="@id/buttonConfig"
@@ -91,7 +91,7 @@
         android:contentDescription="As Minhas Compras"
         android:src="@drawable/ic_package_filled"
         android:textAllCaps="false"
-        android:textColor="@color/principal_2"
+        android:textColor="@color/textPrimary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/numberAccount" />
@@ -103,7 +103,7 @@
         android:text="@string/minhasCompras"
         android:textSize="12sp"
         android:fontFamily="@font/roboto_bold"
-        android:textColor="@color/black"
+        android:textColor="@color/textPrimary"
         app:layout_constraintStart_toStartOf="@id/buttonMyPurchases"
         app:layout_constraintEnd_toEndOf="@id/buttonMyPurchases"
         app:layout_constraintTop_toBottomOf="@id/buttonMyPurchases"
@@ -125,7 +125,7 @@
         android:src="@drawable/ic_sell_filled"
         android:contentDescription="Os Meus Anúncios"
         android:textAllCaps="false"
-        android:textColor="@color/principal_2"
+        android:textColor="@color/textPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/buttonMyPurchases"
         app:layout_constraintTop_toBottomOf="@id/numberAccount" />
@@ -137,7 +137,7 @@
         android:text="@string/meusAnuncios"
         android:textSize="12sp"
         android:fontFamily="@font/roboto_bold"
-        android:textColor="@color/black"
+        android:textColor="@color/textPrimary"
         app:layout_constraintStart_toStartOf="@id/buttonMyAds"
         app:layout_constraintEnd_toEndOf="@id/buttonMyAds"
         app:layout_constraintTop_toBottomOf="@id/buttonMyAds"
@@ -154,7 +154,7 @@
         android:layout_width="wrap_content"
         android:layout_height="1dp"
         android:layout_marginTop="24dp"
-        android:background="@color/suporte_2"
+        android:background="@color/colorOnSurfaceVariant"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textMyPurchases" />
 

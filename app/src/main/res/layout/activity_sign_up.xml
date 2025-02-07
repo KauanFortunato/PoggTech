@@ -26,7 +26,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/voltar"
             android:src="@drawable/ic_back"
-            android:tint="?attr/colorOnBackground"
+            android:tint="@color/colorOnBackground"
             tools:ignore="UseAppTint" />
 
         <TextView
@@ -150,7 +150,6 @@
             android:textColor="?attr/colorOnPrimary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
     </LinearLayout>
 
 
