@@ -27,7 +27,7 @@ public interface ProductApi {
     );
 
     @FormUrlEncoded
-    @POST("AddProductOnCart.php")
+    @POST("AddProductOnCartOrFav.php")
     Call<ResponseBody> addToCart(
             @Field("product_id") int product_id,
             @Field("user_id") int user_id,
@@ -35,5 +35,8 @@ public interface ProductApi {
     );
 
     @GET("GetProductsFromCart.php")
-    Call<List<Product>> getCartProducts(@Query("user_id") int user_id);
+    Call<List<Product>> getCartProducts(
+            @Query("user_id") int user_id,
+            @Query("tipo") int tipo
+    );
 }

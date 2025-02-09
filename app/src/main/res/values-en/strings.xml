@@ -28,6 +28,7 @@
     <string name="tentarNovamente">Try Again</string>
     <string name="verfInternet">Check your Internet connection</string>
     <string name="numContaExample">Account ID: 1A2B3C</string>
+    <string name="termosDeCondicoes">By accessing PogTech, you agree to comply with these terms of service and privacy policy.</string>
     <string name="menu_lateral">Side menu</string>
     <string name="menu_lateral_perfil">Profile icon</string>
     <string name="add_favoritos">Add to favorites</string>
@@ -36,6 +37,9 @@
     <string name="favoritos">Favorites</string>
     <string name="inicio">Home</string>
     <string name="meusAnuncios">My Ads</string>
+    <string name="remove">Remove</string>
+    <string name="noFavProducts">You have no favorite products</string>
+    <string name="noCartProducts">Your cart is empty</string>
     <string name="paraVoce">For you</string>
     <string name="jogos">Games</string>
     <string name="minhasCompras">My Purchases</string>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -46,6 +47,7 @@ public class ShoppingCartFragment extends Fragment {
     private CartManager cartManager;
     private List<Product> productList;
     private ProgressBar progressBar;
+    private TextView textNoCartProducts;
     private boolean isLoading = true;
     private boolean isEmpty = false;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -58,10 +60,7 @@ public class ShoppingCartFragment extends Fragment {
         sharedPrefHelper = new SharedPrefHelper(requireContext());
         user = sharedPrefHelper.getUser();
 
-        // Componentes
-        progressBar = view.findViewById(R.id.progressBarItems);
-        rvItemsCart = view.findViewById(R.id.rvItemsCart);
-        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+        initComponents(view);
 
         // Recycler View
         productList = new ArrayList<>();
@@ -84,24 +83,32 @@ public class ShoppingCartFragment extends Fragment {
         return view;
     }
 
-    // ToDo: Não está funcioanndo pq precisa de criar uma view na database juntando os favorites e os produtos, para ter todas as informações
-
+    // Tipo 0 = Carrinho
     private void fetchCartProducts () {
-        cartManager.fetchCartProducts(user.getUserId(), new RepositoryCallback<List<Product>>() {
+        cartManager.fetchCartProducts(user.getUserId(), 0, new RepositoryCallback<List<Product>>() {
             @Override
             public void onSuccess(List<Product> products) {
-                if (products.isEmpty()) {
-                    Log.d("API_RESPONSE", "Nenhum produto encontrado");
-                } else {
-                    productList.clear();
-                    productList.addAll(products);
-                    cartProductAdapter.notifyDataSetChanged();
-                    Log.d("API_RESPONSE", "Item 0: " + productList.get(0).getTitle());
-                }
-
                 progressBar.setVisibility(View.GONE);
                 swipeRefreshLayout.setRefreshing(false);
                 isLoading = false;
+
+                productList.clear();
+
+                if (products.isEmpty()) {
+                    isEmpty = true;
+                    rvItemsCart.setVisibility(View.GONE);
+                    textNoCartProducts.setVisibility(View.VISIBLE);
+
+                    Log.d("API_RESPONSE", "Nenhum produto encontrado");
+                } else {
+                    isEmpty = false;
+                    productList.addAll(products);
+                    cartProductAdapter.notifyDataSetChanged();
+
+                    rvItemsCart.setVisibility(View.VISIBLE);
+                    textNoCartProducts.setVisibility(View.GONE);
+                    Log.d("API_RESPONSE", "Item 0: " + productList.get(0).getTitle());
+                }
             }
 
             @Override
@@ -115,33 +122,11 @@ public class ShoppingCartFragment extends Fragment {
         });
     }
 
-    private void fetchAllProducts() {
-        isLoading = true;
-        productManager.fetchAllProduct(new RepositoryCallback<List<Product>>() {
-            @Override
-            public void onSuccess(List<Product> result) {
-                if (result.isEmpty()) {
-                    Log.d("API_RESPONSE", "Nenhum produto encontrado");
-                } else {
-                    productList.clear();
-                    productList.addAll(result);
-                    cartProductAdapter.notifyDataSetChanged();
-                    Log.d("API_RESPONSE", "Item 0: " + productList.get(0).getTitle());
-                }
-
-                progressBar.setVisibility(View.GONE);
-                swipeRefreshLayout.setRefreshing(false);
-                isLoading = false;
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                Log.e("API_RESPONSE", "Erro ao buscar produtos", t);
-
-                progressBar.setVisibility(View.GONE);
-                swipeRefreshLayout.setRefreshing(false);
-                isLoading = false;
-            }
-        });
+    private void initComponents(View view) {
+        // Componentes
+        progressBar = view.findViewById(R.id.progressBarItems);
+        rvItemsCart = view.findViewById(R.id.rvItemsCart);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+        textNoCartProducts = view.findViewById(R.id.textNoCartProducts);
     }
 }

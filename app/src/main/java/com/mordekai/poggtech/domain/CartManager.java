@@ -38,8 +38,8 @@ public class CartManager {
     }
 
 
-    public void fetchCartProducts(int userId, RepositoryCallback<List<Product>> callback) {
-        productApi.getCartProducts(userId)
+    public void fetchCartProducts(int userId, int tipo, RepositoryCallback<List<Product>> callback) {
+        productApi.getCartProducts(userId, tipo)
                 .enqueue(new Callback<List<Product>>() {
                     @Override
                     public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
