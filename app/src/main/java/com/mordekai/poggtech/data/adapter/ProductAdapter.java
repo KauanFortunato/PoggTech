@@ -1,5 +1,6 @@
 package com.mordekai.poggtech.data.adapter;
 
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,27 +53,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.productPrice.setText("€ " + product.getPrice());
         holder.productType.setText(product.getCategory());
 
-        holder.buttonAddToCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cartManager.addToCart(product.getProduct_id(), userId, 0, new RepositoryCallback<ResponseBody>() {
-                    @Override
-                    public void onSuccess(ResponseBody result) {
-                        Toast.makeText(v.getContext(), "Adicionado ao carrinho", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onFailure(Throwable t) {
-                        Toast.makeText(v.getContext(), "Erro ao adicionar ao carrinho", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
-
         holder.favoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cartManager.addToCart(product.getProduct_id(), userId, 0, new RepositoryCallback<ResponseBody>() {
+                if(holder.favoriteButton.isHapticFeedbackEnabled()) {
+                    v.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
+                }
+                cartManager.addToCart(product.getProduct_id(), userId, 1, new RepositoryCallback<ResponseBody>() {
                     @Override
                     public void onSuccess(ResponseBody result) {
                         Toast.makeText(v.getContext(), "Adicionado aos favoritos", Toast.LENGTH_SHORT).show();
@@ -103,7 +90,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         TextView productTitle;
         TextView productType;
         TextView productPrice;
-        ImageView buttonAddToCart;
+//        ImageView buttonAddToCart;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -114,7 +101,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             productTitle = itemView.findViewById(R.id.productTitle);
             productType = itemView.findViewById(R.id.productType);
             productPrice = itemView.findViewById(R.id.productPrice);
-            buttonAddToCart = itemView.findViewById(R.id.buttonAddToCart);
+//            buttonAddToCart = itemView.findViewById(R.id.buttonAddToCart);
         }
     }
 }

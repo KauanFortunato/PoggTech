@@ -22,6 +22,18 @@
             android:layout_gravity="center"
             android:visibility="gone"/>
 
+        <TextView
+            android:id="@+id/textNoCartProducts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/noCartProducts"
+            android:textAlignment="center"
+            android:fontFamily="@font/roboto_medium"
+            android:textSize="16sp"
+            android:textColor="@color/textTertiary"
+            android:visibility="gone"/>
+
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"

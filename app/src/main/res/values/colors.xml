@@ -33,4 +33,7 @@
     <color name="textPrimary">#000000</color>
     <color name="textSecondary">#616161</color>
     <color name="textTertiary">#848484</color>
+
+    <!--  Opacity Colors  -->
+    <color name="opacityColor">#1C000000</color>
 </resources>

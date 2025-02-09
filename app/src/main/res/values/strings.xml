@@ -34,7 +34,9 @@
     <string name="minhasCompras">As Minhas Compras</string>
     <string name="meusAnuncios">Os Meus Anúncios</string>
     <string name="linkDeRecuperacao">Um link para redefinir sua senha será enviado para o e-mail cadastrado em sua conta</string>
-
+    <string name="remove">Remover</string>
+    <string name="noFavProducts">Você não tem produtos favoritos</string>
+    <string name="noCartProducts">Seu carrinho está vázio</string>
 
     <!-- Home -->
     <string name="paraVoce">Para você</string>
