@@ -1,25 +1,35 @@
 package com.mordekai.poggtech.data.adapter;
 
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.mordekai.poggtech.R;
+import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.Product;
+import com.mordekai.poggtech.data.remote.ProductApi;
+import com.mordekai.poggtech.data.remote.RetrofitClient;
+import com.mordekai.poggtech.domain.CartManager;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
+
 public class FavProductAdapter extends RecyclerView.Adapter<FavProductAdapter.ViewHolder> {
     private final List<Product> products;
+    private final int userId;
 
-    public FavProductAdapter(List<Product> products) {
+    public FavProductAdapter(List<Product> products, int userId) {
         this.products = products;
+        this.userId = userId;
     }
 
     @NonNull
@@ -39,10 +49,21 @@ public class FavProductAdapter extends RecyclerView.Adapter<FavProductAdapter.Vi
         holder.productPrice.setText("€ " + product.getPrice());
         holder.productType.setText(product.getCategory());
 
+        holder.removeButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               if(holder.removeButton.isHapticFeedbackEnabled()) {
+                   v.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
+               }
+
+               removeFromFavorites(product.getProduct_id(), v, holder.getAdapterPosition());
+           }
+       });
+
         Glide.with(
-                        holder.productImage.getContext())
-                .load(product.getImage_url())
-                .into(holder.productImage);
+                    holder.productImage.getContext())
+            .load(product.getImage_url())
+            .into(holder.productImage);
     }
 
     @Override
@@ -69,5 +90,23 @@ public class FavProductAdapter extends RecyclerView.Adapter<FavProductAdapter.Vi
             removeButton = itemView.findViewById(R.id.removeButton);
             buttonAddToCart = itemView.findViewById(R.id.buttonAddToCart);
         }
+    }
+
+    private void removeFromFavorites(int productId, View view, int position) {
+        CartManager cartManager = new CartManager(RetrofitClient.getRetrofitInstance().create(ProductApi.class));
+        cartManager.removeFromCart(productId, userId, 1, new RepositoryCallback<ResponseBody>() {
+            @Override
+            public void onSuccess(ResponseBody result) {
+                products.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, products.size());
+                Toast.makeText(view.getContext(), "Removido dos favoritos", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Toast.makeText(view.getContext(), "Erro ao remover dos favoritos", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

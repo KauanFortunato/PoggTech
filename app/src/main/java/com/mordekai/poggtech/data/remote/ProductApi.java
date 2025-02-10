@@ -1,5 +1,6 @@
 package com.mordekai.poggtech.data.remote;
 
+import com.mordekai.poggtech.data.model.ApiResponse;
 import com.mordekai.poggtech.data.model.Product;
 
 import java.util.List;
@@ -34,9 +35,23 @@ public interface ProductApi {
             @Field("tipo") int tipo
     );
 
+    @FormUrlEncoded
+    @POST("RemoveProductOnCartOrFav.php")
+    Call<ResponseBody> removeFromCart(
+            @Field("product_id") int product_id,
+            @Field("user_id") int user_id,
+            @Field("tipo") int tipo
+    );
+
     @GET("GetProductsFromCart.php")
     Call<List<Product>> getCartProducts(
             @Query("user_id") int user_id,
+            @Query("tipo") int tipo
+    );
+
+    @GET("GetUserFavOrCart.php")
+    Call<List<Integer>> getUserFavOrCart(
+            @Query("user_id") int userId,
             @Query("tipo") int tipo
     );
 }

@@ -78,4 +78,24 @@ public class ProductManager {
                     }
                 });
     }
+
+    public void fetchUserFavOrCart(int userId, int tipo, RepositoryCallback<List<Integer>> callback) {
+        productApi.getUserFavOrCart(userId, tipo)
+                .enqueue(new Callback<List<Integer>>() {
+                    @Override
+                    public void onResponse(Call<List<Integer>> call, Response<List<Integer>> response) {
+                        if(response.isSuccessful() && response.body() != null) {
+                            List<Integer> products = response.body();
+                            callback.onSuccess(products);
+                        } else {
+                            callback.onFailure(new Exception("Erro ao buscar produtos"));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Integer>> call, Throwable t) {
+                        callback.onFailure(new Exception("Erro ao buscar produtos: " + t.getMessage()));
+                    }
+                });
+    }
 }

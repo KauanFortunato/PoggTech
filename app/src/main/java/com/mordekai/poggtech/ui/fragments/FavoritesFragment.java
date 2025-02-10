@@ -57,7 +57,7 @@ public class FavoritesFragment extends Fragment {
 
         // Recycler View
         productList = new ArrayList<>();
-        FavProductAdapter = new FavProductAdapter(productList);
+        FavProductAdapter = new FavProductAdapter(productList, user.getUserId());
         rvItemsFav.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         rvItemsFav.setNestedScrollingEnabled(false);
         rvItemsFav.setAdapter(FavProductAdapter);
