@@ -23,6 +23,7 @@
 
     <color name="colorAccent">#F9E400</color>
 
+
     <!-- Cores para Divisões e Bordas -->
     <color name="colorDivider">#424242</color>
     <color name="colorOnDivider">#757575</color>
@@ -37,5 +38,5 @@
 
 
     <!--  Opacity Colors  -->
-    <color name="opacityColor">#1CFFFFFF</color>
+    <color name="opacityColor">#CC666666</color>
 </resources>

@@ -26,13 +26,32 @@ public class CartManager {
                 if (response.isSuccessful() && response.body() != null) {
                     callback.onSuccess(response.body());
                 } else {
-                    callback.onFailure(new Exception("Erro ao adicionar ao carrinho: " + response.message()));
+                    callback.onFailure(new Exception("Erro ao adicionar aos favoritos/carrinho: " + response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 callback.onFailure(new Exception("Falha na conexão: " + t.getMessage()));
+            }
+        });
+    }
+
+    public void removeFromCart(int product_id, int user_id, int tipo, RepositoryCallback<ResponseBody> callback) {
+        Call<ResponseBody> call = productApi.removeFromCart(product_id, user_id, tipo);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onFailure(new Exception("Erro ao remover dos favoritos/carrinho: " + response.message()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
             }
         });
     }

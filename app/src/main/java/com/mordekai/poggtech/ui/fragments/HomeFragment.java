@@ -147,6 +147,19 @@ public class HomeFragment extends Fragment {
                     rvProducts.scheduleLayoutAnimation();
 
                     Log.d("API_RESPONSE", "Item 0: " + productList.get(0).getTitle());
+
+                    productManager.fetchUserFavOrCart(user.getUserId(), 1, new RepositoryCallback<List<Integer>>() {
+                        @Override
+                        public void onSuccess(List<Integer> favorites) {
+                            productAdapter.setFavoriteIds(favorites);
+                        }
+
+                        @Override
+                        public void onFailure(Throwable t) {
+                            Log.e("API_RESPONSE", "Erro ao buscar produtos", t);
+                        }
+                    });
+
                     checkIfLoadingFinished();
                 }
             }

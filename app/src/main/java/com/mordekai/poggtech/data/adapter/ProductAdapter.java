@@ -22,17 +22,24 @@ import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.CartManager;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.ResponseBody;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
     private final List<Product> products;
+    private List<Integer> favoriteIds = new ArrayList<>();
     private final int userId;
 
     public ProductAdapter(List<Product> products, int userId) {
         this.products = products;
         this.userId = userId;
+    }
+
+    public void setFavoriteIds(List<Integer> favoriteIds) {
+        this.favoriteIds = favoriteIds;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -46,12 +53,17 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.ViewHolder holder, int position) {
-        CartManager cartManager = new CartManager(RetrofitClient.getRetrofitInstance().create(ProductApi.class));
         Product product = products.get(position);
 
         holder.productTitle.setText(product.getTitle());
         holder.productPrice.setText("€ " + product.getPrice());
         holder.productType.setText(product.getCategory());
+
+        if (favoriteIds.contains(product.getProduct_id())) {
+            holder.favoriteButton.setImageResource(R.drawable.ic_favorite_filled);
+        } else {
+            holder.favoriteButton.setImageResource(R.drawable.ic_favorite);
+        }
 
         holder.favoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,17 +71,20 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 if(holder.favoriteButton.isHapticFeedbackEnabled()) {
                     v.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
                 }
-                cartManager.addToCart(product.getProduct_id(), userId, 1, new RepositoryCallback<ResponseBody>() {
-                    @Override
-                    public void onSuccess(ResponseBody result) {
-                        Toast.makeText(v.getContext(), "Adicionado aos favoritos", Toast.LENGTH_SHORT).show();
-                    }
 
-                    @Override
-                    public void onFailure(Throwable t) {
-                        Toast.makeText(v.getContext(), "Erro ao adicionar aos favoritos", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                boolean isFavorite = favoriteIds.contains(product.getProduct_id());
+
+                if (isFavorite) {
+                    // Remover dos favoritos
+                    favoriteIds.remove(Integer.valueOf(product.getProduct_id()));
+                    holder.favoriteButton.setImageResource(R.drawable.ic_favorite);
+                    removeFromFavorites(product.getProduct_id(), v, holder.getAdapterPosition());
+                } else {
+                    // Adicionar aos favoritos
+                    favoriteIds.add(product.getProduct_id());
+                    holder.favoriteButton.setImageResource(R.drawable.ic_favorite_filled);
+                    addToFavorites(product.getProduct_id(), v, holder.getAdapterPosition());
+                }
             }
         });
 
@@ -82,6 +97,38 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @Override
     public int getItemCount() {
         return products.size();
+    }
+
+    private void addToFavorites(int productId, View view, int position) {
+        CartManager cartManager = new CartManager(RetrofitClient.getRetrofitInstance().create(ProductApi.class));
+        cartManager.addToCart(productId, userId, 1, new RepositoryCallback<ResponseBody>() {
+            @Override
+            public void onSuccess(ResponseBody result) {
+                notifyItemChanged(position);
+                Toast.makeText(view.getContext(), "Adicionado aos favoritos", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Toast.makeText(view.getContext(), "Erro ao adicionar aos favoritos", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void removeFromFavorites(int productId, View view, int position) {
+        CartManager cartManager = new CartManager(RetrofitClient.getRetrofitInstance().create(ProductApi.class));
+        cartManager.removeFromCart(productId, userId, 1, new RepositoryCallback<ResponseBody>() {
+            @Override
+            public void onSuccess(ResponseBody result) {
+                notifyItemChanged(position);
+                Toast.makeText(view.getContext(), "Removido dos favoritos", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Toast.makeText(view.getContext(), "Erro ao remover dos favoritos", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

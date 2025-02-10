@@ -4,7 +4,10 @@ import com.mordekai.poggtech.R;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.text.InputType;
@@ -17,6 +20,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.widget.AppCompatButton;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_form_login);
 
         AppConfig.initialize(this);
+        showIpInputDialog();
 
         AppCompatButton buttonLogin = findViewById(R.id.buttonLogin);
         ProgressBar buttonProgress = findViewById(R.id.buttonProgress);
@@ -116,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
                 buttonLogin.setText(R.string.entrar);
                 buttonLogin.setEnabled(true);
 
-                SnackbarUtil.showErrorSnackbar(getWindow().getDecorView().getRootView(), "Senha ou email incorretos!", LoginActivity.this);
+                SnackbarUtil.showErrorSnackbar(getWindow().getDecorView().getRootView(), "Erro: " . concat(t.getMessage()), LoginActivity.this);
                 Log.e("Erro", "Erro ao fazer login: " + t.getMessage());
             }
         });
@@ -176,5 +182,36 @@ public class LoginActivity extends AppCompatActivity {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+
+    private void showIpInputDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Editar IP do Servidor");
+
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setText(AppConfig.getBaseUrl().replace("http://", "").replace("/PoggTech-APIs/routes/", ""));
+        builder.setView(input);
+
+        builder.setPositiveButton("Salvar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String userInput = input.getText().toString().trim();
+                if (!userInput.isEmpty()) {
+                    AppConfig.setBaseUrl(LoginActivity.this, userInput);
+                    RetrofitClient.resetRetrofit(); // Reinicia Retrofit para usar o novo IP
+                    Toast.makeText(LoginActivity.this, "IP atualizado para " + userInput, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 }
