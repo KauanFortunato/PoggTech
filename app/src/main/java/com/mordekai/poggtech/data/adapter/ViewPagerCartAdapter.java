@@ -7,18 +7,21 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.mordekai.poggtech.ui.fragments.FavoritesFragment;
 import com.mordekai.poggtech.ui.fragments.ShoppingCartFragment;
 
-public class ViewPagerAdapter extends FragmentStateAdapter {
-    public ViewPagerAdapter(@NonNull Fragment fragment) {
+public class ViewPagerCartAdapter extends FragmentStateAdapter {
+    public ViewPagerCartAdapter(@NonNull Fragment fragment) {
         super(fragment);
     }
 
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        if(position == 0) {
-            return new ShoppingCartFragment();
-        } else {
-            return new FavoritesFragment();
+        switch (position) {
+            case 0:
+                return new ShoppingCartFragment();
+            case 1:
+                return new FavoritesFragment();
+            default:
+                return new ShoppingCartFragment();
         }
     }
 

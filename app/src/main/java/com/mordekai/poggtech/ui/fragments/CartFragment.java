@@ -13,7 +13,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.mordekai.poggtech.R;
-import com.mordekai.poggtech.data.adapter.ViewPagerAdapter;
+import com.mordekai.poggtech.data.adapter.ViewPagerCartAdapter;
 
 public class CartFragment extends Fragment {
 
@@ -25,7 +25,7 @@ public class CartFragment extends Fragment {
         TabLayout tabLayout = view.findViewById(R.id.tabLayout);
         ViewPager2 viewPager = view.findViewById(R.id.viewPager);
 
-        ViewPagerAdapter adapter = new ViewPagerAdapter(this);
+        ViewPagerCartAdapter adapter = new ViewPagerCartAdapter(this);
         viewPager.setAdapter(adapter);
 
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
