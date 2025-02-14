@@ -12,8 +12,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.mordekai.poggtech.R;
+import com.mordekai.poggtech.ui.activity.LoginActivity;
 import com.mordekai.poggtech.ui.activity.MainActivity;
 import com.mordekai.poggtech.utils.NetworkUtil;
+import com.mordekai.poggtech.utils.SnackbarUtil;
 
 import androidx.appcompat.widget.AppCompatButton;
 
@@ -28,12 +30,16 @@ public class OfflineFragment extends Fragment {
         inciarComponentes(view);
 
         tryAgainButton.setOnClickListener(v -> {
-            if (NetworkUtil.isConnected(requireContext())) {
-                requireActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.containerFrame, new HomeFragment())
-                        .commit();
-            }
+            NetworkUtil.isConnectedXampp(isConnected -> {
+                if(isConnected) {
+                    if (NetworkUtil.isConnected(requireContext())) {
+                        requireActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.containerFrame, new HomeFragment())
+                                .commit();
+                    }
+                }
+            });
         });
 
         return view;

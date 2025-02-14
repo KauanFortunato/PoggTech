@@ -128,7 +128,9 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Category>> call, Throwable t) {
-                Toast.makeText(getContext(), "Erro ao buscar categorias", Toast.LENGTH_SHORT).show();
+                if (getContext() != null) {
+                    Toast.makeText(getContext(), "Erro ao buscar categorias", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -156,7 +158,9 @@ public class HomeFragment extends Fragment {
 
                         @Override
                         public void onFailure(Throwable t) {
-                            Log.e("API_RESPONSE", "Erro ao buscar produtos", t);
+                            if (getContext() != null) {
+                                Log.e("API_RESPONSE", "Erro ao buscar produtos", t);
+                            }
                         }
                     });
 
@@ -166,8 +170,10 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onFailure(Throwable t) {
-                Log.e("API_RESPONSE", "Erro ao buscar produtos", t);
-                checkIfLoadingFinished();
+                if (getContext() != null) {
+                    Log.e("API_RESPONSE", "Erro ao buscar produtos", t);
+                    checkIfLoadingFinished();
+                }
             }
         });
     }
@@ -184,8 +190,10 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onFailure(Throwable t) {
-                Log.e("API_RESPONSE", "Erro ao buscar produtos da categoria", t);
-                checkIfLoadingFinished();
+                if (getContext() != null) {
+                    Log.e("API_RESPONSE", "Erro ao buscar produtos da categoria", t);
+                    checkIfLoadingFinished();
+                }
             }
         });
 
@@ -200,8 +208,10 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onFailure(Throwable t) {
-                Log.e("API_RESPONSE", "Erro ao buscar produtos da categoria", t);
-                checkIfLoadingFinished();
+                if (getContext() != null) {
+                    Log.e("API_RESPONSE", "Erro ao buscar produtos da categoria", t);
+                    checkIfLoadingFinished();
+                }
             }
         });
 
@@ -216,8 +226,10 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onFailure(Throwable t) {
-                Log.e("API_RESPONSE", "Erro ao buscar produtos da categoria", t);
-                checkIfLoadingFinished();
+                if (getContext() != null) {
+                    Log.e("API_RESPONSE", "Erro ao buscar produtos da categoria", t);
+                    checkIfLoadingFinished();
+                }
             }
         });
 

@@ -1,5 +1,7 @@
 package com.mordekai.poggtech.ui.activity;
 
+import static com.mordekai.poggtech.utils.NetworkUtil.isConnectedXampp;
+
 import com.mordekai.poggtech.R;
 
 import android.annotation.SuppressLint;
@@ -27,6 +29,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import com.mordekai.poggtech.data.callback.ConnectionCallback;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.remote.ApiService;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
@@ -35,6 +38,7 @@ import com.mordekai.poggtech.data.repository.FirebaseUserRepository;
 import com.mordekai.poggtech.data.repository.MySqlUserRepository;
 import com.mordekai.poggtech.domain.UserManager;
 import com.mordekai.poggtech.utils.AppConfig;
+import com.mordekai.poggtech.utils.NetworkUtil;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 import com.mordekai.poggtech.utils.SnackbarUtil;
 
@@ -101,29 +105,39 @@ public class LoginActivity extends AppCompatActivity {
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
         UserManager userManager = new UserManager(new FirebaseUserRepository(), new MySqlUserRepository(apiService));
 
-        userManager.loginUser(email, password, new RepositoryCallback<User>() {
-            @Override
-            public void onSuccess(User result) {
+        // Verifica se tem conexão com o servidor
+        isConnectedXampp(isConnected -> {
+            if (isConnected) {
+                userManager.loginUser(email, password, new RepositoryCallback<User>() {
+                    @Override
+                    public void onSuccess(User result) {
+                        buttonProgress.setVisibility(View.GONE);
+                        buttonLogin.setText(R.string.entrar);
+                        buttonLogin.setEnabled(true);
+
+                        Log.d("Sucesso", "Usuário logado com sucesso! Response: " + result.getName());
+                        SharedPrefHelper sharedPrefHelper = new SharedPrefHelper(LoginActivity.this);
+                        sharedPrefHelper.saveUser(result);
+
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        finish();
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+                        buttonProgress.setVisibility(View.GONE);
+                        buttonLogin.setText(R.string.entrar);
+                        buttonLogin.setEnabled(true);
+
+                        SnackbarUtil.showErrorSnackbar(getWindow().getDecorView().getRootView(), "Erro: " . concat(t.getMessage()), LoginActivity.this);
+                        Log.e("Erro", "Erro ao fazer login: " + t.getMessage());
+                    }
+                });
+            } else {
                 buttonProgress.setVisibility(View.GONE);
                 buttonLogin.setText(R.string.entrar);
                 buttonLogin.setEnabled(true);
-
-                Log.d("Sucesso", "Usuário logado com sucesso! Response: " + result.getName());
-                SharedPrefHelper sharedPrefHelper = new SharedPrefHelper(LoginActivity.this);
-                sharedPrefHelper.saveUser(result);
-
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                finish();
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                buttonProgress.setVisibility(View.GONE);
-                buttonLogin.setText(R.string.entrar);
-                buttonLogin.setEnabled(true);
-
-                SnackbarUtil.showErrorSnackbar(getWindow().getDecorView().getRootView(), "Erro: " . concat(t.getMessage()), LoginActivity.this);
-                Log.e("Erro", "Erro ao fazer login: " + t.getMessage());
+                SnackbarUtil.showErrorSnackbar(getWindow().getDecorView().getRootView(), "Não foi possível conectar ao servidor", LoginActivity.this);
             }
         });
     }

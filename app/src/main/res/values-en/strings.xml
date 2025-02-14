@@ -26,7 +26,7 @@
     <string name="cancelar">Cancel</string>
     <string name="logout">Log Out</string>
     <string name="tentarNovamente">Try Again</string>
-    <string name="verfInternet">Check your Internet connection</string>
+    <string name="verfInternet">Check your Internetyouconnection</string>
     <string name="numContaExample">Account ID: 1A2B3C</string>
     <string name="termosDeCondicoes">By accessing PogTech, you agree to comply with these terms of service and privacy policy.</string>
     <string name="menu_lateral">Side menu</string>
@@ -44,6 +44,6 @@
     <string name="jogos">Games</string>
     <string name="minhasCompras">My Purchases</string>
     <string name="acessorios">Acessories</string>
-    <string name="naoTemInternet">Ops!\nYou don\'t have Internet</string>
+    <string name="naoTemInternet">Ops! Conexão perdida</string>
     <string name="linkDeRecuperacao">A link to reset your password will be sent to the email address registered in your account.</string>
 </resources>

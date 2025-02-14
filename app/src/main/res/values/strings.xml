@@ -26,7 +26,7 @@
     <string name="logout">Sair da Conta</string>
     <string name="tentarNovamente">Tentar Novamente</string>
     <string name="verfInternet">Verifique a sua conexão de Internet</string>
-    <string name="naoTemInternet">Ops!\nNão tem Internet</string>
+    <string name="naoTemInternet" translatable="false">Ops! Conexão perdida</string>
     <string name="carrinho">Carrinho</string>
     <string name="favoritos">Favoritos</string>
     <string name="chat" translatable="false">Chat</string>
