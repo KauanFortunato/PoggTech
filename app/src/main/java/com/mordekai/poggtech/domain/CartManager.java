@@ -53,7 +53,7 @@ public class CartManager {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                callback.onFailure(new Exception("Falha na conexão: " + t.getMessage()));
             }
         });
     }

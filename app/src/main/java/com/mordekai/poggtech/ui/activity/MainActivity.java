@@ -20,6 +20,7 @@ import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.callback.ConnectionCallback;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.ui.fragments.CartFragment;
+import com.mordekai.poggtech.ui.fragments.ChatFragment;
 import com.mordekai.poggtech.ui.fragments.HeaderFragment;
 import com.mordekai.poggtech.ui.fragments.HomeFragment;
 import com.mordekai.poggtech.ui.fragments.OfflineFragment;
@@ -64,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
                 selectedFragment = new CartFragment();
                 findViewById(R.id.headerContainer).setVisibility(View.GONE);
             } else if (item.getItemId() == R.id.chat) {
-                // ToDo: Adicionar tela de Chat
-                return true;
+                selectedFragment = new ChatFragment();
+                findViewById(R.id.headerContainer).setVisibility(View.GONE);
             }
 
             // Chama a função para carregar o fragmento apenas se houver internet/XAMPP

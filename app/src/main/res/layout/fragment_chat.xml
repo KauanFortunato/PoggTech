@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorSecondaryVariant">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/rounded_bottom_med"
+        android:padding="4dp">
+
+        <Button
+            android:id="@+id/btnShop"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Compra"
+            android:background="@drawable/bg_button_selected"
+            android:textColor="@color/textPrimary"
+            android:paddingHorizontal="16dp"/>
+
+        <Button
+            android:id="@+id/btnSell"
+            android:layout_width="wrap_content"
+            android:text="Compra"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_button_unselected"
+            android:textColor="@color/textPrimary"/>
+
+    </LinearLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>
