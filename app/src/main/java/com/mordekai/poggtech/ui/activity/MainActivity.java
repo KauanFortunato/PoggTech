@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mordekai.poggtech.R;
+import com.mordekai.poggtech.data.callback.ConnectionCallback;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.ui.fragments.CartFragment;
 import com.mordekai.poggtech.ui.fragments.HeaderFragment;
@@ -82,18 +83,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadFragmentBasedOnNetwork() {
-        Fragment fragment;
-        if (NetworkUtil.isConnected(this)) {
-            fragment = new HomeFragment();
-        } else {
-            fragment = new OfflineFragment();
-        }
+        NetworkUtil.isConnectedXampp(isConnected -> {
+            Fragment fragment;
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.containerFrame, fragment)
-                .commit();
-
+            if(!isConnected) {
+                fragment = new OfflineFragment();
+            } else {
+                if (NetworkUtil.isConnected(getApplicationContext())) {
+                    fragment = new HomeFragment();
+                } else {
+                    fragment = new OfflineFragment();
+                }
+            }
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.containerFrame, fragment)
+                    .commit();
+        });
     }
 
     private void showIpInputDialog() {

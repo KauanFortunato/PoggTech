@@ -16,6 +16,9 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 
 public interface ApiService {
+    // Test Connection
+    @GET("TestConnection.php")
+    Call<ApiResponse> testConnection();
 
     // User
     @FormUrlEncoded
