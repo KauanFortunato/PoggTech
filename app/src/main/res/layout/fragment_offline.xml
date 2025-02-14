@@ -46,17 +46,33 @@
             android:textColor="@color/textTertiary"
             android:textSize="15sp" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/tryAgainButton"
-            style="@style/Button"
+        <FrameLayout
+            android:id="@+id/tryAgainFrame"
             android:layout_width="wrap_content"
-            android:paddingHorizontal="35dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:textSize="12sp"
-            android:background="@drawable/rounded_button_background_color"
-            android:text="@string/tentarNovamente"
-            android:textColor="@color/backgroundColor" />
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/tryAgainButton"
+                style="@style/Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="35dp"
+                android:layout_margin="10dp"
+                android:textSize="12sp"
+                android:background="@drawable/rounded_button_background_color"
+                android:text="@string/tentarNovamente"
+                android:textColor="@color/backgroundColor" />
+
+            <ProgressBar
+                android:id="@+id/buttonProgress"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+        </FrameLayout>
+
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,7 +18,7 @@ import retrofit2.http.PUT;
 public interface ApiService {
     // Test Connection
     @GET("TestConnection.php")
-    Call<ApiResponse> testConnection();
+    Call<ApiResponse<Void>> testConnection();
 
     // User
     @FormUrlEncoded
@@ -37,7 +37,7 @@ public interface ApiService {
     );
 
     @PUT("UpdateUser.php")
-    Call<ApiResponse> updateUser(@Body User user);
+    Call<ApiResponse<Void>> updateUser(@Body User user);
 
     // Category
     @GET("GetAllCategories.php")

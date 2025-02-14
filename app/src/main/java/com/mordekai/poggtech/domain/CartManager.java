@@ -1,9 +1,11 @@
 package com.mordekai.poggtech.domain;
 
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
+import com.mordekai.poggtech.data.model.ApiResponse;
 import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.remote.ProductApi;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -58,22 +60,27 @@ public class CartManager {
 
 
     public void fetchCartProducts(int userId, int tipo, RepositoryCallback<List<Product>> callback) {
-        productApi.getCartProducts(userId, tipo)
-                .enqueue(new Callback<List<Product>>() {
-                    @Override
-                    public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                        if(response.isSuccessful() && response.body() != null) {
-                            List<Product> products = response.body();
-                            callback.onSuccess(products);
-                        } else {
-                            callback.onFailure(new Exception("Erro ao buscar produtos"));
-                        }
-                    }
+        productApi.getCartProducts(userId, tipo).enqueue(new Callback<ApiResponse<List<Product>>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<List<Product>>> call, Response<ApiResponse<List<Product>>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ApiResponse<List<Product>> apiResponse = response.body();
 
-                    @Override
-                    public void onFailure(Call<List<Product>> call, Throwable t) {
-                        callback.onFailure(new Exception("Erro ao buscar produtos: " + t.getMessage()));
+                    if (apiResponse.isSuccess() && apiResponse.getData() != null) {
+                        callback.onSuccess(apiResponse.getData()); // Retorna os produtos corretamente
+                    } else {
+                        callback.onSuccess(new ArrayList<>()); // Se não houver produtos, retorna lista vazia
                     }
-                });
+                } else {
+                    callback.onFailure(new Exception("Erro na resposta da API: Código " + response.code()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<List<Product>>> call, Throwable t) {
+                callback.onFailure(new Exception("Erro ao buscar produtos: " + t.getMessage()));
+            }
+        });
     }
+
 }

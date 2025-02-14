@@ -64,7 +64,7 @@ public class ShoppingCartFragment extends Fragment {
 
         // Recycler View
         productList = new ArrayList<>();
-        cartProductAdapter = new CartProductAdapter(productList);
+        cartProductAdapter = new CartProductAdapter(productList, user.getUserId());
         rvItemsCart.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         rvItemsCart.setNestedScrollingEnabled(false);
         rvItemsCart.setAdapter(cartProductAdapter);
@@ -114,10 +114,13 @@ public class ShoppingCartFragment extends Fragment {
             @Override
             public void onFailure(Throwable t) {
                 Log.e("API_RESPONSE", "Erro ao buscar produtos", t);
-
                 progressBar.setVisibility(View.GONE);
                 swipeRefreshLayout.setRefreshing(false);
                 isLoading = false;
+                isEmpty = true;
+
+                rvItemsCart.setVisibility(View.GONE);
+                textNoCartProducts.setVisibility(View.VISIBLE);
             }
         });
     }

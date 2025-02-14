@@ -198,10 +198,10 @@ public class UserConfigFragment extends Fragment {
 
     private void saveUserChanges() {
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-        Call<ApiResponse> call = apiService.updateUser(user);
-        call.enqueue(new Callback<ApiResponse>() {
+        Call<ApiResponse<Void>> call = apiService.updateUser(user);
+        call.enqueue(new Callback<ApiResponse<Void>>() {
             @Override
-            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+            public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
                     sharedPrefHelper.saveUser(user);
 
@@ -213,7 +213,7 @@ public class UserConfigFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ApiResponse> call, Throwable t) {
+            public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
                 Log.e("API_FAILURE", "Falha ao comunicar com a API: " + t.getMessage());
             }
         });

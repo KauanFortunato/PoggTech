@@ -54,30 +54,28 @@ public class MainActivity extends AppCompatActivity {
 
             Fragment selectedFragment = null;
 
-            if (!NetworkUtil.isConnected(this)) {
-                selectedFragment = new OfflineFragment();
-            } else {
-                if (item.getItemId() == R.id.home) {
-                    selectedFragment = new HomeFragment();
-                    findViewById(R.id.headerContainer).setVisibility(View.VISIBLE);
-                } else if (item.getItemId() == R.id.account) {
-                    selectedFragment = new UserAccountFragment();
-                    findViewById(R.id.headerContainer).setVisibility(View.GONE);
-                } else if (item.getItemId() == R.id.cart) {
-                    selectedFragment = new CartFragment();
-                    findViewById(R.id.headerContainer).setVisibility(View.GONE);
-                } else if (item.getItemId() == R.id.chat) {
-                    // ToDo: Adicionar tela de Chat
-                }
+            if (item.getItemId() == R.id.home) {
+                selectedFragment = new HomeFragment();
+                findViewById(R.id.headerContainer).setVisibility(View.VISIBLE);
+            } else if (item.getItemId() == R.id.account) {
+                selectedFragment = new UserAccountFragment();
+                findViewById(R.id.headerContainer).setVisibility(View.GONE);
+            } else if (item.getItemId() == R.id.cart) {
+                selectedFragment = new CartFragment();
+                findViewById(R.id.headerContainer).setVisibility(View.GONE);
+            } else if (item.getItemId() == R.id.chat) {
+                // ToDo: Adicionar tela de Chat
+                return true;
             }
 
+            // Chama a função para carregar o fragmento apenas se houver internet/XAMPP
             if (selectedFragment != null) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.containerFrame, selectedFragment)
-                        .commit();
+                loadFragmentIfConnected(selectedFragment);
             }
+
             return true;
         });
+
 
         bottomNavigationView.setSelectedItemId(R.id.home);
     }
@@ -98,6 +96,20 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.containerFrame, fragment)
+                    .commit();
+        });
+    }
+
+    private void loadFragmentIfConnected(Fragment fragment) {
+        NetworkUtil.isConnectedXampp(isConnectedXampp -> {
+            Fragment fragmentToLoad = fragment;
+
+            if (!isConnectedXampp || !NetworkUtil.isConnected(this)) {
+                fragmentToLoad = new OfflineFragment();
+            }
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.containerFrame, fragmentToLoad)
                     .commit();
         });
     }

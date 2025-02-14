@@ -35,7 +35,9 @@ import com.mordekai.poggtech.domain.ProductManager;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -57,6 +59,7 @@ public class HomeFragment extends Fragment {
     private List<Category> categoryList = new ArrayList<>();
     private User user;
     private int loadingCount = 0;
+    private List<Integer> favoriteIds = new ArrayList<>();
 
     @Nullable
     @Override
@@ -70,9 +73,9 @@ public class HomeFragment extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
         containerProductsHome.setVisibility(View.GONE);
 
-        consolasAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId());
-        jogosAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId());
-        acessoryAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId());
+        consolasAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), this);
+        jogosAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), this);
+        acessoryAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), this);
 
         rvConsolas.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rvJogos.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -96,12 +99,11 @@ public class HomeFragment extends Fragment {
 
         productApi = RetrofitClient.getRetrofitInstance().create(ProductApi.class);
         productManager = new ProductManager(productApi);
-        productAdapter = new ProductAdapter(productList, user.getUserId());
+        productAdapter = new ProductAdapter(productList, user.getUserId(), this);
         rvProducts.setAdapter(productAdapter);
         applyRecyclerViewAnimation(rvProducts);
 
         fetchAllProducts();
-        fetchCategoryProducts();
         return view;
     }
 
@@ -150,19 +152,45 @@ public class HomeFragment extends Fragment {
 
                     Log.d("API_RESPONSE", "Item 0: " + productList.get(0).getTitle());
 
+                    Map<String, List<Product>> categorizedProducts = new HashMap<>();
+
+                    for (Product product : productList) {
+                        String category = product.getCategory();
+                        if (!categorizedProducts.containsKey(category)) {
+                            categorizedProducts.put(category, new ArrayList<>());
+                        }
+                        categorizedProducts.get(category).add(product);
+                    }
+
+                    // Pede os favoritos do utilizador
                     productManager.fetchUserFavOrCart(user.getUserId(), 1, new RepositoryCallback<List<Integer>>() {
                         @Override
                         public void onSuccess(List<Integer> favorites) {
-                            productAdapter.setFavoriteIds(favorites);
+                            favoriteIds.clear();
+                            favoriteIds.addAll(favorites);
+
+                            // Garante que todos os adaptadores usam a mesma lista de favoritos
+                            updateAllAdapters();
                         }
 
                         @Override
                         public void onFailure(Throwable t) {
                             if (getContext() != null) {
-                                Log.e("API_RESPONSE", "Erro ao buscar produtos", t);
+                                Log.e("API_RESPONSE", "Erro ao buscar produtos favoritos", t);
                             }
                         }
                     });
+
+                    // Atualiza os adapters das RecyclerViews de categorias
+                    if (categorizedProducts.containsKey("Consolas")) {
+                        consolasAdapter.updateProducts(categorizedProducts.get("Consolas"));
+                    }
+                    if (categorizedProducts.containsKey("Jogos")) {
+                        jogosAdapter.updateProducts(categorizedProducts.get("Jogos"));
+                    }
+                    if (categorizedProducts.containsKey("Acessórios")) {
+                        acessoryAdapter.updateProducts(categorizedProducts.get("Acessórios"));
+                    }
 
                     checkIfLoadingFinished();
                 }
@@ -178,67 +206,17 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void fetchCategoryProducts() {
-        productManager.fetchProductsByCategory("Consolas", new RepositoryCallback<List<Product>>() {
-            @Override
-            public void onSuccess(List<Product> products) {
-                consolasAdapter = new ProductAdapter(products, user.getUserId());
-                rvConsolas.setAdapter(consolasAdapter);
-                consolasAdapter.notifyDataSetChanged();
-                checkIfLoadingFinished();
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                if (getContext() != null) {
-                    Log.e("API_RESPONSE", "Erro ao buscar produtos da categoria", t);
-                    checkIfLoadingFinished();
-                }
-            }
-        });
-
-        productManager.fetchProductsByCategory("Jogos", new RepositoryCallback<List<Product>>() {
-            @Override
-            public void onSuccess(List<Product> products) {
-                jogosAdapter = new ProductAdapter(products, user.getUserId());
-                rvJogos.setAdapter(jogosAdapter);
-                jogosAdapter.notifyDataSetChanged();
-                checkIfLoadingFinished();
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                if (getContext() != null) {
-                    Log.e("API_RESPONSE", "Erro ao buscar produtos da categoria", t);
-                    checkIfLoadingFinished();
-                }
-            }
-        });
-
-        productManager.fetchProductsByCategory("Acessórios", new RepositoryCallback<List<Product>>() {
-            @Override
-            public void onSuccess(List<Product> products) {
-                acessoryAdapter = new ProductAdapter(products, user.getUserId());
-                rvAcessory.setAdapter(acessoryAdapter);
-                acessoryAdapter.notifyDataSetChanged();
-                checkIfLoadingFinished();
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                if (getContext() != null) {
-                    Log.e("API_RESPONSE", "Erro ao buscar produtos da categoria", t);
-                    checkIfLoadingFinished();
-                }
-            }
-        });
-
+    public void updateAllAdapters() {
+        productAdapter.setFavoriteIds(favoriteIds);
+        consolasAdapter.setFavoriteIds(favoriteIds);
+        jogosAdapter.setFavoriteIds(favoriteIds);
+        acessoryAdapter.setFavoriteIds(favoriteIds);
     }
 
     private void checkIfLoadingFinished() {
         loadingCount++;
 
-        if (loadingCount >= 4) {
+        if (loadingCount >= 1) {
             progressBar.setVisibility(View.GONE);
             containerProductsHome.setVisibility(View.VISIBLE);
         }

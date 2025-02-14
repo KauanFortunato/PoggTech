@@ -2,9 +2,11 @@ package com.mordekai.poggtech.ui.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 
 import androidx.annotation.NonNull;
@@ -21,6 +23,7 @@ import androidx.appcompat.widget.AppCompatButton;
 
 public class OfflineFragment extends Fragment {
     private AppCompatButton tryAgainButton;
+    ProgressBar buttonProgress;
 
     @Nullable
     @Override
@@ -30,6 +33,13 @@ public class OfflineFragment extends Fragment {
         inciarComponentes(view);
 
         tryAgainButton.setOnClickListener(v -> {
+            if(tryAgainButton.isHapticFeedbackEnabled()) {
+                v.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
+            }
+            tryAgainButton.setEnabled(false);
+            tryAgainButton.setText("");
+            buttonProgress.setVisibility(View.VISIBLE);
+
             NetworkUtil.isConnectedXampp(isConnected -> {
                 if(isConnected) {
                     if (NetworkUtil.isConnected(requireContext())) {
@@ -37,7 +47,21 @@ public class OfflineFragment extends Fragment {
                                 .beginTransaction()
                                 .replace(R.id.containerFrame, new HomeFragment())
                                 .commit();
+                    } else {
+                        if(tryAgainButton.isHapticFeedbackEnabled()) {
+                            v.performHapticFeedback(HapticFeedbackConstants.REJECT);
+                        }
+                        SnackbarUtil.showErrorSnackbar(requireActivity().getWindow().getDecorView().getRootView(), "Não foi possível conectar ao servidor", requireContext());
+                        tryAgainButton.setEnabled(true);
+                        tryAgainButton.setText(R.string.tentarNovamente);
                     }
+                } else {
+                    if(tryAgainButton.isHapticFeedbackEnabled()) {
+                        v.performHapticFeedback(HapticFeedbackConstants.REJECT);
+                    }
+                    SnackbarUtil.showErrorSnackbar(requireActivity().getWindow().getDecorView().getRootView(), "Não foi possível conectar ao servidor", requireContext());
+                    tryAgainButton.setEnabled(true);
+                    tryAgainButton.setText(R.string.tentarNovamente);
                 }
             });
         });
@@ -47,5 +71,6 @@ public class OfflineFragment extends Fragment {
 
     private void inciarComponentes(View view){
         tryAgainButton = view.findViewById(R.id.tryAgainButton);
+        buttonProgress = view.findViewById(R.id.buttonProgress);
     }
 }

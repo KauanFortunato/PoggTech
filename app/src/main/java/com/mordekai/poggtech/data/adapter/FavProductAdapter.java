@@ -49,16 +49,21 @@ public class FavProductAdapter extends RecyclerView.Adapter<FavProductAdapter.Vi
         holder.productPrice.setText("€ " + product.getPrice());
         holder.productType.setText(product.getCategory());
 
-        holder.removeButton.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               if(holder.removeButton.isHapticFeedbackEnabled()) {
-                   v.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
-               }
-
-               removeFromFavorites(product.getProduct_id(), v, holder.getAdapterPosition());
+        holder.removeButton.setOnClickListener(v -> {
+           if(holder.removeButton.isHapticFeedbackEnabled()) {
+               v.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
            }
+
+           removeFromFavorites(product.getProduct_id(), v, holder.getAdapterPosition());
        });
+
+        holder.buttonAddToCart.setOnClickListener(v -> {
+            if(holder.buttonAddToCart.isHapticFeedbackEnabled()) {
+                v.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
+            }
+
+            addToCart(product.getProduct_id(), v, holder.getAdapterPosition());
+        });
 
         Glide.with(
                     holder.productImage.getContext())
@@ -106,6 +111,22 @@ public class FavProductAdapter extends RecyclerView.Adapter<FavProductAdapter.Vi
             @Override
             public void onFailure(Throwable t) {
                 Toast.makeText(view.getContext(), "Erro ao remover dos favoritos", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void addToCart(int productId, View view, int position) {
+        CartManager cartManager = new CartManager(RetrofitClient.getRetrofitInstance().create(ProductApi.class));
+        cartManager.addToCart(productId, userId, 0, new RepositoryCallback<ResponseBody>() {
+            @Override
+            public void onSuccess(ResponseBody result) {
+                notifyItemChanged(position);
+                Toast.makeText(view.getContext(), "Adicionado ao carrinho", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Toast.makeText(view.getContext(), "Erro ao adicionar ao carrinho", Toast.LENGTH_SHORT).show();
             }
         });
     }

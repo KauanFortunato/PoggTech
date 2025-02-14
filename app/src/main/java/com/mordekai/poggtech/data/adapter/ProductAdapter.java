@@ -20,6 +20,7 @@ import com.mordekai.poggtech.data.model.User;
 import com.mordekai.poggtech.data.remote.ProductApi;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.CartManager;
+import com.mordekai.poggtech.ui.fragments.HomeFragment;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
 import java.util.ArrayList;
@@ -31,10 +32,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     private final List<Product> products;
     private List<Integer> favoriteIds = new ArrayList<>();
     private final int userId;
+    private HomeFragment homeFragment;
 
-    public ProductAdapter(List<Product> products, int userId) {
+    public ProductAdapter(List<Product> products, int userId, HomeFragment homeFragment) {
         this.products = products;
         this.userId = userId;
+        this.homeFragment = homeFragment;
     }
 
     public void setFavoriteIds(List<Integer> favoriteIds) {
@@ -65,28 +68,31 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             holder.favoriteButton.setImageResource(R.drawable.ic_favorite);
         }
 
-        holder.favoriteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(holder.favoriteButton.isHapticFeedbackEnabled()) {
-                    v.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
-                }
+        holder.favoriteButton.setOnClickListener(v -> {
+            if (holder.favoriteButton.isHapticFeedbackEnabled()) {
+                v.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
+            }
 
-                boolean isFavorite = favoriteIds.contains(product.getProduct_id());
+            boolean isFavorite = favoriteIds.contains(product.getProduct_id());
 
-                if (isFavorite) {
-                    // Remover dos favoritos
-                    favoriteIds.remove(Integer.valueOf(product.getProduct_id()));
-                    holder.favoriteButton.setImageResource(R.drawable.ic_favorite);
-                    removeFromFavorites(product.getProduct_id(), v, holder.getAdapterPosition());
-                } else {
-                    // Adicionar aos favoritos
-                    favoriteIds.add(product.getProduct_id());
-                    holder.favoriteButton.setImageResource(R.drawable.ic_favorite_filled);
-                    addToFavorites(product.getProduct_id(), v, holder.getAdapterPosition());
-                }
+            if (isFavorite) {
+                // Remove dos favoritos
+                favoriteIds.remove(Integer.valueOf(product.getProduct_id()));
+                holder.favoriteButton.setImageResource(R.drawable.ic_favorite);
+                removeFromFavorites(product.getProduct_id(), v, holder.getAdapterPosition());
+            } else {
+                // Adiciona aos favoritos
+                favoriteIds.add(product.getProduct_id());
+                holder.favoriteButton.setImageResource(R.drawable.ic_favorite_filled);
+                addToFavorites(product.getProduct_id(), v, holder.getAdapterPosition());
+            }
+
+            // Atualiza todas as listas em tempo real
+            if (homeFragment != null) {
+                homeFragment.updateAllAdapters();
             }
         });
+
 
         Glide.with(
                 holder.productImage.getContext())
@@ -97,6 +103,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @Override
     public int getItemCount() {
         return products.size();
+    }
+
+    public void updateProducts(List<Product> newProducts) {
+        this.products.clear();
+        this.products.addAll(newProducts);
+        notifyDataSetChanged();
     }
 
     private void addToFavorites(int productId, View view, int position) {
@@ -137,7 +149,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         TextView productTitle;
         TextView productType;
         TextView productPrice;
-//        ImageView buttonAddToCart;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -148,7 +159,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             productTitle = itemView.findViewById(R.id.productTitle);
             productType = itemView.findViewById(R.id.productType);
             productPrice = itemView.findViewById(R.id.productPrice);
-//            buttonAddToCart = itemView.findViewById(R.id.buttonAddToCart);
         }
     }
 }
