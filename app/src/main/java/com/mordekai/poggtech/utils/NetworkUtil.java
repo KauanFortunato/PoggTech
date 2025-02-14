@@ -26,12 +26,11 @@ public class NetworkUtil {
         return false;
     }
 
-    // TODO: 09/01/2025 Testar conexão com o xampp
     public static boolean isConnectedXampp(ConnectionCallback callback) {
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-        apiService.testConnection().enqueue(new Callback<ApiResponse>() {
+        apiService.testConnection().enqueue(new Callback<ApiResponse<Void>>() {
             @Override
-            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+            public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
                 if(response.isSuccessful() && response.body() != null) {
                     callback.onResult(response.body().isSuccess());
                 } else {
@@ -40,7 +39,7 @@ public class NetworkUtil {
             }
 
             @Override
-            public void onFailure(Call<ApiResponse> call, Throwable t) {
+            public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
                 callback.onResult(false);
             }
         });

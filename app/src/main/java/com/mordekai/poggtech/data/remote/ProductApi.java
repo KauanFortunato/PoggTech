@@ -44,7 +44,7 @@ public interface ProductApi {
     );
 
     @GET("GetProductsFromCart.php")
-    Call<List<Product>> getCartProducts(
+    Call<ApiResponse<List<Product>>> getCartProducts(
             @Query("user_id") int user_id,
             @Query("tipo") int tipo
     );
