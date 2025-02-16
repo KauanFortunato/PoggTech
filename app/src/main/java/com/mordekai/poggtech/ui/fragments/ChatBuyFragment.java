@@ -46,7 +46,25 @@ public class ChatBuyFragment extends Fragment {
 
         // Recycler View
         chatList = new ArrayList<>();
-        chatAdapter = new ChatAdapter(chatList, user.getUserId());
+        chatAdapter = new ChatAdapter(chatList, user.getUserId(), chat -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("chat_with_id", chat.getChat_with());
+            bundle.putString("chat_with_name", chat.getChat_with_name());
+            bundle.putString("chat_with_last_name", chat.getChat_with_last_name());
+            bundle.putInt("product_id", chat.getProduct_id());
+            bundle.putString("product_title", chat.getProduct_title());
+            bundle.putString("product_price", String.valueOf(chat.getProduct_price()));
+            bundle.putString("image_product", chat.getImage_product());
+
+            ChatDetailFragment chatDetailFragment = new ChatDetailFragment();
+            chatDetailFragment.setArguments(bundle);
+
+            requireActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.containerFrame, chatDetailFragment) // Usa o container correto da MainActivity
+                    .addToBackStack(null)
+                    .commit();
+        });
+
         rvChats.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         rvChats.setNestedScrollingEnabled(false);
         rvChats.setAdapter(chatAdapter);
@@ -64,7 +82,7 @@ public class ChatBuyFragment extends Fragment {
     }
 
     private void fetchUserChats() {
-        messageManager.fetchUserChats(user.getUserId(), new RepositoryCallback<List<Chat>>() {
+        messageManager.fetchUserChatsBuy(user.getUserId(), new RepositoryCallback<List<Chat>>() {
             @Override
             public void onSuccess(List<Chat> chats) {
                 progressBar.setVisibility(View.GONE);

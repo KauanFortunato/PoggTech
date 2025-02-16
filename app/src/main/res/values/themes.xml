@@ -23,7 +23,7 @@
         <item name="android:textColorSecondary">@color/textSecondary</item>
         <item name="android:textColorTertiary">@color/textTertiary</item>
 
-        <item name="android:navigationBarColor">@color/colorSurface</item>
+        <item name="android:navigationBarColor">@color/backgroundColor</item>
         <item name="android:statusBarColor">@color/backgroundColor</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>

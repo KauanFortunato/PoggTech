@@ -20,7 +20,7 @@ public interface MessageApi {
     Call<ApiResponse<Void>> sendMessage(
             @Field("sender_id") int sender_id,
             @Field("receiver_id") int receiver_id,
-            @Query("product_id") int product_id,
+            @Field("product_id") int product_id,
             @Field("message") String message
     );
 
@@ -31,8 +31,13 @@ public interface MessageApi {
             @Query("product_id") int product_id
     );
 
-    @GET("GetUserChats.php")
-    Call<List<Chat>> getUserChats(
+    @GET("GetUserChatsBuy.php")
+    Call<List<Chat>> getUserChatsBuy(
+            @Query("user_id") int user_id
+    );
+
+    @GET("GetUserChatsSell.php")
+    Call<List<Chat>> getUserChatsSell(
             @Query("user_id") int user_id
     );
 }

@@ -1,5 +1,7 @@
 package com.mordekai.poggtech.domain;
 
+import android.util.Log;
+
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.ApiResponse;
 import com.mordekai.poggtech.data.model.Chat;
@@ -19,14 +21,14 @@ public class MessageManager {
         this.messageApi = messageApi;
     }
 
-    public void sendMessage(int sender_id, int receiver_id, int product_id, String message, RepositoryCallback<Void> callback) {
+    public void sendMessage(int sender_id, int receiver_id, int product_id, String message, RepositoryCallback<String> callback) {
         messageApi.sendMessage(sender_id, receiver_id, product_id, message).enqueue(new Callback<ApiResponse<Void>>(){
             @Override
             public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
                 if(response.isSuccessful() && response.body() != null) {
                     ApiResponse<Void> apiResponse = response.body();
                     if(apiResponse.isSuccess()) {
-                        callback.onSuccess(null);
+                        callback.onSuccess(apiResponse.getMessage());
                     } else {
                         callback.onFailure(new Exception(apiResponse.getMessage()));
                     }
@@ -64,8 +66,29 @@ public class MessageManager {
         });
     }
 
-    public void fetchUserChats(int user_id, RepositoryCallback<List<Chat>> callback) {
-        messageApi.getUserChats(user_id).enqueue(new Callback<List<Chat>>(){
+    public void fetchUserChatsBuy(int user_id, RepositoryCallback<List<Chat>> callback) {
+        messageApi.getUserChatsBuy(user_id).enqueue(new Callback<List<Chat>>(){
+
+            @Override
+            public void onResponse(Call<List<Chat>> call, Response<List<Chat>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Chat> chats = response.body();
+                    callback.onSuccess(chats);
+                } else {
+                    callback.onFailure(new Exception("Erro ao buscar chats: Código " + response.code()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Chat>> call, Throwable t) {
+                callback.onFailure(new Exception("Erro ao buscar chats: " + t.getMessage()));
+            }
+        });
+
+    }
+
+    public void fetchUserChatsSell(int user_id, RepositoryCallback<List<Chat>> callback) {
+        messageApi.getUserChatsSell(user_id).enqueue(new Callback<List<Chat>>(){
 
             @Override
             public void onResponse(Call<List<Chat>> call, Response<List<Chat>> response) {
