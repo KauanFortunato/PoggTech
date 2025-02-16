@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.mordekai.poggtech.ui.fragments.ChatSellFragment;
-import com.mordekai.poggtech.ui.fragments.ChatShopFragment;
+import com.mordekai.poggtech.ui.fragments.ChatBuyFragment;
 
 public class TabChatAdapter extends FragmentStateAdapter {
 
@@ -18,11 +18,11 @@ public class TabChatAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position) {
             case 0:
-                return new ChatShopFragment();
+                return new ChatBuyFragment();
             case 1:
                 return new ChatSellFragment();
             default:
-                return new ChatShopFragment();
+                return new ChatBuyFragment();
         }
     }
 

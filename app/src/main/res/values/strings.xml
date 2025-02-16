@@ -29,7 +29,6 @@
     <string name="naoTemInternet" translatable="false">Ops! Conexão perdida</string>
     <string name="carrinho">Carrinho</string>
     <string name="favoritos">Favoritos</string>
-    <string name="chat" translatable="false">Chat</string>
     <string name="inicio">Início</string>
     <string name="minhasCompras">As Minhas Compras</string>
     <string name="meusAnuncios">Os Meus Anúncios</string>
@@ -37,6 +36,11 @@
     <string name="remove">Remover</string>
     <string name="noFavProducts">Você não tem produtos favoritos</string>
     <string name="noCartProducts">Seu carrinho está vázio</string>
+
+    <!-- Chat -->
+    <string name="chat" translatable="false">Chat</string>
+    <string name="compra">Comprando</string>
+    <string name="venda">Vendendo</string>
 
     <!-- Home -->
     <string name="paraVoce">Para você</string>

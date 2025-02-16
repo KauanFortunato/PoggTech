@@ -73,7 +73,7 @@
 
     <style name="BottomNav">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">75dp</item>
+        <item name="android:layout_height">80dp</item>
         <item name="android:background">@color/backgroundColor</item>
         <item name="android:elevation">12dp</item>
     </style>
@@ -159,6 +159,13 @@
     <style name="TabTextStyle" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="buttonChat">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:elevation">0dp</item>
         <item name="android:textAllCaps">false</item>
     </style>
 </resources>

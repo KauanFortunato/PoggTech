@@ -40,10 +40,12 @@
     <string name="remove">Remove</string>
     <string name="noFavProducts">You have no favorite products</string>
     <string name="noCartProducts">Your cart is empty</string>
+    <string name="venda">Selling</string>
     <string name="paraVoce">For you</string>
     <string name="jogos">Games</string>
     <string name="minhasCompras">My Purchases</string>
     <string name="acessorios">Acessories</string>
     <string name="naoTemInternet">Ops! Conexão perdida</string>
     <string name="linkDeRecuperacao">A link to reset your password will be sent to the email address registered in your account.</string>
+    <string name="compra">Buying</string>
 </resources>

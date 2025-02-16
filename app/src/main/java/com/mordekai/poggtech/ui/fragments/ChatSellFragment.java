@@ -10,12 +10,12 @@ import androidx.fragment.app.Fragment;
 
 public class ChatSellFragment extends Fragment {
 
-    public ChatSellFragment() {
-
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_chat_sell, container, false);
+        View view = inflater.inflate(R.layout.fragment_chat_sell, container, false);
+
+
+
+        return view;
     }
 }
