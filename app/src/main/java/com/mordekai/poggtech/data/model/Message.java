@@ -2,123 +2,121 @@ package com.mordekai.poggtech.data.model;
 
 public class Message {
 
-    // ToDo: Trocar o nome das variáveis, pois estão todas erradas e não vão funcionar com o retrofit
-
-    private int idMessage;
-    private int ownerId;
-    private int senderId;
-    private String senderName;
-    private String senderLastName;
-    private int receiverId;
-    private String receiverName;
-    private String receiverLastName;
-    private int productId;
-    private String productTitle;
+    private int id_message;
+    private int owner_id;
+    private int sender_id;
+    private String sender_name;
+    private String sender_last_name;
+    private int receiver_id;
+    private String receiver_name;
+    private String receiver_last_name;
+    private int product_id;
+    private String product_title;
     private String message;
     private String timestamp;
-    private String timestampFormat;
+    private String timestamp_format;
 
     // Construtor vazio
     public Message() {}
 
     // Construtor com parâmetros
-    public Message(int idMessage, int ownerId, int senderId, String senderName, String senderLastName,
-                   int receiverId, String receiverName, String receiverLastName, int productId,
-                   String productTitle, String message, String timestamp, String timestampFormat) {
-        this.idMessage = idMessage;
-        this.ownerId = ownerId;
-        this.senderId = senderId;
-        this.senderName = senderName;
-        this.senderLastName = senderLastName;
-        this.receiverId = receiverId;
-        this.receiverName = receiverName;
-        this.receiverLastName = receiverLastName;
-        this.productId = productId;
-        this.productTitle = productTitle;
+    public Message(int id_message, int owner_id, int sender_id, String sender_name, String sender_last_name,
+                   int receiver_id, String receiver_name, String receiver_last_name, int product_id,
+                   String product_title, String message, String timestamp, String timestamp_format) {
+        this.id_message = id_message;
+        this.owner_id = owner_id;
+        this.sender_id = sender_id;
+        this.sender_name = sender_name;
+        this.sender_last_name = sender_last_name;
+        this.receiver_id = receiver_id;
+        this.receiver_name = receiver_name;
+        this.receiver_last_name = receiver_last_name;
+        this.product_id = product_id;
+        this.product_title = product_title;
         this.message = message;
         this.timestamp = timestamp;
-        this.timestampFormat = timestampFormat;
+        this.timestamp_format = timestamp_format;
     }
 
     // Getters e Setters
-    public int getIdMessage() {
-        return idMessage;
+    public int getId_message() {
+        return id_message;
     }
 
-    public void setIdMessage(int idMessage) {
-        this.idMessage = idMessage;
+    public void setId_message(int id_message) {
+        this.id_message = id_message;
     }
 
-    public int getOwnerId() {
-        return ownerId;
+    public int getOwner_id() {
+        return owner_id;
     }
 
-    public void setOwnerId(int ownerId) {
-        this.ownerId = ownerId;
+    public void setOwner_id(int owner_id) {
+        this.owner_id = owner_id;
     }
 
-    public int getSenderId() {
-        return senderId;
+    public int getSender_id() {
+        return sender_id;
     }
 
-    public void setSenderId(int senderId) {
-        this.senderId = senderId;
+    public void setSender_id(int sender_id) {
+        this.sender_id = sender_id;
     }
 
-    public String getSenderName() {
-        return senderName;
+    public String getSender_name() {
+        return sender_name;
     }
 
-    public void setSenderName(String senderName) {
-        this.senderName = senderName;
+    public void setSender_name(String sender_name) {
+        this.sender_name = sender_name;
     }
 
-    public String getSenderLastName() {
-        return senderLastName;
+    public String getSender_last_name() {
+        return sender_last_name;
     }
 
-    public void setSenderLastName(String senderLastName) {
-        this.senderLastName = senderLastName;
+    public void setSender_last_name(String sender_last_name) {
+        this.sender_last_name = sender_last_name;
     }
 
-    public int getReceiverId() {
-        return receiverId;
+    public int getReceiver_id() {
+        return receiver_id;
     }
 
-    public void setReceiverId(int receiverId) {
-        this.receiverId = receiverId;
+    public void setReceiver_id(int receiver_id) {
+        this.receiver_id = receiver_id;
     }
 
-    public String getReceiverName() {
-        return receiverName;
+    public String getReceiver_name() {
+        return receiver_name;
     }
 
-    public void setReceiverName(String receiverName) {
-        this.receiverName = receiverName;
+    public void setReceiver_name(String receiver_name) {
+        this.receiver_name = receiver_name;
     }
 
-    public String getReceiverLastName() {
-        return receiverLastName;
+    public String getReceiver_last_name() {
+        return receiver_last_name;
     }
 
-    public void setReceiverLastName(String receiverLastName) {
-        this.receiverLastName = receiverLastName;
+    public void setReceiver_last_name(String receiver_last_name) {
+        this.receiver_last_name = receiver_last_name;
     }
 
-    public int getProductId() {
-        return productId;
+    public int getProduct_id() {
+        return product_id;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setProduct_id(int product_id) {
+        this.product_id = product_id;
     }
 
-    public String getProductTitle() {
-        return productTitle;
+    public String getProduct_title() {
+        return product_title;
     }
 
-    public void setProductTitle(String productTitle) {
-        this.productTitle = productTitle;
+    public void setProduct_title(String product_title) {
+        this.product_title = product_title;
     }
 
     public String getMessage() {
@@ -137,31 +135,31 @@ public class Message {
         this.timestamp = timestamp;
     }
 
-    public String getTimestampFormat() {
-        return timestampFormat;
+    public String getTimestamp_format() {
+        return timestamp_format;
     }
 
-    public void setTimestampFormat(String timestampFormat) {
-        this.timestampFormat = timestampFormat;
+    public void setTimestamp_format(String timestamp_format) {
+        this.timestamp_format = timestamp_format;
     }
 
-    // Métdo toString() para facilitar o debug
+    // Método toString() para facilitar o debug
     @Override
     public String toString() {
         return "Message{" +
-                "idMessage=" + idMessage +
-                ", ownerId=" + ownerId +
-                ", senderId=" + senderId +
-                ", senderName='" + senderName + '\'' +
-                ", senderLastName='" + senderLastName + '\'' +
-                ", receiverId=" + receiverId +
-                ", receiverName='" + receiverName + '\'' +
-                ", receiverLastName='" + receiverLastName + '\'' +
-                ", productId=" + productId +
-                ", productTitle='" + productTitle + '\'' +
+                "id_message=" + id_message +
+                ", owner_id=" + owner_id +
+                ", sender_id=" + sender_id +
+                ", sender_name='" + sender_name + '\'' +
+                ", sender_last_name='" + sender_last_name + '\'' +
+                ", receiver_id=" + receiver_id +
+                ", receiver_name='" + receiver_name + '\'' +
+                ", receiver_last_name='" + receiver_last_name + '\'' +
+                ", product_id=" + product_id +
+                ", product_title='" + product_title + '\'' +
                 ", message='" + message + '\'' +
                 ", timestamp='" + timestamp + '\'' +
-                ", timestampFormat='" + timestampFormat + '\'' +
+                ", timestamp_format='" + timestamp_format + '\'' +
                 '}';
     }
 }

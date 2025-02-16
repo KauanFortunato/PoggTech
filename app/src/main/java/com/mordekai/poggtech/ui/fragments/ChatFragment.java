@@ -2,6 +2,7 @@ package com.mordekai.poggtech.ui.fragments;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mordekai.poggtech.R;
 
 import androidx.appcompat.widget.AppCompatButton;
@@ -16,6 +17,7 @@ public class ChatFragment extends Fragment {
 
     private AppCompatButton btnShop, btnSell;
     private FragmentManager fragmentManager;
+    private BottomNavigationView bottomNavigationView;
 
     public ChatFragment() {
 
@@ -72,5 +74,7 @@ public class ChatFragment extends Fragment {
     private void iniciarComponentes(View view) {
         btnShop = view.findViewById(R.id.btnShop);
         btnSell = view.findViewById(R.id.btnSell);
+        bottomNavigationView = getActivity().findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setVisibility(View.VISIBLE);
     }
 }

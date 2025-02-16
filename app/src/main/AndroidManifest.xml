@@ -36,7 +36,9 @@
         <activity
             android:name=".ui.activity.MainActivity"
             android:theme="@style/Theme.PoggTech"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize">
+
         </activity>
 
         <meta-data

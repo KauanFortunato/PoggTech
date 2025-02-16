@@ -18,10 +18,16 @@ import java.util.List;
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     private final List<Chat> chats;
     private final int userId;
+    private OnChatClickListener listener;
 
-    public ChatAdapter(List<Chat> chats, int userId) {
+    public interface OnChatClickListener {
+        void onChatClick(Chat chat);
+    }
+
+    public ChatAdapter(List<Chat> chats, int userId, OnChatClickListener listener) {
         this.chats = chats;
         this.userId = userId;
+        this.listener = listener;
     }
 
     @NonNull
@@ -35,23 +41,18 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ChatAdapter.ViewHolder holder, int position) {
         Chat chat = chats.get(position);
-
-        holder.productTitle.setText(chat.getProduct_title());
-        holder.sellerName.setText(chat.getChat_with_name() + " " + chat.getChat_with_last_name());
-        holder.lastMessage.setText(chat.getLast_message());
-        holder.messageTime.setText(chat.getLast_message_time_format());
-//        holder.newMessageIcon.setVisibility(View.GONE);
-
-        Glide.with(
-                        holder.imageProduct.getContext())
-                .load(chat.getImage_product())
-                .into(holder.imageProduct);
+        holder.bind(chat);
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    @Override
+    public int getItemCount() {
+        return chats.size();
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageProduct;
         TextView productTitle;
-        TextView sellerName;
+        TextView chatWith;
         TextView lastMessage;
         TextView messageTime;
 //        View newMessageIcon;
@@ -61,15 +62,32 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
             imageProduct = itemView.findViewById(R.id.imageProduct);
             productTitle = itemView.findViewById(R.id.productTitle);
-            sellerName = itemView.findViewById(R.id.sellerName);
+            chatWith = itemView.findViewById(R.id.chatWith);
             lastMessage = itemView.findViewById(R.id.lastMessage);
             messageTime = itemView.findViewById(R.id.messageTime);
 //            newMessageIcon = itemView.findViewById(R.id.newMessageIcon);
-        }
-    }
 
-    @Override
-    public int getItemCount() {
-        return chats.size();
+            itemView.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION && listener != null) {
+                    listener.onChatClick(chats.get(position));
+                }
+            });
+        }
+
+        void bind(Chat chat) {
+            chatWith.setText(chat.getChat_with_name() + " " + chat.getChat_with_last_name());
+            lastMessage.setText(chat.getLast_message());
+            productTitle.setText(chat.getProduct_title());
+            productTitle.setText(chat.getProduct_title());
+            chatWith.setText(chat.getChat_with_name() + " " + chat.getChat_with_last_name());
+            lastMessage.setText(chat.getLast_message());
+            messageTime.setText(chat.getLast_message_time_format());
+
+            Glide.with(
+                            imageProduct.getContext())
+                    .load(chat.getImage_product())
+                    .into(imageProduct);
+        }
     }
 }

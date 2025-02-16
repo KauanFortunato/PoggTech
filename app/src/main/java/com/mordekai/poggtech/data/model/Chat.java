@@ -2,12 +2,14 @@ package com.mordekai.poggtech.data.model;
 
 public class Chat {
     private int id_message;
+    private int owner_id;
     private int user_id;
     private int chat_with;
     private String chat_with_name;
     private String chat_with_last_name;
     private int product_id;
     private String product_title;
+    private Float product_price;
     private String last_message;
     private String image_product;
     private String last_message_time;
@@ -39,6 +41,14 @@ public class Chat {
 
     public void setId_message(int id_message) {
         this.id_message = id_message;
+    }
+
+    public int getowner_id() {
+        return owner_id;
+    }
+
+    public void setowner_id(int owner_id) {
+        this.owner_id = owner_id;
     }
 
     public int getUser_id() {
@@ -89,6 +99,14 @@ public class Chat {
         this.product_title = product_title;
     }
 
+    public Float getProduct_price() {
+        return product_price;
+    }
+
+    public void setProduct_price(Float product_price) {
+        this.product_price = product_price;
+    }
+
     public String getLast_message() {
         return last_message;
     }
@@ -122,6 +140,7 @@ public class Chat {
     public String toString() {
         return "Chat{" +
                 "idMessage=" + id_message +
+                ", ownerId=" + owner_id +
                 ", userId=" + user_id +
                 ", chatWith=" + chat_with +
                 ", chatWithName='" + chat_with_name + '\'' +
