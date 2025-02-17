@@ -10,11 +10,13 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,11 +49,11 @@ public class HomeFragment extends Fragment {
 
     private SharedPrefHelper sharedPrefHelper;
     private LinearLayout containerProductsHome;
+    private TextView tudoCategorie;
     private ProgressBar progressBar;
-    private RecyclerView rvCategories, rvProducts, rvConsolas, rvJogos, rvAcessory;
+    private RecyclerView rvProducts, rvConsolas, rvJogos, rvAcessory;
     private CategoryAdapter categoryAdapter;
     private ProductAdapter productAdapter, consolasAdapter, jogosAdapter, acessoryAdapter;
-    private FirebaseAuth auth;
     private ApiService apiService;
     private ProductApi productApi;
     private List<Product> productList = new ArrayList<>();
@@ -85,13 +87,8 @@ public class HomeFragment extends Fragment {
         rvJogos.setAdapter(jogosAdapter);
         rvAcessory.setAdapter(acessoryAdapter);
 
-        rvCategories = view.findViewById(R.id.rvCategories);
-        rvCategories.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
         categoryAdapter = new CategoryAdapter(categoryList);
-        rvCategories.setAdapter(categoryAdapter);
         apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-        fetchCategories();
 
         rvProducts = view.findViewById(R.id.rvForYou);
         rvProducts.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -111,30 +108,6 @@ public class HomeFragment extends Fragment {
         Context context = requireContext();
         LayoutAnimationController animationController = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_slide);
         recyclerView.setLayoutAnimation(animationController);
-    }
-
-    private void fetchCategories() {
-        apiService.getAllCategories().enqueue(new Callback<List<Category>>() {
-            @Override
-            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    categoryList.clear();
-                    categoryList.addAll(response.body());
-                    categoryAdapter.notifyDataSetChanged();
-
-                    Log.d("API_RESPONSE", "Categorias recebidas: " + response.body().toString());
-                } else {
-                    Toast.makeText(getContext(), "Erro ao carregar categorias", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Category>> call, Throwable t) {
-                if (getContext() != null) {
-                    Toast.makeText(getContext(), "Erro ao buscar categorias", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
     }
 
     private void fetchAllProducts() {
@@ -228,5 +201,8 @@ public class HomeFragment extends Fragment {
         rvAcessory = view.findViewById(R.id.rvAcessory);
         containerProductsHome = view.findViewById(R.id.containerProductsHome);
         progressBar = view.findViewById(R.id.progressBar);
+        tudoCategorie = view.findViewById(R.id.tudoCategorie);
+        tudoCategorie.setTypeface(tudoCategorie.getTypeface(), tudoCategorie.getTypeface().BOLD);
+        tudoCategorie.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
     }
 }

@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -33,6 +34,7 @@ public class ChatSellFragment extends Fragment {
     private MessageApi messageApi;
     private List<Chat> chatList;
     private ProgressBar progressBar;
+    private TextView textNoChats;
     private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
@@ -49,6 +51,7 @@ public class ChatSellFragment extends Fragment {
         chatAdapter = new ChatAdapter(chatList, user.getUserId(), chat -> {
             Bundle bundle = new Bundle();
             bundle.putInt("chat_with_id", chat.getChat_with());
+            bundle.putInt("chat_id", chat.getChat_id());
             bundle.putString("chat_with_name", chat.getChat_with_name());
             bundle.putString("chat_with_last_name", chat.getChat_with_last_name());
             bundle.putInt("product_id", chat.getProduct_id());
@@ -90,10 +93,11 @@ public class ChatSellFragment extends Fragment {
 
                 if (chats.isEmpty()) {
                     rvChats.setVisibility(View.GONE);
+                    textNoChats.setVisibility(View.VISIBLE);
                 } else {
                     chatList.addAll(chats);
                     chatAdapter.notifyDataSetChanged();
-
+                    textNoChats.setVisibility(View.GONE);
                     rvChats.setVisibility(View.VISIBLE);
                     Log.d("API_RESPONSE", "Item 0: " + chats.get(0).getLast_message());
                 }
@@ -114,5 +118,6 @@ public class ChatSellFragment extends Fragment {
         progressBar = view.findViewById(R.id.progressBarItems);
         rvChats = view.findViewById(R.id.rvChats);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+        textNoChats = view.findViewById(R.id.textNoChats);
     }
 }

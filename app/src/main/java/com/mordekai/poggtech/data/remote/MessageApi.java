@@ -20,7 +20,7 @@ public interface MessageApi {
     Call<ApiResponse<Void>> sendMessage(
             @Field("sender_id") int sender_id,
             @Field("receiver_id") int receiver_id,
-            @Field("product_id") int product_id,
+            @Field("chat_id") int chat_id,
             @Field("message") String message
     );
 

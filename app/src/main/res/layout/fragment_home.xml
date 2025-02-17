@@ -6,23 +6,40 @@
     android:layout_height="match_parent"
     android:id="@+id/mainContent">
 
-    <!-- Primeiro RecyclerView (não rolável) -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCategories"
+    <LinearLayout
+        android:id="@+id/categoriesHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:background="@drawable/rounded_high_bottom"
-        android:elevation="2dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:paddingVertical="10dp"
+        android:background="@drawable/rounded_bottom_med"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tudoCategorie"
+            style="@style/CategorieHeader"
+            android:text="Tudo"/>
+
+        <TextView
+            android:id="@+id/consolesCategorie"
+            style="@style/CategorieHeader"
+            android:text="Consoles"/>
+
+        <TextView
+            android:id="@+id/jogosCategorie"
+            style="@style/CategorieHeader"
+            android:text="Jogos"/>
+
+        <TextView
+            android:id="@+id/acesCategorie"
+            style="@style/CategorieHeader"
+            android:text="Acessórios"/>
+    </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/rvCategories"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/categoriesHeader">
 
         <!-- ScrollView que contém os LinearLayouts -->
         <androidx.core.widget.NestedScrollView
@@ -36,13 +53,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-<!--                <ImageView-->
-<!--                    android:id="@+id/imageView"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:adjustViewBounds="true"-->
-<!--                    android:scaleType="fitCenter"-->
-<!--                    app:srcCompat="@drawable/img" />-->
+                <!--                <ImageView-->
+                <!--                    android:id="@+id/imageView"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:adjustViewBounds="true"-->
+                <!--                    android:scaleType="fitCenter"-->
+                <!--                    app:srcCompat="@drawable/img" />-->
 
                 <!-- Container "Continuar a comprar" -->
                 <LinearLayout
@@ -62,15 +79,15 @@
                 <!-- Container "Para Você" -->
                 <LinearLayout
                     android:id="@+id/forYouContainer"
+                    style="@style/productContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/productContainer"
                     android:elevation="2dp">
 
                     <TextView
+                        style="@style/productSectionTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/productSectionTitle"
                         android:text="@string/paraVoce" />
 
                     <LinearLayout
@@ -91,15 +108,15 @@
                 <!-- Container "Jogos" -->
                 <LinearLayout
                     android:id="@+id/jogosContainer"
+                    style="@style/productContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/productContainer"
                     android:elevation="2dp">
 
                     <TextView
+                        style="@style/productSectionTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/productSectionTitle"
                         android:text="@string/jogos" />
 
                     <LinearLayout
@@ -119,15 +136,15 @@
                 <!-- Container "Acessórios" -->
                 <LinearLayout
                     android:id="@+id/acessoryContainer"
+                    style="@style/productContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/productContainer"
                     android:elevation="2dp">
 
                     <TextView
+                        style="@style/productSectionTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/productSectionTitle"
                         android:text="@string/acessorios" />
 
                     <LinearLayout
@@ -147,15 +164,15 @@
                 <!-- Container "Consolas" -->
                 <LinearLayout
                     android:id="@+id/consolasContainer"
+                    style="@style/productContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/productContainer"
                     android:elevation="2dp">
 
                     <TextView
+                        style="@style/productSectionTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/productSectionTitle"
                         android:text="@string/consolas" />
 
                     <LinearLayout
@@ -180,7 +197,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:visibility="gone"/>
+            android:visibility="gone" />
     </FrameLayout>
     
 

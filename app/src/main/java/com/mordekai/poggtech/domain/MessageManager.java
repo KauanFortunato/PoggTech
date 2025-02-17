@@ -21,8 +21,8 @@ public class MessageManager {
         this.messageApi = messageApi;
     }
 
-    public void sendMessage(int sender_id, int receiver_id, int product_id, String message, RepositoryCallback<String> callback) {
-        messageApi.sendMessage(sender_id, receiver_id, product_id, message).enqueue(new Callback<ApiResponse<Void>>(){
+    public void sendMessage(int sender_id, int receiver_id, int chat_id, String message, RepositoryCallback<String> callback) {
+        messageApi.sendMessage(sender_id, receiver_id, chat_id, message).enqueue(new Callback<ApiResponse<Void>>(){
             @Override
             public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
                 if(response.isSuccessful() && response.body() != null) {
