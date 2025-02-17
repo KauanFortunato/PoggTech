@@ -45,11 +45,11 @@ public class ChatDetailFragment extends Fragment {
     private ImageButton btnSend;
     private ImageButton btnBack;
 
-    private int chatWithId, productId;
+    private int chatWithId, productId, chatChatId;
     private String chatWithName, chatWithLastName, productTitle, productPriceString, productImage;
     private User currentUser;
 
-    private TextView nameUser, productName, productPrice;
+    private TextView nameUser, productName, productPrice, chatId;
     private ImageView imageProduct;
     private BottomNavigationView bottomNavigationView;
 
@@ -61,6 +61,7 @@ public class ChatDetailFragment extends Fragment {
 
         if(getArguments() != null) {
             chatWithId = getArguments().getInt("chat_with_id");
+            chatChatId = getArguments().getInt("chat_id");
             chatWithName = getArguments().getString("chat_with_name");
             chatWithLastName = getArguments().getString("chat_with_last_name");
             productId = getArguments().getInt("product_id");
@@ -68,10 +69,10 @@ public class ChatDetailFragment extends Fragment {
             productPriceString = getArguments().getString("product_price");
             productImage = getArguments().getString("image_product");
 
-
             nameUser.setText(chatWithName + " " + chatWithLastName);
             productName.setText(productTitle);
             productPrice.setText(productPriceString + " €");
+            chatId.setText("ID: " + chatChatId);
 
             Glide.with(
                             imageProduct.getContext())
@@ -81,7 +82,6 @@ public class ChatDetailFragment extends Fragment {
 
         SharedPrefHelper sharedPrefHelper = new SharedPrefHelper(requireContext());
         currentUser = sharedPrefHelper.getUser();
-
 
         // Configurar RecyclerView
         messageList = new ArrayList<>();
@@ -133,7 +133,7 @@ public class ChatDetailFragment extends Fragment {
         String messageText = etMessage.getText().toString().trim();
 
         if (!messageText.isEmpty()) {
-            messageManager.sendMessage(currentUser.getUserId(), chatWithId, productId, messageText, new RepositoryCallback<String>() {
+            messageManager.sendMessage(currentUser.getUserId(), chatWithId, chatChatId, messageText, new RepositoryCallback<String>() {
 
                 @Override
                 public void onSuccess(String result) {
@@ -157,8 +157,8 @@ public class ChatDetailFragment extends Fragment {
         productName = view.findViewById(R.id.productName);
         productPrice = view.findViewById(R.id.productPrice);
         btnBack = view.findViewById(R.id.btn_back);
+        chatId = view.findViewById(R.id.chatId);
 
-        // Inicializar componentes
         rvMessages = view.findViewById(R.id.rvMessage);
         etMessage = view.findViewById(R.id.etMessage);
         btnSend = view.findViewById(R.id.btnSend);

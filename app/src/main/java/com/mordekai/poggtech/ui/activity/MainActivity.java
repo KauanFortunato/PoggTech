@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         AppConfig.initialize(this);
-        showIpInputDialog();
+//        showIpInputDialog();
 
         loadFragmentBasedOnNetwork();
 

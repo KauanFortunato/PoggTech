@@ -3,6 +3,7 @@ package com.mordekai.poggtech.data.model;
 public class Message {
 
     private int id_message;
+    private int chat_id;
     private int owner_id;
     private int sender_id;
     private String sender_name;
@@ -39,6 +40,15 @@ public class Message {
     }
 
     // Getters e Setters
+
+    public int getChat_id() {
+        return chat_id;
+    }
+
+    public void setChat_id(int chat_id) {
+        this.chat_id = chat_id;
+    }
+
     public int getId_message() {
         return id_message;
     }

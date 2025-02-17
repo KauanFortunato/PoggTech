@@ -48,4 +48,5 @@
     <string name="naoTemInternet">Ops! Conexão perdida</string>
     <string name="linkDeRecuperacao">A link to reset your password will be sent to the email address registered in your account.</string>
     <string name="compra">Buying</string>
+    <string name="noChat">You don\'t have any chat</string>
 </resources>

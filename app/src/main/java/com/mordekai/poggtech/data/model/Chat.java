@@ -1,8 +1,9 @@
 package com.mordekai.poggtech.data.model;
 
 public class Chat {
-    private int id_message;
     private int owner_id;
+    private int chat_id;
+    private int id_message;
     private int user_id;
     private int chat_with;
     private String chat_with_name;
@@ -35,6 +36,15 @@ public class Chat {
     }
 
     // Getters e Setters
+
+    public int getChat_id() {
+        return chat_id;
+    }
+
+    public void setChat_id(int chat_id) {
+        this.chat_id = chat_id;
+    }
+
     public int getId_message() {
         return id_message;
     }
@@ -141,6 +151,7 @@ public class Chat {
         return "Chat{" +
                 "idMessage=" + id_message +
                 ", ownerId=" + owner_id +
+                ", chatId=" + chat_id +
                 ", userId=" + user_id +
                 ", chatWith=" + chat_with +
                 ", chatWithName='" + chat_with_name + '\'' +

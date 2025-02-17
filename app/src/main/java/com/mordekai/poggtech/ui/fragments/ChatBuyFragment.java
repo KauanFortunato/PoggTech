@@ -15,11 +15,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +36,7 @@ public class ChatBuyFragment extends Fragment {
     private MessageApi messageApi;
     private List<Chat> chatList;
     private ProgressBar progressBar;
+    private TextView textNoChats;
     private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
@@ -49,6 +53,7 @@ public class ChatBuyFragment extends Fragment {
         chatAdapter = new ChatAdapter(chatList, user.getUserId(), chat -> {
             Bundle bundle = new Bundle();
             bundle.putInt("chat_with_id", chat.getChat_with());
+            bundle.putInt("chat_id", chat.getChat_id());
             bundle.putString("chat_with_name", chat.getChat_with_name());
             bundle.putString("chat_with_last_name", chat.getChat_with_last_name());
             bundle.putInt("product_id", chat.getProduct_id());
@@ -90,11 +95,12 @@ public class ChatBuyFragment extends Fragment {
                 chatList.clear();
 
                 if (chats.isEmpty()) {
+                    textNoChats.setVisibility(View.VISIBLE);
                     rvChats.setVisibility(View.GONE);
                 } else {
                     chatList.addAll(chats);
                     chatAdapter.notifyDataSetChanged();
-
+                    textNoChats.setVisibility(View.GONE);
                     rvChats.setVisibility(View.VISIBLE);
                     Log.d("API_RESPONSE", "Item 0: " + chats.get(0).getLast_message());
                 }
@@ -104,6 +110,7 @@ public class ChatBuyFragment extends Fragment {
             public void onFailure(Throwable t) {
                 Log.e("API_RESPONSE", "Erro ao buscar chats", t);
                 progressBar.setVisibility(View.GONE);
+                textNoChats.setVisibility(View.VISIBLE);
                 swipeRefreshLayout.setRefreshing(false);
 
                 rvChats.setVisibility(View.GONE);
@@ -115,5 +122,6 @@ public class ChatBuyFragment extends Fragment {
         progressBar = view.findViewById(R.id.progressBarItems);
         rvChats = view.findViewById(R.id.rvChats);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+        textNoChats = view.findViewById(R.id.textNoChats);
     }
 }

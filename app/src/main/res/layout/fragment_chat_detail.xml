@@ -100,14 +100,29 @@
                         android:textSize="15sp"
                         android:text="Microsoft Xbox Series X preto"/>
 
-                    <TextView
-                        android:id="@+id/productPrice"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/textPrimary"
-                        android:fontFamily="@font/roboto_bold"
-                        android:textSize="17sp"
-                        android:text="533,99 €"/>
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/productPrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/textPrimary"
+                            android:fontFamily="@font/roboto_bold"
+                            android:textSize="17sp"
+                            android:text="533,99 €"/>
+
+                        <TextView
+                            android:id="@+id/chatId"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textTertiary"
+                            android:fontFamily="@font/roboto"
+                            android:textSize="11sp"
+                            android:text="ID: 123"/>
+                    </LinearLayout>
 
                 </LinearLayout>
             </LinearLayout>

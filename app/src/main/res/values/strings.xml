@@ -36,6 +36,7 @@
     <string name="remove">Remover</string>
     <string name="noFavProducts">Você não tem produtos favoritos</string>
     <string name="noCartProducts">Seu carrinho está vázio</string>
+    <string name="noChat">Você não tem nenhum chat</string>
 
     <!-- Chat -->
     <string name="chat" translatable="false">Chat</string>
