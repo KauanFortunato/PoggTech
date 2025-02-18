@@ -3,7 +3,7 @@
 
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="@color/colorOnDivider"/>
+            <solid android:color="@color/colorDivider"/>
         </shape>
     </item>
 
@@ -11,7 +11,7 @@
     <item android:bottom="1dp">
         <shape android:shape="rectangle">
             <size android:height="1dp"/>
-            <solid android:color="@color/colorSecondaryVariant"/>
+            <solid android:color="@color/backgroundColor"/>
         </shape>
     </item>
 
