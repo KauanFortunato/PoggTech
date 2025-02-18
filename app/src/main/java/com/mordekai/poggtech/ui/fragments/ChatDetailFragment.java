@@ -2,6 +2,8 @@ package com.mordekai.poggtech.ui.fragments;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.graphics.Rect;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -34,6 +36,8 @@ import com.mordekai.poggtech.utils.SharedPrefHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ChatDetailFragment extends Fragment {
     private RecyclerView rvMessages;
@@ -44,6 +48,9 @@ public class ChatDetailFragment extends Fragment {
     private EditText etMessage;
     private ImageButton btnSend;
     private ImageButton btnBack;
+
+    private Timer timer;
+    private boolean isScrolled = false;
 
     private int chatWithId, productId, chatChatId;
     private String chatWithName, chatWithLastName, productTitle, productPriceString, productImage;
@@ -58,6 +65,7 @@ public class ChatDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_chat_detail, container, false);
 
         initComponents(view);
+        setupKeyboardVisibilityListener();
 
         if(getArguments() != null) {
             chatWithId = getArguments().getInt("chat_with_id");
@@ -95,7 +103,18 @@ public class ChatDetailFragment extends Fragment {
         messageApi = RetrofitClient.getRetrofitInstance().create(MessageApi.class);
         messageManager = new MessageManager(messageApi);
 
-        fetchMessages();
+//        fetchMessages();
+        timer = new Timer();
+
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                fetchMessages();
+            }
+
+        };
+
+        timer.schedule(task, 0, 2000);
 
         btnSend.setOnClickListener(v -> {
             if(btnSend.isHapticFeedbackEnabled()) {
@@ -112,13 +131,14 @@ public class ChatDetailFragment extends Fragment {
         messageManager.fetchMessages(currentUser.getUserId(), chatWithId, productId, new RepositoryCallback<List<Message>>() {
             @Override
             public void onSuccess(List<Message> messages) {
+                boolean isNewMessage = messageList.size() != messages.size();
+
                 messageList.clear();
                 messageList.addAll(messages);
                 messageAdapter.notifyDataSetChanged();
 
-                // Rolar automaticamente para a última mensagem
-                if (!messageList.isEmpty()) {
-                    rvMessages.scrollToPosition(messageList.size() - 1);
+                if (isNewMessage) {
+                    scrollToBottom();
                 }
             }
 
@@ -134,12 +154,12 @@ public class ChatDetailFragment extends Fragment {
 
         if (!messageText.isEmpty()) {
             messageManager.sendMessage(currentUser.getUserId(), chatWithId, chatChatId, messageText, new RepositoryCallback<String>() {
-
                 @Override
                 public void onSuccess(String result) {
                     etMessage.setText("");
                     Log.d("ChatDetail", "Resposta: " + result);
                     fetchMessages();
+                    playSound(R.raw.send_message);
                 }
 
                 @Override
@@ -230,6 +250,38 @@ public class ChatDetailFragment extends Fragment {
                     })
                     .start();
         }
+    }
+
+    private void scrollToBottom() {
+        if (messageAdapter.getItemCount() > 0) {
+            rvMessages.scrollToPosition(messageAdapter.getItemCount() - 1);
+        }
+    }
+
+
+    private void setupKeyboardVisibilityListener() {
+        final View rootView = getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
+        rootView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            Rect r = new Rect();
+            rootView.getWindowVisibleDisplayFrame(r);
+            int screenHeight = rootView.getRootView().getHeight();
+            int keypadHeight = screenHeight - r.bottom;
+
+            if (keypadHeight > screenHeight * 0.15) { // Se o teclado está visível
+                if (!isScrolled) {
+                    scrollToBottom();
+                    isScrolled = true;
+                }
+            } else {
+                isScrolled = false; // Resetar quando o teclado for fechado
+            }
+        });
+    }
+
+    private void playSound(int soundResourceId) {
+        MediaPlayer mediaPlayer = MediaPlayer.create(getContext(), soundResourceId);
+        mediaPlayer.setOnCompletionListener(MediaPlayer::release);
+        mediaPlayer.start();
     }
 
 }
