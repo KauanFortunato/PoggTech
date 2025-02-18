@@ -35,5 +35,5 @@
     <color name="textTertiary">#848484</color>
 
     <!--  Opacity Colors  -->
-    <color name="opacityColor">#80000000</color>
+    <color name="opacityColor">#5C000000</color>
 </resources>

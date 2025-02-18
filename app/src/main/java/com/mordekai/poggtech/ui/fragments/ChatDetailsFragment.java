@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ChatDetailFragment extends Fragment {
+public class ChatDetailsFragment extends Fragment {
     private RecyclerView rvMessages;
     private MessageAdapter messageAdapter;
     private MessageManager messageManager;

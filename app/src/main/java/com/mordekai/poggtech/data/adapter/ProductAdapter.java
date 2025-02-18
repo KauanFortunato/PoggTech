@@ -16,12 +16,10 @@ import com.bumptech.glide.Glide;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.Product;
-import com.mordekai.poggtech.data.model.User;
 import com.mordekai.poggtech.data.remote.ProductApi;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.CartManager;
 import com.mordekai.poggtech.ui.fragments.HomeFragment;
-import com.mordekai.poggtech.utils.SharedPrefHelper;
 
 import java.util.ArrayList;
 import java.util.List;

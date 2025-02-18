@@ -22,8 +22,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,11 +59,11 @@ public class ChatBuyFragment extends Fragment {
             bundle.putString("product_price", String.valueOf(chat.getProduct_price()));
             bundle.putString("image_product", chat.getImage_product());
 
-            ChatDetailFragment chatDetailFragment = new ChatDetailFragment();
-            chatDetailFragment.setArguments(bundle);
+            ChatDetailsFragment chatDetailsFragment = new ChatDetailsFragment();
+            chatDetailsFragment.setArguments(bundle);
 
             requireActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.containerFrame, chatDetailFragment) // Usa o container correto da MainActivity
+                    .replace(R.id.containerFrame, chatDetailsFragment) // Usa o container correto da MainActivity
                     .addToBackStack(null)
                     .commit();
         });
