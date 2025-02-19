@@ -1,5 +1,6 @@
 package com.mordekai.poggtech.ui.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +21,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.model.ApiResponse;
 import com.mordekai.poggtech.data.model.User;
@@ -45,6 +47,7 @@ public class UserConfigFragment extends Fragment {
     private EditText editName, editSurname, editContact;
     private ImageButton btn_back;
     private AppCompatButton buttonEditPersonInfo, buttonCancelPersonInfo, buttonLogout, buttonEditEmail, buttonResetPass;
+    private BottomNavigationView bottomNavigationView;
     private SharedPrefHelper sharedPrefHelper;
     private UserManager userManager;
     private User user;
@@ -130,6 +133,7 @@ public class UserConfigFragment extends Fragment {
         return view;
     }
 
+    @SuppressLint("InlinedApi")
     private void startComponents(View view) {
         editName = view.findViewById(R.id.editName);
         editSurname = view.findViewById(R.id.editSurname);
@@ -141,6 +145,8 @@ public class UserConfigFragment extends Fragment {
         buttonCancelPersonInfo = view.findViewById(R.id.buttonCancelPersonInfo);
         buttonEditEmail = view.findViewById(R.id.buttonEditEmail);
         buttonResetPass = view.findViewById(R.id.buttonResetPass);
+        bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setVisibility(View.GONE);
 
         buttonLogout = view.findViewById(R.id.buttonLogout);
 
@@ -154,6 +160,9 @@ public class UserConfigFragment extends Fragment {
         });
 
         btn_back.setOnClickListener(v -> {
+            if (btn_back.isHapticFeedbackEnabled()) {
+                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
+            }
             requireActivity().getSupportFragmentManager().popBackStack();
         });
     }

@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.mordekai.poggtech.R;
@@ -26,6 +27,7 @@ public class UserAccountFragment extends Fragment {
     private TextView helloUser, numberAccount;
     private ImageButton buttonConfig, buttonMyPurchases, buttonMyAds;
     private FirebaseUser currentUser;
+    private BottomNavigationView bottomNavigationView;
     private SharedPrefHelper sharedPrefHelper;
     private User user;
 
@@ -58,6 +60,8 @@ public class UserAccountFragment extends Fragment {
         buttonConfig = view.findViewById(R.id.buttonConfig);
         buttonMyPurchases = view.findViewById(R.id.buttonMyPurchases);
         buttonMyAds = view.findViewById(R.id.buttonMyAds);
+        bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setVisibility(View.VISIBLE);
 
         buttonConfig.setOnTouchListener((v, event) -> {
             switch (event.getAction()) {

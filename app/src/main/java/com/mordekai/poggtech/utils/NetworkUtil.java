@@ -1,16 +1,16 @@
 package com.mordekai.poggtech.utils;
 
 import android.content.Context;
-import android.media.browse.MediaBrowser;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
+
 
 import com.mordekai.poggtech.data.callback.ConnectionCallback;
 import com.mordekai.poggtech.data.model.ApiResponse;
 import com.mordekai.poggtech.data.remote.ApiService;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,6 +40,7 @@ public class NetworkUtil {
 
             @Override
             public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
+                Log.e("NetworkUtil", "Erro ao conectar ao servidor: " + t.getMessage());
                 callback.onResult(false);
             }
         });

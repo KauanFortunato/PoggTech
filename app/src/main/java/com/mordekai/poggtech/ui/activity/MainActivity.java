@@ -17,7 +17,6 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mordekai.poggtech.R;
-import com.mordekai.poggtech.data.callback.ConnectionCallback;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.ui.fragments.CartFragment;
 import com.mordekai.poggtech.ui.fragments.ChatFragment;
