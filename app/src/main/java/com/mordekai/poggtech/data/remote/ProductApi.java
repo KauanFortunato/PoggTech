@@ -21,10 +21,9 @@ public interface ProductApi {
     @GET("GetProductsByCategory.php")
     Call<List<Product>> getProductsByCategory(@Query("category") String category);
 
-    @FormUrlEncoded
-    @POST("GetProduct.php")
+    @GET("GetProduct.php")
     Call<Product> getProductById(
-            @Field("product_id") int product_id
+            @Query("product_id") int product_id
     );
 
     @FormUrlEncoded

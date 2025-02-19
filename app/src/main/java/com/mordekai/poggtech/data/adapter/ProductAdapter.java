@@ -1,5 +1,6 @@
 package com.mordekai.poggtech.data.adapter;
 
+import android.content.Context;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     private List<Integer> favoriteIds = new ArrayList<>();
     private final int userId;
     private HomeFragment homeFragment;
+
+    public interface OnProductClickListener {
+        void onProductClick(Product product);
+    }
 
     public ProductAdapter(List<Product> products, int userId, HomeFragment homeFragment) {
         this.products = products;
@@ -96,6 +101,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 holder.productImage.getContext())
                 .load(product.getImage_url())
                 .into(holder.productImage);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (homeFragment instanceof OnProductClickListener) {
+                    ((OnProductClickListener) homeFragment).onProductClick(product);
+                }
+            }
+        });
     }
 
     @Override

@@ -45,7 +45,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements ProductAdapter.OnProductClickListener {
 
     private SharedPrefHelper sharedPrefHelper;
     private LinearLayout containerProductsHome;
@@ -62,6 +62,20 @@ public class HomeFragment extends Fragment {
     private User user;
     private int loadingCount = 0;
     private List<Integer> favoriteIds = new ArrayList<>();
+
+    @Override
+    public void onProductClick(Product product) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("productId", product.getProduct_id());
+
+        ProductDetailsFragment fragment = new ProductDetailsFragment();
+        fragment.setArguments(bundle);
+
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.containerFrame, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
 
     @Nullable
     @Override
