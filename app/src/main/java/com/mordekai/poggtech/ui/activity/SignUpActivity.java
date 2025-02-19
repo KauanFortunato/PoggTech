@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.HapticFeedbackConstants;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -64,6 +65,9 @@ public class SignUpActivity extends AppCompatActivity  {
         btnBack = findViewById(R.id.btn_back);
 
         btnBack.setOnClickListener(view -> {
+            if (btnBack.isHapticFeedbackEnabled()) {
+                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
+            }
             startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
             finish();
         });

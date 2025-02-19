@@ -6,6 +6,7 @@
     <string name="conta">Account</string>
     <string name="enviar">Send</string>
     <string name="enderecoEmail">Email Address</string>
+    <string name="digiteEmail">Enter your email</string>
     <string name="palavraPasse">Password</string>
     <string name="esqueceuSenha">Forgot your password?</string>
     <string name="googleLogin">Login with Google</string>
@@ -49,4 +50,8 @@
     <string name="linkDeRecuperacao">A link to reset your password will be sent to the email address registered in your account.</string>
     <string name="compra">Buying</string>
     <string name="noChat">You don\'t have any chat</string>
+    <string name="recuperarSenha">Recover password</string>
+    <string name="mensagemRecuperarSenha">You will receive an email to reset your password.</string>
+    <string name="checkEmail">Check your email</string>
+    <string name="falhaCheckEmail">Failed to send recovery email</string>
 </resources>
