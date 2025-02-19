@@ -2,6 +2,7 @@ package com.mordekai.poggtech.ui.activity;
 
 import static com.mordekai.poggtech.utils.NetworkUtil.isConnectedXampp;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.mordekai.poggtech.R;
 
 import android.annotation.SuppressLint;
@@ -15,11 +16,13 @@ import android.content.Intent;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -166,6 +169,9 @@ public class LoginActivity extends AppCompatActivity {
         textNaoTemConta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (textNaoTemConta.isHapticFeedbackEnabled()) {
+                    v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
+                }
                 startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
             }
         });
@@ -173,7 +179,10 @@ public class LoginActivity extends AppCompatActivity {
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
+                if (forgotPassword.isHapticFeedbackEnabled()) {
+                    v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
+                }
+                showForgotPasswordDialog();
             }
         });
     }
@@ -228,4 +237,55 @@ public class LoginActivity extends AppCompatActivity {
 
         builder.show();
     }
+
+    private void showForgotPasswordDialog() {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
+
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setPadding(60, 10, 60, 10); // Ajustar as margens conforme necessário
+
+        final EditText inputEmail = new EditText(this);
+        inputEmail.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        inputEmail.setHint(R.string.digiteEmail);
+        layout.addView(inputEmail);
+
+        TextView infoText = new TextView(this);
+        infoText.setText(R.string.mensagemRecuperarSenha);
+        infoText.setTextSize(14); // Tamanho do texto
+        infoText.setTextColor(getResources().getColor(R.color.textTertiary));
+        infoText.setPadding(0, 25, 0, 0);
+        infoText.setGravity(Gravity.CENTER);
+        layout.addView(infoText);
+
+        builder.setTitle(R.string.recuperarSenha);
+        builder.setBackground(getResources().getDrawable(R.drawable.card_product_background, null));
+        builder.setView(layout);
+
+        builder.setPositiveButton(R.string.enviar, (dialog, which) -> {
+            String email = inputEmail.getText().toString();
+            resetUserPassword(email);
+        });
+        builder.setNegativeButton(R.string.cancelar, (dialog, which) -> dialog.cancel());
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+
+    private void resetUserPassword(String email) {
+        if (!TextUtils.isEmpty(email)) {
+            FirebaseAuth.getInstance().sendPasswordResetEmail(email)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(LoginActivity.this, R.string.checkEmail, Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(LoginActivity.this, R.string.falhaCheckEmail, Toast.LENGTH_LONG).show();
+                        }
+                    });
+        } else {
+            Toast.makeText(LoginActivity.this, "Digite um e-mail válido.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

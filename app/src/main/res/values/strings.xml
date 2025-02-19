@@ -5,6 +5,7 @@
     <string name="conta">Conta</string>
     <string name="enviar">Enviar</string>
     <string name="enderecoEmail">Endereço de email</string>
+    <string name="digiteEmail">Digite seu e-mail</string>
     <string name="palavraPasse">Palavra passe</string>
     <string name="esqueceuSenha">Esqueceu a sua senha?</string>
     <string name="googleLogin">Entrar com Google</string>
@@ -37,6 +38,10 @@
     <string name="noFavProducts">Você não tem produtos favoritos</string>
     <string name="noCartProducts">Seu carrinho está vázio</string>
     <string name="noChat">Você não tem nenhum chat</string>
+    <string name="recuperarSenha">Recuperar senha</string>
+    <string name="mensagemRecuperarSenha">Você receberá um e-mail para redefinir sua senha.</string>
+    <string name="checkEmail">Check o seu email</string>
+    <string name="falhaCheckEmail">Falha ao enviar e-mail de recuperação</string>
 
     <!-- Chat -->
     <string name="chat" translatable="false">Chat</string>

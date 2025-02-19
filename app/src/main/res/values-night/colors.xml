@@ -1,4 +1,6 @@
 <resources>
+    <color name="colorWhite">#FFFFFF</color>
+
     <color name="colorPrimary">#1565C0</color>
     <color name="colorPrimaryVariant">#1E88E5</color>
     <color name="colorOnPrimary">#FFFFFF</color>
