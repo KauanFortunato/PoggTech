@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.mordekai.poggtech.R;
@@ -216,6 +217,10 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
         containerProductsHome = view.findViewById(R.id.containerProductsHome);
         progressBar = view.findViewById(R.id.progressBar);
         tudoCategorie = view.findViewById(R.id.tudoCategorie);
+        getActivity().findViewById(R.id.bottomNavigationView).setVisibility(View.VISIBLE);
+        getActivity().findViewById(R.id.btnBackHeader).setVisibility(View.GONE);
+
+
         tudoCategorie.setTypeface(tudoCategorie.getTypeface(), tudoCategorie.getTypeface().BOLD);
         tudoCategorie.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
     }
