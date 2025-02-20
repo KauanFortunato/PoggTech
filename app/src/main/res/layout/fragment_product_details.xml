@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/fragment_product_details"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include
+        android:id="@+id/skeletonView"
+        layout="@layout/skeleton_product_details"
+        android:visibility="visible"/>
+
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/scrollView"
+        android:id="@+id/contentView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -92,7 +99,7 @@
                                 android:textSize="13sp"
                                 android:fontFamily="@font/roboto_medium"
                                 android:textColor="@color/textTertiary"
-                                android:text="(1.524)"/>
+                                android:text="(1,524)"/>
                         </LinearLayout>
 
                     </LinearLayout>
@@ -126,7 +133,9 @@
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingVertical="20dp">
+                        android:paddingHorizontal="10dp"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="15dp">
 
                         <ImageView
                             android:id="@+id/productImage"
@@ -205,6 +214,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_black"
+                    android:layout_marginTop="15dp"
                     android:text="poggers"
                     android:textColor="@color/colorSuccess"
                     android:textSize="15sp" />
@@ -221,8 +231,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingVertical="25dp"
-                android:paddingHorizontal="30dp"
+                android:paddingVertical="15dp"
+                android:paddingHorizontal="20dp"
                 android:background="@color/backgroundColor"
                 android:orientation="vertical">
 
@@ -258,7 +268,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Avaliações"
-                        android:textSize="18sp"
+                        android:textSize="28sp"
                         android:textColor="@color/textPrimary"
                         android:fontFamily="@font/roboto_bold"/>
 
@@ -267,6 +277,7 @@
                         android:layout_height="wrap_content"
                         android:text="Ver todas (65) >"
                         android:textSize="14sp"
+                        android:padding="10dp"
                         android:textColor="@color/textSecondary"
                         android:fontFamily="@font/roboto"/>
                 </LinearLayout>
@@ -282,7 +293,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="4.2"
-                        android:textSize="28sp"
+                        android:textSize="22sp"
                         android:textColor="@color/textPrimary"
                         android:fontFamily="@font/roboto_bold"/>
 
@@ -290,36 +301,36 @@
                         android:id="@+id/sellerRating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="18dp"
+                        android:layout_marginHorizontal="10dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
                             android:src="@drawable/ic_star_filled" />
                         <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
                             android:src="@drawable/ic_star_filled" />
                         <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
                             android:src="@drawable/ic_star_filled" />
                         <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
                             android:src="@drawable/ic_star_filled" />
                         <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
                             android:src="@drawable/ic_star" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="121 avaliações"
-                            android:layout_marginStart="10dp"
+                            android:text="1,524"
+                            android:layout_marginStart="5dp"
                             android:textSize="15sp"
                             android:textColor="@color/textSecondary"
                             android:fontFamily="@font/roboto_medium"/>

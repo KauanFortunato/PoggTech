@@ -19,7 +19,7 @@
         <ImageView
             android:id="@+id/productImage"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="90dp"
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
             android:src="@drawable/xbox_series_x" />

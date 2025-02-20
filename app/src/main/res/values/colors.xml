@@ -38,4 +38,7 @@
 
     <!--  Opacity Colors  -->
     <color name="opacityColor">#5C000000</color>
+
+    <color name="skeletonStartColor">#DCDCDC</color>
+    <color name="skeletonCenterColor">#C4C4C4</color>
 </resources>
