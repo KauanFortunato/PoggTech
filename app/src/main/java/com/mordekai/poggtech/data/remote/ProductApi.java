@@ -49,7 +49,14 @@ public interface ProductApi {
     );
 
     @GET("GetUserFavOrCart.php")
-    Call<List<Integer>> getUserFavOrCart(
+    Call<ApiResponse<List<Integer>>> getUserFavOrCart(
+            @Query("user_id") int userId,
+            @Query("tipo") int tipo
+    );
+
+    @GET("VerifyProductOnCart.php")
+    Call<ApiResponse> verifyProductOnCart(
+            @Query("product_id") int productId,
             @Query("user_id") int userId,
             @Query("tipo") int tipo
     );

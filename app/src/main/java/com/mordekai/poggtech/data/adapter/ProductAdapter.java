@@ -1,5 +1,6 @@
 package com.mordekai.poggtech.data.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
@@ -57,12 +58,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         return new ViewHolder(view);
     }
 
+    @SuppressLint("DefaultLocale")
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.ViewHolder holder, int position) {
         Product product = products.get(position);
 
         holder.productTitle.setText(product.getTitle());
-        holder.productPrice.setText("€ " + product.getPrice());
+        holder.productPrice.setText(String.format("%.2f€", product.getPrice()));
         holder.productType.setText(product.getCategory());
 
         if (favoriteIds.contains(product.getProduct_id())) {

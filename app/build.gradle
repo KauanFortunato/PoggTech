@@ -39,6 +39,7 @@ dependencies {
     implementation libs.converter.gson
 
     implementation libs.flexbox
+    implementation libs.shimmer
 
     // Glide
     implementation libs.github.glide

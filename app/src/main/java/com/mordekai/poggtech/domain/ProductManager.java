@@ -1,10 +1,14 @@
 package com.mordekai.poggtech.domain;
 
 
+import android.util.Log;
+
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
+import com.mordekai.poggtech.data.model.ApiResponse;
 import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.remote.ProductApi;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -28,14 +32,17 @@ public class ProductManager {
                             Product product = response.body();
                             callback.onSuccess(product);
                         } else {
+                            Log.e("API_ERROR", "Código: " + response.code() + ", Erro: " + response.errorBody());
                             callback.onFailure(new Exception("Erro ao buscar produto"));
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Product> call, Throwable t) {
-                        callback.onFailure(new Exception("Erro ao buscar produto"));
+                        Log.e("API_ERROR", "Erro na requisição: " + t.getMessage(), t);
+                        callback.onFailure(new Exception("Erro ao buscar produto: " + t.getMessage()));
                     }
+
                 });
     }
 
@@ -81,19 +88,24 @@ public class ProductManager {
 
     public void fetchUserFavOrCart(int userId, int tipo, RepositoryCallback<List<Integer>> callback) {
         productApi.getUserFavOrCart(userId, tipo)
-                .enqueue(new Callback<List<Integer>>() {
+                .enqueue(new Callback<ApiResponse<List<Integer>>>() {
                     @Override
-                    public void onResponse(Call<List<Integer>> call, Response<List<Integer>> response) {
+                    public void onResponse(Call<ApiResponse<List<Integer>>> call, Response<ApiResponse<List<Integer>>> response) {
                         if(response.isSuccessful() && response.body() != null) {
-                            List<Integer> products = response.body();
-                            callback.onSuccess(products);
+                            ApiResponse<List<Integer>> apiResponse = response.body();
+                            if(apiResponse.getData() != null) {
+                                List<Integer> products = apiResponse.getData();
+                                callback.onSuccess(products);
+                            } else {
+                                callback.onSuccess(new ArrayList<>());
+                            }
                         } else {
                             callback.onFailure(new Exception("Erro ao buscar produtos"));
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<List<Integer>> call, Throwable t) {
+                    public void onFailure(Call<ApiResponse<List<Integer>>> call, Throwable t) {
                         callback.onFailure(new Exception("Erro ao buscar produtos: " + t.getMessage()));
                     }
                 });
