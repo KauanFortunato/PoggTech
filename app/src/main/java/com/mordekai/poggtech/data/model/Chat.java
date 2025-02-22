@@ -20,6 +20,12 @@ public class Chat {
     public Chat() {}
 
     // Construtor com parâmetros
+
+    public Chat(int chat_id, int product_id) {
+        this.chat_id = chat_id;
+        this.product_id = product_id;
+    }
+
     public Chat(int id_message, int user_id, int chat_with, String chat_with_name, String chat_with_last_name,
                 int product_id, String product_title, String last_message, String last_message_time,
                 String last_message_time_format) {

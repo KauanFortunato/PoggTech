@@ -1,17 +1,13 @@
 package com.mordekai.poggtech.ui.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -22,9 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.adapter.CategoryAdapter;
 import com.mordekai.poggtech.data.adapter.ProductAdapter;
@@ -32,9 +25,11 @@ import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.Category;
 import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.model.User;
+import com.mordekai.poggtech.data.remote.ApiInteraction;
 import com.mordekai.poggtech.data.remote.ApiService;
-import com.mordekai.poggtech.data.remote.ProductApi;
+import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
+import com.mordekai.poggtech.domain.InteractionManager;
 import com.mordekai.poggtech.domain.ProductManager;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
@@ -42,10 +37,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class HomeFragment extends Fragment implements ProductAdapter.OnProductClickListener {
 
@@ -57,10 +48,12 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
     private CategoryAdapter categoryAdapter;
     private ProductAdapter productAdapter, consolasAdapter, jogosAdapter, acessoryAdapter;
     private ApiService apiService;
-    private ProductApi productApi;
+    private ApiProduct apiProduct;
+    private ApiInteraction apiInteraction;
     private List<Product> productList = new ArrayList<>();
     private List<Product> productForYouList = new ArrayList<>();
     private ProductManager productManager;
+    private InteractionManager interactionManager;
     private List<Category> categoryList = new ArrayList<>();
     private User user;
     private int loadingCount = 0;
@@ -74,6 +67,18 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
 
         ProductDetailsFragment fragment = new ProductDetailsFragment();
         fragment.setArguments(bundle);
+
+        interactionManager.userInteraction(product.getProduct_id(), user.getUserId(), "view",new RepositoryCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("API_RESPONSE", "Interaction result: " + result);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("API_RESPONSE", "Error in userInteraction", t);
+            }
+        });
 
         getParentFragmentManager().beginTransaction()
                 .replace(R.id.containerFrame, fragment)
@@ -115,10 +120,13 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
         rvProducts.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rvProducts.setNestedScrollingEnabled(false);
 
-        productApi = RetrofitClient.getRetrofitInstance().create(ProductApi.class);
-        productManager = new ProductManager(productApi);
+        apiProduct = RetrofitClient.getRetrofitInstance().create(ApiProduct.class);
+        productManager = new ProductManager(apiProduct);
         productAdapter = new ProductAdapter(productList, user.getUserId(), this);
         rvProducts.setAdapter(productAdapter);
+
+        apiInteraction = RetrofitClient.getRetrofitInstance().create(ApiInteraction.class);
+        interactionManager = new InteractionManager(apiInteraction);
 
         fetchAllProducts();
         return view;

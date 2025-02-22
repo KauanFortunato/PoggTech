@@ -13,7 +13,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
-public interface MessageApi {
+public interface ApiMessage {
 
     @FormUrlEncoded
     @POST("SendMessage.php")
@@ -39,5 +39,17 @@ public interface MessageApi {
     @GET("GetUserChatsSell.php")
     Call<List<Chat>> getUserChatsSell(
             @Query("user_id") int user_id
+    );
+
+    @GET("GetChat.php")
+    Call<ApiResponse<Chat>> getChat(
+            @Query("user_id") int user_id,
+            @Query("product_id") int product_id
+    );
+
+    @FormUrlEncoded
+    @POST("CreateChat.php")
+    Call<ApiResponse<Integer>> createChat(
+            @Field("product_id") int product_id
     );
 }

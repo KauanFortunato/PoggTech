@@ -45,6 +45,7 @@
     <string name="falhaCheckEmail">Falha ao enviar e-mail de recuperação</string>
     <string name="antes">Antes</string>
     <string name="infoPoggersProduct">Os preços dos produtos vendidos pela PoggTech, que são “poggers” já incluem IVA.</string>
+    <string name="iniciarChat">Iniciar chat</string>
 
     <!-- Chat -->
     <string name="chat" translatable="false">Chat</string>

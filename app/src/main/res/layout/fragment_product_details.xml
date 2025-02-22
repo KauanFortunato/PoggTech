@@ -21,12 +21,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="10dp"
-                android:paddingVertical="15dp"
+                android:paddingBottom="15dp"
                 android:background="@drawable/section_divisor"
                 android:orientation="vertical">
 
@@ -231,8 +232,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingVertical="15dp"
-                android:paddingHorizontal="20dp"
+                android:paddingVertical="10dp"
                 android:background="@color/backgroundColor"
                 android:orientation="vertical">
 
@@ -241,9 +241,72 @@
                     style="@style/Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Iniciar chat"
+                    android:layout_marginHorizontal="30dp"
+                    android:text="@string/add_cart"
                     android:textAllCaps="false"
                     android:textColor="@color/colorOnPrimary" />
+
+                <LinearLayout
+                    android:id="@+id/contactSellerContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:padding="10dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/card_product_background">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_chat_filled" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:fontFamily="@font/roboto_medium"
+                            android:textSize="16sp"
+                            android:textColor="@color/textPrimary"
+                            android:text="Envie uma mensagem ao vendedor"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginHorizontal="2dp"
+                        android:layout_height="42dp"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/inputText"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:text="Oi, esse item está disponível?"
+                            android:hint="Mensagem"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/roboto"
+                            android:textSize="14sp"
+                            android:background="@drawable/background_input"
+                            android:paddingHorizontal="15dp"/>
+
+                        <ImageButton
+                            android:id="@+id/btnSend"
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
+                            android:layout_gravity="center_vertical|end"
+                            android:background="@drawable/rounded_full_button"
+                            android:layout_marginStart="8dp"
+                            android:contentDescription="Enviar mensagem_button"
+                            android:src="@drawable/ic_send" />
+                    </LinearLayout>
+
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout

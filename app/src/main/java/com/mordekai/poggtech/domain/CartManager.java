@@ -1,11 +1,9 @@
 package com.mordekai.poggtech.domain;
 
-import android.util.Log;
-
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.ApiResponse;
 import com.mordekai.poggtech.data.model.Product;
-import com.mordekai.poggtech.data.remote.ProductApi;
+import com.mordekai.poggtech.data.remote.ApiProduct;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,14 +14,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CartManager {
-    private final ProductApi productApi;
+    private final ApiProduct apiProduct;
 
-    public CartManager(ProductApi productApi) {
-        this.productApi = productApi;
+    public CartManager(ApiProduct apiProduct) {
+        this.apiProduct = apiProduct;
     }
 
     public void addToCart(int product_id, int user_id, int tipo, RepositoryCallback<ResponseBody> callback) {
-        Call<ResponseBody> call = productApi.addToCart(product_id, user_id, tipo);
+        Call<ResponseBody> call = apiProduct.addToCart(product_id, user_id, tipo);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -42,7 +40,7 @@ public class CartManager {
     }
 
     public void removeFromCart(int product_id, int user_id, int tipo, RepositoryCallback<ResponseBody> callback) {
-        Call<ResponseBody> call = productApi.removeFromCart(product_id, user_id, tipo);
+        Call<ResponseBody> call = apiProduct.removeFromCart(product_id, user_id, tipo);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -62,7 +60,7 @@ public class CartManager {
 
 
     public void fetchCartProducts(int userId, int tipo, RepositoryCallback<List<Product>> callback) {
-        productApi.getCartProducts(userId, tipo).enqueue(new Callback<ApiResponse<List<Product>>>() {
+        apiProduct.getCartProducts(userId, tipo).enqueue(new Callback<ApiResponse<List<Product>>>() {
             @Override
             public void onResponse(Call<ApiResponse<List<Product>>> call, Response<ApiResponse<List<Product>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -86,7 +84,7 @@ public class CartManager {
     }
 
     public void verifyProductOnCart(int productId, int userId, int tipo, RepositoryCallback<Boolean> callback) {
-        productApi.verifyProductOnCart(productId, userId, tipo).enqueue(new Callback<ApiResponse>() {
+        apiProduct.verifyProductOnCart(productId, userId, tipo).enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {

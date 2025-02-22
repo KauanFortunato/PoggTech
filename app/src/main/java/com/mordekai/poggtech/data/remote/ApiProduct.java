@@ -7,14 +7,13 @@ import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
-public interface ProductApi {
+public interface ApiProduct {
     @GET("GetAllProducts.php")
     Call<List<Product>> getAllProducts();
 
@@ -59,5 +58,18 @@ public interface ProductApi {
             @Query("product_id") int productId,
             @Query("user_id") int userId,
             @Query("tipo") int tipo
+    );
+
+    @GET("GetPopularProducts.php")
+    Call<List<Product>> getPopularProducts();
+
+    @GET("GetRecommendedProducts.php")
+    Call<List<Product>> getRecommendedProducts(
+            @Query("user_id") int userId
+    );
+
+    @GET("GetProductsFavCategory.php")
+    Call<List<Product>> getProductsFavCategory(
+            @Query("user_id") int userId
     );
 }

@@ -20,7 +20,7 @@ import com.mordekai.poggtech.data.adapter.FavProductAdapter;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.model.User;
-import com.mordekai.poggtech.data.remote.ProductApi;
+import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.CartManager;
 import com.mordekai.poggtech.domain.ProductManager;
@@ -34,7 +34,7 @@ public class FavoritesFragment extends Fragment {
     private User user;
     private FavProductAdapter FavProductAdapter;
     private RecyclerView rvItemsFav;
-    private ProductApi productApi;
+    private ApiProduct apiProduct;
     private ProductManager productManager;
     private CartManager cartManager;
     private List<Product> productList;
@@ -63,9 +63,9 @@ public class FavoritesFragment extends Fragment {
         rvItemsFav.setAdapter(FavProductAdapter);
 
         // Iniciar API e gerenciador de produtos
-        productApi = RetrofitClient.getRetrofitInstance().create(ProductApi.class);
-        productManager = new ProductManager(productApi);
-        cartManager = new CartManager(productApi);
+        apiProduct = RetrofitClient.getRetrofitInstance().create(ApiProduct.class);
+        productManager = new ProductManager(apiProduct);
+        cartManager = new CartManager(apiProduct);
 
         swipeRefreshLayout.setOnRefreshListener(this::fetchFavProducts);
 

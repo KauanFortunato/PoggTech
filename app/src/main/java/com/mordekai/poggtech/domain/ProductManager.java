@@ -6,25 +6,24 @@ import android.util.Log;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.ApiResponse;
 import com.mordekai.poggtech.data.model.Product;
-import com.mordekai.poggtech.data.remote.ProductApi;
+import com.mordekai.poggtech.data.remote.ApiProduct;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ProductManager {
-    private final ProductApi productApi;
+    private final ApiProduct apiProduct;
 
-    public ProductManager(ProductApi productApi) {
-        this.productApi = productApi;
+    public ProductManager(ApiProduct apiProduct) {
+        this.apiProduct = apiProduct;
     }
 
     public void fetchProductById(int product_id, RepositoryCallback<Product> callback) {
-        productApi.getProductById(product_id)
+        apiProduct.getProductById(product_id)
                 .enqueue(new Callback<Product>() {
                     @Override
                     public void onResponse(Call<Product> call, Response<Product> response) {
@@ -47,7 +46,7 @@ public class ProductManager {
     }
 
     public void fetchAllProduct(RepositoryCallback<List<Product>> callback) {
-        productApi.getAllProducts()
+        apiProduct.getAllProducts()
                 .enqueue(new Callback<List<Product>>() {
                     @Override
                     public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
@@ -67,7 +66,7 @@ public class ProductManager {
     }
 
     public void fetchProductsByCategory(String category, RepositoryCallback<List<Product>> callback) {
-        productApi.getProductsByCategory(category)
+        apiProduct.getProductsByCategory(category)
                 .enqueue(new Callback<List<Product>>() {
                     @Override
                     public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
@@ -87,7 +86,7 @@ public class ProductManager {
     }
 
     public void fetchUserFavOrCart(int userId, int tipo, RepositoryCallback<List<Integer>> callback) {
-        productApi.getUserFavOrCart(userId, tipo)
+        apiProduct.getUserFavOrCart(userId, tipo)
                 .enqueue(new Callback<ApiResponse<List<Integer>>>() {
                     @Override
                     public void onResponse(Call<ApiResponse<List<Integer>>> call, Response<ApiResponse<List<Integer>>> response) {
@@ -109,5 +108,63 @@ public class ProductManager {
                         callback.onFailure(new Exception("Erro ao buscar produtos: " + t.getMessage()));
                     }
                 });
+    }
+
+    public void getPopularProducts(RepositoryCallback<List<Product>> callback) {
+        apiProduct.getPopularProducts()
+                .enqueue(new Callback<List<Product>>() {
+                    @Override
+                    public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            List<Product> products = response.body();
+                            callback.onSuccess(products);
+                        } else {
+                            callback.onFailure(new Exception("Erro ao buscar produtos populares"));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Product>> call, Throwable t) {
+                        callback.onFailure(new Exception("Erro ao buscar produtos"));
+                    }
+                });
+    }
+
+    public void getRecommendedProducts(int userId, RepositoryCallback<List<Product>> callback) {
+        apiProduct.getRecommendedProducts(userId).enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Product> products = response.body();
+                    callback.onSuccess(products);
+                } else {
+                    callback.onFailure(new Exception("Erro ao buscar produtos populares"));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+                callback.onFailure(new Exception("Erro ao buscar produtos"));
+            }
+        });
+    }
+
+    public void getProductsFavCategory(int userId, RepositoryCallback<List<Product>> callback) {
+        apiProduct.getProductsFavCategory(userId).enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Product> products = response.body();
+                    callback.onSuccess(products);
+                } else {
+                    callback.onFailure(new Exception("Erro ao buscar produtos populares"));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+                callback.onFailure(new Exception("Erro ao buscar produtos"));
+            }
+        });
     }
 }

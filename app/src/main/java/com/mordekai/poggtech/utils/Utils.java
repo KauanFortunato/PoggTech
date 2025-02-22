@@ -1,0 +1,50 @@
+package com.mordekai.poggtech.utils;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+
+import com.mordekai.poggtech.R;
+import com.mordekai.poggtech.data.model.Chat;
+import com.mordekai.poggtech.ui.fragments.ChatDetailsFragment;
+
+public class Utils {
+    public static void hideKeyboard(Fragment fragment) {
+        View view = fragment.getView();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) fragment.requireContext()
+                    .getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    public static void goToChat(FragmentActivity activity, Chat chat) {
+        if (activity == null || chat == null) return;
+
+        Bundle bundle = new Bundle();
+        bundle.putInt("chat_with_id", chat.getChat_with());
+        bundle.putInt("chat_id", chat.getChat_id());
+        bundle.putString("chat_with_name", chat.getChat_with_name());
+        bundle.putString("chat_with_last_name", chat.getChat_with_last_name());
+        bundle.putInt("product_id", chat.getProduct_id());
+        bundle.putString("product_title", chat.getProduct_title());
+        bundle.putString("product_price", String.valueOf(chat.getProduct_price()));
+        bundle.putString("image_product", chat.getImage_product());
+
+        ChatDetailsFragment chatDetailsFragment = new ChatDetailsFragment();
+        chatDetailsFragment.setArguments(bundle);
+
+
+        FragmentManager fragmentManager = activity.getSupportFragmentManager();
+
+        fragmentManager.beginTransaction()
+                .replace(R.id.containerFrame, chatDetailsFragment) // Certifica-te que o ID está correto
+                .addToBackStack(null) // Permite voltar atrás com o botão de voltar
+                .commit();
+    }
+}

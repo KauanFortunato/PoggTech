@@ -28,7 +28,7 @@ import com.mordekai.poggtech.data.adapter.MessageAdapter;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.Message;
 import com.mordekai.poggtech.data.model.User;
-import com.mordekai.poggtech.data.remote.MessageApi;
+import com.mordekai.poggtech.data.remote.ApiMessage;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.MessageManager;
@@ -44,7 +44,7 @@ public class ChatDetailsFragment extends Fragment {
     private MessageAdapter messageAdapter;
     private MessageManager messageManager;
     private List<Message> messageList;
-    private MessageApi messageApi;
+    private ApiMessage apiMessage;
     private EditText etMessage;
     private ImageButton btnSend;
     private ImageButton btnBack;
@@ -97,11 +97,11 @@ public class ChatDetailsFragment extends Fragment {
         rvMessages.setLayoutManager(new LinearLayoutManager(getContext()));
         rvMessages.setAdapter(messageAdapter);
 
-        messageApi = RetrofitClient.getRetrofitInstance().create(MessageApi.class);
+        apiMessage = RetrofitClient.getRetrofitInstance().create(ApiMessage.class);
 
         // Iniciar API e gerenciador de chats
-        messageApi = RetrofitClient.getRetrofitInstance().create(MessageApi.class);
-        messageManager = new MessageManager(messageApi);
+        apiMessage = RetrofitClient.getRetrofitInstance().create(ApiMessage.class);
+        messageManager = new MessageManager(apiMessage);
 
 //        fetchMessages();
         timer = new Timer();
@@ -172,12 +172,14 @@ public class ChatDetailsFragment extends Fragment {
 
     private void initComponents(View view) {
         bottomNavigationView = getActivity().findViewById(R.id.bottomNavigationView);
+
         imageProduct = view.findViewById(R.id.imageProduct);
         nameUser = view.findViewById(R.id.nameUser);
         productName = view.findViewById(R.id.productName);
         productPrice = view.findViewById(R.id.productPrice);
         btnBack = view.findViewById(R.id.btn_back);
         chatId = view.findViewById(R.id.chatId);
+        getActivity().findViewById(R.id.headerContainer).setVisibility(View.GONE);
 
         rvMessages = view.findViewById(R.id.rvMessage);
         etMessage = view.findViewById(R.id.etMessage);
