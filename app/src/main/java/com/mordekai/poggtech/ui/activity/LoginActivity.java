@@ -32,7 +32,6 @@ import androidx.appcompat.widget.AppCompatButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import com.mordekai.poggtech.data.callback.ConnectionCallback;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.remote.ApiService;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
@@ -41,7 +40,6 @@ import com.mordekai.poggtech.data.repository.FirebaseUserRepository;
 import com.mordekai.poggtech.data.repository.MySqlUserRepository;
 import com.mordekai.poggtech.domain.UserManager;
 import com.mordekai.poggtech.utils.AppConfig;
-import com.mordekai.poggtech.utils.NetworkUtil;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 import com.mordekai.poggtech.utils.SnackbarUtil;
 
@@ -271,7 +269,6 @@ public class LoginActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
-
 
     private void resetUserPassword(String email) {
         if (!TextUtils.isEmpty(email)) {

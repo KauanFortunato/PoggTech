@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,12 +17,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.adapter.CartProductAdapter;
-import com.mordekai.poggtech.data.adapter.ProductAdapter;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
-import com.mordekai.poggtech.data.model.Category;
 import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.model.User;
-import com.mordekai.poggtech.data.remote.ProductApi;
+import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.CartManager;
 import com.mordekai.poggtech.domain.ProductManager;
@@ -32,17 +29,13 @@ import com.mordekai.poggtech.utils.SharedPrefHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class ShoppingCartFragment extends Fragment {
 
     private SharedPrefHelper sharedPrefHelper;
     private User user;
     private CartProductAdapter cartProductAdapter;
     private RecyclerView rvItemsCart;
-    private ProductApi productApi;
+    private ApiProduct apiProduct;
     private ProductManager productManager;
     private CartManager cartManager;
     private List<Product> productList;
@@ -70,9 +63,9 @@ public class ShoppingCartFragment extends Fragment {
         rvItemsCart.setAdapter(cartProductAdapter);
 
         // Iniciar API e gerenciador de produtos
-        productApi = RetrofitClient.getRetrofitInstance().create(ProductApi.class);
-        productManager = new ProductManager(productApi);
-        cartManager = new CartManager(productApi);
+        apiProduct = RetrofitClient.getRetrofitInstance().create(ApiProduct.class);
+        productManager = new ProductManager(apiProduct);
+        cartManager = new CartManager(apiProduct);
 
         swipeRefreshLayout.setOnRefreshListener(this::fetchCartProducts);
 

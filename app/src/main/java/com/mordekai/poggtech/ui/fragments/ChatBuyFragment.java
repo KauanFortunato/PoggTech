@@ -4,10 +4,11 @@ import com.mordekai.poggtech.data.adapter.ChatAdapter;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.Chat;
 import com.mordekai.poggtech.data.model.User;
-import com.mordekai.poggtech.data.remote.MessageApi;
+import com.mordekai.poggtech.data.remote.ApiMessage;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.MessageManager;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
+import com.mordekai.poggtech.utils.Utils;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -31,7 +32,7 @@ public class ChatBuyFragment extends Fragment {
     private ChatAdapter chatAdapter;
     private RecyclerView rvChats;
     private MessageManager messageManager;
-    private MessageApi messageApi;
+    private ApiMessage apiMessage;
     private List<Chat> chatList;
     private ProgressBar progressBar;
     private TextView textNoChats;
@@ -48,24 +49,9 @@ public class ChatBuyFragment extends Fragment {
 
         // Recycler View
         chatList = new ArrayList<>();
+
         chatAdapter = new ChatAdapter(chatList, user.getUserId(), chat -> {
-            Bundle bundle = new Bundle();
-            bundle.putInt("chat_with_id", chat.getChat_with());
-            bundle.putInt("chat_id", chat.getChat_id());
-            bundle.putString("chat_with_name", chat.getChat_with_name());
-            bundle.putString("chat_with_last_name", chat.getChat_with_last_name());
-            bundle.putInt("product_id", chat.getProduct_id());
-            bundle.putString("product_title", chat.getProduct_title());
-            bundle.putString("product_price", String.valueOf(chat.getProduct_price()));
-            bundle.putString("image_product", chat.getImage_product());
-
-            ChatDetailsFragment chatDetailsFragment = new ChatDetailsFragment();
-            chatDetailsFragment.setArguments(bundle);
-
-            requireActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.containerFrame, chatDetailsFragment) // Usa o container correto da MainActivity
-                    .addToBackStack(null)
-                    .commit();
+            Utils.goToChat(requireActivity(), chat);
         });
 
         rvChats.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -73,8 +59,8 @@ public class ChatBuyFragment extends Fragment {
         rvChats.setAdapter(chatAdapter);
 
         // Iniciar API e gerenciador de chats
-        messageApi = RetrofitClient.getRetrofitInstance().create(MessageApi.class);
-        messageManager = new MessageManager(messageApi);
+        apiMessage = RetrofitClient.getRetrofitInstance().create(ApiMessage.class);
+        messageManager = new MessageManager(apiMessage);
 
         swipeRefreshLayout.setOnRefreshListener(this::fetchUserChats);
 

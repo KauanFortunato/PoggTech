@@ -1,15 +1,21 @@
 package com.mordekai.poggtech.ui.fragments;
+
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
+import com.mordekai.poggtech.data.model.Chat;
 import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.model.User;
-import com.mordekai.poggtech.data.remote.ProductApi;
+import com.mordekai.poggtech.data.remote.ApiMessage;
+import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.CartManager;
+import com.mordekai.poggtech.domain.MessageManager;
 import com.mordekai.poggtech.domain.ProductManager;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
+import com.mordekai.poggtech.utils.SnackbarUtil;
+import com.mordekai.poggtech.utils.Utils;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
@@ -21,8 +27,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatButton;
@@ -33,31 +41,38 @@ import okhttp3.ResponseBody;
 public class ProductDetailsFragment extends Fragment {
 
     private TextView titleProduct, category, price, priceDecimal, discount, priceBefore, productPoggers;
-    private AppCompatButton actionPrimaryProduct;
-    private ImageButton favoriteButton;
+    private EditText inputText;
+    private LinearLayout contactSellerContainer;
+    private AppCompatButton actionButton;
+    private ImageButton favoriteButton, btnSend;
     private View skeletonView, contentView;
     private ImageView productImage;
     private CartManager cartManager;
     private ProductManager productManager;
-    private ProductApi productApi;
+    private MessageManager messageManager;
+    private ApiProduct apiProduct;
     private SharedPrefHelper sharedPrefHelper;
     private Boolean isFavorite;
+    private Chat chatProduct;
     private User user;
+    private Product product;
     private int productId;
 
     private BottomNavigationView bottomNavigationView;
 
+    @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product_details, container, false);
 
-        // Obtemos as referências das Views
+        // Referencias das views
         skeletonView = view.findViewById(R.id.skeletonView);
         animateContentView(skeletonView);
         contentView = view.findViewById(R.id.contentView);
 
         sharedPrefHelper = new SharedPrefHelper(requireContext());
         user = sharedPrefHelper.getUser();
-        cartManager = new CartManager(RetrofitClient.getRetrofitInstance().create(ProductApi.class));
+        cartManager = new CartManager(RetrofitClient.getRetrofitInstance().create(ApiProduct.class));
+        messageManager = new MessageManager(RetrofitClient.getRetrofitInstance().create(ApiMessage.class));
 
         if (getArguments() != null) {
             productId = getArguments().getInt("productId");
@@ -66,8 +81,8 @@ public class ProductDetailsFragment extends Fragment {
         startComponents(contentView);
         verifyProductIsFavorite(productId, user.getUserId(), 1);
 
-        productApi = RetrofitClient.getRetrofitInstance().create(ProductApi.class);
-        productManager = new ProductManager(productApi);
+        apiProduct = RetrofitClient.getRetrofitInstance().create(ApiProduct.class);
+        productManager = new ProductManager(apiProduct);
 
         // Iniciar animação do Skeleton
         animateSkeleton(skeletonView);
@@ -82,9 +97,10 @@ public class ProductDetailsFragment extends Fragment {
         new android.os.Handler().postDelayed(() -> {
             productManager.fetchProductById(productId, new RepositoryCallback<Product>() {
                 @Override
-                public void onSuccess(Product product) {
-                    if (product != null) {
-                        updateUIWithProduct(product);
+                public void onSuccess(Product productDetails) {
+                    if (productDetails != null) {
+                        product = productDetails;
+                        updateUIWithProduct();
 
                         // Esconder Skeleton e mostrar conteúdo real
                         skeletonView.setVisibility(View.GONE);
@@ -102,8 +118,95 @@ public class ProductDetailsFragment extends Fragment {
         }, 400);
     }
 
+    private void sendMessage() {
+        verifyIfChatExist(new RepositoryCallback<Chat>() {
+            @Override
+            public void onSuccess(Chat chat) {
+                if (chat != null) {
+                    chatProduct = chat;
+                    sendMessageToChat();
+                } else {
+                    createNewChat();
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                SnackbarUtil.showErrorSnackbar(getView(), "Erro ao verificar chat: " + t.getMessage(), getContext());
+            }
+        });
+    }
+
+    private void verifyIfChatExist(RepositoryCallback<Chat> callback) {
+        messageManager.fetchChat(user.getUserId(), productId, new RepositoryCallback<Chat>() {
+            @Override
+            public void onSuccess(Chat chat) {
+                callback.onSuccess(chat);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                callback.onFailure(t);
+            }
+        });
+    }
+
+    private void createNewChat() {
+        messageManager.createChat(productId, new RepositoryCallback<Integer>() {
+            @Override
+            public void onSuccess(Integer chatId) {
+                if (chatId != null) {
+                    chatProduct = new Chat(chatId, productId); // Criar um objeto Chat com o ID correto
+                    sendMessageToChat();
+                } else {
+                    SnackbarUtil.showErrorSnackbar(getView(), "Erro ao obter chat_id", getContext());
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                SnackbarUtil.showErrorSnackbar(getView(), "Erro ao criar chat: " + t.getMessage(), getContext());
+            }
+        });
+    }
+
+    private void sendMessageToChat() {
+        if (chatProduct != null) {
+            messageManager.sendMessage(
+                    user.getUserId(),
+                    product.getUser_id(),
+                    chatProduct.getChat_id(),
+                    inputText.getText().toString(),
+                    new RepositoryCallback<String>() {
+                        @Override
+                        public void onSuccess(String result) {
+                            Log.d("ProductDetailsFragment", "Mensagem enviada: " + result);
+                            verifyIfChatExist(new RepositoryCallback<Chat>() {
+                                @Override
+                                public void onSuccess(Chat result) {
+                                    Utils.goToChat(requireActivity(), result);
+                                }
+
+                                @Override
+                                public void onFailure(Throwable t) {
+                                    SnackbarUtil.showErrorSnackbar(getView(), "Erro ao buscar chat: " + t.getMessage(), getContext());
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onFailure(Throwable t) {
+                            SnackbarUtil.showErrorSnackbar(getView(), "Erro ao enviar mensagem: " + t.getMessage(), getContext());
+                        }
+                    }
+            );
+        }
+    }
+
     @SuppressLint("DefaultLocale")
-    private void updateUIWithProduct(Product product) {
+    private void updateUIWithProduct() {
+        Log.d("ProductDetailsFragment", "Logs: " + product.getUser_id() + " " + productId);
+
         float priceTotal = product.getPrice() != null ? product.getPrice() : 0f;
         int integerPart = (int) priceTotal;
         int cents = Math.round((priceTotal - integerPart) * 100);
@@ -113,6 +216,15 @@ public class ProductDetailsFragment extends Fragment {
         price.setText(String.valueOf(integerPart));
         priceDecimal.setText(String.format("%02d€", cents));
         Log.d("ProductDetailsFragment", "Logs: " + product.getDiscountPercentage());
+
+        if(product.getUser_id() != user.getUserId()) {
+            actionButton.setVisibility(View.GONE);
+            contactSellerContainer.setVisibility(View.VISIBLE);
+        } else {
+            actionButton.setBackgroundResource(R.drawable.background_button_unable);
+            actionButton.setVisibility(View.VISIBLE);
+            contactSellerContainer.setVisibility(View.GONE);
+        }
 
         if (product.getDiscountPercentage() != null && product.getDiscountPercentage() > 0) {
             priceBefore.setText(String.format("%s %.2f€", getString(R.string.antes),
@@ -127,6 +239,21 @@ public class ProductDetailsFragment extends Fragment {
         Glide.with(productImage.getContext())
                 .load(product.getImage_url())
                 .into(productImage);
+
+
+        btnSend.setOnClickListener(v -> {
+            if(!inputText.getText().toString().isEmpty()) {
+                if(btnSend.isHapticFeedbackEnabled()) {
+                    btnSend.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
+                }
+                sendMessage();
+            } else {
+                if(btnSend.isHapticFeedbackEnabled()) {
+                    btnSend.performHapticFeedback(HapticFeedbackConstants.REJECT);
+                }
+                inputText.setError("Escreva uma mensagem");
+            }
+        });
     }
 
     private void updateFavoriteButton(boolean isFavorite) {
@@ -208,7 +335,10 @@ public class ProductDetailsFragment extends Fragment {
         priceBefore = view.findViewById(R.id.priceBefore);
         productPoggers = view.findViewById(R.id.productPoggers);
         productImage = view.findViewById(R.id.productImage);
-        actionPrimaryProduct = view.findViewById(R.id.actionPrimaryProduct);
+        actionButton = view.findViewById(R.id.actionPrimaryProduct);
+        inputText = view.findViewById(R.id.inputText);
+        contactSellerContainer = view.findViewById(R.id.contactSellerContainer);
+        btnSend = view.findViewById(R.id.btnSend);
 
         favoriteButton.setOnClickListener(v -> {
             if(favoriteButton.isHapticFeedbackEnabled()) {
@@ -224,6 +354,7 @@ public class ProductDetailsFragment extends Fragment {
 
         getActivity().findViewById(R.id.bottomNavigationView).setVisibility(View.GONE);
         getActivity().findViewById(R.id.btnBackHeader).setVisibility(View.VISIBLE);
+        getActivity().findViewById(R.id.headerContainer).setVisibility(View.VISIBLE);
     }
 
     private void animateSkeleton(View view) {

@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.Product;
-import com.mordekai.poggtech.data.remote.ProductApi;
+import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.CartManager;
 
@@ -98,7 +98,7 @@ public class FavProductAdapter extends RecyclerView.Adapter<FavProductAdapter.Vi
     }
 
     private void removeFromFavorites(int productId, View view, int position) {
-        CartManager cartManager = new CartManager(RetrofitClient.getRetrofitInstance().create(ProductApi.class));
+        CartManager cartManager = new CartManager(RetrofitClient.getRetrofitInstance().create(ApiProduct.class));
         cartManager.removeFromCart(productId, userId, 1, new RepositoryCallback<ResponseBody>() {
             @Override
             public void onSuccess(ResponseBody result) {
@@ -116,7 +116,7 @@ public class FavProductAdapter extends RecyclerView.Adapter<FavProductAdapter.Vi
     }
 
     private void addToCart(int productId, View view, int position) {
-        CartManager cartManager = new CartManager(RetrofitClient.getRetrofitInstance().create(ProductApi.class));
+        CartManager cartManager = new CartManager(RetrofitClient.getRetrofitInstance().create(ApiProduct.class));
         cartManager.addToCart(productId, userId, 0, new RepositoryCallback<ResponseBody>() {
             @Override
             public void onSuccess(ResponseBody result) {

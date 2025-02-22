@@ -1,7 +1,6 @@
 package com.mordekai.poggtech.data.adapter;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,7 @@ import com.bumptech.glide.Glide;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.Product;
-import com.mordekai.poggtech.data.remote.ProductApi;
+import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.CartManager;
 import com.mordekai.poggtech.ui.fragments.HomeFragment;
@@ -126,7 +125,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     }
 
     private void addToFavorites(int productId, View view, int position) {
-        CartManager cartManager = new CartManager(RetrofitClient.getRetrofitInstance().create(ProductApi.class));
+        CartManager cartManager = new CartManager(RetrofitClient.getRetrofitInstance().create(ApiProduct.class));
         cartManager.addToCart(productId, userId, 1, new RepositoryCallback<ResponseBody>() {
             @Override
             public void onSuccess(ResponseBody result) {
@@ -142,7 +141,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     }
 
     private void removeFromFavorites(int productId, View view, int position) {
-        CartManager cartManager = new CartManager(RetrofitClient.getRetrofitInstance().create(ProductApi.class));
+        CartManager cartManager = new CartManager(RetrofitClient.getRetrofitInstance().create(ApiProduct.class));
         cartManager.removeFromCart(productId, userId, 1, new RepositoryCallback<ResponseBody>() {
             @Override
             public void onSuccess(ResponseBody result) {
