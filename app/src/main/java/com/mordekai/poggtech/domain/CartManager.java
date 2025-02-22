@@ -1,5 +1,7 @@
 package com.mordekai.poggtech.domain;
 
+import android.util.Log;
+
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.ApiResponse;
 import com.mordekai.poggtech.data.model.Product;
@@ -79,6 +81,34 @@ public class CartManager {
             @Override
             public void onFailure(Call<ApiResponse<List<Product>>> call, Throwable t) {
                 callback.onFailure(new Exception("Erro ao buscar produtos: " + t.getMessage()));
+            }
+        });
+    }
+
+    public void verifyProductOnCart(int productId, int userId, int tipo, RepositoryCallback<Boolean> callback) {
+        productApi.verifyProductOnCart(productId, userId, tipo).enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ApiResponse apiResponse = response.body();
+
+                    if(apiResponse.getData() != null) {
+                        int tipoProdutoApi = (int) Float.parseFloat(String.format("%f", apiResponse.getData()));
+
+                        if (tipo == tipoProdutoApi) {
+                            callback.onSuccess(true);
+                        } else {
+                            callback.onSuccess(false);
+                        }
+                    } else {
+                        callback.onSuccess(false);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
+                callback.onFailure(new Exception("Erro ao verificar se o produto está nos favoritos: " + t.getMessage()));
             }
         });
     }

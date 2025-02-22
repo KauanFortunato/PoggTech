@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">PoggTech</string>
+    <string name="poggers" translatable="false">poggers</string>
     <string name="login">Login</string>
     <string name="cadastrar">Cadastrar</string>
     <string name="conta">Conta</string>
@@ -42,6 +43,8 @@
     <string name="mensagemRecuperarSenha">Você receberá um e-mail para redefinir sua senha.</string>
     <string name="checkEmail">Check o seu email</string>
     <string name="falhaCheckEmail">Falha ao enviar e-mail de recuperação</string>
+    <string name="antes">Antes</string>
+    <string name="infoPoggersProduct">Os preços dos produtos vendidos pela PoggTech, que são “poggers” já incluem IVA.</string>
 
     <!-- Chat -->
     <string name="chat" translatable="false">Chat</string>

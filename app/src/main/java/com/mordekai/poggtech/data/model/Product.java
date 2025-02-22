@@ -6,13 +6,16 @@ public class Product {
     private String title;
     private String description;
     private Float price;
+    private Float price_before;
+    private Float discount_percentage;
     private String category;
     private String image_url;
     private String created_at;
     private String updated_at;
     public String seller_type;
-    // GET and SETTERS
 
+
+    // GET and SETTERS
     public int getProduct_id() {
         return product_id;
     }
@@ -32,6 +35,15 @@ public class Product {
     public Float getPrice() {
         return price;
     }
+
+    public Float getPriceBefore() {
+        return price_before;
+    }
+
+    public Float getDiscountPercentage() {
+        return discount_percentage;
+    }
+
 
     public String getCategory() {
         return category;

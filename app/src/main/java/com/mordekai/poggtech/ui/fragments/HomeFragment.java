@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -52,17 +53,19 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
     private LinearLayout containerProductsHome;
     private TextView tudoCategorie;
     private ProgressBar progressBar;
-    private RecyclerView rvProducts, rvConsolas, rvJogos, rvAcessory;
+    private RecyclerView rvProducts, rvConsolas, rvJogos, rvAcessory, rvContinueBuySkeleton, rvContinueBuy;
     private CategoryAdapter categoryAdapter;
     private ProductAdapter productAdapter, consolasAdapter, jogosAdapter, acessoryAdapter;
     private ApiService apiService;
     private ProductApi productApi;
     private List<Product> productList = new ArrayList<>();
+    private List<Product> productForYouList = new ArrayList<>();
     private ProductManager productManager;
     private List<Category> categoryList = new ArrayList<>();
     private User user;
     private int loadingCount = 0;
     private List<Integer> favoriteIds = new ArrayList<>();
+    private ShimmerFrameLayout shimmerContinueBuy;
 
     @Override
     public void onProductClick(Product product) {
@@ -87,6 +90,9 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
         user = sharedPrefHelper.getUser();
 
         startComponentes(view);
+
+//        setupSkeletonLoader();
+
         progressBar.setVisibility(View.VISIBLE);
         containerProductsHome.setVisibility(View.GONE);
 
@@ -113,16 +119,9 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
         productManager = new ProductManager(productApi);
         productAdapter = new ProductAdapter(productList, user.getUserId(), this);
         rvProducts.setAdapter(productAdapter);
-        applyRecyclerViewAnimation(rvProducts);
 
         fetchAllProducts();
         return view;
-    }
-
-    private void applyRecyclerViewAnimation(RecyclerView recyclerView) {
-        Context context = requireContext();
-        LayoutAnimationController animationController = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_slide);
-        recyclerView.setLayoutAnimation(animationController);
     }
 
     private void fetchAllProducts() {
@@ -157,7 +156,6 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
                             favoriteIds.clear();
                             favoriteIds.addAll(favorites);
 
-                            // Garante que todos os adaptadores usam a mesma lista de favoritos
                             updateAllAdapters();
                         }
 
@@ -217,6 +215,14 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
         containerProductsHome = view.findViewById(R.id.containerProductsHome);
         progressBar = view.findViewById(R.id.progressBar);
         tudoCategorie = view.findViewById(R.id.tudoCategorie);
+        rvContinueBuySkeleton = view.findViewById(R.id.rvContinueBuySkeleton);
+        rvContinueBuy = view.findViewById(R.id.rvContinueBuy);
+        shimmerContinueBuy = view.findViewById(R.id.shimmerContinueBuy);
+
+        shimmerContinueBuy.startShimmer();
+        shimmerContinueBuy.setVisibility(View.VISIBLE);
+        rvContinueBuy.setVisibility(View.GONE);
+
         getActivity().findViewById(R.id.bottomNavigationView).setVisibility(View.VISIBLE);
         getActivity().findViewById(R.id.btnBackHeader).setVisibility(View.GONE);
 
@@ -224,4 +230,15 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
         tudoCategorie.setTypeface(tudoCategorie.getTypeface(), tudoCategorie.getTypeface().BOLD);
         tudoCategorie.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
     }
+
+    private void setupSkeletonLoader() {
+        List<Product> fakeList = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            fakeList.add(new Product());
+        }
+
+        ProductAdapter skeletonAdapter = new ProductAdapter(fakeList, user.getUserId(), this);
+        rvContinueBuySkeleton.setAdapter(skeletonAdapter);
+    }
+
 }
