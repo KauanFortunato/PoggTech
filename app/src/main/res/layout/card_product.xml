@@ -2,9 +2,9 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="220dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_margin="5dp"
     app:cardElevation="0dp"
     app:cardCornerRadius="13dp">
 
@@ -19,7 +19,7 @@
         <ImageView
             android:id="@+id/productImage"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="130dp"
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
             android:padding="10dp"
@@ -82,7 +82,7 @@
                 android:fontFamily="@font/roboto_medium"
                 android:paddingTop="0dp"
                 android:text="€ 635,29"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/textPrimary"/>
         </LinearLayout>

@@ -2,11 +2,11 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="110dp"
+    android:layout_width="115dp"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
+    android:layout_margin="5dp"
     app:cardCornerRadius="15dp"
-    app:cardElevation="0dp">
+    app:cardElevation="2dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,9 +19,11 @@
         <ImageView
             android:id="@+id/productImage"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="95dp"
+            android:padding="5dp"
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
+            android:background="@drawable/background_image_product"
             android:src="@drawable/xbox_series_x" />
 
         <!-- Título do Produto -->
@@ -29,11 +31,11 @@
             android:id="@+id/productTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Continuar a comprar ..."
+            android:text="Continuar a comprar..."
             android:textColor="@color/textPrimary"
             android:fontFamily="@font/roboto"
             android:textSize="13sp"
-            android:paddingTop="4dp"
+            android:paddingTop="8dp"
             android:maxLines="2"
             android:ellipsize="end"
             android:scrollHorizontally="false"

@@ -61,15 +61,16 @@ public interface ApiProduct {
     );
 
     @GET("GetPopularProducts.php")
-    Call<List<Product>> getPopularProducts();
+    Call<ApiResponse<List<Product>>> getPopularProducts();
 
     @GET("GetRecommendedProducts.php")
-    Call<List<Product>> getRecommendedProducts(
+    Call<ApiResponse<List<Product>>> getRecommendedProducts(
             @Query("user_id") int userId
     );
 
     @GET("GetProductsFavCategory.php")
-    Call<List<Product>> getProductsFavCategory(
-            @Query("user_id") int userId
+    Call<ApiResponse<List<Product>>> getProductsFavCategory(
+            @Query("user_id") int userId,
+            @Query("quantity") int quantity
     );
 }

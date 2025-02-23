@@ -53,7 +53,7 @@
     <string name="venda">Vendendo</string>
 
     <!-- Home -->
-    <string name="paraVoce">Para você</string>
+    <string name="paraVoce">Ofertas para si</string>
     <string name="consolas" translatable="false">Consolas</string>
     <string name="jogos">Jogos</string>
     <string name="acessorios">Acessorios</string>
