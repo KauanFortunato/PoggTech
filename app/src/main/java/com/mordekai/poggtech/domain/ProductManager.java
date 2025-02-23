@@ -112,11 +112,11 @@ public class ProductManager {
 
     public void getPopularProducts(RepositoryCallback<List<Product>> callback) {
         apiProduct.getPopularProducts()
-                .enqueue(new Callback<List<Product>>() {
+                .enqueue(new Callback<ApiResponse<List<Product>>>() {
                     @Override
-                    public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                    public void onResponse(Call<ApiResponse<List<Product>>> call, Response<ApiResponse<List<Product>>> response) {
                         if (response.isSuccessful() && response.body() != null) {
-                            List<Product> products = response.body();
+                            List<Product> products = response.body().getData();
                             callback.onSuccess(products);
                         } else {
                             callback.onFailure(new Exception("Erro ao buscar produtos populares"));
@@ -124,45 +124,45 @@ public class ProductManager {
                     }
 
                     @Override
-                    public void onFailure(Call<List<Product>> call, Throwable t) {
+                    public void onFailure(Call<ApiResponse<List<Product>>> call, Throwable t) {
                         callback.onFailure(new Exception("Erro ao buscar produtos"));
                     }
                 });
     }
 
     public void getRecommendedProducts(int userId, RepositoryCallback<List<Product>> callback) {
-        apiProduct.getRecommendedProducts(userId).enqueue(new Callback<List<Product>>() {
+        apiProduct.getRecommendedProducts(userId).enqueue(new Callback<ApiResponse<List<Product>>>() {
             @Override
-            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+            public void onResponse(Call<ApiResponse<List<Product>>> call, Response<ApiResponse<List<Product>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Product> products = response.body();
+                    List<Product> products = response.body().getData();
                     callback.onSuccess(products);
                 } else {
-                    callback.onFailure(new Exception("Erro ao buscar produtos populares"));
+                    callback.onFailure(new Exception("Erro ao buscar produtos recomendados"));
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Product>> call, Throwable t) {
+            public void onFailure(Call<ApiResponse<List<Product>>> call, Throwable t) {
                 callback.onFailure(new Exception("Erro ao buscar produtos"));
             }
         });
     }
 
-    public void getProductsFavCategory(int userId, RepositoryCallback<List<Product>> callback) {
-        apiProduct.getProductsFavCategory(userId).enqueue(new Callback<List<Product>>() {
+    public void getProductsFavCategory(int userId, int quantity, RepositoryCallback<List<Product>> callback) {
+        apiProduct.getProductsFavCategory(userId, quantity).enqueue(new Callback<ApiResponse<List<Product>>>() {
             @Override
-            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+            public void onResponse(Call<ApiResponse<List<Product>>> call, Response<ApiResponse<List<Product>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Product> products = response.body();
+                    List<Product> products = response.body().getData();
                     callback.onSuccess(products);
                 } else {
-                    callback.onFailure(new Exception("Erro ao buscar produtos populares"));
+                    callback.onFailure(new Exception("Erro ao buscar produtos pela categoria"));
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Product>> call, Throwable t) {
+            public void onFailure(Call<ApiResponse<List<Product>>> call, Throwable t) {
                 callback.onFailure(new Exception("Erro ao buscar produtos"));
             }
         });

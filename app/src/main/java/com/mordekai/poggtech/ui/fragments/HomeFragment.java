@@ -1,5 +1,6 @@
 package com.mordekai.poggtech.ui.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +23,7 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.adapter.CategoryAdapter;
 import com.mordekai.poggtech.data.adapter.ProductAdapter;
+import com.mordekai.poggtech.data.adapter.ProductContinueAdapter;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.Category;
 import com.mordekai.poggtech.data.model.Product;
@@ -34,19 +37,18 @@ import com.mordekai.poggtech.domain.ProductManager;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class HomeFragment extends Fragment implements ProductAdapter.OnProductClickListener {
+public class HomeFragment extends Fragment implements ProductAdapter.OnProductClickListener, ProductContinueAdapter.OnProductContinueClickListener {
 
     private SharedPrefHelper sharedPrefHelper;
     private LinearLayout containerProductsHome;
     private TextView tudoCategorie;
     private ProgressBar progressBar;
-    private RecyclerView rvProducts, rvConsolas, rvJogos, rvAcessory, rvContinueBuySkeleton, rvContinueBuy;
+    private RecyclerView rvForYou, rvConsolas, rvPopular, rvAcessory, rvContinueBuySkeleton, rvContinueBuy;
     private CategoryAdapter categoryAdapter;
-    private ProductAdapter productAdapter, consolasAdapter, jogosAdapter, acessoryAdapter;
+    private ProductAdapter forYouAdapter, consolasAdapter, popularAdapter, acessoryAdapter;
+    private ProductContinueAdapter productContinueAdapter;
     private ApiService apiService;
     private ApiProduct apiProduct;
     private ApiInteraction apiInteraction;
@@ -96,121 +98,141 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
 
         startComponentes(view);
 
-//        setupSkeletonLoader();
+        setupSkeletonLoader();
 
         progressBar.setVisibility(View.VISIBLE);
         containerProductsHome.setVisibility(View.GONE);
 
         consolasAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), this);
-        jogosAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), this);
+        popularAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), this);
         acessoryAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), this);
+        productContinueAdapter = new ProductContinueAdapter(new ArrayList<>(), user.getUserId(), this, this);
 
         rvConsolas.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        rvJogos.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        rvPopular.setLayoutManager(new GridLayoutManager(getContext(),2));
         rvAcessory.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         rvConsolas.setAdapter(consolasAdapter);
-        rvJogos.setAdapter(jogosAdapter);
+        rvPopular.setAdapter(popularAdapter);
         rvAcessory.setAdapter(acessoryAdapter);
 
         categoryAdapter = new CategoryAdapter(categoryList);
         apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
 
-        rvProducts = view.findViewById(R.id.rvForYou);
-        rvProducts.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        rvProducts.setNestedScrollingEnabled(false);
+        rvForYou = view.findViewById(R.id.rvForYou);
+        rvForYou.setLayoutManager(new GridLayoutManager(getContext(),2));
+        rvForYou.setNestedScrollingEnabled(false);
 
         apiProduct = RetrofitClient.getRetrofitInstance().create(ApiProduct.class);
         productManager = new ProductManager(apiProduct);
-        productAdapter = new ProductAdapter(productList, user.getUserId(), this);
-        rvProducts.setAdapter(productAdapter);
+        forYouAdapter = new ProductAdapter(productList, user.getUserId(), this);
+        rvForYou.setAdapter(forYouAdapter);
 
         apiInteraction = RetrofitClient.getRetrofitInstance().create(ApiInteraction.class);
         interactionManager = new InteractionManager(apiInteraction);
+        
+        getContinueBuy();
+        getPopular();
+        getForYou();
 
-        fetchAllProducts();
         return view;
     }
 
-    private void fetchAllProducts() {
-        productManager.fetchAllProduct(new RepositoryCallback<List<Product>>() {
-            @Override
-            public void onSuccess(List<Product> result) {
-                if (result.isEmpty()) {
-                    Log.d("API_RESPONSE", "Nenhum produto encontrado");
-                } else {
-                    productList.clear();
-                    productList.addAll(result);
-                    productAdapter.notifyDataSetChanged();
+    private void getContinueBuy() {
+        new android.os.Handler().postDelayed(() -> {
+            productManager.getRecommendedProducts(user.getUserId(), new RepositoryCallback<List<Product>>() {
+                @Override
+                public void onSuccess(List<Product> result) {
+                    rvContinueBuySkeleton.setVisibility(View.GONE);
+                    rvContinueBuy.setVisibility(View.VISIBLE);
 
-                    rvProducts.scheduleLayoutAnimation();
-
-                    Log.d("API_RESPONSE", "Item 0: " + productList.get(0).getTitle());
-
-                    Map<String, List<Product>> categorizedProducts = new HashMap<>();
-
-                    for (Product product : productList) {
-                        String category = product.getCategory();
-                        if (!categorizedProducts.containsKey(category)) {
-                            categorizedProducts.put(category, new ArrayList<>());
-                        }
-                        categorizedProducts.get(category).add(product);
-                    }
-
-                    // Pede os favoritos do utilizador
-                    productManager.fetchUserFavOrCart(user.getUserId(), 1, new RepositoryCallback<List<Integer>>() {
-                        @Override
-                        public void onSuccess(List<Integer> favorites) {
-                            favoriteIds.clear();
-                            favoriteIds.addAll(favorites);
-
-                            updateAllAdapters();
-                        }
-
-                        @Override
-                        public void onFailure(Throwable t) {
-                            if (getContext() != null) {
-                                Log.e("API_RESPONSE", "Erro ao buscar produtos favoritos", t);
-                            }
-                        }
-                    });
-
-                    // Atualiza os adapters das RecyclerViews de categorias
-                    if (categorizedProducts.containsKey("Consolas")) {
-                        consolasAdapter.updateProducts(categorizedProducts.get("Consolas"));
-                    }
-                    if (categorizedProducts.containsKey("Jogos")) {
-                        jogosAdapter.updateProducts(categorizedProducts.get("Jogos"));
-                    }
-                    if (categorizedProducts.containsKey("Acessórios")) {
-                        acessoryAdapter.updateProducts(categorizedProducts.get("Acessórios"));
-                    }
+                    productContinueAdapter.updateProducts(result);
+                    rvContinueBuy.setAdapter(productContinueAdapter);
 
                     checkIfLoadingFinished();
                 }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    if (getContext() != null) {
+                        Log.e("API_RESPONSE", "Erro ao buscar produtos recomendados", t);
+                        checkIfLoadingFinished();
+                    }
+                }
+            });
+        }, 400);
+    }
+
+    private void getForYou() {
+        productManager.getProductsFavCategory(user.getUserId(), 4, new RepositoryCallback<List<Product>>() {
+            @Override
+            public void onSuccess(List<Product> result) {
+                productForYouList.clear();
+                productForYouList.addAll(result);
+
+                // Buscar os favoritos do utilizador antes de atualizar os adapters
+                productManager.fetchUserFavOrCart(user.getUserId(), 1, new RepositoryCallback<List<Integer>>() {
+                    @Override
+                    public void onSuccess(List<Integer> favorites) {
+                        favoriteIds.clear();
+                        favoriteIds.addAll(favorites);
+
+                        updateAllAdapters(); // Atualiza todos os adapters com os favoritos
+                        forYouAdapter.updateProducts(productForYouList);
+                        checkIfLoadingFinished();
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+                        Log.e("API_RESPONSE", "Erro ao buscar produtos favoritos", t);
+                        checkIfLoadingFinished();
+                    }
+                });
             }
 
             @Override
             public void onFailure(Throwable t) {
-                if (getContext() != null) {
-                    Log.e("API_RESPONSE", "Erro ao buscar produtos", t);
-                    checkIfLoadingFinished();
-                }
+                Log.e("API_RESPONSE", "Erro ao buscar produtos", t);
+                checkIfLoadingFinished();
             }
         });
     }
 
-    public void updateAllAdapters() {
-        productAdapter.setFavoriteIds(favoriteIds);
-        consolasAdapter.setFavoriteIds(favoriteIds);
-        jogosAdapter.setFavoriteIds(favoriteIds);
-        acessoryAdapter.setFavoriteIds(favoriteIds);
+    private void getPopular() {
+        productManager.getPopularProducts(new RepositoryCallback<List<Product>>() {
+            @Override
+            public void onSuccess(List<Product> result) {
+                popularAdapter.updateProducts(result);
+                checkIfLoadingFinished();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("API_RESPONSE", "Erro ao buscar produtos", t);
+                checkIfLoadingFinished();
+            }
+        });
     }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void updateAllAdapters() {
+        forYouAdapter.setFavoriteIds(favoriteIds);
+        consolasAdapter.setFavoriteIds(favoriteIds);
+        popularAdapter.setFavoriteIds(favoriteIds);
+        acessoryAdapter.setFavoriteIds(favoriteIds);
+
+        forYouAdapter.notifyDataSetChanged();
+        consolasAdapter.notifyDataSetChanged();
+        popularAdapter.notifyDataSetChanged();
+        acessoryAdapter.notifyDataSetChanged();
+        productContinueAdapter.notifyDataSetChanged();
+    }
+
 
     private void checkIfLoadingFinished() {
         loadingCount++;
 
-        if (loadingCount >= 1) {
+        if (loadingCount >= 3) {
             progressBar.setVisibility(View.GONE);
             containerProductsHome.setVisibility(View.VISIBLE);
         }
@@ -218,15 +240,15 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
 
     private void startComponentes(View view) {
         rvConsolas = view.findViewById(R.id.rvConsolas);
-        rvJogos = view.findViewById(R.id.rvJogos);
+        rvPopular = view.findViewById(R.id.rvPopular);
         rvAcessory = view.findViewById(R.id.rvAcessory);
+        rvContinueBuy = view.findViewById(R.id.rvContinueBuy);
+
+        rvContinueBuySkeleton = view.findViewById(R.id.rvContinueBuySkeleton);
         containerProductsHome = view.findViewById(R.id.containerProductsHome);
         progressBar = view.findViewById(R.id.progressBar);
         tudoCategorie = view.findViewById(R.id.tudoCategorie);
-        rvContinueBuySkeleton = view.findViewById(R.id.rvContinueBuySkeleton);
-        rvContinueBuy = view.findViewById(R.id.rvContinueBuy);
         shimmerContinueBuy = view.findViewById(R.id.shimmerContinueBuy);
-
         shimmerContinueBuy.startShimmer();
         shimmerContinueBuy.setVisibility(View.VISIBLE);
         rvContinueBuy.setVisibility(View.GONE);
@@ -245,7 +267,7 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
             fakeList.add(new Product());
         }
 
-        ProductAdapter skeletonAdapter = new ProductAdapter(fakeList, user.getUserId(), this);
+        ProductContinueAdapter skeletonAdapter = new ProductContinueAdapter(fakeList, user.getUserId(), this, this);
         rvContinueBuySkeleton.setAdapter(skeletonAdapter);
     }
 
