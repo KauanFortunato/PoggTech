@@ -32,7 +32,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("GetUser.php")
-    Call<User> getUser(
+    Call<ApiResponse<User>> getUser(
             @Field("firebase_uid") String firebase_uid
     );
 

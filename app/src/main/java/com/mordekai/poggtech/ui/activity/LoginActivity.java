@@ -2,6 +2,8 @@ package com.mordekai.poggtech.ui.activity;
 
 import static com.mordekai.poggtech.utils.NetworkUtil.isConnectedXampp;
 
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption;
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.mordekai.poggtech.R;
 
@@ -27,7 +29,17 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+// Google auth
+import androidx.core.content.ContextCompat;
+import androidx.credentials.Credential;
+import androidx.credentials.CredentialManagerCallback;
+import androidx.credentials.CustomCredential;
+import androidx.credentials.GetCredentialRequest;
+import androidx.credentials.GetCredentialResponse;
+import androidx.credentials.exceptions.GetCredentialException;
+
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.credentials.CredentialManager;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -47,18 +59,44 @@ public class LoginActivity extends AppCompatActivity {
     private EditText inputEmail, inputPassword;
     private TextView textNaoTemConta, forgotPassword;
     private FirebaseUser currentUser;
-    boolean isPasswordVisible = false;
+    private boolean isPasswordVisible = false;
+    private AppCompatButton buttonGoogle;
+    private ProgressBar buttonProgressGoogle;
+
+    // Google Auth
+    private CredentialManager credentialManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_form_login);
+        setContentView(R.layout.activity_login);
 
         AppConfig.initialize(this);
         showIpInputDialog();
 
+        credentialManager = CredentialManager.create(this);
+
         AppCompatButton buttonLogin = findViewById(R.id.buttonLogin);
         ProgressBar buttonProgress = findViewById(R.id.buttonProgress);
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            Log.d("Auth", "Usuário já autenticado: " + currentUser.getEmail());
+        } else {
+            Log.d("Auth", "Nenhum usuário autenticado");
+        }
+
+        buttonProgressGoogle = findViewById(R.id.buttonProgressGoogle);
+        buttonGoogle = findViewById(R.id.button_login_google); // Certifica-te de que tens um botão no XML
+        buttonGoogle.setOnClickListener(view -> {
+            if (buttonGoogle.isHapticFeedbackEnabled()) {
+                view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+            }
+            buttonGoogle.setText(" ");
+            buttonProgressGoogle.setVisibility(View.VISIBLE);
+
+            initiateGoogleLogin();
+        });
 
         // Verificar se o usuário já está logado
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -139,6 +177,94 @@ public class LoginActivity extends AppCompatActivity {
                 buttonLogin.setText(R.string.entrar);
                 buttonLogin.setEnabled(true);
                 SnackbarUtil.showErrorSnackbar(getWindow().getDecorView().getRootView(), "Não foi possível conectar ao servidor", LoginActivity.this);
+            }
+        });
+    }
+
+    private void initiateGoogleLogin() {
+        Log.d("Auth", "Iniciando login com Google...");
+
+        GetGoogleIdOption googleIdOption = new GetGoogleIdOption.Builder()
+                .setServerClientId(getString(R.string.default_web_client_id)) // Define o ID do cliente do servidor
+                .setFilterByAuthorizedAccounts(false) // Mostrar todas as contas do Google
+                .build();
+
+        GetCredentialRequest credentialRequest = new GetCredentialRequest.Builder()
+                .addCredentialOption(googleIdOption)
+                .build();
+
+        credentialManager.getCredentialAsync(
+                this,
+                credentialRequest,
+                null,
+                ContextCompat.getMainExecutor(this),
+                new CredentialManagerCallback<GetCredentialResponse, GetCredentialException>() {
+                    @Override
+                    public void onResult(GetCredentialResponse result) {
+                        // Lógica para sucesso
+                        Log.d("Auth", "getCredentialAsync() foi bem-sucedido!");
+                        processCredentialResponse(result);
+                    }
+
+                    @Override
+                    public void onError(GetCredentialException e) {
+                        // Lógica para erro
+                        SnackbarUtil.showErrorSnackbar(getWindow().getDecorView().getRootView(), "Erro ao autenticar com Google", LoginActivity.this);
+                        Log.e("Auth", "Erro ao autenticar com Google", e);
+                    }
+                }
+        );
+    }
+
+    private void processCredentialResponse(GetCredentialResponse result) {
+        Credential credential = result.getCredential();
+
+        if (credential instanceof CustomCredential) {
+            CustomCredential customCredential = (CustomCredential) credential;
+
+            if (GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL.equals(customCredential.getType())) {
+                GoogleIdTokenCredential googleIdTokenCredential = GoogleIdTokenCredential.createFrom(customCredential.getData());
+                String idToken = googleIdTokenCredential.getIdToken();
+
+                Log.d("Auth", "ID Token obtido: " + idToken);
+
+                if (idToken == null || idToken.isEmpty()) {
+                    Log.e("Auth", "Erro: ID Token é nulo ou vazio!");
+                    SnackbarUtil.showErrorSnackbar(getWindow().getDecorView().getRootView(), "Erro ao obter ID Token", LoginActivity.this);
+                    return;
+                }
+
+                authInFirebase(idToken);
+            } else {
+                Log.e("Auth", "Tipo de credencial inesperado.");
+            }
+        } else {
+            Log.e("Auth", "Tipo de credencial inesperado.");
+        }
+    }
+
+    private void authInFirebase(String idToken) {
+        UserManager userManager = new UserManager(new FirebaseUserRepository(), new MySqlUserRepository(RetrofitClient.getRetrofitInstance().create(ApiService.class)));
+
+        userManager.googleLogin(idToken, new RepositoryCallback<User>() {
+            @Override
+            public void onSuccess(User user) {
+                Log.d("Auth", "Login bem-sucedido! Nome: " + user.getName() + ", Email: " + user.getEmail());
+
+                SharedPrefHelper sharedPrefHelper = new SharedPrefHelper(LoginActivity.this);
+                sharedPrefHelper.saveUser(user);
+
+                buttonGoogle.setText(R.string.googleLogin);
+                buttonProgressGoogle.setVisibility(View.GONE);
+
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                finish();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("Auth", "Falha no login", t);
+                Toast.makeText(LoginActivity.this, "Erro ao fazer login", Toast.LENGTH_SHORT).show();
             }
         });
     }
