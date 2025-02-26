@@ -144,10 +144,13 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
                 @Override
                 public void onSuccess(List<Product> result) {
                     rvContinueBuySkeleton.setVisibility(View.GONE);
-                    rvContinueBuy.setVisibility(View.VISIBLE);
 
-                    productContinueAdapter.updateProducts(result);
-                    rvContinueBuy.setAdapter(productContinueAdapter);
+                    if(result.size() >= 3) {
+                        rvContinueBuy.setVisibility(View.VISIBLE);
+
+                        productContinueAdapter.updateProducts(result);
+                        rvContinueBuy.setAdapter(productContinueAdapter);
+                    }
 
                     checkIfLoadingFinished();
                 }
@@ -177,7 +180,7 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
                         favoriteIds.clear();
                         favoriteIds.addAll(favorites);
 
-                        updateAllAdapters(); // Atualiza todos os adapters com os favoritos
+                        updateAllAdapters();
                         forYouAdapter.updateProducts(productForYouList);
                         checkIfLoadingFinished();
                     }
@@ -227,7 +230,6 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
         acessoryAdapter.notifyDataSetChanged();
         productContinueAdapter.notifyDataSetChanged();
     }
-
 
     private void checkIfLoadingFinished() {
         loadingCount++;

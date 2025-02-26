@@ -129,21 +129,36 @@
             android:layout_marginEnd="14dp"
             android:background="@color/colorDivider" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button_login_google"
-            style="@style/ButtonGoogle"
+        <FrameLayout
+            android:id="@+id/loginButtonGoogle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="10dp"
-            android:drawableStart="@drawable/ic_google"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:text="@string/googleLogin"
-            android:textAllCaps="false"
-            android:textColor="@color/textPrimary" />
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="30dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_login_google"
+                style="@style/ButtonGoogle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="5dp"
+                android:layout_marginHorizontal="2dp"
+                android:drawableStart="@drawable/ic_google"
+                android:paddingHorizontal="10dp"
+                android:text="@string/googleLogin"
+                android:textAllCaps="false"
+                android:textColor="@color/textPrimary" />
+
+            <ProgressBar
+                android:id="@+id/buttonProgressGoogle"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center"
+                android:elevation="6dp"
+                android:visibility="gone" />
+        </FrameLayout>
     </LinearLayout>
 
     <LinearLayout

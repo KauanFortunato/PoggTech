@@ -10,6 +10,9 @@ public class User {
     private String created_at;
     private String error;
 
+    public User() {
+    }
+
     public User(String name, String lastName, String email) {
         this.name = name;
         this.last_name = lastName;

@@ -135,8 +135,13 @@ public class ProductManager {
             @Override
             public void onResponse(Call<ApiResponse<List<Product>>> call, Response<ApiResponse<List<Product>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Product> products = response.body().getData();
-                    callback.onSuccess(products);
+                    ApiResponse<List<Product>> apiResponse = response.body();
+                    if(apiResponse.isSuccess()) {
+                        List<Product> products = response.body().getData();
+                        callback.onSuccess(products);
+                    } else {
+                        callback.onFailure(new Exception("Erro ao buscar produtos recomendados"));
+                    }
                 } else {
                     callback.onFailure(new Exception("Erro ao buscar produtos recomendados"));
                 }
@@ -154,8 +159,13 @@ public class ProductManager {
             @Override
             public void onResponse(Call<ApiResponse<List<Product>>> call, Response<ApiResponse<List<Product>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Product> products = response.body().getData();
-                    callback.onSuccess(products);
+                    ApiResponse<List<Product>> apiResponse = response.body();
+                    if(apiResponse.isSuccess()) {
+                        List<Product> products = apiResponse.getData();
+                        callback.onSuccess(products);
+                    } else {
+                        callback.onFailure(new Exception("Erro ao buscar produtos"));
+                    }
                 } else {
                     callback.onFailure(new Exception("Erro ao buscar produtos pela categoria"));
                 }
