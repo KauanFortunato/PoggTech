@@ -209,8 +209,10 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onError(GetCredentialException e) {
                         // Lógica para erro
-                        SnackbarUtil.showErrorSnackbar(getWindow().getDecorView().getRootView(), "Erro ao autenticar com Google", LoginActivity.this);
-                        Log.e("Auth", "Erro ao autenticar com Google", e);
+                        buttonGoogle.setText(R.string.googleLogin);
+                        buttonProgressGoogle.setVisibility(View.GONE);
+                        SnackbarUtil.showErrorSnackbar(getWindow().getDecorView().getRootView(), getString(R.string.erroGoogleAuth), LoginActivity.this);
+                        Log.e("Auth", getString(R.string.erroGoogleAuth), e);
                     }
                 }
         );
