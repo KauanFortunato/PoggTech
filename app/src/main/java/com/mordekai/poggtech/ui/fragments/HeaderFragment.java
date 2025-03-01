@@ -6,15 +6,22 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,20 +30,42 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 
 import com.mordekai.poggtech.R;
+import com.mordekai.poggtech.data.callback.RepositoryCallback;
+import com.mordekai.poggtech.data.remote.ApiProduct;
+import com.mordekai.poggtech.data.remote.RetrofitClient;
+import com.mordekai.poggtech.domain.ProductManager;
 import com.mordekai.poggtech.utils.Utils;
+
+import java.util.List;
 
 public class HeaderFragment extends Fragment {
 
     ImageButton btnBackHeader;
     EditText searchProd;
     private ConstraintLayout constraintLayout;
-    private int larguraOriginalEditText = -1;
+
+    private ListView listSuggestions;
+    private FrameLayout overlayContainer;
+    private ArrayAdapter<String> adapter;
+
+
+    private ProductManager productManager;
+    private ApiProduct apiProduct;
 
     @SuppressLint("ClickableViewAccessibility")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_header, container, false);
+
+        apiProduct = RetrofitClient.getRetrofitInstance().create(ApiProduct.class);
+        productManager = new ProductManager(apiProduct);
+
+        listSuggestions = getActivity().findViewById(R.id.listSuggestions);
+        overlayContainer = getActivity().findViewById(R.id.overlayContainer);
+
+        adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1);
+        listSuggestions.setAdapter(adapter);
 
         btnBackHeader = view.findViewById(R.id.btnBackHeader);
         searchProd = view.findViewById(R.id.searchProd);
@@ -46,6 +75,7 @@ public class HeaderFragment extends Fragment {
             if (btnBackHeader.isHapticFeedbackEnabled()) {
                 btnBackHeader.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
             }
+            listSuggestions.setVisibility(View.GONE);
             hideButtonBack();
 
             if (getActivity() != null) {
@@ -58,12 +88,61 @@ public class HeaderFragment extends Fragment {
 
         searchProd.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
+                if(!searchProd.getText().toString().isEmpty()) {
+                    overlayContainer.setVisibility(View.VISIBLE);
+                    listSuggestions.setVisibility(View.VISIBLE);
+                }
+
                 showButtonBack();
-                getParentFragmentManager().beginTransaction()
-                        .replace(R.id.containerFrame, new SearchFragment())
-                        .addToBackStack(null)
-                        .commit();
+
+                Fragment existingFragment = getParentFragmentManager().findFragmentByTag("SEARCH_FRAGMENT");
+                if (existingFragment == null) {
+                    getParentFragmentManager().beginTransaction()
+                            .replace(R.id.containerFrame, new SearchFragment(), "SEARCH_FRAGMENT")
+                            .addToBackStack(null)
+                            .commit();
+                }
             }
+        });
+
+        searchProd.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 0) {
+                    getSuggestions(s.toString());
+                    searchProd.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_lupa, 0, R.drawable.ic_close_small, 0);
+                } else {
+                    searchProd.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_lupa, 0, 0, 0);
+                    overlayContainer.setVisibility(View.GONE);
+                    listSuggestions.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) { }
+        });
+
+        searchProd.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                Drawable[] drawables = searchProd.getCompoundDrawables();
+
+                if(drawables[2] != null) {
+                    int drawableEndPosition = searchProd.getRight() - drawables[2].getBounds().width();
+
+                    if(event.getRawX() >= drawableEndPosition) {
+                        if (searchProd.isHapticFeedbackEnabled()) {
+                            v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
+                        }
+                        searchProd.setText("");
+                        searchProd.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_lupa, 0, 0, 0);
+                        return true;
+                    }
+                }
+            }
+            return false;
         });
 
         return view;
@@ -120,6 +199,32 @@ public class HeaderFragment extends Fragment {
         btnBackHeader.setVisibility(View.GONE);
     }
 
+    private void getSuggestions(String query) {
+        productManager.getSuggestions(query, new RepositoryCallback<List<String>>() {
+            @Override
+            public void onSuccess(List<String> result) {
+                if (result != null && !result.isEmpty()) {
+                    adapter.clear();
+                    adapter.addAll(result);
+                    adapter.notifyDataSetChanged();
+
+                    overlayContainer.setVisibility(View.VISIBLE);
+                    listSuggestions.setVisibility(View.VISIBLE);
+                    listSuggestions.bringToFront();
+                } else {
+                    Log.d("API_RESPONSE", "Suggestions: " + result);
+                    listSuggestions.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("API_ERROR", "Erro ao buscar sugestões: " + t.getMessage(), t);
+                overlayContainer.setVisibility(View.GONE);
+                listSuggestions.setVisibility(View.GONE);
+            }
+        });
+    }
 
     public interface HeaderListener {
         void showBackButton();

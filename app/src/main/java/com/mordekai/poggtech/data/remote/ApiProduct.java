@@ -73,4 +73,14 @@ public interface ApiProduct {
             @Query("user_id") int userId,
             @Query("quantity") int quantity
     );
+
+    @GET("SearchProducts.php")
+    Call<ApiResponse<List<Product>>> searchProducts (
+            @Query("search") String search
+    );
+
+    @GET("GetSuggestions.php")
+    Call<ApiResponse<List<String>>> getSuggestions (
+            @Query("query") String query
+    );
 }
