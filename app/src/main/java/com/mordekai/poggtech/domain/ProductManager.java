@@ -177,4 +177,52 @@ public class ProductManager {
             }
         });
     }
+
+    public void searchProducts(String search, RepositoryCallback<List<Product>> callback) {
+        apiProduct.searchProducts(search).enqueue(new Callback<ApiResponse<List<Product>>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<List<Product>>> call, Response<ApiResponse<List<Product>>> response) {
+                if(response.isSuccessful() && response.body() != null) {
+                    ApiResponse<List<Product>> apiResponse = response.body();
+                    if(apiResponse.isSuccess()) {
+                        callback.onSuccess(apiResponse.getData());
+                    } else {
+                        callback.onFailure(new Exception("Erro ao buscar produtos"));
+                    }
+                } else {
+                    callback.onFailure(new Exception("Erro ao buscar produtos"));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<List<Product>>> call, Throwable t) {
+                callback.onFailure(new Exception("Erro ao buscar produtos"));
+            }
+        });
+    }
+
+    public void getSuggestions(String query, RepositoryCallback<List<String>> callback) {
+        Call<ApiResponse<List<String>>> call = apiProduct.getSuggestions(query);
+        call.enqueue(new Callback<ApiResponse<List<String>>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<List<String>>> call, Response<ApiResponse<List<String>>> response) {
+                if(response.isSuccessful() && response.body() != null) {
+                    ApiResponse<List<String>> apiResponse = response.body();
+
+                    if(apiResponse.isSuccess()) {
+                        callback.onSuccess(apiResponse.getData());
+                    } else {
+                        callback.onFailure(new Exception("Erro ao buscar sugestões"));
+                    }
+                } else {
+                    callback.onFailure(new Exception("Erro ao buscar sugestões"));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<List<String>>> call, Throwable t) {
+                callback.onFailure(new Exception("Erro ao buscar sugestões"));
+            }
+        });
+    }
 }

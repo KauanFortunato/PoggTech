@@ -5,6 +5,7 @@ import android.util.Log;
 import com.mordekai.poggtech.utils.AppConfig;
 
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -18,8 +19,13 @@ public class RetrofitClient {
         Log.d("RetrofitClient", "getRetrofitInstance: " + AppConfig.getBaseUrl());
 
         if (retrofit == null) {
-            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-            httpClient.addInterceptor(new BasicAuthInterceptor(username, password));
+            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+            OkHttpClient httpClient = new OkHttpClient.Builder()
+                    .addInterceptor(loggingInterceptor)
+                    .addInterceptor(new BasicAuthInterceptor(username, password))
+                    .build();
 
             String baseUrl = AppConfig.getBaseUrl();
             if (baseUrl == null) {
@@ -29,8 +35,8 @@ public class RetrofitClient {
 
             retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
+                    .client(httpClient)
                     .addConverterFactory(GsonConverterFactory.create())
-                    .client(httpClient.build())
                     .build();
         }
         return retrofit;
