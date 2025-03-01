@@ -4,8 +4,10 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,8 @@ import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 
 import com.mordekai.poggtech.R;
@@ -25,6 +29,8 @@ public class HeaderFragment extends Fragment {
 
     ImageButton btnBackHeader;
     EditText searchProd;
+    private ConstraintLayout constraintLayout;
+    private int larguraOriginalEditText = -1;
 
     @SuppressLint("ClickableViewAccessibility")
     @Nullable
@@ -34,6 +40,7 @@ public class HeaderFragment extends Fragment {
 
         btnBackHeader = view.findViewById(R.id.btnBackHeader);
         searchProd = view.findViewById(R.id.searchProd);
+        constraintLayout = (ConstraintLayout) searchProd.getParent();
 
         btnBackHeader.setOnClickListener(v -> {
             if (btnBackHeader.isHapticFeedbackEnabled()) {
@@ -65,47 +72,54 @@ public class HeaderFragment extends Fragment {
     public void showButtonBack() {
         if (btnBackHeader.getVisibility() == View.VISIBLE) return;
 
-        int originalWidth = searchProd.getWidth();
-        int newWidth = originalWidth - btnBackHeader.getWidth() - 24;
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(constraintLayout);
 
-        ObjectAnimator animacaoEditText = ObjectAnimator.ofInt(searchProd, "width", newWidth);
-        animacaoEditText.setDuration(300);
-        animacaoEditText.setInterpolator(new DecelerateInterpolator());
+        int btnWidth = 110;
 
-        btnBackHeader.setVisibility(View.VISIBLE);
-        ObjectAnimator animacaoBotao = ObjectAnimator.ofFloat(btnBackHeader, "translationX", -100f, 0f);
-        animacaoBotao.setDuration(300);
-        animacaoBotao.setInterpolator(new DecelerateInterpolator());
+        int margemOriginal = ((ConstraintLayout.LayoutParams) searchProd.getLayoutParams()).getMarginStart();
+        int novaMargem = margemOriginal + btnWidth;
 
-        AnimatorSet animacaoSet = new AnimatorSet();
-        animacaoSet.playTogether(animacaoEditText, animacaoBotao);
-        animacaoSet.start();
+        btnBackHeader.setTranslationX(-btnWidth);
+
+        ValueAnimator anim = ValueAnimator.ofInt(margemOriginal, novaMargem);
+        anim.setDuration(200);
+        anim.addUpdateListener(animation -> {
+            int value = (int) animation.getAnimatedValue();
+            constraintSet.setMargin(searchProd.getId(), ConstraintSet.START, value);
+            constraintSet.applyTo(constraintLayout);
+        });
+
+        anim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                constraintSet.setMargin(searchProd.getId(), ConstraintSet.START, margemOriginal);
+                constraintSet.applyTo(constraintLayout);
+
+                btnBackHeader.setVisibility(View.VISIBLE);
+            }
+        });
+
+        anim.start();
     }
 
     public void hideButtonBack() {
         if (btnBackHeader.getVisibility() == View.GONE) return;
 
-        int larguraOriginal = searchProd.getWidth() + btnBackHeader.getWidth() + 24;
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(constraintLayout);
 
-        ObjectAnimator animacaoEditText = ObjectAnimator.ofInt(searchProd, "width", larguraOriginal);
-        animacaoEditText.setDuration(300);
-        animacaoEditText.setInterpolator(new DecelerateInterpolator());
+        // Obtém a margem original do EditText
+        int margemOriginal = 10; // Margem inicial padrão antes da animação
 
-        ObjectAnimator animacaoBotao = ObjectAnimator.ofFloat(btnBackHeader, "translationX", 0f, -100f);
-        animacaoBotao.setDuration(300);
-        animacaoBotao.setInterpolator(new DecelerateInterpolator());
+        // Define a margem de volta ao normal sem animação
+        constraintSet.setMargin(searchProd.getId(), ConstraintSet.START, margemOriginal);
+        constraintSet.applyTo(constraintLayout);
 
-        animacaoBotao.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                btnBackHeader.setVisibility(View.GONE);
-            }
-        });
-
-        AnimatorSet animacaoSet = new AnimatorSet();
-        animacaoSet.playTogether(animacaoEditText, animacaoBotao);
-        animacaoSet.start();
+        // Esconde o botão imediatamente
+        btnBackHeader.setVisibility(View.GONE);
     }
+
 
     public interface HeaderListener {
         void showBackButton();
