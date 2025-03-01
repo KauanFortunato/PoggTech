@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -255,9 +256,12 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
         shimmerContinueBuy.setVisibility(View.VISIBLE);
         rvContinueBuy.setVisibility(View.GONE);
 
-        getActivity().findViewById(R.id.bottomNavigationView).setVisibility(View.VISIBLE);
-        getActivity().findViewById(R.id.btnBackHeader).setVisibility(View.GONE);
+        HeaderFragment.HeaderListener listener = (HeaderFragment.HeaderListener) getActivity();
+        if (listener != null) {
+            listener.hideBackButton();
+        }
 
+        getActivity().findViewById(R.id.bottomNavigationView).setVisibility(View.VISIBLE);
 
         tudoCategorie.setTypeface(tudoCategorie.getTypeface(), tudoCategorie.getTypeface().BOLD);
         tudoCategorie.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
