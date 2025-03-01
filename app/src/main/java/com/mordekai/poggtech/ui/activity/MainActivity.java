@@ -27,7 +27,23 @@ import com.mordekai.poggtech.ui.fragments.UserAccountFragment;
 import com.mordekai.poggtech.utils.AppConfig;
 import com.mordekai.poggtech.utils.NetworkUtil;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements HeaderFragment.HeaderListener {
+
+    private HeaderFragment headerFragment;
+
+    @Override
+    public void showBackButton() {
+        if (headerFragment != null) {
+            headerFragment.showButtonBack();
+        }
+    }
+
+    @Override
+    public void hideBackButton() {
+        if (headerFragment != null) {
+            headerFragment.hideButtonBack();
+        }
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.O_MR1)
     @Override
@@ -36,8 +52,10 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
+        headerFragment = (HeaderFragment) getSupportFragmentManager().findFragmentById(R.id.headerContainer);
+
         AppConfig.initialize(this);
-//        showIpInputDialog();
+        // showIpInputDialog();
 
         loadFragmentBasedOnNetwork();
 
