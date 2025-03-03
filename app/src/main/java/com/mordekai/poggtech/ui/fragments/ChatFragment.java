@@ -54,7 +54,9 @@ public class ChatFragment extends Fragment {
     }
 
     private void loadFragment(Fragment fragment) {
-        fragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment).commit();
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, fragment)
+                .commit();
     }
 
     public void updateButtonStyle(boolean isCompraSelected) {

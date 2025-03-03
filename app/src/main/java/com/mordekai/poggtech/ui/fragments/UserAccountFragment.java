@@ -106,6 +106,12 @@ public class UserAccountFragment extends Fragment {
             UserConfigFragment userConfigFragment = new UserConfigFragment();
             requireActivity().getSupportFragmentManager()
                     .beginTransaction()
+                    .setCustomAnimations(
+                            R.anim.slide_in_right,
+                            R.anim.slide_out_left,
+                            R.anim.slide_in_left,
+                            R.anim.slide_out_right
+                    )
                     .replace(R.id.containerFrame, userConfigFragment)
                     .addToBackStack(null) // Permite voltar com o botão de voltar do sistema
                     .commit();

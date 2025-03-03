@@ -126,7 +126,8 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
                 fragmentToLoad = new OfflineFragment();
             }
 
-            getSupportFragmentManager().beginTransaction()
+            getSupportFragmentManager()
+                    .beginTransaction()
                     .replace(R.id.containerFrame, fragmentToLoad)
                     .commit();
         });
