@@ -97,7 +97,14 @@ public class HeaderFragment extends Fragment {
 
                 Fragment existingFragment = getParentFragmentManager().findFragmentByTag("SEARCH_FRAGMENT");
                 if (existingFragment == null) {
-                    getParentFragmentManager().beginTransaction()
+                    getParentFragmentManager()
+                            .beginTransaction()
+                            .setCustomAnimations(
+                                    R.anim.fade_in,
+                                    R.anim.fade_out,
+                                    R.anim.fade_in,
+                                    R.anim.fade_out
+                            )
                             .replace(R.id.containerFrame, new SearchFragment(), "SEARCH_FRAGMENT")
                             .addToBackStack(null)
                             .commit();

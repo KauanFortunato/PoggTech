@@ -37,7 +37,7 @@
                     android:id="@+id/btn_back"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:background="@drawable/rounded_menu"
                     android:contentDescription="@string/voltar"
                     android:src="@drawable/ic_back"/>
 

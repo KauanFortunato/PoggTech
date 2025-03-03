@@ -369,16 +369,6 @@ public class ProductDetailsFragment extends Fragment {
     }
 
     private void animateContentView(View view) {
-        view.setTranslationY(300f);
-        view.setAlpha(0f);
-
-        view.animate()
-                .translationY(0f)
-                .alpha(1f)
-                .setDuration(400)
-                .setInterpolator(new DecelerateInterpolator())
-                .start();
-
         view.setVisibility(View.VISIBLE);
     }
 }
