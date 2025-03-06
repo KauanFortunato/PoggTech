@@ -187,7 +187,7 @@
                     android:gravity="center_vertical"
                     android:paddingVertical="5dp"
                     android:paddingHorizontal="2dp"
-                    android:background="@drawable/background_section_divisor"
+                    android:background="@drawable/bg_divisor_bottom"
                     android:orientation="horizontal">
 
                     <View

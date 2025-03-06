@@ -23,7 +23,7 @@
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
             android:padding="10dp"
-            android:background="@drawable/background_image_product"
+            android:background="@drawable/bg_image_product"
             android:src="@drawable/xbox_series_x" />
 
         <!-- Botão de Favoritos -->

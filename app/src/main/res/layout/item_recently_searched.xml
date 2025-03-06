@@ -10,6 +10,6 @@
         android:layout_height="wrap_content"
         android:textColor="@color/textPrimary"
         android:paddingHorizontal="10dp"
-        android:background="@drawable/background_input"
+        android:background="@drawable/bg_input"
         android:text="Adaptador HDMI"/>
 </LinearLayout>

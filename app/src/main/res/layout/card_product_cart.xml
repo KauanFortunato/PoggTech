@@ -24,7 +24,7 @@
             android:scaleType="fitCenter"
             android:padding="5dp"
             android:adjustViewBounds="true"
-            android:background="@drawable/background_image_product"
+            android:background="@drawable/bg_image_product"
             android:src="@drawable/xbox_series_x" />
 
         <!-- Informações do Produto -->

@@ -26,7 +26,6 @@ import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -221,7 +220,7 @@ public class ProductDetailsFragment extends Fragment {
             actionButton.setVisibility(View.GONE);
             contactSellerContainer.setVisibility(View.VISIBLE);
         } else {
-            actionButton.setBackgroundResource(R.drawable.background_button_unable);
+            actionButton.setBackgroundResource(R.drawable.bg_button_unable);
             actionButton.setVisibility(View.VISIBLE);
             contactSellerContainer.setVisibility(View.GONE);
         }
