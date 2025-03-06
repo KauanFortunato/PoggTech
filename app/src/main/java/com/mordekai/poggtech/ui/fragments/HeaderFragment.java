@@ -152,6 +152,34 @@ public class HeaderFragment extends Fragment {
             return false;
         });
 
+        listSuggestions.setOnItemClickListener((parent, v, position, id) -> {
+            String selectedItem = adapter.getItem(position);
+
+            searchProd.setText(selectedItem);
+            searchProd.setSelection(selectedItem.length());
+
+            overlayContainer.setVisibility(View.GONE);
+            listSuggestions.setVisibility(View.GONE);
+            hideButtonBack();
+
+            if (getActivity() != null) {
+                Utils.hideKeyboard(this);
+                searchProd.clearFocus();
+            }
+
+            getParentFragmentManager()
+                    .beginTransaction()
+                    .setCustomAnimations(
+                            R.anim.fade_in,
+                            R.anim.fade_out,
+                            R.anim.fade_in,
+                            R.anim.fade_out
+                    )
+                    .replace(R.id.containerFrame, new SearchedProductsFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
+
         return view;
     }
 

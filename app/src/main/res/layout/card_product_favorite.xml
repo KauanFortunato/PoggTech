@@ -20,7 +20,7 @@
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
             android:padding="5dp"
-            android:background="@drawable/background_image_product"
+            android:background="@drawable/bg_image_product"
             android:src="@drawable/xbox_series_x"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

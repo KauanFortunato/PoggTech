@@ -145,7 +145,7 @@
                             android:scaleType="fitCenter"
                             android:adjustViewBounds="true"
                             android:padding="20dp"
-                            android:background="@drawable/background_image_product"
+                            android:background="@drawable/bg_image_product"
                             android:src="@drawable/xbox_series_x" />
                     </FrameLayout>
                 </LinearLayout>
@@ -292,7 +292,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/roboto"
                             android:textSize="14sp"
-                            android:background="@drawable/background_input"
+                            android:background="@drawable/bg_input"
                             android:paddingHorizontal="15dp"/>
 
                         <ImageButton
@@ -323,7 +323,7 @@
                     android:gravity="center_vertical"
                     android:paddingVertical="5dp"
                     android:paddingHorizontal="2dp"
-                    android:background="@drawable/background_section_divisor"
+                    android:background="@drawable/bg_divisor_bottom"
                     android:orientation="horizontal">
 
                     <TextView
