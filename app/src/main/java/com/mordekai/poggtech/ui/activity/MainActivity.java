@@ -45,6 +45,13 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
         }
     }
 
+    @Override
+    public void closeSearchProd() {
+        if (headerFragment != null) {
+            headerFragment.closeSearchProd();
+        }
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.O_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {

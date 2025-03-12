@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -46,9 +45,9 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
     private LinearLayout containerProductsHome;
     private TextView tudoCategorie;
     private ProgressBar progressBar;
-    private RecyclerView rvForYou, rvConsolas, rvPopular, rvAcessory, rvContinueBuySkeleton, rvContinueBuy;
+    private RecyclerView rvForYou, rvConsolas, rvPopular, rvAccessory, rvContinueBuySkeleton, rvContinueBuy;
     private CategoryAdapter categoryAdapter;
-    private ProductAdapter forYouAdapter, consolasAdapter, popularAdapter, acessoryAdapter;
+    private ProductAdapter forYouAdapter, consolasAdapter, popularAdapter, accessoryAdapter;
     private ProductContinueAdapter productContinueAdapter;
     private ApiService apiService;
     private ApiProduct apiProduct;
@@ -112,16 +111,16 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
 
         consolasAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), this);
         popularAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), this);
-        acessoryAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), this);
+        accessoryAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), this);
         productContinueAdapter = new ProductContinueAdapter(new ArrayList<>(), user.getUserId(), this, this);
 
         rvConsolas.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rvPopular.setLayoutManager(new GridLayoutManager(getContext(),2));
-        rvAcessory.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        rvAccessory.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         rvConsolas.setAdapter(consolasAdapter);
         rvPopular.setAdapter(popularAdapter);
-        rvAcessory.setAdapter(acessoryAdapter);
+        rvAccessory.setAdapter(accessoryAdapter);
 
         categoryAdapter = new CategoryAdapter(categoryList);
         apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
@@ -229,12 +228,12 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
         forYouAdapter.setFavoriteIds(favoriteIds);
         consolasAdapter.setFavoriteIds(favoriteIds);
         popularAdapter.setFavoriteIds(favoriteIds);
-        acessoryAdapter.setFavoriteIds(favoriteIds);
+        accessoryAdapter.setFavoriteIds(favoriteIds);
 
         forYouAdapter.notifyDataSetChanged();
         consolasAdapter.notifyDataSetChanged();
         popularAdapter.notifyDataSetChanged();
-        acessoryAdapter.notifyDataSetChanged();
+        accessoryAdapter.notifyDataSetChanged();
         productContinueAdapter.notifyDataSetChanged();
     }
 
@@ -250,7 +249,7 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
     private void startComponentes(View view) {
         rvConsolas = view.findViewById(R.id.rvConsolas);
         rvPopular = view.findViewById(R.id.rvPopular);
-        rvAcessory = view.findViewById(R.id.rvAcessory);
+        rvAccessory = view.findViewById(R.id.rvAcessory);
         rvContinueBuy = view.findViewById(R.id.rvContinueBuy);
 
         rvContinueBuySkeleton = view.findViewById(R.id.rvContinueBuySkeleton);

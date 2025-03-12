@@ -26,9 +26,8 @@ public interface ApiMessage {
 
     @GET("GetMessages.php")
     Call<ApiResponse<List<Message>>> getMessages(
-            @Query("sender_id") int sender_id,
-            @Query("receiver_id") int receiver_id,
-            @Query("product_id") int product_id
+            @Query("product_id") int product_id,
+            @Query("chat_id") int chat_id
     );
 
     @GET("GetUserChatsBuy.php")

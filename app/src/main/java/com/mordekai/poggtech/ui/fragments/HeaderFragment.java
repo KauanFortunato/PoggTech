@@ -28,6 +28,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
@@ -47,7 +48,7 @@ public class HeaderFragment extends Fragment {
     private ListView listSuggestions;
     private FrameLayout overlayContainer;
     private ArrayAdapter<String> adapter;
-
+    private boolean isUpdatingText = false;
 
     private ProductManager productManager;
     private ApiProduct apiProduct;
@@ -75,30 +76,29 @@ public class HeaderFragment extends Fragment {
             if (btnBackHeader.isHapticFeedbackEnabled()) {
                 btnBackHeader.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
             }
-            listSuggestions.setVisibility(View.GONE);
-            hideButtonBack();
-
-            if (getActivity() != null) {
-                Utils.hideKeyboard(this);
-                searchProd.clearFocus();
-            }
+            closeSearchProd();
 
             getParentFragmentManager().popBackStack();
         });
 
         searchProd.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
-                if(!searchProd.getText().toString().isEmpty()) {
+                if (!searchProd.getText().toString().isEmpty()) {
                     overlayContainer.setVisibility(View.VISIBLE);
                     listSuggestions.setVisibility(View.VISIBLE);
                 }
 
                 showButtonBack();
 
-                Fragment existingFragment = getParentFragmentManager().findFragmentByTag("SEARCH_FRAGMENT");
-                if (existingFragment == null) {
-                    getParentFragmentManager()
-                            .beginTransaction()
+                FragmentManager fragmentManager = getParentFragmentManager();
+                Fragment existingFragment = fragmentManager.findFragmentByTag("SEARCH_FRAGMENT");
+
+                if (existingFragment != null) {
+                    fragmentManager.beginTransaction().remove(existingFragment).commit();
+                }
+
+                searchProd.postDelayed(() -> {
+                    fragmentManager.beginTransaction()
                             .setCustomAnimations(
                                     R.anim.fade_in,
                                     R.anim.fade_out,
@@ -108,7 +108,7 @@ public class HeaderFragment extends Fragment {
                             .replace(R.id.containerFrame, new SearchFragment(), "SEARCH_FRAGMENT")
                             .addToBackStack(null)
                             .commit();
-                }
+                }, 100);
             }
         });
 
@@ -118,6 +118,10 @@ public class HeaderFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (isUpdatingText) {
+                    return;
+                }
+
                 if (s.length() > 0) {
                     getSuggestions(s.toString());
                     searchProd.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_lupa, 0, R.drawable.ic_close_small, 0);
@@ -155,12 +159,13 @@ public class HeaderFragment extends Fragment {
         listSuggestions.setOnItemClickListener((parent, v, position, id) -> {
             String selectedItem = adapter.getItem(position);
 
+            isUpdatingText = true;
+
             searchProd.setText(selectedItem);
             searchProd.setSelection(selectedItem.length());
 
             overlayContainer.setVisibility(View.GONE);
             listSuggestions.setVisibility(View.GONE);
-            hideButtonBack();
 
             if (getActivity() != null) {
                 Utils.hideKeyboard(this);
@@ -176,8 +181,9 @@ public class HeaderFragment extends Fragment {
                             R.anim.fade_out
                     )
                     .replace(R.id.containerFrame, new SearchedProductsFragment())
-                    .addToBackStack(null)
                     .commit();
+
+            searchProd.postDelayed(() -> isUpdatingText = false, 100);
         });
 
         return view;
@@ -234,6 +240,18 @@ public class HeaderFragment extends Fragment {
         btnBackHeader.setVisibility(View.GONE);
     }
 
+    public void closeSearchProd() {
+        hideButtonBack();
+        overlayContainer.setVisibility(View.GONE);
+        listSuggestions.setVisibility(View.GONE);
+
+        if (getActivity() != null) {
+            Utils.hideKeyboard(this);
+            searchProd.setText("");
+            searchProd.clearFocus();
+        }
+    }
+
     private void getSuggestions(String query) {
         productManager.getSuggestions(query, new RepositoryCallback<List<String>>() {
             @Override
@@ -264,5 +282,6 @@ public class HeaderFragment extends Fragment {
     public interface HeaderListener {
         void showBackButton();
         void hideBackButton();
+        void closeSearchProd();
     }
 }
