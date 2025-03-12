@@ -128,7 +128,7 @@ public class ChatDetailsFragment extends Fragment {
     }
 
     private void fetchMessages() {
-        messageManager.fetchMessages(currentUser.getUserId(), chatWithId, productId, new RepositoryCallback<List<Message>>() {
+        messageManager.fetchMessages(productId, chatChatId, new RepositoryCallback<List<Message>>() {
             @Override
             public void onSuccess(List<Message> messages) {
                 boolean isNewMessage = messageList.size() != messages.size();

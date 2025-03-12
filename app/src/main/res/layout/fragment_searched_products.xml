@@ -5,59 +5,91 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/backgroundColor">
+    android:background="@color/colorSecondaryVariant">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="10dp"
+        android:paddingVertical="8dp"
         android:layout_marginBottom="20dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@drawable/rounded_bottom_med">
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingEnd="10dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:paddingHorizontal="10dp"
+            android:gravity="center_vertical|center_horizontal"
             android:background="@drawable/bg_divisor_right"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:background="@drawable/bg_item_filter"
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:fontFamily="@font/roboto_bold"
-                android:paddingHorizontal="5dp"
-                android:text="Filtros"
-                android:textAllCaps="false"
-                android:textSize="@dimen/text_large" />
+                android:textColor="@color/colorPrimaryVariant"
+                android:textSize="12sp"
+                android:text="@string/poggers"/>
 
-            <LinearLayout
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:thumb="@drawable/bg_switch_thumb"
+                android:track="@drawable/bg_switch"
+                android:showText="false"
+                android:paddingHorizontal="10dp"
+                android:scaleY="1.5"
+                android:scaleX="1.5"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingVertical="10dp"
-                android:orientation="horizontal">
+                android:fillViewport="true"
+                android:scrollbars="none">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/roboto_bold"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="11sp"
-                    android:text="@string/poggers"/>
-
-                <Switch
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:thumb="@drawable/bg_switch_thumb"
-                    android:track="@drawable/bg_switch"
-                    android:showText="false"
                     android:paddingHorizontal="10dp"
-                    android:scaleY="1.5"
-                    android:scaleX="1.5"
-                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+                    android:orientation="horizontal">
 
-            </LinearLayout>
+                    <androidx.appcompat.widget.AppCompatButton
+                        style="@style/itemFilterButton"
+                        android:fontFamily="@font/roboto_bold"
+                        android:textColor="@color/colorPrimaryVariant"
+                        android:text="Filtros" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        style="@style/itemFilterButton"
+                        android:text="Mais de 200 EUR" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        style="@style/itemFilterButton"
+                        android:text="200 - 500 EUR" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        style="@style/itemFilterButton"
+                        android:text="Mais Caro" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        style="@style/itemFilterButton"
+                        android:text="Mais Barato" />
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
 
         </LinearLayout>
 
@@ -76,6 +108,5 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/card_product_searched" />
     </LinearLayout>
-
 
 </LinearLayout>

@@ -49,8 +49,8 @@ public class Utils {
                         R.anim.fade_in,
                         R.anim.slide_out_bottom
                 )
-                .replace(R.id.containerFrame, chatDetailsFragment) // Certifica-te que o ID está correto
-                .addToBackStack(null) // Permite voltar atrás com o botão de voltar
+                .replace(R.id.containerFrame, chatDetailsFragment)
+                .addToBackStack(null)
                 .commit();
     }
 }

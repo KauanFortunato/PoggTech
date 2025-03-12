@@ -1,5 +1,7 @@
 package com.mordekai.poggtech.domain;
 
+import android.util.Log;
+
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.ApiResponse;
 import com.mordekai.poggtech.data.remote.ApiInteraction;
@@ -22,6 +24,7 @@ public class InteractionManager {
             @Override
             public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
                 if(response.isSuccessful() && response.body() != null) {
+                    Log.d("API_RESPONSE", "Interaction response: " + response.body().getMessage());
                     ApiResponse<Void> apiResponse = response.body();
                     if(apiResponse.isSuccess()) {
                         callback.onSuccess(apiResponse.getMessage());

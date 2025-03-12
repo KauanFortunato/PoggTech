@@ -42,8 +42,8 @@ public class MessageManager {
         });
     }
 
-    public void fetchMessages(int sender_id, int receiver_id, int product_id, RepositoryCallback<List<Message>> callback) {
-        apiMessage.getMessages(sender_id, receiver_id, product_id).enqueue(new Callback<ApiResponse<List<Message>>>() {
+    public void fetchMessages(int product_id, int chat_id, RepositoryCallback<List<Message>> callback) {
+        apiMessage.getMessages(product_id, chat_id).enqueue(new Callback<ApiResponse<List<Message>>>() {
             @Override
             public void onResponse(Call<ApiResponse<List<Message>>> call, Response<ApiResponse<List<Message>>> response) {
                 if (response.isSuccessful() && response.body() != null) {

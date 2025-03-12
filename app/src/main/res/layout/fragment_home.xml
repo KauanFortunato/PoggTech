@@ -198,9 +198,9 @@
                                 android:id="@+id/rvPopular"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                                 android:orientation="horizontal"
-                                tools:listitem="@layout/card_product"/>
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                tools:listitem="@layout/card_product" />
                         </LinearLayout>
                     </LinearLayout>
 

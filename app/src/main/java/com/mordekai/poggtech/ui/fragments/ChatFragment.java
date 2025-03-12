@@ -56,6 +56,7 @@ public class ChatFragment extends Fragment {
     private void loadFragment(Fragment fragment) {
         fragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, fragment)
+                .addToBackStack(null)
                 .commit();
     }
 
