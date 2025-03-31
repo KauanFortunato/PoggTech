@@ -52,6 +52,9 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
         }
     }
 
+    @Override
+    public void setFragmentTagAlvo(String tag) {}
+
     @RequiresApi(api = Build.VERSION_CODES.O_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +103,6 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
 
             return true;
         });
-
 
         bottomNavigationView.setSelectedItemId(R.id.home);
     }
@@ -171,3 +173,4 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
         builder.show();
     }
 }
+

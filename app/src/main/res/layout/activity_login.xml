@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp"
+        android:padding="20dp"
         app:layout_constraintTop_toBottomOf="@+id/header">
 
         <TextView
@@ -45,8 +45,6 @@
         <EditText
             android:id="@+id/inputEmail"
             style="@style/Edit_Text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_email"
             android:drawablePadding="15dp"
             android:drawableTint="@color/edit_text_icon_color"
@@ -73,114 +71,155 @@
             android:hint="@string/palavraPasse"
             android:inputType="textPassword" />
 
-        <TextView
-            android:id="@+id/forgotPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/roboto_bold"
-            android:text="@string/esqueceuSenha"
-            android:textColor="@color/textSecondary"
-            android:textSize="14sp" />
 
-        <FrameLayout
-            android:id="@+id/loginButtonContainer"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="30dp">
+            android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/buttonLogin"
-                style="@style/Button"
+            <CheckBox
+                android:id="@+id/checkbox_terms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textTertiary"
+                android:textIsSelectable="false"
+                android:textSize="12sp"
+                android:text="Confirmo que li e concordo com os Termos e Condições de Uso do PoggTech"
+                android:layout_marginTop="5dp"/>
+
+            <FrameLayout
+                android:id="@+id/loginButtonContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/entrar"
-                android:textAllCaps="false"
-                android:textColor="@color/colorOnPrimary" />
+                android:layout_marginTop="20dp">
 
-            <ProgressBar
-                android:id="@+id/buttonProgress"
-                style="?android:attr/progressBarStyleSmall"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_gravity="center"
-                android:visibility="gone" />
-        </FrameLayout>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonLogin"
+                    style="@style/Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="@string/entrar"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorOnPrimary" />
 
+                <ProgressBar
+                    android:id="@+id/buttonProgress"
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:visibility="gone" />
+            </FrameLayout>
 
-        <TextView
-            android:id="@+id/textNaoTemConta"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/roboto"
-            android:text="@string/naoTemConta"
-            android:textColor="@color/textTertiary" />
-
-        <View
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="14dp"
-            android:background="@color/colorDivider" />
-
-        <FrameLayout
-            android:id="@+id/loginButtonGoogle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="30dp">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/button_login_google"
-                style="@style/ButtonGoogle"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="5dp"
-                android:layout_marginHorizontal="2dp"
-                android:drawableStart="@drawable/ic_google"
-                android:paddingHorizontal="10dp"
-                android:text="@string/googleLogin"
-                android:textAllCaps="false"
-                android:textColor="@color/textPrimary" />
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
 
-            <ProgressBar
-                android:id="@+id/buttonProgressGoogle"
-                style="?android:attr/progressBarStyleSmall"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_gravity="center"
-                android:elevation="6dp"
-                android:visibility="gone" />
-        </FrameLayout>
+                <TextView
+                    android:id="@+id/forgotPassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="@string/esqueceuSenha"
+                    android:textColor="@color/colorPrimaryVariant"
+                    android:textSize="13sp" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/textNaoTemConta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="@string/naoTemConta"
+                    android:textSize="13sp"
+                    android:textColor="@color/colorPrimaryVariant" />
+
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="409dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        android:padding="20dp"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/termosDeCondicoes"
-            android:layout_marginBottom="40dp"
-            android:layout_marginStart="60dp"
-            android:layout_marginEnd="60dp"
-            android:textSize="@dimen/text_small"
-            android:fontFamily="@font/roboto"
-            android:textColor="@color/textTertiary"
-            android:textAlignment="center"/>
-    </LinearLayout>
+            android:orientation="horizontal">
 
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="14dp"
+                android:layout_weight="1"
+                android:background="@color/colorDivider" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ou"
+                android:textColor="@color/textTertiary" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:background="@color/colorDivider" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/loginButtonGoogle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/button_login_google"
+                    style="@style/ButtonGoogle"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="2dp"
+                    android:layout_marginVertical="5dp"
+                    android:drawableStart="@drawable/ic_google"
+                    android:paddingHorizontal="10dp"
+                    android:text="@string/googleLogin"
+                    android:textAllCaps="false"
+                    android:textColor="@color/textPrimary" />
+
+                <ProgressBar
+                    android:id="@+id/buttonProgressGoogle"
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:elevation="6dp"
+                    android:visibility="gone" />
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Contate-nos" />
+        </LinearLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
