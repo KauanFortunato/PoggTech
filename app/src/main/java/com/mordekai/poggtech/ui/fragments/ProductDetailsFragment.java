@@ -212,6 +212,7 @@ public class ProductDetailsFragment extends Fragment {
 
         titleProduct.setText(product.getTitle());
         category.setText(product.getCategory());
+
         price.setText(String.valueOf(integerPart));
         priceDecimal.setText(String.format("%02d€", cents));
         Log.d("ProductDetailsFragment", "Logs: " + product.getDiscountPercentage());
