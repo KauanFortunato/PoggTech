@@ -4,19 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="10dp"
-    android:paddingHorizontal="10dp"
+    android:paddingHorizontal="15dp"
     android:paddingVertical="10dp"
+    android:layout_marginBottom="15dp"
     android:background="@drawable/card_product_background">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_divisor_bottom">
+        android:background="@drawable/bg_divisor_bottom_product">
 
         <ImageView
+            android:id="@+id/productImage"
             android:layout_width="match_parent"
             android:layout_height="220dp"
             android:contentDescription="@string/productImg"
+            android:background="@drawable/bg_image_product"
+            android:layout_marginBottom="8dp"
             android:src="@drawable/xbox_series_x">
         </ImageView>
 
@@ -42,6 +46,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/seller"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto"
@@ -50,9 +55,24 @@
                     android:maxLines="1"
                     android:ellipsize="end"
                     android:layout_marginBottom="5dp"
-                    android:text="Produto vendido por DioguinhoPJL"/>
+                    android:text="Produto vendido por DioguinhoPJL"
+                    android:visibility="gone"/>
 
                 <TextView
+                    android:id="@+id/sellerAdmin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="@dimen/text_normal"
+                    android:textColor="@color/colorPrimaryVariant"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/poggers"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/productTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_medium"
@@ -63,6 +83,7 @@
                     android:text="Microsoft Xbox Series X, 512gb"/>
 
                 <TextView
+                    android:id="@+id/productType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto"
@@ -86,10 +107,22 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/discount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_normal"
+            android:fontFamily="@font/roboto_medium"
+            android:textColor="@color/colorOnError"
+            android:background="@color/colorError"
+            android:padding="3dp"
+            android:text="20% de desconto"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="5dp"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -105,6 +138,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_medium"
                     android:text="18"
+
                     android:textColor="@color/textPrimary"
                     android:textSize="@dimen/text_title" />
 
@@ -112,6 +146,7 @@
                     android:id="@+id/priceDecimal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="2dp"
                     android:fontFamily="@font/roboto_medium"
                     android:textColor="@color/textPrimary"
                     android:textSize="@dimen/text_large"
@@ -119,6 +154,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/priceBefore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
@@ -130,10 +166,12 @@
 
 
         <TextView
+            android:id="@+id/deliveryType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/textSecondary"
-            android:text="Entrega COMBINAR com o vendedor"/>
+            android:text="Entrega COMBINAR com o vendedor"
+            android:visibility="gone"/>
 
 
 
