@@ -2,8 +2,6 @@ package com.mordekai.poggtech.ui.fragments;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
@@ -16,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -53,6 +50,12 @@ public class HeaderFragment extends Fragment {
     private ProductManager productManager;
     private ApiProduct apiProduct;
 
+    private String fragmentTagAlvo = null;
+
+    public void setFragmentTagAlvo(String tag) {
+        this.fragmentTagAlvo = tag;
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     @Nullable
     @Override
@@ -78,7 +81,7 @@ public class HeaderFragment extends Fragment {
             }
             closeSearchProd();
 
-            getParentFragmentManager().popBackStack();
+            popBackStackTo(fragmentTagAlvo);
         });
 
         searchProd.setOnFocusChangeListener((v, hasFocus) -> {
@@ -106,7 +109,7 @@ public class HeaderFragment extends Fragment {
                                     R.anim.fade_out
                             )
                             .replace(R.id.containerFrame, new SearchFragment(), "SEARCH_FRAGMENT")
-                            .addToBackStack(null)
+                            .addToBackStack("search_fragment")
                             .commit();
                 }, 100);
             }
@@ -172,8 +175,13 @@ public class HeaderFragment extends Fragment {
                 searchProd.clearFocus();
             }
 
-            getParentFragmentManager()
-                    .beginTransaction()
+            FragmentManager fragmentManager = getParentFragmentManager();
+
+            while (fragmentManager.getBackStackEntryCount() > 0) {
+                fragmentManager.popBackStackImmediate();
+            }
+
+            fragmentManager.beginTransaction()
                     .setCustomAnimations(
                             R.anim.fade_in,
                             R.anim.fade_out,
@@ -181,6 +189,7 @@ public class HeaderFragment extends Fragment {
                             R.anim.fade_out
                     )
                     .replace(R.id.containerFrame, new SearchedProductsFragment())
+                    .addToBackStack("searched_products")
                     .commit();
 
             searchProd.postDelayed(() -> isUpdatingText = false, 100);
@@ -188,6 +197,34 @@ public class HeaderFragment extends Fragment {
 
         return view;
     }
+
+    private void popBackStackTo(String fragmentTag) {
+        FragmentManager fragmentManager = getParentFragmentManager();
+
+        if (fragmentTag != null && !fragmentTag.isEmpty()) {
+            boolean encontrou = false;
+
+            for (int i = 0; i < fragmentManager.getBackStackEntryCount(); i++) {
+                FragmentManager.BackStackEntry entry = fragmentManager.getBackStackEntryAt(i);
+                if (fragmentTag.equals(entry.getName())) {
+                    encontrou = true;
+                    break;
+                }
+            }
+
+            if (encontrou) {
+                fragmentManager.popBackStack(fragmentTag, 0);
+            } else {
+                Log.w("HeaderFragment", "Tag \"" + fragmentTag + "\" não encontrada na back stack. A fazer pop normal.");
+                fragmentManager.popBackStack();
+            }
+        } else {
+            fragmentManager.popBackStack();
+        }
+
+        setFragmentTagAlvo(null);
+    }
+
 
     public void showButtonBack() {
         if (btnBackHeader.getVisibility() == View.VISIBLE) return;
@@ -236,7 +273,6 @@ public class HeaderFragment extends Fragment {
         constraintSet.setMargin(searchProd.getId(), ConstraintSet.START, margemOriginal);
         constraintSet.applyTo(constraintLayout);
 
-        // Esconde o botão imediatamente
         btnBackHeader.setVisibility(View.GONE);
     }
 
@@ -283,5 +319,6 @@ public class HeaderFragment extends Fragment {
         void showBackButton();
         void hideBackButton();
         void closeSearchProd();
+        void setFragmentTagAlvo(String tag);
     }
 }

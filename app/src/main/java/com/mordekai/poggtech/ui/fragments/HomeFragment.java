@@ -62,6 +62,7 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
     private List<Integer> favoriteIds = new ArrayList<>();
     private ShimmerFrameLayout shimmerContinueBuy;
 
+
     @Override
     public void onProductClick(Product product) {
         Bundle bundle = new Bundle();
@@ -262,6 +263,7 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
         rvContinueBuy.setVisibility(View.GONE);
 
         HeaderFragment.HeaderListener listener = (HeaderFragment.HeaderListener) getActivity();
+
         if (listener != null) {
             listener.hideBackButton();
         }

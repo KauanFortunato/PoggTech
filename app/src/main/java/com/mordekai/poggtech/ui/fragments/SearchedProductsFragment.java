@@ -45,7 +45,6 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
         View view = inflater.inflate(R.layout.fragment_searched_products, container, false);
         headerFragment = (HeaderFragment) getChildFragmentManager().findFragmentById(R.id.headerContainer);
 
-
         sharedPrefHelper = new SharedPrefHelper(requireContext());
         user = sharedPrefHelper.getUser();
 
@@ -64,6 +63,14 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (headerFragment != null) {
+            headerFragment.closeSearchProd();
+        }
+    }
+
     public void getSearchedProducts(String search) {
         productManager.searchProducts(search, new RepositoryCallback<List<Product>>() {
 
@@ -73,9 +80,7 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
             }
 
             @Override
-            public void onFailure(Throwable t) {
-
-            }
+            public void onFailure(Throwable t) {}
         });
     }
 
@@ -102,6 +107,13 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
     public void closeSearchProd() {
         if (headerFragment != null) {
             headerFragment.closeSearchProd();
+        }
+    }
+
+    @Override
+    public void setFragmentTagAlvo(String tag) {
+        if (headerFragment != null) {
+            headerFragment.setFragmentTagAlvo(tag);
         }
     }
 

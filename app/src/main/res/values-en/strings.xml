@@ -8,9 +8,9 @@
     <string name="enderecoEmail">Email Address</string>
     <string name="digiteEmail">Enter your email</string>
     <string name="palavraPasse">Password</string>
-    <string name="esqueceuSenha">Forgot your password?</string>
+    <string name="esqueceuSenha">Forgot password?</string>
     <string name="googleLogin">Login with Google</string>
-    <string name="naoTemConta">Don\'t have an account? Create here!</string>
+    <string name="naoTemConta">Sign Up</string>
     <string name="entrar">Login</string>
     <string name="cadastro">Sign up</string>
     <string name="nome">Name</string>

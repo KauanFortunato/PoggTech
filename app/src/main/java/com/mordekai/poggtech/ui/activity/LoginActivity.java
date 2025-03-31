@@ -23,6 +23,7 @@ import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -62,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
     private boolean isPasswordVisible = false;
     private AppCompatButton buttonGoogle;
     private ProgressBar buttonProgressGoogle;
+    private CheckBox checkboxTerms;
 
     // Google Auth
     private CredentialManager credentialManager;
@@ -135,6 +137,13 @@ public class LoginActivity extends AppCompatActivity {
         }
         if (TextUtils.isEmpty(password)) {
             inputPassword.setError("Digite a senha");
+            buttonProgress.setVisibility(View.GONE);
+            buttonLogin.setText(R.string.entrar);
+            buttonLogin.setEnabled(true);
+            return;
+        }
+        if(!checkboxTerms.isChecked()) {
+            SnackbarUtil.showErrorSnackbar(getWindow().getDecorView().getRootView(), "Você precisa aceitar os termos de uso", LoginActivity.this);
             buttonProgress.setVisibility(View.GONE);
             buttonLogin.setText(R.string.entrar);
             buttonLogin.setEnabled(true);
@@ -277,6 +286,7 @@ public class LoginActivity extends AppCompatActivity {
         inputPassword = findViewById(R.id.inputPassword);
         textNaoTemConta = findViewById(R.id.textNaoTemConta);
         forgotPassword = findViewById(R.id.forgotPassword);
+        checkboxTerms = findViewById(R.id.checkbox_terms);
 
         inputPassword.setOnTouchListener((v, event) -> {
             if(event.getAction() == MotionEvent.ACTION_DOWN) {
