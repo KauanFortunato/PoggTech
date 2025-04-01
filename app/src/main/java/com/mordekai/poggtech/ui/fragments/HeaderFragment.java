@@ -33,14 +33,17 @@ import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.ProductManager;
 import com.mordekai.poggtech.ui.activity.MainActivity;
+import com.mordekai.poggtech.utils.SharedPrefHelper;
 import com.mordekai.poggtech.utils.Utils;
 
 import java.util.List;
 
 public class HeaderFragment extends Fragment {
 
-    ImageButton btnBackHeader;
-    EditText searchProd;
+    private ImageButton btnBackHeader;
+    private EditText searchProd;
+    private SharedPrefHelper sharedPrefHelper;
+
     private ConstraintLayout constraintLayout;
 
     private ListView listSuggestions;
@@ -57,6 +60,7 @@ public class HeaderFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_header, container, false);
+        sharedPrefHelper = new SharedPrefHelper(requireContext());
 
         apiProduct = RetrofitClient.getRetrofitInstance().create(ApiProduct.class);
         productManager = new ProductManager(apiProduct);
@@ -154,6 +158,8 @@ public class HeaderFragment extends Fragment {
                     fragmentManager.popBackStackImmediate();
                 }
 
+                sharedPrefHelper.addSearchHistory(query);
+
                 fragmentManager.beginTransaction()
                         .setCustomAnimations(
                                 R.anim.fade_in,
@@ -170,7 +176,6 @@ public class HeaderFragment extends Fragment {
 
             return true;
         });
-
 
         searchProd.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -213,6 +218,8 @@ public class HeaderFragment extends Fragment {
             while (fragmentManager.getBackStackEntryCount() > 0) {
                 fragmentManager.popBackStackImmediate();
             }
+
+            sharedPrefHelper.addSearchHistory(searchProd.getText().toString().trim());
 
             fragmentManager.beginTransaction()
                     .setCustomAnimations(

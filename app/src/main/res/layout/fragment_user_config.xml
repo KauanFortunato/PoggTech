@@ -135,6 +135,7 @@
                         android:enabled="false"
                         android:focusable="false"
                         android:focusableInTouchMode="false"
+                        android:inputType="number"
                         android:text="@string/contactoExample" />
 
                     <RelativeLayout
