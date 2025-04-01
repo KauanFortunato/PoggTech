@@ -32,6 +32,7 @@ import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.ProductManager;
+import com.mordekai.poggtech.ui.activity.MainActivity;
 import com.mordekai.poggtech.utils.Utils;
 
 import java.util.List;
@@ -50,11 +51,6 @@ public class HeaderFragment extends Fragment {
     private ProductManager productManager;
     private ApiProduct apiProduct;
 
-    private String fragmentTagAlvo = null;
-
-    public void setFragmentTagAlvo(String tag) {
-        this.fragmentTagAlvo = tag;
-    }
 
     @SuppressLint("ClickableViewAccessibility")
     @Nullable
@@ -80,8 +76,7 @@ public class HeaderFragment extends Fragment {
                 btnBackHeader.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
             }
             closeSearchProd();
-
-            popBackStackTo(fragmentTagAlvo);
+            handleBackNavigation();
         });
 
         searchProd.setOnFocusChangeListener((v, hasFocus) -> {
@@ -138,6 +133,44 @@ public class HeaderFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) { }
         });
+
+        searchProd.setOnEditorActionListener((v, actionId, event) -> {
+            String query = searchProd.getText().toString().trim();
+
+            if (!query.isEmpty()) {
+                isUpdatingText = true;
+
+                overlayContainer.setVisibility(View.GONE);
+                listSuggestions.setVisibility(View.GONE);
+
+                if (getActivity() != null) {
+                    Utils.hideKeyboard(this);
+                    searchProd.clearFocus();
+                }
+
+                FragmentManager fragmentManager = getParentFragmentManager();
+
+                while (fragmentManager.getBackStackEntryCount() > 0) {
+                    fragmentManager.popBackStackImmediate();
+                }
+
+                fragmentManager.beginTransaction()
+                        .setCustomAnimations(
+                                R.anim.fade_in,
+                                R.anim.fade_out,
+                                R.anim.fade_in,
+                                R.anim.fade_out
+                        )
+                        .replace(R.id.containerFrame, new SearchedProductsFragment())
+                        .addToBackStack("searched_products")
+                        .commit();
+
+                searchProd.postDelayed(() -> isUpdatingText = false, 100);
+            }
+
+            return true;
+        });
+
 
         searchProd.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -198,33 +231,38 @@ public class HeaderFragment extends Fragment {
         return view;
     }
 
-    private void popBackStackTo(String fragmentTag) {
+    private void handleBackNavigation() {
         FragmentManager fragmentManager = getParentFragmentManager();
+        boolean forceBackHome = ((MainActivity) requireActivity()).shouldForceBackToHome();
 
-        if (fragmentTag != null && !fragmentTag.isEmpty()) {
-            boolean encontrou = false;
+        if (forceBackHome) {
+            fragmentManager.beginTransaction()
+                    .setCustomAnimations(
+                            R.anim.fade_in,
+                            R.anim.fade_out,
+                            R.anim.fade_in,
+                            R.anim.fade_out
+                    )
+                    .replace(R.id.containerFrame, new HomeFragment(), "home_fragment")
+                    .commit();
 
-            for (int i = 0; i < fragmentManager.getBackStackEntryCount(); i++) {
-                FragmentManager.BackStackEntry entry = fragmentManager.getBackStackEntryAt(i);
-                if (fragmentTag.equals(entry.getName())) {
-                    encontrou = true;
-                    break;
-                }
-            }
-
-            if (encontrou) {
-                fragmentManager.popBackStack(fragmentTag, 0);
-            } else {
-                Log.w("HeaderFragment", "Tag \"" + fragmentTag + "\" não encontrada na back stack. A fazer pop normal.");
-                fragmentManager.popBackStack();
-            }
+            ((MainActivity) requireActivity()).setForceBackToHome(false); // reset
         } else {
-            fragmentManager.popBackStack();
+            if (fragmentManager.getBackStackEntryCount() > 0) {
+                fragmentManager.popBackStack();
+            } else {
+                fragmentManager.beginTransaction()
+                        .setCustomAnimations(
+                                R.anim.fade_in,
+                                R.anim.fade_out,
+                                R.anim.fade_in,
+                                R.anim.fade_out
+                        )
+                        .replace(R.id.containerFrame, new HomeFragment(), "home_fragment")
+                        .commit();
+            }
         }
-
-        setFragmentTagAlvo(null);
     }
-
 
     public void showButtonBack() {
         if (btnBackHeader.getVisibility() == View.VISIBLE) return;
@@ -319,6 +357,5 @@ public class HeaderFragment extends Fragment {
         void showBackButton();
         void hideBackButton();
         void closeSearchProd();
-        void setFragmentTagAlvo(String tag);
     }
 }
