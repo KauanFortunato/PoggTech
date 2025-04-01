@@ -109,12 +109,4 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
             headerFragment.closeSearchProd();
         }
     }
-
-    @Override
-    public void setFragmentTagAlvo(String tag) {
-        if (headerFragment != null) {
-            headerFragment.setFragmentTagAlvo(tag);
-        }
-    }
-
 }

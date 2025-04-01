@@ -52,8 +52,16 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
         }
     }
 
-    @Override
-    public void setFragmentTagAlvo(String tag) {}
+
+    private boolean forceBackToHome = false;
+
+    public void setForceBackToHome(boolean force) {
+        this.forceBackToHome = force;
+    }
+
+    public boolean shouldForceBackToHome() {
+        return forceBackToHome;
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.O_MR1)
     @Override

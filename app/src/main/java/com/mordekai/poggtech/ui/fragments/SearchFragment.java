@@ -10,9 +10,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.mordekai.poggtech.R;
+import com.mordekai.poggtech.ui.activity.MainActivity;
 import com.mordekai.poggtech.utils.Utils;
 
 public class SearchFragment extends Fragment {
+
+    private HeaderFragment headerFragment;
 
     @Nullable
     @Override
@@ -22,9 +25,11 @@ public class SearchFragment extends Fragment {
         getActivity().findViewById(R.id.bottomNavigationView).setVisibility(View.GONE);
 
         HeaderFragment.HeaderListener listener = (HeaderFragment.HeaderListener) getActivity();
+
         if (listener != null) {
             listener.showBackButton();
         }
+        ((MainActivity) requireActivity()).setForceBackToHome(true);
 
         view.setOnClickListener(v -> {
             getActivity().findViewById(R.id.searchProd).clearFocus();
