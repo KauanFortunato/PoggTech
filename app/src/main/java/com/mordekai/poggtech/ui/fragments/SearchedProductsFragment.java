@@ -57,7 +57,6 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
         apiProduct = RetrofitClient.getRetrofitInstance().create(ApiProduct.class);
         productManager = new ProductManager(apiProduct);
 
-
         getSearchedProducts(searchProd.getText().toString());
 
         return view;

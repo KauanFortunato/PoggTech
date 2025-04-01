@@ -37,8 +37,8 @@
 
                 <ImageButton
                     android:id="@+id/delHistory"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_gravity="center_vertical|end"
                     android:background="@android:color/transparent"
                     android:layout_marginStart="8dp"
@@ -53,7 +53,7 @@
                 android:orientation="horizontal">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvContinueBuySkeleton"
+                    android:id="@+id/rvHistory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
