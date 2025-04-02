@@ -33,6 +33,7 @@
                 android:text="@string/poggers"/>
 
             <Switch
+                android:id="@+id/poggersFilter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:thumb="@drawable/bg_switch_thumb"
