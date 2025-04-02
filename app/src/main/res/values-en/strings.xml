@@ -59,4 +59,6 @@
     <string name="iniciarChat">Start chat</string>
     <string name="erroGoogleAuth">Error authenticating with Google</string>
     <string name="productImg">Product Image</string>
+    <string name="soldeBy">Sold by</string>
+    <string name="discount">discount</string>
 </resources>

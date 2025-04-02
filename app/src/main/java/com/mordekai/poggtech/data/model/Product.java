@@ -1,5 +1,7 @@
 package com.mordekai.poggtech.data.model;
 
+import java.util.Objects;
+
 public class Product {
     private int product_id;
     private int user_id;
@@ -55,6 +57,10 @@ public class Product {
 
     public String getSeller_type() {
         return seller_type;
+    }
+
+    public boolean isPoggers() {
+        return Objects.equals(seller_type, "admin");
     }
 
     public String getUpdated_at() {
