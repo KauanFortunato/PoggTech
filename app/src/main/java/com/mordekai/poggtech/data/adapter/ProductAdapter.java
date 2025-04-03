@@ -1,6 +1,7 @@
 package com.mordekai.poggtech.data.adapter;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +21,8 @@ import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.CartManager;
-import com.mordekai.poggtech.ui.fragments.HomeFragment;
+
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,17 +33,28 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     private final List<Product> products;
     private List<Integer> favoriteIds = new ArrayList<>();
     private final int userId;
-    private HomeFragment homeFragment;
+    private final OnProductClickListener productClickListener;
+    private final OnFavoritesChangedListener favoritesChangedListener;
+    private final int layoutResId;
 
     public interface OnProductClickListener {
         void onProductClick(Product product);
     }
 
-    public ProductAdapter(List<Product> products, int userId, HomeFragment homeFragment) {
+    public interface OnFavoritesChangedListener {
+        void onFavoritesChanged();
+    }
+
+    public ProductAdapter(List<Product> products, int userId, int layoutResId,
+                          OnProductClickListener productClickListener,
+                          OnFavoritesChangedListener favoritesChangedListener) {
         this.products = products;
         this.userId = userId;
-        this.homeFragment = homeFragment;
+        this.productClickListener = productClickListener;
+        this.favoritesChangedListener = favoritesChangedListener;
+        this.layoutResId = layoutResId;
     }
+
 
     public void setFavoriteIds(List<Integer> favoriteIds) {
         this.favoriteIds = favoriteIds;
@@ -53,7 +66,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Infla o layout do card
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_product, parent, false);
+                .inflate(layoutResId, parent, false);
         return new ViewHolder(view);
     }
 
@@ -61,6 +74,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.ViewHolder holder, int position) {
         Product product = products.get(position);
+        Log.d("ADAPTER_DEBUG", "Bind product: " + product.getTitle());
 
         holder.productTitle.setText(product.getTitle());
         holder.productPrice.setText(String.format("%.2f€", product.getPrice()));
@@ -92,9 +106,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             }
 
             // Atualiza todas as listas em tempo real
-            if (homeFragment != null) {
-                homeFragment.updateAllAdapters();
+            if (favoritesChangedListener != null) {
+                favoritesChangedListener.onFavoritesChanged();
             }
+
         });
 
 
@@ -103,14 +118,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 .load(product.getImage_url())
                 .into(holder.productImage);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (homeFragment instanceof OnProductClickListener) {
-                    ((OnProductClickListener) homeFragment).onProductClick(product);
-                }
+        holder.itemView.setOnClickListener(view -> {
+            if (productClickListener != null) {
+                productClickListener.onProductClick(product);
             }
         });
+
     }
 
     @Override

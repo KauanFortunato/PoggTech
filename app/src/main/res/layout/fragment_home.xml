@@ -155,7 +155,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                                tools:listitem="@layout/card_product"
+                                tools:listitem="@layout/card_product_match_parent"
                                 android:orientation="horizontal"/>
                         </LinearLayout>
                     </LinearLayout>
@@ -200,7 +200,7 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
                                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                                tools:listitem="@layout/card_product" />
+                                tools:listitem="@layout/card_product_match_parent" />
                         </LinearLayout>
                     </LinearLayout>
 
