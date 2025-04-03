@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorSecondaryVariant">
 
     <RelativeLayout
@@ -27,38 +28,39 @@
 
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingVertical="25dp"
-        android:paddingHorizontal="30dp"
         android:background="@drawable/section_divisor"
+        android:orientation="vertical"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="25dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header" >
+        app:layout_constraintTop_toBottomOf="@id/header">
 
         <TextView
             android:id="@+id/helloUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Olá, KAUAN"
-            android:textSize="24sp"
             android:fontFamily="@font/roboto_bold"
-            android:textColor="@color/textPrimary"/>
+            android:text="Olá, KAUAN"
+            android:textColor="@color/textPrimary"
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/numberAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Número Da Conta: 1A2B3C"
-            android:textSize="14sp"
             android:fontFamily="@font/roboto_bold"
-            android:textColor="@color/textSecondary" />
+            android:text="Número Da Conta: 1A2B3C"
+            android:textColor="@color/textSecondary"
+            android:textSize="14sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="10dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -80,18 +82,17 @@
                     android:id="@+id/textConfig"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/configuracoes"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/roboto_bold"
-                    android:textColor="@color/textPrimary"
-
-                    android:maxLines="2"
-                    android:ellipsize="end"
-                    android:lineSpacingExtra="4dp"
-                    android:hyphenationFrequency="full"
                     android:breakStrategy="balanced"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/roboto_bold"
+                    android:hyphenationFrequency="full"
+
+                    android:lineSpacingExtra="4dp"
+                    android:maxLines="2"
+                    android:text="@string/configuracoes"
                     android:textAlignment="center"
-                    />
+                    android:textColor="@color/textPrimary"
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -135,14 +136,15 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical">
+
                 <ImageButton
                     android:id="@+id/buttonMyAds"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_marginTop="28dp"
                     android:background="@drawable/rounded_button_small"
-                    android:src="@drawable/ic_sell_filled"
                     android:contentDescription="Os Meus Anúncios"
+                    android:src="@drawable/ic_sell_filled"
                     android:textAllCaps="false"
                     android:textColor="@color/textPrimary" />
 
@@ -150,20 +152,67 @@
                     android:id="@+id/textMyAds"
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/meusAnuncios"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/roboto_bold"
-                    android:textColor="@color/textPrimary"
-
-                    android:maxLines="2"
-                    android:ellipsize="end"
-                    android:lineSpacingExtra="4dp"
-                    android:hyphenationFrequency="full"
                     android:breakStrategy="balanced"
-                    android:textAlignment="center" />
+                    android:ellipsize="end"
+                    android:fontFamily="@font/roboto_bold"
+                    android:hyphenationFrequency="full"
+
+                    android:lineSpacingExtra="4dp"
+                    android:maxLines="2"
+                    android:text="@string/meusAnuncios"
+                    android:textAlignment="center"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/forYouContainer"
+        style="@style/productContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorSecondaryVariant"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/productSectionTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/paraVoce" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Ver mais"
+                android:textColor="@color/colorPrimaryVariant"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvForYou"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/card_product" />
+        </LinearLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

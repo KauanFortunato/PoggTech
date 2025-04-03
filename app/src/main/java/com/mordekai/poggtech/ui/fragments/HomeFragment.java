@@ -39,7 +39,10 @@ import com.mordekai.poggtech.utils.SharedPrefHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment implements ProductAdapter.OnProductClickListener, ProductContinueAdapter.OnProductContinueClickListener {
+public class HomeFragment extends Fragment
+        implements ProductAdapter.OnProductClickListener,
+                    ProductAdapter.OnFavoritesChangedListener,
+                    ProductContinueAdapter.OnProductContinueClickListener {
 
     private SharedPrefHelper sharedPrefHelper;
     private LinearLayout containerProductsHome;
@@ -110,9 +113,9 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
         progressBar.setVisibility(View.VISIBLE);
         containerProductsHome.setVisibility(View.GONE);
 
-        consolasAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), this);
-        popularAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), this);
-        accessoryAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), this);
+        consolasAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), R.layout.card_product_match_parent,this, this);
+        popularAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), R.layout.card_product_match_parent, this, this);
+        accessoryAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), R.layout.card_product_match_parent, this, this);
         productContinueAdapter = new ProductContinueAdapter(new ArrayList<>(), user.getUserId(), this, this);
 
         rvConsolas.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -132,7 +135,7 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
 
         apiProduct = RetrofitClient.getRetrofitInstance().create(ApiProduct.class);
         productManager = new ProductManager(apiProduct);
-        forYouAdapter = new ProductAdapter(productList, user.getUserId(), this);
+        forYouAdapter = new ProductAdapter(productList, user.getUserId(), R.layout.card_product_match_parent, this, this);
         rvForYou.setAdapter(forYouAdapter);
 
         apiInteraction = RetrofitClient.getRetrofitInstance().create(ApiInteraction.class);
@@ -282,6 +285,11 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
 
         ProductContinueAdapter skeletonAdapter = new ProductContinueAdapter(fakeList, user.getUserId(), this, this);
         rvContinueBuySkeleton.setAdapter(skeletonAdapter);
+    }
+
+    @Override
+    public void onFavoritesChanged() {
+        updateAllAdapters();
     }
 
 }
