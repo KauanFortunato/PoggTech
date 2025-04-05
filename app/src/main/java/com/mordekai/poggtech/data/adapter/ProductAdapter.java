@@ -118,12 +118,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 .load(product.getImage_url())
                 .into(holder.productImage);
 
+        // Quando o produto for clicado
         holder.itemView.setOnClickListener(view -> {
             if (productClickListener != null) {
                 productClickListener.onProductClick(product);
             }
         });
-
     }
 
     @Override

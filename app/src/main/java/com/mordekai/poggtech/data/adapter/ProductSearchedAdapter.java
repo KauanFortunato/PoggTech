@@ -33,10 +33,12 @@ public class ProductSearchedAdapter extends RecyclerView.Adapter<ProductSearched
     private final List<Product> products;
     private List<Integer> favoriteIds = new ArrayList<>();
     private final User user;
+    private OnProductClickListener productClickListener;
 
-    public ProductSearchedAdapter(List<Product> products, User user) {
+    public ProductSearchedAdapter(List<Product> products, User user, OnProductClickListener productClickListener) {
         this.products = products;
         this.user = user;
+        this.productClickListener = productClickListener;
     }
 
     public void setFavoriteIds(List<Integer> favoriteIds) {
@@ -44,6 +46,9 @@ public class ProductSearchedAdapter extends RecyclerView.Adapter<ProductSearched
         notifyDataSetChanged();
     }
 
+    public interface OnProductClickListener {
+        void onProductClick(Product product);
+    }
 
     @NonNull
     @Override
@@ -127,6 +132,12 @@ public class ProductSearchedAdapter extends RecyclerView.Adapter<ProductSearched
         Glide.with(holder.productImage.getContext())
                 .load(product.getImage_url())
                 .into(holder.productImage);
+
+        holder.itemView.setOnClickListener( v -> {
+            if (productClickListener != null) {
+                productClickListener.onProductClick(product);
+            }
+        });
     }
 
     @Override
@@ -184,14 +195,6 @@ public class ProductSearchedAdapter extends RecyclerView.Adapter<ProductSearched
                 Toast.makeText(view.getContext(), "Erro ao adicionar aos favoritos", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    public void filterPoggers(boolean poggers) {
-        if(poggers) {
-
-        } else {
-
-        }
     }
 
     private void removeFromFavorites(int productId, View view, int position) {
