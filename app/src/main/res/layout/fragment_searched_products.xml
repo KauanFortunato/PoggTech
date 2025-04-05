@@ -72,21 +72,22 @@
                         android:text="Filtros" />
 
                     <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/filterHigh"
+                        style="@style/itemFilterButton"
+                        android:text="Mais Caro" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/filterLow"
+                        style="@style/itemFilterButton"
+                        android:text="Mais Barato" />
+
+                    <androidx.appcompat.widget.AppCompatButton
                         style="@style/itemFilterButton"
                         android:text="Mais de 200 EUR" />
 
                     <androidx.appcompat.widget.AppCompatButton
                         style="@style/itemFilterButton"
                         android:text="200 - 500 EUR" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        style="@style/itemFilterButton"
-                        android:text="Mais Caro" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        style="@style/itemFilterButton"
-                        android:text="Mais Barato" />
-
                 </LinearLayout>
 
             </HorizontalScrollView>

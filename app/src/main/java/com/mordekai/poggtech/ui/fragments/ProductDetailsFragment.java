@@ -13,6 +13,7 @@ import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.CartManager;
 import com.mordekai.poggtech.domain.MessageManager;
 import com.mordekai.poggtech.domain.ProductManager;
+import com.mordekai.poggtech.ui.activity.MainActivity;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 import com.mordekai.poggtech.utils.SnackbarUtil;
 import com.mordekai.poggtech.utils.Utils;
@@ -62,6 +63,7 @@ public class ProductDetailsFragment extends Fragment {
     @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product_details, container, false);
+        ((MainActivity) requireActivity()).setForceBackToHome(false);
 
         // Referencias das views
         skeletonView = view.findViewById(R.id.skeletonView);

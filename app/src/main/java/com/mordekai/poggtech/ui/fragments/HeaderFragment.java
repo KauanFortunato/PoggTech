@@ -243,6 +243,7 @@ public class HeaderFragment extends Fragment {
         boolean forceBackHome = ((MainActivity) requireActivity()).shouldForceBackToHome();
 
         if (forceBackHome) {
+            searchProd.setText("");
             fragmentManager.beginTransaction()
                     .setCustomAnimations(
                             R.anim.fade_in,
@@ -328,7 +329,6 @@ public class HeaderFragment extends Fragment {
 
         if (getActivity() != null) {
             Utils.hideKeyboard(this);
-            searchProd.setText("");
             searchProd.clearFocus();
         }
     }

@@ -4,6 +4,7 @@ import com.mordekai.poggtech.data.adapter.ProductSearchedAdapter;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,13 +22,16 @@ import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.model.User;
+import com.mordekai.poggtech.data.remote.ApiInteraction;
 import com.mordekai.poggtech.data.remote.ApiProduct;
-import com.mordekai.poggtech.data.remote.ApiService;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
+import com.mordekai.poggtech.domain.InteractionManager;
 import com.mordekai.poggtech.domain.ProductManager;
+import com.mordekai.poggtech.ui.activity.MainActivity;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class SearchedProductsFragment extends Fragment implements HeaderFragment.HeaderListener {
@@ -34,21 +39,26 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
     private HeaderFragment headerFragment;
     private ProductSearchedAdapter productSearchedAdapter;
     private SharedPrefHelper sharedPrefHelper;
+    private InteractionManager interactionManager;
     private User user;
     private EditText searchProd;
     private Switch poggersFilter;
+    private boolean highPrice = false, lowPrice = false;
+    private AppCompatButton filterHigh, filterLow;
     private RecyclerView searchedProducts;
     private ApiProduct apiProduct;
     private ProductManager productManager;
     private List<Integer> favoriteIds = new ArrayList<>();
     private List<Product> allProducts = new ArrayList<>();
+    private List<Product> filteredProducts = new ArrayList<>();
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_searched_products, container, false);
-        headerFragment = (HeaderFragment) getChildFragmentManager().findFragmentById(R.id.headerContainer);
+        ((MainActivity) requireActivity()).setForceBackToHome(true);
+        headerFragment = (HeaderFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.headerContainer);
 
         sharedPrefHelper = new SharedPrefHelper(requireContext());
         user = sharedPrefHelper.getUser();
@@ -58,7 +68,37 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
 
         initializeComponents(view);
 
-        productSearchedAdapter = new ProductSearchedAdapter(new ArrayList<>(), user);
+        productSearchedAdapter = new ProductSearchedAdapter(new ArrayList<>(), user, product -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("productId", product.getProduct_id());
+
+            ProductDetailsFragment fragment = new ProductDetailsFragment();
+            fragment.setArguments(bundle);
+
+            interactionManager.userInteraction(product.getProduct_id(), user.getUserId(), "view",new RepositoryCallback<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    Log.d("API_RESPONSE", "Interaction result: " + result);
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    Log.e("API_RESPONSE", "Error in userInteraction", t);
+                }
+            });
+
+            getParentFragmentManager().beginTransaction()
+                    .setCustomAnimations(
+                            R.anim.enter_from_right,
+                            R.anim.exit_to_left,
+                            R.anim.enter_from_left,
+                            R.anim.exit_to_right
+                    )
+                    .replace(R.id.containerFrame, fragment)
+                    .addToBackStack(null)
+                    .commit();
+        });
+
         getFavoriteProducts();
         searchedProducts.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         searchedProducts.setAdapter(productSearchedAdapter);
@@ -74,6 +114,11 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
         if (headerFragment != null) {
             headerFragment.closeSearchProd();
         }
+        ((MainActivity) requireActivity()).setForceBackToHome(true);
+        showBackButton();
+
+        buttonSelect(filterHigh);
+        buttonSelect(filterLow);
     }
 
     private void getFavoriteProducts() {
@@ -99,7 +144,7 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
             @Override
             public void onSuccess(List<Product> result) {
                 allProducts = result;
-                applyFilter();
+                applyCombinedFitlers();
             }
 
             @Override
@@ -107,39 +152,102 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
         });
     }
 
-    private void applyFilter() {
+    private void applyCombinedFitlers() {
         List<Product> filtered = new ArrayList<>();
 
         boolean onlyPoggers = poggersFilter.isChecked();
 
-        for (Product p : allProducts) {
-            if (onlyPoggers) {
-                if (p.isPoggers()) {
-                    filtered.add(p);
+        for (Product product : allProducts) {
+            if(onlyPoggers) {
+                if(product.isPoggers()){
+                    filtered.add(product);
                 }
-            } else {
-                filtered.add(p);
+            }else{
+                filtered.add(product);
             }
         }
 
-        productSearchedAdapter.updateProducts(filtered);
-    }
+        if(highPrice){
+            Collections.sort(filtered, (p1, p2) -> Float.compare(p2.getPrice(), p1.getPrice()));
+        } else {
+            Collections.sort(filtered, (p1, p2) -> Float.compare(p1.getPrice(), p2.getPrice()));
+        }
 
+        filteredProducts.clear();
+        filteredProducts.addAll(filtered);
+
+        productSearchedAdapter.updateProducts(filteredProducts);
+    }
 
     private void initializeComponents(View view) {
         searchedProducts = view.findViewById(R.id.searchedProducts);
         searchProd = getActivity().findViewById(R.id.searchProd);
         poggersFilter = view.findViewById(R.id.poggersFilter);
+        filterHigh = view.findViewById(R.id.filterHigh);
+        filterLow = view.findViewById(R.id.filterLow);
 
         poggersFilter.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            applyFilter();
+            applyCombinedFitlers();
         });
+
+        filterHigh.setOnClickListener(v -> {
+            if(filterHigh.isHapticFeedbackEnabled()) {
+                filterHigh.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
+            }
+
+            highPrice = !highPrice;
+            lowPrice = false;
+
+            applyCombinedFitlers();
+            buttonSelect(filterLow);
+            buttonSelect(filterHigh);
+        });
+
+        filterLow.setOnClickListener(v -> {
+            if(filterLow.isHapticFeedbackEnabled()) {
+                filterLow.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
+            }
+
+            lowPrice = !lowPrice;
+            highPrice = false;
+
+            applyCombinedFitlers();
+            buttonSelect(filterHigh);
+            buttonSelect(filterLow);
+        });
+
+        interactionManager = new InteractionManager(RetrofitClient.getRetrofitInstance().create(ApiInteraction.class));
+    }
+
+    private void buttonSelect(AppCompatButton button) {
+
+        if(button == filterHigh) {
+            if(highPrice) {
+                button.setBackgroundResource(R.drawable.bg_item_filter_selected);
+                button.setTextColor(getResources().getColor(R.color.colorPrimary));
+            } else {
+                button.setBackgroundResource(R.drawable.bg_item_filter);
+                button.setTextColor(getResources().getColor(R.color.textSecondary));
+            }
+        } else {
+            if(lowPrice) {
+                button.setBackgroundResource(R.drawable.bg_item_filter_selected);
+                button.setTextColor(getResources().getColor(R.color.colorPrimary));
+            } else {
+                button.setBackgroundResource(R.drawable.bg_item_filter);
+                button.setTextColor(getResources().getColor(R.color.textSecondary));
+            }
+        }
+
+
     }
 
     @Override
     public void showBackButton() {
+        Log.d("HeaderFragment", "showBackButton callesss");
         if (headerFragment != null) {
             headerFragment.showButtonBack();
+            Log.d("HeaderFragment", "showBackButton called");
         }
     }
 
