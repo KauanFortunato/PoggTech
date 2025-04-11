@@ -5,6 +5,7 @@ import static com.mordekai.poggtech.utils.NetworkUtil.isConnectedXampp;
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption;
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.mordekai.poggtech.R;
 
 import android.annotation.SuppressLint;
@@ -46,11 +47,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
+import com.mordekai.poggtech.data.model.ApiResponse;
 import com.mordekai.poggtech.data.remote.ApiService;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.data.model.User;
 import com.mordekai.poggtech.data.repository.FirebaseUserRepository;
 import com.mordekai.poggtech.data.repository.MySqlUserRepository;
+import com.mordekai.poggtech.domain.FCMManager;
 import com.mordekai.poggtech.domain.UserManager;
 import com.mordekai.poggtech.utils.AppConfig;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
@@ -64,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
     private AppCompatButton buttonGoogle;
     private ProgressBar buttonProgressGoogle;
     private CheckBox checkboxTerms;
+    private FCMManager fcmManager;
 
     // Google Auth
     private CredentialManager credentialManager;
@@ -122,6 +126,8 @@ public class LoginActivity extends AppCompatActivity {
 
             loginUser(buttonLogin, buttonProgress);
         });
+
+        fcmManager = new FCMManager(RetrofitClient.getRetrofitInstance().create(ApiService.class));
     }
 
     private void loginUser(AppCompatButton buttonLogin, ProgressBar buttonProgress) {
@@ -164,11 +170,9 @@ public class LoginActivity extends AppCompatActivity {
                         buttonLogin.setEnabled(true);
 
                         Log.d("Sucesso", "Usuário logado com sucesso! Response: " + result.getName());
-                        SharedPrefHelper sharedPrefHelper = new SharedPrefHelper(LoginActivity.this);
-                        sharedPrefHelper.saveUser(result);
 
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        finish();
+                        // Envia o token de dispositivo para o servidor
+                        saveToken(result);
                     }
 
                     @Override
@@ -188,6 +192,36 @@ public class LoginActivity extends AppCompatActivity {
                 SnackbarUtil.showErrorSnackbar(getWindow().getDecorView().getRootView(), "Não foi possível conectar ao servidor", LoginActivity.this);
             }
         });
+    }
+
+    private void saveToken(User user) {
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        String token = task.getResult();
+                        fcmManager.saveToken(user.getUserId(), token, new RepositoryCallback<ApiResponse> () {
+                            @Override
+                            public void onSuccess(ApiResponse result) {
+                                user.setToken(token);
+
+                                SharedPrefHelper sharedPrefHelper = new SharedPrefHelper(LoginActivity.this);
+                                sharedPrefHelper.saveUser(user);
+
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                finish();
+                            }
+
+                            @Override
+                            public void onFailure(Throwable t) {
+                                SharedPrefHelper sharedPrefHelper = new SharedPrefHelper(LoginActivity.this);
+                                sharedPrefHelper.saveUser(user);
+
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                finish();
+                            }
+                        });
+                    }
+                });
     }
 
     private void initiateGoogleLogin() {
@@ -262,14 +296,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onSuccess(User user) {
                 Log.d("Auth", "Login bem-sucedido! Nome: " + user.getName() + ", Email: " + user.getEmail());
 
-                SharedPrefHelper sharedPrefHelper = new SharedPrefHelper(LoginActivity.this);
-                sharedPrefHelper.saveUser(user);
-
                 buttonGoogle.setText(R.string.googleLogin);
                 buttonProgressGoogle.setVisibility(View.GONE);
 
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                finish();
+                saveToken(user);
             }
 
             @Override

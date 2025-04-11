@@ -5,6 +5,7 @@ compiler = "4.15.1"
 converterGson = "2.9.0"
 credentialsVersion = "1.3.0-alpha04"
 firebaseBom = "33.6.0"
+firebaseMessaging = "24.1.1"
 flexbox = "3.0.0"
 glideVersion = "4.15.1"
 junit = "4.13.2"
@@ -32,6 +33,7 @@ converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref
 credentials-v130alpha04 = { module = "androidx.credentials:credentials", version.ref = "credentialsVersion" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-messaging = { module = "com.google.firebase:firebase-messaging", version.ref = "firebaseMessaging" }
 flexbox = { module = "com.google.android.flexbox:flexbox", version.ref = "flexbox" }
 github-glide = { module = "com.github.bumptech.glide:glide", version.ref = "glideVersion" }
 google-firebase-auth = { module = "com.google.firebase:firebase-auth" }

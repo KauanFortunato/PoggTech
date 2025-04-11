@@ -23,11 +23,13 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mordekai.poggtech.R;
+import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.ApiResponse;
 import com.mordekai.poggtech.data.model.User;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.data.repository.FirebaseUserRepository;
 import com.mordekai.poggtech.data.repository.MySqlUserRepository;
+import com.mordekai.poggtech.domain.FCMManager;
 import com.mordekai.poggtech.domain.UserManager;
 import com.mordekai.poggtech.ui.activity.LoginActivity;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
@@ -50,6 +52,7 @@ public class UserConfigFragment extends Fragment {
     private BottomNavigationView bottomNavigationView;
     private SharedPrefHelper sharedPrefHelper;
     private UserManager userManager;
+    private FCMManager fcmManager;
     private User user;
     private boolean isEditing = false;
 
@@ -59,6 +62,7 @@ public class UserConfigFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_user_config, container, false);
 
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        fcmManager = new FCMManager(apiService);
         userManager = new UserManager(new FirebaseUserRepository(), new MySqlUserRepository(apiService));
 
         sharedPrefHelper = new SharedPrefHelper(requireContext());
@@ -154,6 +158,18 @@ public class UserConfigFragment extends Fragment {
             if (buttonLogout.isHapticFeedbackEnabled()) {
                 v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
             }
+
+            fcmManager.removeToken(user.getUserId(), user.getToken(), new RepositoryCallback<ApiResponse>() {
+                @Override
+                public void onSuccess(ApiResponse result) {
+                    Log.d("FCM_TOKEN", "Token removido com sucesso!");
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    Log.e("FCM_TOKEN", "Erro ao remover token: " + t.getMessage());
+                }
+            });
             userManager.logoutUser();
             sharedPrefHelper.clearUser();
             startActivity(new Intent(requireContext(), LoginActivity.class));

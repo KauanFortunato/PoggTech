@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
         return forceBackToHome;
     }
 
+
     @RequiresApi(api = Build.VERSION_CODES.O_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
