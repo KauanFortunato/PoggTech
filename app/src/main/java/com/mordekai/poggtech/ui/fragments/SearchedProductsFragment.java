@@ -68,6 +68,7 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
 
         initializeComponents(view);
 
+        // Quando o produto for clicado
         productSearchedAdapter = new ProductSearchedAdapter(new ArrayList<>(), user, product -> {
             Bundle bundle = new Bundle();
             bundle.putInt("productId", product.getProduct_id());
@@ -170,7 +171,9 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
         if(highPrice){
             Collections.sort(filtered, (p1, p2) -> Float.compare(p2.getPrice(), p1.getPrice()));
         } else {
-            Collections.sort(filtered, (p1, p2) -> Float.compare(p1.getPrice(), p2.getPrice()));
+            if(lowPrice) {
+                Collections.sort(filtered, (p1, p2) -> Float.compare(p1.getPrice(), p2.getPrice()));
+            }
         }
 
         filteredProducts.clear();
@@ -244,10 +247,8 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
 
     @Override
     public void showBackButton() {
-        Log.d("HeaderFragment", "showBackButton callesss");
         if (headerFragment != null) {
             headerFragment.showButtonBack();
-            Log.d("HeaderFragment", "showBackButton called");
         }
     }
 

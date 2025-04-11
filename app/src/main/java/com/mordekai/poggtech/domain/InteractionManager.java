@@ -19,7 +19,7 @@ public class InteractionManager {
         this.apiInteraction = apiInteraction;
     }
 
-    public void userInteraction(int product_id, int user_id, String action,RepositoryCallback<String> callback) {
+    public void userInteraction(int product_id, int user_id, String action, RepositoryCallback<String> callback) {
         apiInteraction.userInteraction(product_id, user_id, action).enqueue(new Callback<ApiResponse<Void>>() {
             @Override
             public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {

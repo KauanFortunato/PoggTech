@@ -35,6 +35,7 @@ import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.InteractionManager;
 import com.mordekai.poggtech.domain.ProductManager;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
+import com.mordekai.poggtech.utils.SnackbarUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,6 +106,11 @@ public class HomeFragment extends Fragment
 
         sharedPrefHelper = new SharedPrefHelper(requireContext());
         user = sharedPrefHelper.getUser();
+
+        if (user == null) {
+            Log.e("HomeFragment", "ERRO: Usuário está null! Verifica se o login foi completado.");
+            return inflater.inflate(R.layout.fragment_home, container, false); // ou um layout de erro
+        }
 
         startComponentes(view);
 

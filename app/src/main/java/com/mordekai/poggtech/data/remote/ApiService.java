@@ -39,6 +39,20 @@ public interface ApiService {
     @PUT("UpdateUser.php")
     Call<ApiResponse<Void>> updateUser(@Body User user);
 
+    @FormUrlEncoded
+    @POST("NotificationsFCM/SaveToken.php")
+    Call<ApiResponse<Void>> saveToken(
+            @Field("user_id") int user_id,
+            @Field("token") String token
+    );
+
+    @FormUrlEncoded
+    @POST("NotificationsFCM/RemoveToken.php")
+    Call<ApiResponse<Void>> removeToken(
+            @Field("user_id") int user_id,
+            @Field("token") String token
+    );
+
     // Category
     @GET("GetAllCategories.php")
     Call<List<Category>> getAllCategories();
