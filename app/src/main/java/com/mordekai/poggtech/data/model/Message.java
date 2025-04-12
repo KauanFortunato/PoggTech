@@ -16,6 +16,7 @@ public class Message {
     private String message;
     private String timestamp;
     private String timestamp_format;
+    private int is_read;
 
     // Construtor vazio
     public Message() {}
@@ -152,6 +153,10 @@ public class Message {
     public void setTimestamp_format(String timestamp_format) {
         this.timestamp_format = timestamp_format;
     }
+
+    public int getIs_read() { return is_read; }
+
+    public void setIs_read(int is_read) { this.is_read = is_read; }
 
     // Método toString() para facilitar o debug
     @Override
