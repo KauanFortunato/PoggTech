@@ -14,19 +14,19 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface ApiProduct {
-    @GET("GetAllProducts.php")
+    @GET("Product/GetAllProducts.php")
     Call<List<Product>> getAllProducts();
 
-    @GET("GetProductsByCategory.php")
+    @GET("Product/GetProductsByCategory.php")
     Call<List<Product>> getProductsByCategory(@Query("category") String category);
 
-    @GET("GetProduct.php")
+    @GET("Product/GetProduct.php")
     Call<Product> getProductById(
             @Query("product_id") int product_id
     );
 
     @FormUrlEncoded
-    @POST("AddProductOnCartOrFav.php")
+    @POST("Product/AddProductOnCartOrFav.php")
     Call<ResponseBody> addToCart(
             @Field("product_id") int product_id,
             @Field("user_id") int user_id,
@@ -34,52 +34,52 @@ public interface ApiProduct {
     );
 
     @FormUrlEncoded
-    @POST("RemoveProductOnCartOrFav.php")
+    @POST("Product/RemoveProductOnCartOrFav.php")
     Call<ResponseBody> removeFromCart(
             @Field("product_id") int product_id,
             @Field("user_id") int user_id,
             @Field("tipo") int tipo
     );
 
-    @GET("GetProductsFromCart.php")
+    @GET("Product/GetProductsFromCart.php")
     Call<ApiResponse<List<Product>>> getCartProducts(
             @Query("user_id") int user_id,
             @Query("tipo") int tipo
     );
 
-    @GET("GetUserFavOrCart.php")
+    @GET("Product/GetUserFavOrCart.php")
     Call<ApiResponse<List<Integer>>> getUserFavOrCart(
             @Query("user_id") int userId,
             @Query("tipo") int tipo
     );
 
-    @GET("VerifyProductOnCart.php")
+    @GET("Product/VerifyProductOnCart.php")
     Call<ApiResponse> verifyProductOnCart(
             @Query("product_id") int productId,
             @Query("user_id") int userId,
             @Query("tipo") int tipo
     );
 
-    @GET("GetPopularProducts.php")
+    @GET("Product/GetPopularProducts.php")
     Call<ApiResponse<List<Product>>> getPopularProducts();
 
-    @GET("GetRecommendedProducts.php")
+    @GET("Product/GetRecommendedProducts.php")
     Call<ApiResponse<List<Product>>> getRecommendedProducts(
             @Query("user_id") int userId
     );
 
-    @GET("GetProductsFavCategory.php")
+    @GET("Product/GetProductsFavCategory.php")
     Call<ApiResponse<List<Product>>> getProductsFavCategory(
             @Query("user_id") int userId,
             @Query("quantity") int quantity
     );
 
-    @GET("SearchProducts.php")
+    @GET("Product/SearchProducts.php")
     Call<ApiResponse<List<Product>>> searchProducts (
             @Query("search") String search
     );
 
-    @GET("GetSuggestions.php")
+    @GET("Product/GetSuggestions.php")
     Call<ApiResponse<List<String>>> getSuggestions (
             @Query("query") String query
     );

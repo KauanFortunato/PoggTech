@@ -16,7 +16,7 @@ import retrofit2.http.Query;
 public interface ApiMessage {
 
     @FormUrlEncoded
-    @POST("SendMessage.php")
+    @POST("Message/SendMessage.php")
     Call<ApiResponse<Void>> sendMessage(
             @Field("sender_id") int sender_id,
             @Field("receiver_id") int receiver_id,
@@ -24,30 +24,30 @@ public interface ApiMessage {
             @Field("message") String message
     );
 
-    @GET("GetMessages.php")
+    @GET("Message/GetMessages.php")
     Call<ApiResponse<List<Message>>> getMessages(
             @Query("product_id") int product_id,
             @Query("chat_id") int chat_id
     );
 
-    @GET("GetUserChatsBuy.php")
+    @GET("Chat/GetUserChatsBuy.php")
     Call<List<Chat>> getUserChatsBuy(
             @Query("user_id") int user_id
     );
 
-    @GET("GetUserChatsSell.php")
+    @GET("Chat/GetUserChatsSell.php")
     Call<List<Chat>> getUserChatsSell(
             @Query("user_id") int user_id
     );
 
-    @GET("GetChat.php")
+    @GET("Chat/GetChat.php")
     Call<ApiResponse<Chat>> getChat(
             @Query("user_id") int user_id,
             @Query("product_id") int product_id
     );
 
     @FormUrlEncoded
-    @POST("CreateChat.php")
+    @POST("Chat/CreateChat.php")
     Call<ApiResponse<Integer>> createChat(
             @Field("product_id") int product_id
     );

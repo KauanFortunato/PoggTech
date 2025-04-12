@@ -22,7 +22,7 @@ public interface ApiService {
 
     // User
     @FormUrlEncoded
-    @POST("RegisterUser.php")
+    @POST("User/RegisterUser.php")
     Call<ResponseBody> insertUser(
             @Field("firebase_uid") String firebase_uid,
             @Field("name") String name,
@@ -31,12 +31,12 @@ public interface ApiService {
     );
 
     @FormUrlEncoded
-    @POST("GetUser.php")
+    @POST("User/GetUser.php")
     Call<ApiResponse<User>> getUser(
             @Field("firebase_uid") String firebase_uid
     );
 
-    @PUT("UpdateUser.php")
+    @PUT("User/UpdateUser.php")
     Call<ApiResponse<Void>> updateUser(@Body User user);
 
     @FormUrlEncoded
@@ -54,6 +54,6 @@ public interface ApiService {
     );
 
     // Category
-    @GET("GetAllCategories.php")
+    @GET("Category/GetAllCategories.php")
     Call<List<Category>> getAllCategories();
 }
