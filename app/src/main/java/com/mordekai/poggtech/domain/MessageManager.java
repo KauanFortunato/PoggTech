@@ -162,4 +162,25 @@ public class MessageManager {
             }
         });
     }
+
+    public void fetchUnread(int chat_id, int receiver_id, RepositoryCallback<Integer> callback) {
+        apiMessage.getUnread(chat_id, receiver_id).enqueue(new Callback<ApiResponse<Integer>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<Integer>> call, Response<ApiResponse<Integer>> response) {
+                if(response.isSuccessful() && response.body() != null) {
+                    ApiResponse<Integer> apiResponse = response.body();
+                    if(apiResponse.isSuccess()) {
+                        callback.onSuccess(apiResponse.getData());
+                    } else {
+                        callback.onFailure(new Exception(apiResponse.getMessage()));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Integer>> call, Throwable t) {
+                callback.onFailure(new Exception("Erro ao buscar mensagens: " + t.getMessage()));
+            }
+        });
+    }
 }

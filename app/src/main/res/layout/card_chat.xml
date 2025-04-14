@@ -11,7 +11,6 @@
     <FrameLayout
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:clipToOutline="true"
         android:background="@drawable/rounded_full">
 
         <ImageView
@@ -21,8 +20,32 @@
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             android:padding="5dp"
-            android:src="@drawable/xbox_series_x"/>
+            android:src="@drawable/xbox_series_x" />
+
+        <!-- Badge de notificação -->
+        <FrameLayout
+            android:id="@+id/notificationBadge"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="end|top"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:visibility="gone"
+            android:background="@drawable/background_notification">
+
+            <TextView
+                android:id="@+id/notificationCount"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="3"
+                android:textColor="@android:color/white"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+        </FrameLayout>
     </FrameLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"

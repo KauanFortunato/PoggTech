@@ -3,6 +3,7 @@ package com.mordekai.poggtech.data.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -55,6 +56,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         TextView chatWith;
         TextView lastMessage;
         TextView messageTime;
+        TextView notificationCount;
+         FrameLayout notificationBadge;
 //        View newMessageIcon;
 
         public ViewHolder(@NonNull View itemView) {
@@ -65,6 +68,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             chatWith = itemView.findViewById(R.id.chatWith);
             lastMessage = itemView.findViewById(R.id.lastMessage);
             messageTime = itemView.findViewById(R.id.messageTime);
+            notificationCount = itemView.findViewById(R.id.notificationCount);
+            notificationBadge = itemView.findViewById(R.id.notificationBadge);
 //            newMessageIcon = itemView.findViewById(R.id.newMessageIcon);
 
             itemView.setOnClickListener(v -> {
@@ -83,6 +88,15 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             chatWith.setText(chat.getChat_with_name() + " " + chat.getChat_with_last_name());
             lastMessage.setText(chat.getLast_message());
             messageTime.setText(chat.getLast_message_time_format());
+
+            if(chat.getUnread_count() > 0) {
+                notificationCount.setText(String.valueOf(chat.getUnread_count()));
+                notificationCount.setVisibility(View.VISIBLE);
+                notificationBadge.setVisibility(View.VISIBLE);
+            } else {
+                notificationCount.setVisibility(View.GONE);
+                notificationBadge.setVisibility(View.GONE);
+            }
 
             Glide.with(
                             imageProduct.getContext())

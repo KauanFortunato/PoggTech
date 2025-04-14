@@ -15,6 +15,7 @@ public class Chat {
     private String image_product;
     private String last_message_time;
     private String last_message_time_format;
+    private int unread_count;
 
     // Construtor vazio
     public Chat() {}
@@ -142,6 +143,10 @@ public class Chat {
     public void setLast_message_time(String last_message_time) {
         this.last_message_time = last_message_time;
     }
+
+    public int getUnread_count() { return unread_count; }
+
+    public void setUnread_count(int unread_count) { this.unread_count = unread_count; }
 
     public String getLast_message_time_format() {
         return last_message_time_format;
