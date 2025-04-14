@@ -59,9 +59,9 @@ public interface ApiMessage {
     );
 
     @FormUrlEncoded
-    @POST
-    Call<ApiResponse<Integer>> MarkIsRead(
+    @POST("Chat/MarkIsRead.php")
+    Call<ApiResponse<Void>> markIsRead(
             @Field("chat_id") int chat_id,
-            @Field("user_id") int receiver_id
+            @Field("receiver_id") int receiver_id
     );
 }

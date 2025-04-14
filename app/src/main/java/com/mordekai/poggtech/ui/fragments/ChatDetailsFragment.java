@@ -26,6 +26,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mordekai.poggtech.data.adapter.MessageAdapter;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
+import com.mordekai.poggtech.data.model.ApiResponse;
 import com.mordekai.poggtech.data.model.Message;
 import com.mordekai.poggtech.data.model.User;
 import com.mordekai.poggtech.data.remote.ApiMessage;
@@ -64,8 +65,15 @@ public class ChatDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat_detail, container, false);
 
+        SharedPrefHelper sharedPrefHelper = new SharedPrefHelper(requireContext());
+        currentUser = sharedPrefHelper.getUser();
+
         initComponents(view);
         setupKeyboardVisibilityListener();
+
+        // Iniciar API e gerenciador de chats
+        apiMessage = RetrofitClient.getRetrofitInstance().create(ApiMessage.class);
+        messageManager = new MessageManager(apiMessage);
 
         if(getArguments() != null) {
             chatWithId = getArguments().getInt("chat_with_id");
@@ -86,10 +94,21 @@ public class ChatDetailsFragment extends Fragment {
                             imageProduct.getContext())
                     .load(productImage)
                     .into(imageProduct);
-        }
 
-        SharedPrefHelper sharedPrefHelper = new SharedPrefHelper(requireContext());
-        currentUser = sharedPrefHelper.getUser();
+            messageManager.markIsRead(chatChatId, currentUser.getUserId(), new RepositoryCallback<ApiResponse<Void>>() {
+
+                @Override
+                public void onSuccess(ApiResponse<Void> result) {
+                    Log.d("ChatFragment", "Mensagens maracadas como lida");
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    Log.e("ChatFragment", "Erro ao marcar como lida", t);
+                }
+            });
+
+        }
 
         // Configurar RecyclerView
         messageList = new ArrayList<>();
@@ -97,11 +116,6 @@ public class ChatDetailsFragment extends Fragment {
         rvMessages.setLayoutManager(new LinearLayoutManager(getContext()));
         rvMessages.setAdapter(messageAdapter);
 
-        apiMessage = RetrofitClient.getRetrofitInstance().create(ApiMessage.class);
-
-        // Iniciar API e gerenciador de chats
-        apiMessage = RetrofitClient.getRetrofitInstance().create(ApiMessage.class);
-        messageManager = new MessageManager(apiMessage);
 
 //        fetchMessages();
         timer = new Timer();
@@ -125,49 +139,6 @@ public class ChatDetailsFragment extends Fragment {
         });
 
         return view;
-    }
-
-    private void fetchMessages() {
-        messageManager.fetchMessages(productId, chatChatId, new RepositoryCallback<List<Message>>() {
-            @Override
-            public void onSuccess(List<Message> messages) {
-                boolean isNewMessage = messageList.size() != messages.size();
-
-                messageList.clear();
-                messageList.addAll(messages);
-                messageAdapter.notifyDataSetChanged();
-
-                if (isNewMessage) {
-                    scrollToBottom();
-                }
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                Log.e("ChatDetail", "Erro ao carregar mensagens", t);
-            }
-        });
-    }
-
-    private void sendMessage() {
-        String messageText = etMessage.getText().toString().trim();
-
-        if (!messageText.isEmpty()) {
-            messageManager.sendMessage(currentUser.getUserId(), chatWithId, chatChatId, messageText, new RepositoryCallback<String>() {
-                @Override
-                public void onSuccess(String result) {
-                    etMessage.setText("");
-                    Log.d("ChatDetail", "Resposta: " + result);
-                    fetchMessages();
-                    playSound(R.raw.send_message);
-                }
-
-                @Override
-                public void onFailure(Throwable t) {
-                    Log.e("ChatDetail", "Erro ao enviar mensagem", t);
-                }
-            });
-        }
     }
 
     private void initComponents(View view) {
@@ -219,6 +190,49 @@ public class ChatDetailsFragment extends Fragment {
             bottomNavigationView.setVisibility(View.VISIBLE);
             requireActivity().getSupportFragmentManager().popBackStack();
         });
+    }
+
+    private void fetchMessages() {
+        messageManager.fetchMessages(productId, chatChatId, new RepositoryCallback<List<Message>>() {
+            @Override
+            public void onSuccess(List<Message> messages) {
+                boolean isNewMessage = messageList.size() != messages.size();
+
+                messageList.clear();
+                messageList.addAll(messages);
+                messageAdapter.notifyDataSetChanged();
+
+                if (isNewMessage) {
+                    scrollToBottom();
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("ChatDetail", "Erro ao carregar mensagens", t);
+            }
+        });
+    }
+
+    private void sendMessage() {
+        String messageText = etMessage.getText().toString().trim();
+
+        if (!messageText.isEmpty()) {
+            messageManager.sendMessage(currentUser.getUserId(), chatWithId, chatChatId, messageText, new RepositoryCallback<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    etMessage.setText("");
+                    Log.d("ChatDetail", "Resposta: " + result);
+                    fetchMessages();
+                    playSound(R.raw.send_message);
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    Log.e("ChatDetail", "Erro ao enviar mensagem", t);
+                }
+            });
+        }
     }
 
     private void animateButtonAppear(View button) {

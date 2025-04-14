@@ -183,4 +183,26 @@ public class MessageManager {
             }
         });
     }
+
+    public void markIsRead(int chat_id, int receiver_id, RepositoryCallback<ApiResponse<Void>> callback) {
+        apiMessage.markIsRead(chat_id, receiver_id).enqueue(new Callback<ApiResponse<Void>>() {
+
+            @Override
+            public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
+                if(response.isSuccessful() && response.body() != null) {
+                    ApiResponse<Void> apiResponse = response.body();
+                    if(apiResponse.isSuccess()) {
+                        callback.onSuccess(apiResponse);
+                    } else {
+                        callback.onFailure(new Exception(apiResponse.getMessage()));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
+                callback.onFailure(new Exception("Erro ao setar as mensagens como lidas: " + t.getMessage()));
+            }
+        });
+    }
 }
