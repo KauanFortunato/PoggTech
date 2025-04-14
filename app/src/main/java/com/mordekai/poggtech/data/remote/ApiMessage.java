@@ -51,4 +51,17 @@ public interface ApiMessage {
     Call<ApiResponse<Integer>> createChat(
             @Field("product_id") int product_id
     );
+
+    @GET("Chat/GetUnread.php")
+    Call<ApiResponse<Integer>> getUnread(
+            @Query("chat_id") int chat_id,
+            @Query("user_id") int receiver_id
+    );
+
+    @FormUrlEncoded
+    @POST
+    Call<ApiResponse<Integer>> MarkIsRead(
+            @Field("chat_id") int chat_id,
+            @Field("user_id") int receiver_id
+    );
 }
