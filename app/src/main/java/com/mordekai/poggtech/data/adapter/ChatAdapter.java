@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -91,6 +92,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
             if(chat.getUnread_count() > 0) {
                 notificationCount.setText(String.valueOf(chat.getUnread_count()));
+                messageTime.setTextColor(ContextCompat.getColor(messageTime.getContext(), R.color.colorPrimary));
                 notificationCount.setVisibility(View.VISIBLE);
                 notificationBadge.setVisibility(View.VISIBLE);
             } else {
