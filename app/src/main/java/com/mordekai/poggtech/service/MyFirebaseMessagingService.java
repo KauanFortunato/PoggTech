@@ -4,6 +4,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.util.Log;
@@ -15,6 +16,8 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.ui.activity.MainActivity;
+import com.mordekai.poggtech.utils.MessageNotifier;
+import com.mordekai.poggtech.utils.NotificationFlagHelper;
 
 import java.util.Map;
 
@@ -34,10 +37,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             if (data.containsKey("title")) title = data.get("title");
             if (data.containsKey("body")) body = data.get("body");
             if (data.containsKey("type")) type = data.get("type");
-
-            Log.d("Notification", "Title: " + title);
-            Log.d("Notification", "Body: " + body);
-            Log.d("Notification", "Type: " + type);
         }
 
         Intent intent = new Intent(this, MainActivity.class);
@@ -45,6 +44,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 
         sendNotification(title, body, intent);
+        MessageNotifier.notifyMessage();
+        NotificationFlagHelper.setNewMessageFlag(getApplicationContext(), true);
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        prefs.edit().putBoolean("has_new_message", true).apply();
     }
 
     private void sendNotification(String title, String body, Intent intent) {

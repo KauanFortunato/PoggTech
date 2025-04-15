@@ -7,6 +7,8 @@ import com.mordekai.poggtech.data.model.User;
 import com.mordekai.poggtech.data.remote.ApiMessage;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.MessageManager;
+import com.mordekai.poggtech.utils.MessageNotifier;
+import com.mordekai.poggtech.utils.NotificationFlagHelper;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 import com.mordekai.poggtech.utils.Utils;
 
@@ -68,6 +70,24 @@ public class ChatBuyFragment extends Fragment {
         fetchUserChats();
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(NotificationFlagHelper.hasNewMessage(requireContext())) {
+            fetchUserChats();
+            NotificationFlagHelper.clearNewMessageFlag(requireContext());
+        }
+
+        MessageNotifier.setListener(() -> fetchUserChats());
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MessageNotifier.clearListener();
     }
 
     private void fetchUserChats() {
