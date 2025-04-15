@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.widget.EditText;
@@ -30,28 +31,8 @@ import com.mordekai.poggtech.utils.NetworkUtil;
 public class MainActivity extends AppCompatActivity implements HeaderFragment.HeaderListener {
 
     private HeaderFragment headerFragment;
-
-    @Override
-    public void showBackButton() {
-        if (headerFragment != null) {
-            headerFragment.showButtonBack();
-        }
-    }
-
-    @Override
-    public void hideBackButton() {
-        if (headerFragment != null) {
-            headerFragment.hideButtonBack();
-        }
-    }
-
-    @Override
-    public void closeSearchProd() {
-        if (headerFragment != null) {
-            headerFragment.closeSearchProd();
-        }
-    }
-
+    private BottomNavigationView bottomNavigationView;
+    private String notificationDestination = null;
 
     private boolean forceBackToHome = false;
 
@@ -70,11 +51,13 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+
+        notificationDestination = getIntent().getStringExtra("navigate_to");
 
         headerFragment = (HeaderFragment) getSupportFragmentManager().findFragmentById(R.id.headerContainer);
 
         AppConfig.initialize(this);
-        // showIpInputDialog();
 
         loadFragmentBasedOnNetwork();
 
@@ -83,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
                 .replace(R.id.headerContainer, new HeaderFragment())
                 .commit();
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (bottomNavigationView.isHapticFeedbackEnabled()) {
                 bottomNavigationView.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
@@ -125,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
             } else {
                 if (NetworkUtil.isConnected(getApplicationContext())) {
                     fragment = new HomeFragment();
+                    goToDestination();
                 } else {
                     fragment = new OfflineFragment();
                 }
@@ -180,6 +163,52 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
         });
 
         builder.show();
+    }
+
+    private void goToDestination() {
+        String destination = getIntent().getStringExtra("navigate_to");
+
+        if (destination != null) {
+            switch (destination) {
+                case "chat":
+                    bottomNavigationView.setSelectedItemId(R.id.chat);
+                    break;
+
+                case "cart":
+                    bottomNavigationView.setSelectedItemId(R.id.cart);
+                    break;
+
+                case "account":
+                    bottomNavigationView.setSelectedItemId(R.id.account);
+                    break;
+
+                case "home":
+                default:
+                    bottomNavigationView.setSelectedItemId(R.id.home);
+                    break;
+            }
+        }
+    }
+
+    @Override
+    public void showBackButton() {
+        if (headerFragment != null) {
+            headerFragment.showButtonBack();
+        }
+    }
+
+    @Override
+    public void hideBackButton() {
+        if (headerFragment != null) {
+            headerFragment.hideButtonBack();
+        }
+    }
+
+    @Override
+    public void closeSearchProd() {
+        if (headerFragment != null) {
+            headerFragment.closeSearchProd();
+        }
     }
 }
 
