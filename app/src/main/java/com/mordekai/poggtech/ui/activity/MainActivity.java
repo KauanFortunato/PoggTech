@@ -1,6 +1,7 @@
 package com.mordekai.poggtech.ui.activity;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
@@ -14,8 +15,10 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
@@ -26,6 +29,7 @@ import com.mordekai.poggtech.ui.fragments.HomeFragment;
 import com.mordekai.poggtech.ui.fragments.OfflineFragment;
 import com.mordekai.poggtech.ui.fragments.UserAccountFragment;
 import com.mordekai.poggtech.utils.AppConfig;
+import com.mordekai.poggtech.utils.MessageNotifier;
 import com.mordekai.poggtech.utils.NetworkUtil;
 
 public class MainActivity extends AppCompatActivity implements HeaderFragment.HeaderListener {
@@ -85,6 +89,10 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
             } else if (item.getItemId() == R.id.chat) {
                 selectedFragment = new ChatFragment();
                 findViewById(R.id.headerContainer).setVisibility(View.GONE);
+
+                SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+                prefs.edit().putBoolean("has_new_message", false).apply();
+                clearChatBadge();
             }
 
             // Chama a função para carregar o fragmento apenas se houver internet/XAMPP
@@ -96,6 +104,19 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
         });
 
         bottomNavigationView.setSelectedItemId(R.id.home);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        boolean hasNew = prefs.getBoolean("has_new_message", false);
+        if (hasNew) {
+            showChatBadge();
+        }
+
+        MessageNotifier.setListener(() -> showChatBadge());
     }
 
     private void loadFragmentBasedOnNetwork() {
@@ -188,6 +209,17 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
                     break;
             }
         }
+    }
+
+    private void showChatBadge() {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        BadgeDrawable badge = bottomNavigationView.getOrCreateBadge(R.id.chat);
+        badge.setVisible(true);
+        badge.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryVariant));
+    }
+
+    private void clearChatBadge() {
+        bottomNavigationView.removeBadge(R.id.chat);
     }
 
     @Override

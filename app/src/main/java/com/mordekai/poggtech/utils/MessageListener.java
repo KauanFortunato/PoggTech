@@ -1,4 +1,5 @@
 package com.mordekai.poggtech.utils;
 
-public class MessageListener {
+public interface MessageListener {
+    void onNewMessage();
 }
