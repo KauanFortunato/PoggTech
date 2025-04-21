@@ -36,6 +36,9 @@ dependencies {
     implementation libs.firebase.auth
     implementation libs.firebase.messaging
 
+    // Google Places
+    implementation libs.places
+
     // Google Auth
     implementation libs.play.services.auth
 

@@ -167,6 +167,21 @@ public class UserAccountFragment extends Fragment
                     .addToBackStack(null) // Permite voltar com o botão de voltar do sistema
                     .commit();
         });
+
+        buttonMyAds.setOnClickListener(v -> {
+            NewAdFragment newAdFragment = new NewAdFragment();
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .setCustomAnimations(
+                            R.anim.slide_in_right,
+                            R.anim.slide_out_left,
+                            R.anim.slide_in_left,
+                            R.anim.slide_out_right
+                    )
+                    .replace(R.id.containerFrame, newAdFragment)
+                    .addToBackStack(null)
+                    .commit();
+        });
     }
 
     private void getForYou() {

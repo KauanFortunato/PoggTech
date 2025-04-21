@@ -52,8 +52,4 @@ public interface ApiService {
             @Field("user_id") int user_id,
             @Field("token") String token
     );
-
-    // Category
-    @GET("Category/GetAllCategories.php")
-    Call<List<Category>> getAllCategories();
 }

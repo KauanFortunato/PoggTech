@@ -61,4 +61,5 @@
     <string name="productImg">Product Image</string>
     <string name="soldeBy">Sold by</string>
     <string name="discount">discount</string>
+    <string name="choose">Choose</string>
 </resources>
