@@ -1,6 +1,7 @@
 package com.mordekai.poggtech.data.remote;
 
 import com.mordekai.poggtech.data.model.ApiResponse;
+import com.mordekai.poggtech.data.model.Category;
 import com.mordekai.poggtech.data.model.Product;
 
 import java.util.List;
@@ -83,4 +84,7 @@ public interface ApiProduct {
     Call<ApiResponse<List<String>>> getSuggestions (
             @Query("query") String query
     );
+
+    @GET("Category/GetAllCategories.php")
+    Call<ApiResponse<List<Category>>> getAllCategories();
 }

@@ -49,6 +49,7 @@
     <string name="productImg">Imagem do produto</string>
     <string name="soldeBy">Vendido por</string>
     <string name="discount">de desconto</string>
+    <string name="choose">Escolha</string>
 
     <!-- Chat -->
     <string name="chat" translatable="false">Chat</string>
@@ -77,4 +78,7 @@
 
     <!-- Erros -->
     <string name="erroGoogleAuth">Erro ao autenticar com Google</string>
+
+    <!-- API KEYS -->
+    <string name="google_maps_key" translatable="false">AIzaSyA9knWgp3HxglBy-Gkim0nv86IV9jqTu4c</string>
 </resources>

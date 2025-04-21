@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.ApiResponse;
+import com.mordekai.poggtech.data.model.Category;
 import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.remote.ApiProduct;
 
@@ -222,6 +223,28 @@ public class ProductManager {
             @Override
             public void onFailure(Call<ApiResponse<List<String>>> call, Throwable t) {
                 callback.onFailure(new Exception("Erro ao buscar sugestões"));
+            }
+        });
+    }
+
+    public void getAllCategories(RepositoryCallback<List<Category>> callback) {
+        apiProduct.getAllCategories().enqueue(new Callback<ApiResponse<List<Category>>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<List<Category>>> call, Response<ApiResponse<List<Category>>> response) {
+                if(response.isSuccessful() && response.body() != null) {
+                    ApiResponse<List<Category>> apiResponse = response.body();
+
+                    if(apiResponse.isSuccess()) {
+                        callback.onSuccess(apiResponse.getData());
+                    } else {
+                        callback.onFailure(new Exception("Erro ao buscar categorias"));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<List<Category>>> call, Throwable t) {
+                callback.onFailure(new Exception("Erro ao buscar categorias"));
             }
         });
     }

@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/header"
+        style="@style/Header"
+        android:layout_width="match_parent">
+
+        <ImageButton
+            android:id="@+id/closeBtn"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginBottom="6dp"
+            android:background="@drawable/rounded_menu"
+            android:contentDescription="@string/voltar"
+            android:src="@drawable/ic_close" />
+
+        <TextView
+            android:id="@+id/headerText"
+            style="@style/TextHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:text="Criar novo anúncio" />
+    </RelativeLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="15dp"
+            android:fitsSystemWindows="true">
+
+            <LinearLayout
+                android:id="@+id/layoutImageExamples"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:gravity="center"
+                android:padding="20dp"
+                android:orientation="vertical"
+                android:background="@drawable/bg_add_ad_ft">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/exemplo_ft1"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="5dp"
+                        android:src="@drawable/exemplo_ft2"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/exemplo_ft3"/>
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/addImagesButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textPrimary"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="18sp"
+                    android:text="Adicione fotos"
+                    android:background="@android:color/transparent"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutUserImages"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:orientation="vertical"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="20dp"
+                android:gravity="center"
+                android:background="@drawable/bg_add_ad_ft"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/textPrimary"
+                        android:fontFamily="@font/roboto_medium"
+                        android:textSize="20sp"
+                        android:text="Imagens"/>
+
+                    <Button
+                        android:id="@+id/addImagesButtonAgain"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Adicione mais"
+                        android:textColor="@color/textPrimary"
+                        android:padding="10dp"
+                        android:fontFamily="@font/roboto_bold"
+                        android:textSize="16sp"
+                        android:background="@android:color/transparent"/>
+                </LinearLayout>
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="10dp"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:id="@+id/imagePreviewContainer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingEnd="8dp" />
+                </HorizontalScrollView>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto"
+                        android:textSize="12sp"
+                        android:textColor="@color/textSecondary"
+                        android:text="A primeira imagem que você adicionar será a imagem de capa do produto"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/Label_Edit_Text"
+                        android:textColor="@color/textPrimary"
+                        android:fontFamily="@font/roboto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Titulo do anúncio*" />
+
+                    <EditText
+                        android:id="@+id/titleProduct"
+                        style="@style/Edit_Text"
+                        android:hint="p. ex. Xbox 360 sem garantia"
+                        android:inputType="text"
+                        android:textSize="15sp"
+                        android:textColorHighlight="@color/textTertiary" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/Label_Edit_Text"
+                            android:textColor="@color/textSecondary"
+                            android:fontFamily="@font/roboto"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_margin="0dp"
+                            android:text="No minímo 14 caracteres" />
+
+                        <TextView
+                            android:id="@+id/titleProductLabelCount"
+                            style="@style/Label_Edit_Text"
+                            android:textColor="@color/textSecondary"
+                            android:fontFamily="@font/roboto"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="0dp"
+                            android:text="0/100" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    style="@style/Label_Edit_Text"
+                    android:textColor="@color/textPrimary"
+                    android:fontFamily="@font/roboto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Escolha uma categoria*" />
+
+                <Spinner
+                    android:id="@+id/classSelector"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:padding="16dp"
+                    android:background="@drawable/rounded_edittext_background"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/Label_Edit_Text"
+                        android:textColor="@color/textPrimary"
+                        android:fontFamily="@font/roboto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Descrição*" />
+
+                    <EditText
+                        android:id="@+id/descriptionProduct"
+                        style="@style/Edit_Text"
+                        android:textSize="15sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minLines="5"
+                        android:gravity="top|start"
+                        android:hint="Escreve o que gostarias de ler se fosses tu a ver este anúncio"
+                        android:inputType="textMultiLine"
+                        android:maxLines="10"
+                        android:scrollbars="vertical"
+                        android:textColorHighlight="@color/textTertiary" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/Label_Edit_Text"
+                            android:textColor="@color/textSecondary"
+                            android:fontFamily="@font/roboto"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_margin="0dp"
+                            android:text="No minímo 40 caracteres" />
+
+                        <TextView
+                            android:id="@+id/descriptionProductLabelCount"
+                            style="@style/Label_Edit_Text"
+                            android:textColor="@color/textSecondary"
+                            android:fontFamily="@font/roboto"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="0dp"
+                            android:text="0/9000" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="Contacto"/>
+
+                <TextView
+                    style="@style/Label_Edit_Text"
+                    android:textColor="@color/textPrimary"
+                    android:fontFamily="@font/roboto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Localização*" />
+
+                <EditText
+                    android:id="@+id/localProduct"
+                    style="@style/Edit_Text"
+                    android:textSize="15sp"
+                    android:hint="p. ex. Braga"
+                    android:textColorHighlight="@color/textTertiary" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/locationSuggestionsRecycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_marginTop="8dp"/>
+
+                <TextView
+                    style="@style/Label_Edit_Text"
+                    android:textColor="@color/textPrimary"
+                    android:fontFamily="@font/roboto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nome*" />
+
+                <EditText
+                    android:id="@+id/nomeUser"
+                    style="@style/Edit_Text"
+                    android:inputType="text"
+                    android:textSize="15sp"
+                    android:textColorHighlight="@color/textTertiary" />
+
+                <TextView
+                    style="@style/Label_Edit_Text"
+                    android:textColor="@color/textPrimary"
+                    android:fontFamily="@font/roboto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email*" />
+
+                <EditText
+                    android:id="@+id/emailUser"
+                    style="@style/Edit_Text"
+                    android:enabled="false"
+                    android:textColor="@color/textTertiary"
+                    android:inputType="textEmailAddress"
+                    android:textSize="15sp"
+                    android:textColorHighlight="@color/textTertiary" />
+
+                <TextView
+                    style="@style/Label_Edit_Text"
+                    android:textColor="@color/textPrimary"
+                    android:fontFamily="@font/roboto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Contacto telefónico" />
+
+                <EditText
+                    android:id="@+id/contactUser"
+                    style="@style/Edit_Text"
+                    android:inputType="phone"
+                    android:textSize="15sp"
+                    android:textColorHighlight="@color/textTertiary" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonLogin"
+                    style="@style/Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="Publicar anúncio"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorOnPrimary" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

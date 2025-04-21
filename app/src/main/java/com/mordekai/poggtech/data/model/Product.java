@@ -12,6 +12,7 @@ public class Product {
     private Float discount_percentage;
     private String category;
     private String image_url;
+    private String location;
     private String created_at;
     private String updated_at;
     public String seller_type;

@@ -18,6 +18,8 @@ public class ChatFragment extends Fragment {
     private AppCompatButton btnShop, btnSell;
     private FragmentManager fragmentManager;
     private BottomNavigationView bottomNavigationView;
+    private static final String SELECTED_TAB_KEY = "selected_tab";
+    private boolean isCompraSelected = true;
 
     public ChatFragment() {
 
@@ -30,7 +32,17 @@ public class ChatFragment extends Fragment {
         iniciarComponentes(view);
         fragmentManager = getChildFragmentManager();
 
-        loadFragment(new ChatBuyFragment());
+        if (savedInstanceState != null) {
+            isCompraSelected = savedInstanceState.getBoolean(SELECTED_TAB_KEY, true);
+        }
+
+        if(isCompraSelected){
+            loadFragment(new ChatBuyFragment());
+        } else {
+            loadFragment(new ChatSellFragment());
+        }
+
+        updateButtonStyle(isCompraSelected);
 
         btnShop.setOnClickListener(v->{
             if(btnShop.isHapticFeedbackEnabled()){
@@ -39,6 +51,7 @@ public class ChatFragment extends Fragment {
 
             updateButtonStyle(true);
             loadFragment(new ChatBuyFragment());
+            isCompraSelected = true;
         });
 
         btnSell.setOnClickListener(v->{
@@ -46,11 +59,18 @@ public class ChatFragment extends Fragment {
                 v.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
             }
 
+            isCompraSelected = false;
             updateButtonStyle(false);
             loadFragment(new ChatSellFragment());
         });
 
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(SELECTED_TAB_KEY, isCompraSelected);
     }
 
     private void loadFragment(Fragment fragment) {
