@@ -1,6 +1,7 @@
 package com.mordekai.poggtech.utils;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -12,6 +13,11 @@ import androidx.fragment.app.FragmentManager;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.model.Chat;
 import com.mordekai.poggtech.ui.fragments.ChatDetailsFragment;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class Utils {
     public static void hideKeyboard(Fragment fragment) {
@@ -53,4 +59,27 @@ public class Utils {
                 .addToBackStack(null)
                 .commit();
     }
+
+    public static File getFileFromUri(Context context, Uri uri) {
+        try {
+            InputStream inputStream = context.getContentResolver().openInputStream(uri);
+            File tempFile = File.createTempFile("image", ".jpg", context.getCacheDir());
+            FileOutputStream outputStream = new FileOutputStream(tempFile);
+
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = inputStream.read(buffer)) > 0) {
+                outputStream.write(buffer, 0, length);
+            }
+
+            outputStream.close();
+            inputStream.close();
+
+            return tempFile;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

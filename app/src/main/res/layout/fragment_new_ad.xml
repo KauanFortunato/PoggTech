@@ -222,6 +222,22 @@
                     android:fontFamily="@font/roboto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="Preço*" />
+
+                <EditText
+                    android:id="@+id/priceProduct"
+                    style="@style/Edit_Text"
+                    android:hint="p. ex. 235.45€"
+                    android:inputType="numberDecimal"
+                    android:textSize="15sp"
+                    android:textColorHighlight="@color/textTertiary" />
+
+                <TextView
+                    style="@style/Label_Edit_Text"
+                    android:textColor="@color/textPrimary"
+                    android:fontFamily="@font/roboto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="Escolha uma categoria*" />
 
                 <Spinner
