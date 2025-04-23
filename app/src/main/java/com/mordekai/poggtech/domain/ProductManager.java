@@ -12,6 +12,9 @@ import com.mordekai.poggtech.data.remote.ApiProduct;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -247,5 +250,27 @@ public class ProductManager {
                 callback.onFailure(new Exception("Erro ao buscar categorias"));
             }
         });
+    }
+
+    public void uploadProduct(RequestBody title, RequestBody description, RequestBody location,
+                              RequestBody price, RequestBody userId, RequestBody category,
+                              List<MultipartBody.Part> images, RepositoryCallback<Void> callback) {
+
+        apiProduct.uploadProduct(title, description, location, price, userId, category, images)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.isSuccessful()) {
+                            callback.onSuccess(null);
+                        } else {
+                            callback.onFailure(new Exception("Erro no servidor"));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        callback.onFailure(t);
+                    }
+                });
     }
 }

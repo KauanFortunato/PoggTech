@@ -56,8 +56,13 @@ import com.mordekai.poggtech.utils.SharedPrefHelper;
 import com.mordekai.poggtech.utils.SnackbarUtil;
 import com.mordekai.poggtech.utils.Utils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public class NewAdFragment extends Fragment {
 
@@ -65,7 +70,7 @@ public class NewAdFragment extends Fragment {
     private static final int PERMISSION_CODE = 1001;
 
     private BottomNavigationView bottomNavigationView;
-    private EditText nomeUser, emailUser, contactUser, titleProduct, descriptionProduct, localProductEditText;
+    private EditText nomeUser, emailUser, contactUser, titleProduct, descriptionProduct, localProductEditText, priceProduct;
     private TextView titleProductLabelCount, descriptionProductLabelCount;
     private ImageButton closeButton;
     private AppCompatButton buttonAddAd;
@@ -252,6 +257,7 @@ public class NewAdFragment extends Fragment {
         emailUser = view.findViewById(R.id.emailUser);
         contactUser = view.findViewById(R.id.contactUser);
         titleProduct = view.findViewById(R.id.titleProduct);
+        priceProduct = view.findViewById(R.id.priceProduct);
         descriptionProduct = view.findViewById(R.id.descriptionProduct);
         titleProductLabelCount = view.findViewById(R.id.titleProductLabelCount);
         descriptionProductLabelCount = view.findViewById(R.id.descriptionProductLabelCount);
@@ -290,6 +296,17 @@ public class NewAdFragment extends Fragment {
                     }
                 } else {
                     titleProduct.setError("Campo obrigatório");
+                }
+            }
+        });
+
+        // Price Product
+        priceProduct.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                if(TextUtils.isEmpty(priceProduct.getText().toString())) {
+                    priceProduct.setError("Campo obrigatório");
+                } else {
+                    priceProduct.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(getContext(), R.drawable.ic_check), null);
                 }
             }
         });
@@ -510,6 +527,12 @@ public class NewAdFragment extends Fragment {
             isValid = false;
         }
 
+        // Preço
+        if (TextUtils.isEmpty(priceProduct.getText().toString().trim())) {
+            priceProduct.setError("Campo obrigatório");
+            isValid = false;
+        }
+
         // Descrição
         String description = descriptionProduct.getText().toString().trim();
         if (TextUtils.isEmpty(description)) {
@@ -541,6 +564,38 @@ public class NewAdFragment extends Fragment {
     }
 
     private void submitAd() {
+        // Dados de texto
+        RequestBody title = RequestBody.create(MediaType.parse("text/plain"), titleProduct.getText().toString().trim());
+        RequestBody description = RequestBody.create(MediaType.parse("text/plain"), descriptionProduct.getText().toString().trim());
+        RequestBody location = RequestBody.create(MediaType.parse("text/plain"), localProductEditText.getText().toString().trim());
+        RequestBody price = RequestBody.create(MediaType.parse("text/plain"), priceProduct.getText().toString().trim());
+        RequestBody userId = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(user.getUserId()));
+        RequestBody category = RequestBody.create(MediaType.parse("text/plain"), classSelectorSpinner.getSelectedItem().toString());
 
+        // Imagens
+        List<MultipartBody.Part> imageParts = new ArrayList<>();
+        for (int i = 0; i < selectedImageUris.size(); i++) {
+            Uri uri = selectedImageUris.get(i);
+            File file = Utils.getFileFromUri(requireContext(), uri);
+            if (file == null) continue;
+
+            RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
+            MultipartBody.Part part = MultipartBody.Part.createFormData("images[]", file.getName(), requestFile);
+            imageParts.add(part);
+        }
+
+        productManager.uploadProduct(title, description, location, price, userId, category, imageParts, new RepositoryCallback<Void>() {
+            @Override
+            public void onSuccess(Void result) {
+                SnackbarUtil.showSuccessSnackbar(requireView(), "Produto adicionado com sucesso!", requireContext());
+                requireActivity().getSupportFragmentManager().popBackStack();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                SnackbarUtil.showErrorSnackbar(requireView(), "Erro ao adicionar produto", requireContext());
+            }
+        });
     }
+
 }
