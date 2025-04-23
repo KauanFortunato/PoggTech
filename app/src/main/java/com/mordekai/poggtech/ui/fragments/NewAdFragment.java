@@ -14,6 +14,8 @@ import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +26,7 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import static android.app.Activity.RESULT_OK;
 
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -41,7 +44,6 @@ import android.Manifest;
 import android.widget.TextView;
 
 import com.google.android.material.imageview.ShapeableImageView;
-import com.google.android.material.shape.CornerFamily;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.adapter.PlaceSuggestionAdapter;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
@@ -63,9 +65,10 @@ public class NewAdFragment extends Fragment {
     private static final int PERMISSION_CODE = 1001;
 
     private BottomNavigationView bottomNavigationView;
-    private EditText nomeUser, emailUser, contactUser, titleProduct, descriptionProduct;
+    private EditText nomeUser, emailUser, contactUser, titleProduct, descriptionProduct, localProductEditText;
     private TextView titleProductLabelCount, descriptionProductLabelCount;
     private ImageButton closeButton;
+    private AppCompatButton buttonAddAd;
     private Spinner classSelectorSpinner;
     private ProductManager productManager;
     private User user;
@@ -133,25 +136,28 @@ public class NewAdFragment extends Fragment {
                 localProductEditText.setText(address);
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 Status status = Autocomplete.getStatusFromIntent(data);
-                Log.e("PLACE_ERROR", status.getStatusMessage());
             }
         }
 
         if (requestCode == IMAGE_PICK_CODE && resultCode == Activity.RESULT_OK && data != null) {
-            selectedImageUris.clear();
-
             layoutImageExamples.setVisibility(View.GONE);
             layoutUserImages.setVisibility(View.VISIBLE);
-            imagePreviewContainer.removeAllViews();
 
             int maxImages = 6;
+            int currentCount = selectedImageUris.size();
+            int availableSlots = maxImages - currentCount;
+
+            if (availableSlots <= 0) {
+                SnackbarUtil.showErrorSnackbar(requireView(), "Já atingiste o limite de 6 fotos.", requireContext());
+                return;
+            }
 
             if (data.getClipData() != null) {
                 int count = data.getClipData().getItemCount();
 
-                if (count > maxImages) {
-                    SnackbarUtil.showErrorSnackbar(requireView(), "Só podes adicionar até 6 fotos.", requireContext());
-                    count = maxImages;
+                if (count > availableSlots) {
+                    SnackbarUtil.showErrorSnackbar(requireView(), "Só podes adicionar mais " + availableSlots + " foto(s).", requireContext());
+                    count = availableSlots;
                 }
 
                 for (int i = 0; i < count; i++) {
@@ -160,9 +166,15 @@ public class NewAdFragment extends Fragment {
                     addImageToLayout(imageUri);
                 }
             } else if (data.getData() != null) {
-                selectedImageUris.add(data.getData());
-                addImageToLayout(data.getData());
+                if (availableSlots <= 0) {
+                    SnackbarUtil.showErrorSnackbar(requireView(), "Já atingiste o limite de 6 fotos.", requireContext());
+                    return;
+                }
+                Uri imageUri = data.getData();
+                selectedImageUris.add(imageUri);
+                addImageToLayout(imageUri);
             }
+
         }
     }
 
@@ -187,23 +199,42 @@ public class NewAdFragment extends Fragment {
     }
 
     private void addImageToLayout(Uri imageUri) {
-        ShapeableImageView imageView = new ShapeableImageView(requireContext());
+        View imageWrapper = LayoutInflater.from(requireContext()).inflate(R.layout.item_selected_image, imagePreviewContainer, false);
+        ShapeableImageView imageView = imageWrapper.findViewById(R.id.imageView);
+        ImageView removeButton = imageWrapper.findViewById(R.id.removeImageButton);
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(250, 250);
-        params.setMargins(8, 8, 8, 8);
-        imageView.setLayoutParams(params);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setImageURI(imageUri);
 
-        float radius = 15f;
-        imageView.setShapeAppearanceModel(
-                imageView.getShapeAppearanceModel()
-                        .toBuilder()
-                        .setAllCorners(CornerFamily.ROUNDED, radius)
-                        .build()
-        );
+        removeButton.setOnClickListener(v -> {
+            if(v.isHapticFeedbackEnabled()) {
+                v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+            }
 
-        imagePreviewContainer.addView(imageView);
+            Animation fadeOut = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_out);
+            imageWrapper.startAnimation(fadeOut);
+
+            fadeOut.setAnimationListener(new Animation.AnimationListener() {
+
+                @Override
+                public void onAnimationStart(Animation animation) {}
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    imagePreviewContainer.removeView(imageWrapper);
+                    selectedImageUris.remove(imageUri);
+
+                    if(selectedImageUris.isEmpty()) {
+                        layoutImageExamples.setVisibility(View.VISIBLE);
+                        layoutUserImages.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {}
+            });
+        });
+
+        imagePreviewContainer.addView(imageWrapper);
     }
 
     private void startComponents(View view) {
@@ -224,58 +255,12 @@ public class NewAdFragment extends Fragment {
         descriptionProduct = view.findViewById(R.id.descriptionProduct);
         titleProductLabelCount = view.findViewById(R.id.titleProductLabelCount);
         descriptionProductLabelCount = view.findViewById(R.id.descriptionProductLabelCount);
+        buttonAddAd = view.findViewById(R.id.buttonAddAd);
+        localProductEditText = view.findViewById(R.id.localProduct);
 
-        EditText localProductEditText = view.findViewById(R.id.localProduct);
         RecyclerView locationRecycler = view.findViewById(R.id.locationSuggestionsRecycler);
 
-        emailUser.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!TextUtils.isEmpty(emailUser.getText())) {
-                    emailUser.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(getContext(), R.drawable.ic_check), null);
-                } else {
-                    emailUser.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) { }
-        });
-
-        emailUser.setText(user.getEmail());
-        nomeUser.setText(user.getName());
-        contactUser.setText(user.getPhone());
-
-        descriptionProduct.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                int currentLength = s.length();
-
-                if (currentLength > 100) {
-                    titleProduct.setError("Máximo de 9000 caracteres");
-                    currentLength = 100;
-                }
-                descriptionProductLabelCount.setText(currentLength + "/" + 9000);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) { }
-        });
-
-        descriptionProduct.setOnFocusChangeListener((v, hasFocus) -> {
-            if (!hasFocus) {
-                if(TextUtils.isEmpty(descriptionProduct.getText().toString())) {
-                    descriptionProduct.setError("Campo obrigatório");
-                }
-            }
-        });
-
+        // Title Product
         titleProduct.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -308,6 +293,63 @@ public class NewAdFragment extends Fragment {
                 }
             }
         });
+
+        // Description Product
+        descriptionProduct.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int currentLength = s.length();
+
+                if (currentLength > 9000) {
+                    descriptionProductLabelCount.setError("Máximo de 9000 caracteres");
+                    currentLength = 9000;
+                }
+                descriptionProductLabelCount.setText(currentLength + "/" + 9000);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) { }
+        });
+
+        descriptionProduct.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                int currentLength = descriptionProduct.getText().length();
+
+                if(TextUtils.isEmpty(descriptionProduct.getText().toString())) {
+                    descriptionProduct.setError("Campo obrigatório");
+                } else {
+                    if(currentLength < 40) {
+                        descriptionProduct.setError("No minímo 40 caracteres");
+                    } else {
+                        descriptionProduct.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(getContext(), R.drawable.ic_check), null);
+                    }
+                }
+            }
+        });
+
+        emailUser.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!TextUtils.isEmpty(emailUser.getText())) {
+                    emailUser.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(getContext(), R.drawable.ic_check), null);
+                } else {
+                    emailUser.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) { }
+        });
+
+        emailUser.setText(user.getEmail());
+        nomeUser.setText(user.getName());
+        contactUser.setText(user.getPhone());
 
         nomeUser.setOnFocusChangeListener((v, hasfocus) -> {
             if (!hasfocus) {
@@ -388,7 +430,21 @@ public class NewAdFragment extends Fragment {
         localProductEditText.setOnFocusChangeListener((v, hasFocus) -> {
             if(!hasFocus) {
                 locationRecycler.setVisibility(View.GONE);
+
+                if(TextUtils.isEmpty(localProductEditText.getText().toString())) {
+                    localProductEditText.setError("Campo obrigatório");
+                } else {
+                    localProductEditText.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(getContext(), R.drawable.ic_check), null);
+                }
             }
+        });
+
+        buttonAddAd.setOnClickListener(v -> {
+            if (v.isHapticFeedbackEnabled()) {
+                v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+            }
+
+            validateEntries();
         });
     }
 
@@ -409,15 +465,82 @@ public class NewAdFragment extends Fragment {
                         R.layout.spinner_item,
                         classNames
                 );
+
                 adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
                 classSelectorSpinner.setAdapter(adapter);
-
             }
 
             @Override
             public void onFailure(Throwable t) {
-
+                SnackbarUtil.showErrorSnackbar(requireView(), "Erro ao carregar categorias", requireContext());
             }
         });
+    }
+
+    private void validateEntries() {
+        boolean isValid = true;
+
+        // Nome
+        if (TextUtils.isEmpty(nomeUser.getText().toString().trim())) {
+            nomeUser.setError("Campo obrigatório");
+            isValid = false;
+        } else {
+            nomeUser.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(getContext(), R.drawable.ic_check), null);
+        }
+
+        // Email
+        if (TextUtils.isEmpty(emailUser.getText().toString().trim())) {
+            emailUser.setError("Campo obrigatório");
+            isValid = false;
+        }
+
+        // Localization
+        if (TextUtils.isEmpty(localProductEditText.getText().toString().trim())) {
+            localProductEditText.setError("Campo obrigatório");
+            isValid = false;
+        }
+
+        // Título
+        String title = titleProduct.getText().toString().trim();
+        if (TextUtils.isEmpty(title)) {
+            titleProduct.setError("Campo obrigatório");
+            isValid = false;
+        } else if (title.length() < 14) {
+            titleProduct.setError("No mínimo 14 caracteres");
+            isValid = false;
+        }
+
+        // Descrição
+        String description = descriptionProduct.getText().toString().trim();
+        if (TextUtils.isEmpty(description)) {
+            descriptionProduct.setError("Campo obrigatório");
+            isValid = false;
+        } else if (description.length() < 40) {
+            descriptionProduct.setError("No mínimo 40 caracteres");
+            isValid = false;
+        }
+
+        // Categoria
+        if (classSelectorSpinner.getSelectedItemPosition() == 0) {
+            classSelectorSpinner.setBackgroundResource(R.drawable.spinner_error_background);
+            isValid = false;
+        } else {
+            classSelectorSpinner.setBackgroundResource(R.drawable.rounded_edittext_background);
+        }
+
+        // Imagens
+        if (selectedImageUris.isEmpty()) {
+            SnackbarUtil.showErrorSnackbar(requireView(), "Adiciona pelo menos uma imagem", requireContext());
+            isValid = false;
+        }
+
+        // Se tudo estiver válido, submeter
+        if (isValid) {
+            submitAd();
+        }
+    }
+
+    private void submitAd() {
+
     }
 }
