@@ -93,7 +93,7 @@
             <LinearLayout
                 android:id="@+id/layoutUserImages"
                 android:layout_width="match_parent"
-                android:layout_height="220dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingVertical="10dp"
                 android:paddingHorizontal="20dp"
@@ -382,7 +382,7 @@
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/buttonLogin"
+                    android:id="@+id/buttonAddAd"
                     style="@style/Button"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
