@@ -18,6 +18,7 @@ import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.CartManager;
+import com.mordekai.poggtech.utils.Utils;
 
 import java.util.List;
 
@@ -65,10 +66,7 @@ public class FavProductAdapter extends RecyclerView.Adapter<FavProductAdapter.Vi
             addToCart(product.getProduct_id(), v, holder.getAdapterPosition());
         });
 
-        Glide.with(
-                    holder.productImage.getContext())
-            .load(product.getImage_url())
-            .into(holder.productImage);
+        Utils.loadImageBasicAuth(holder.productImage, product.getCover());
     }
 
     @Override

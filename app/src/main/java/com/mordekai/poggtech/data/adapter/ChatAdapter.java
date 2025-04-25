@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.model.Chat;
+import com.mordekai.poggtech.utils.Utils;
 
 import java.util.List;
 
@@ -100,10 +101,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                 notificationBadge.setVisibility(View.GONE);
             }
 
-            Glide.with(
-                            imageProduct.getContext())
-                    .load(chat.getImage_product())
-                    .into(imageProduct);
+            Utils.loadImageBasicAuth(imageProduct, chat.getCover_product());
         }
     }
 }

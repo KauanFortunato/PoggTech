@@ -1,5 +1,6 @@
 package com.mordekai.poggtech.data.model;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Product {
@@ -11,7 +12,8 @@ public class Product {
     private Float price_before;
     private Float discount_percentage;
     private String category;
-    private String image_url;
+    private String cover;
+    private List<String> images;
     private String location;
     private String created_at;
     private String updated_at;
@@ -52,8 +54,16 @@ public class Product {
         return category;
     }
 
-    public String getImage_url() {
-        return image_url;
+    public String getCover() {
+        return cover;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 
     public String getSeller_type() {

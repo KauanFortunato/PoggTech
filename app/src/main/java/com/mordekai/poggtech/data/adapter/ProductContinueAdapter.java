@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.ui.fragments.HomeFragment;
+import com.mordekai.poggtech.utils.Utils;
 
 import java.util.List;
 
@@ -47,10 +48,9 @@ public class ProductContinueAdapter extends RecyclerView.Adapter<ProductContinue
     public void onBindViewHolder(@NonNull ProductContinueAdapter.ViewHolder holder, int position) {
         Product product = products.get(position);
 
-        Glide.with(
-                        holder.productImage.getContext())
-                .load(product.getImage_url())
-                .into(holder.productImage);
+        if(product.getCover() != null) {
+            Utils.loadImageBasicAuth(holder.productImage, product.getCover());
+        }
 
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {

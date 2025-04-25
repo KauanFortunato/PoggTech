@@ -169,7 +169,7 @@ public class UserAccountFragment extends Fragment
         });
 
         buttonMyAds.setOnClickListener(v -> {
-            NewAdFragment newAdFragment = new NewAdFragment();
+            MyAdsFragment myAdsFragment = new MyAdsFragment();
             requireActivity().getSupportFragmentManager()
                     .beginTransaction()
                     .setCustomAnimations(
@@ -178,7 +178,7 @@ public class UserAccountFragment extends Fragment
                             R.anim.slide_in_left,
                             R.anim.slide_out_right
                     )
-                    .replace(R.id.containerFrame, newAdFragment)
+                    .replace(R.id.containerFrame, myAdsFragment)
                     .addToBackStack(null)
                     .commit();
         });

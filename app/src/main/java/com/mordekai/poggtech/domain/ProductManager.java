@@ -273,4 +273,50 @@ public class ProductManager {
                     }
                 });
     }
+
+    public void getProductImages(int product_id, RepositoryCallback<List<String>> callback) {
+        apiProduct.getProductImages(product_id).enqueue(new Callback<ApiResponse<List<String>>>() {
+
+            @Override
+            public void onResponse(Call<ApiResponse<List<String>>> call, Response<ApiResponse<List<String>>> response) {
+                if(response.isSuccessful() && response.body() != null) {
+                    ApiResponse<List<String>> apiResponse = response.body();
+
+                    if(apiResponse.isSuccess()) {
+                        callback.onSuccess(apiResponse.getData());
+                    } else {
+                        callback.onFailure(new Exception("Erro ao buscar imagens do produto"));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<List<String>>> call, Throwable t) {
+                callback.onFailure(new Exception("Erro ao buscar imagens do produto"));
+            }
+        });
+    }
+
+    public void getMyProducts(int user_id, RepositoryCallback<List<Product>> callback) {
+        apiProduct.getMyProducts(user_id).enqueue(new Callback<ApiResponse<List<Product>>>() {
+
+            @Override
+            public void onResponse(Call<ApiResponse<List<Product>>> call, Response<ApiResponse<List<Product>>> response) {
+                if(response.isSuccessful() && response.body() != null) {
+                    ApiResponse<List<Product>> apiResponse = response.body();
+
+                    if(apiResponse.isSuccess()) {
+                        callback.onSuccess(apiResponse.getData());
+                    } else {
+                        callback.onFailure(new Exception("Erro ao buscar produtos"));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<List<Product>>> call, Throwable t) {
+                callback.onFailure(new Exception("Erro ao buscar produtos"));
+            }
+        });
+    }
 }

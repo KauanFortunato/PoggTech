@@ -103,4 +103,14 @@ public interface ApiProduct {
             @Part("category") RequestBody category,
             @Part List<MultipartBody.Part> images
     );
+
+    @GET("Gallery/GetProductImages.php")
+    Call<ApiResponse<List<String>>> getProductImages(
+            @Query("product_id") int product_id
+    );
+
+    @GET("Product/GetMyProducts.php")
+    Call<ApiResponse<List<Product>>> getMyProducts(
+            @Query("user_id") int user_id
+    );
 }

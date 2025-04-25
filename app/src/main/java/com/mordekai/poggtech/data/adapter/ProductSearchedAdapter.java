@@ -22,6 +22,7 @@ import com.mordekai.poggtech.data.model.User;
 import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.CartManager;
+import com.mordekai.poggtech.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -129,9 +130,7 @@ public class ProductSearchedAdapter extends RecyclerView.Adapter<ProductSearched
             }
         });
 
-        Glide.with(holder.productImage.getContext())
-                .load(product.getImage_url())
-                .into(holder.productImage);
+        Utils.loadImageBasicAuth(holder.productImage, product.getCover());
 
         holder.itemView.setOnClickListener( v -> {
             if (productClickListener != null) {

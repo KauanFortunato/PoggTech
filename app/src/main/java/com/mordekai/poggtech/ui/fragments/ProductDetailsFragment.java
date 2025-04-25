@@ -239,7 +239,7 @@ public class ProductDetailsFragment extends Fragment {
         }
 
         Glide.with(productImage.getContext())
-                .load(product.getImage_url())
+                .load(product.getCover())
                 .into(productImage);
 
 
