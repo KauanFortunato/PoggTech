@@ -12,7 +12,7 @@ public class Chat {
     private String product_title;
     private Float product_price;
     private String last_message;
-    private String image_product;
+    private String cover_product;
     private String last_message_time;
     private String last_message_time_format;
     private int unread_count;
@@ -132,8 +132,8 @@ public class Chat {
         this.last_message = last_message;
     }
 
-    public String getImage_product() {
-        return image_product;
+    public String getCover_product() {
+        return cover_product;
     }
 
     public String getLast_message_time() {

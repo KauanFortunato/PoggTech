@@ -23,8 +23,7 @@
             android:padding="5dp"
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
-            android:background="@drawable/bg_image_product"
-            android:src="@drawable/xbox_series_x" />
+            android:background="@drawable/bg_image_product" />
 
         <!-- Título do Produto -->
         <TextView
