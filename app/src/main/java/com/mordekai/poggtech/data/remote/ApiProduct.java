@@ -104,6 +104,11 @@ public interface ApiProduct {
             @Part List<MultipartBody.Part> images
     );
 
+    @GET("Product/DeleteProduct.php")
+    Call<ApiResponse<Void>> deleteProduct(
+            @Query("product_id") int product_id
+    );
+
     @GET("Gallery/GetProductImages.php")
     Call<ApiResponse<List<String>>> getProductImages(
             @Query("product_id") int product_id

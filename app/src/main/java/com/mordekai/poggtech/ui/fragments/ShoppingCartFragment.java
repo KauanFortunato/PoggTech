@@ -79,6 +79,7 @@ public class ShoppingCartFragment extends Fragment {
     // Tipo 0 = Carrinho
     private void fetchCartProducts () {
         cartManager.fetchCartProducts(user.getUserId(), 0, new RepositoryCallback<List<Product>>() {
+
             @Override
             public void onSuccess(List<Product> products) {
                 progressBar.setVisibility(View.GONE);

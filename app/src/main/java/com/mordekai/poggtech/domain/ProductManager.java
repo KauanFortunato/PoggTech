@@ -297,6 +297,29 @@ public class ProductManager {
         });
     }
 
+    public void deleteProduct(int product_id, RepositoryCallback<String> callback) {
+        apiProduct.deleteProduct(product_id).enqueue(new Callback<ApiResponse<Void>>() {
+
+            @Override
+            public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
+                if(response.isSuccessful() && response.body() != null) {
+                    ApiResponse<Void> apiResponse = response.body();
+
+                    if(apiResponse.isSuccess()) {
+                        callback.onSuccess("Produto deletado com sucesso");
+                    } else {
+                        callback.onFailure(new Exception("Erro ao deletar produto"));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
+                callback.onFailure(new Exception("Erro ao deletar produto"));
+            }
+        });
+    }
+
     public void getMyProducts(int user_id, RepositoryCallback<List<Product>> callback) {
         apiProduct.getMyProducts(user_id).enqueue(new Callback<ApiResponse<List<Product>>>() {
 
