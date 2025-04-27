@@ -46,7 +46,7 @@ public class MyAdsFragment extends Fragment {
 
         productManager = new ProductManager(RetrofitClient.getRetrofitInstance().create(ApiProduct.class));
 
-        myAdAdapter = new MyAdAdapter(products);
+        myAdAdapter = new MyAdAdapter(products, getChildFragmentManager());
         rvMyAds.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         rvMyAds.setNestedScrollingEnabled(false);
         rvMyAds.setAdapter(myAdAdapter);
@@ -66,6 +66,8 @@ public class MyAdsFragment extends Fragment {
                 products = result;
                 myAdAdapter.updateProducts(products);
                 myAdAdapter.notifyDataSetChanged();
+
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override

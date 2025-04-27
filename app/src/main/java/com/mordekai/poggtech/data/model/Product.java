@@ -17,7 +17,9 @@ public class Product {
     private String location;
     private String created_at;
     private String updated_at;
-    public String seller_type;
+    private String seller_type;
+    private int views;
+    private int favorite_count;
 
 
     // GET and SETTERS
@@ -81,4 +83,10 @@ public class Product {
     public String getCreated_at() {
         return created_at;
     }
+
+    public String getLocation() { return location; }
+
+    public int getViews() { return views; }
+
+    public int getFavorite_count() { return favorite_count; }
 }
