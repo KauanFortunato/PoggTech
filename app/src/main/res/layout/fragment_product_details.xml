@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/fragment_product_details"
+<LinearLayout android:id="@+id/fragment_product_details"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <include
         android:id="@+id/skeletonView"
@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -134,20 +135,55 @@
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingHorizontal="10dp"
-                        android:paddingTop="4dp"
-                        android:paddingBottom="15dp">
+                        android:paddingHorizontal="10dp" >
+
+                        <androidx.viewpager2.widget.ViewPager2
+                            android:id="@+id/viewPagerGallery"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp" />
+                    </FrameLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.tabs.TabLayout
+                            android:id="@+id/tabLayoutDots"
+                            android:layout_width="wrap_content"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:minWidth="0dp"
+                            android:padding="0dp"
+                            android:background="@color/colorSecondaryVariant"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tabIndicatorColor="@android:color/white"
+                            app:tabIndicatorGravity="center"
+                            app:tabIndicatorHeight="0dp"
+                            app:tabMode="fixed"
+                            app:tabPadding="5dp"
+                            app:tabPaddingBottom="5dp"
+                            app:tabPaddingEnd="5dp"
+                            app:tabPaddingStart="5dp"
+                            app:tabRippleColor="#00FFFFFF"
+                            app:tabSelectedTextColor="@android:color/white"
+                            app:tabTextColor="@android:color/darker_gray"
+                            app:tabUnboundedRipple="false" />
 
                         <ImageView
-                            android:id="@+id/productImage"
-                            android:layout_width="match_parent"
-                            android:layout_height="180dp"
-                            android:scaleType="fitCenter"
-                            android:adjustViewBounds="true"
-                            android:padding="20dp"
-                            android:background="@drawable/bg_image_product"
-                            android:src="@drawable/xbox_series_x" />
-                    </FrameLayout>
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_share"
+                            android:layout_marginEnd="10dp"
+                            app:tint="@color/textPrimary"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
                 </LinearLayout>
             </LinearLayout>
 

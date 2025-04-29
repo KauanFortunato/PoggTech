@@ -1,8 +1,10 @@
 package com.mordekai.poggtech.ui.fragments;
 
-import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.mordekai.poggtech.R;
+import com.mordekai.poggtech.data.adapter.GalleryAdapter;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.Chat;
 import com.mordekai.poggtech.data.model.Product;
@@ -29,12 +31,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager2.widget.ViewPager2;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 
@@ -46,7 +51,10 @@ public class ProductDetailsFragment extends Fragment {
     private AppCompatButton actionButton;
     private ImageButton favoriteButton, btnSend;
     private View skeletonView, contentView;
-    private ImageView productImage;
+    private ViewPager2 viewPagerGallery;
+    private GalleryAdapter galleryAdapter;
+    private TabLayout tabLayoutDots;
+    List<String> imageUrls = new ArrayList<>();
     private CartManager cartManager;
     private ProductManager productManager;
     private MessageManager messageManager;
@@ -75,6 +83,7 @@ public class ProductDetailsFragment extends Fragment {
         cartManager = new CartManager(RetrofitClient.getRetrofitInstance().create(ApiProduct.class));
         messageManager = new MessageManager(RetrofitClient.getRetrofitInstance().create(ApiMessage.class));
 
+
         if (getArguments() != null) {
             productId = getArguments().getInt("productId");
         }
@@ -84,6 +93,23 @@ public class ProductDetailsFragment extends Fragment {
 
         apiProduct = RetrofitClient.getRetrofitInstance().create(ApiProduct.class);
         productManager = new ProductManager(apiProduct);
+
+        galleryAdapter = new GalleryAdapter(requireActivity(), imageUrls);
+        viewPagerGallery.setAdapter(galleryAdapter);
+
+        viewPagerGallery.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                for (int i = 0; i < tabLayoutDots.getTabCount(); i++) {
+                    TabLayout.Tab tab = tabLayoutDots.getTabAt(i);
+                    if (tab != null && tab.getCustomView() != null) {
+                        tab.getCustomView().setBackgroundResource(
+                                i == position ? R.drawable.tab_indicator_selected : R.drawable.tab_indicator_default
+                        );
+                    }
+                }
+            }
+        });
 
         // Iniciar animação do Skeleton
         animateSkeleton(skeletonView);
@@ -103,9 +129,47 @@ public class ProductDetailsFragment extends Fragment {
                         product = productDetails;
                         updateUIWithProduct();
 
-                        // Esconder Skeleton e mostrar conteúdo real
-                        skeletonView.setVisibility(View.GONE);
-                        contentView.setVisibility(View.VISIBLE);
+                        productManager.getProductImages(productId, new RepositoryCallback<List<String>>() {
+                            @Override
+                            public void onSuccess(List<String> result) {
+                                if (result != null && !result.isEmpty()) {
+                                    product.setImages(result);
+                                    imageUrls.addAll(result);
+                                } else {
+                                    if (product.getCover() != null) {
+                                        imageUrls.add(product.getCover());
+                                    }
+                                }
+
+                                galleryAdapter.updateImages(imageUrls);
+
+                                new TabLayoutMediator(tabLayoutDots, viewPagerGallery, (tab, position) -> {}).attach();
+
+                                for (int i = 0; i < tabLayoutDots.getTabCount(); i++) {
+                                    TabLayout.Tab tab = tabLayoutDots.getTabAt(i);
+                                    if (tab != null) {
+                                        View tabView = new View(requireContext());
+                                        int size = (int) (getResources().getDisplayMetrics().density * 8); // corrigir: multiplicar
+                                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(size, size);
+                                        tabView.setLayoutParams(params);
+                                        tabView.setBackgroundResource(i == 0 ? R.drawable.tab_indicator_selected : R.drawable.tab_indicator_default);
+                                        tab.setCustomView(tabView);
+                                    }
+                                }
+
+                                skeletonView.setVisibility(View.GONE);
+                                contentView.setVisibility(View.VISIBLE);
+                            }
+
+                            @Override
+                            public void onFailure(Throwable t) {
+                                Log.e("ProductDetailsFragment", "Erro ao buscar imagens do produto", t);
+                                imageUrls.add(product.getCover());
+                                galleryAdapter.updateImages(imageUrls);
+                                skeletonView.setVisibility(View.GONE);
+                                contentView.setVisibility(View.VISIBLE);
+                            }
+                        });
                     }
                 }
 
@@ -238,10 +302,6 @@ public class ProductDetailsFragment extends Fragment {
             discount.setVisibility(View.GONE);
         }
 
-        Glide.with(productImage.getContext())
-                .load(product.getCover())
-                .into(productImage);
-
 
         btnSend.setOnClickListener(v -> {
             if(!inputText.getText().toString().isEmpty()) {
@@ -336,11 +396,12 @@ public class ProductDetailsFragment extends Fragment {
         discount = view.findViewById(R.id.discount);
         priceBefore = view.findViewById(R.id.priceBefore);
         productPoggers = view.findViewById(R.id.productPoggers);
-        productImage = view.findViewById(R.id.productImage);
         actionButton = view.findViewById(R.id.actionPrimaryProduct);
         inputText = view.findViewById(R.id.inputText);
         contactSellerContainer = view.findViewById(R.id.contactSellerContainer);
         btnSend = view.findViewById(R.id.btnSend);
+        viewPagerGallery = view.findViewById(R.id.viewPagerGallery);
+        tabLayoutDots = view.findViewById(R.id.tabLayoutDots);
 
         favoriteButton.setOnClickListener(v -> {
             if(favoriteButton.isHapticFeedbackEnabled()) {
