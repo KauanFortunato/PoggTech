@@ -11,7 +11,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.Product;
@@ -24,26 +23,26 @@ import java.util.List;
 
 import okhttp3.ResponseBody;
 
-public class FavProductAdapter extends RecyclerView.Adapter<FavProductAdapter.ViewHolder> {
+public class SavedProductAdapter extends RecyclerView.Adapter<SavedProductAdapter.ViewHolder> {
     private final List<Product> products;
     private final int userId;
 
-    public FavProductAdapter(List<Product> products, int userId) {
+    public SavedProductAdapter(List<Product> products, int userId) {
         this.products = products;
         this.userId = userId;
     }
 
     @NonNull
     @Override
-    public FavProductAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SavedProductAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Infla o layout do card
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_product_favorite, parent, false);
-        return new FavProductAdapter.ViewHolder(view);
+                .inflate(R.layout.card_product_saved, parent, false);
+        return new SavedProductAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FavProductAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SavedProductAdapter.ViewHolder holder, int position) {
         Product product = products.get(position);
 
         holder.productTitle.setText(product.getTitle());
@@ -58,14 +57,6 @@ public class FavProductAdapter extends RecyclerView.Adapter<FavProductAdapter.Vi
            removeFromFavorites(product.getProduct_id(), v, holder.getAdapterPosition());
        });
 
-        holder.buttonAddToCart.setOnClickListener(v -> {
-            if(holder.buttonAddToCart.isHapticFeedbackEnabled()) {
-                v.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
-            }
-
-            addToCart(product.getProduct_id(), v, holder.getAdapterPosition());
-        });
-
         Utils.loadImageBasicAuth(holder.productImage, product.getCover());
     }
 
@@ -76,7 +67,6 @@ public class FavProductAdapter extends RecyclerView.Adapter<FavProductAdapter.Vi
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView productImage;
-        ImageView buttonAddToCart;
         TextView productTitle;
         TextView productType;
         TextView productPrice;
@@ -91,7 +81,6 @@ public class FavProductAdapter extends RecyclerView.Adapter<FavProductAdapter.Vi
             productType = itemView.findViewById(R.id.productType);
             productPrice = itemView.findViewById(R.id.productPrice);
             removeButton = itemView.findViewById(R.id.removeButton);
-            buttonAddToCart = itemView.findViewById(R.id.buttonAddToCart);
         }
     }
 

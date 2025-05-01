@@ -94,12 +94,12 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
                 products.remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, products.size());
-                Toast.makeText(view.getContext(), "Removido dos favoritos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), "Removido dos salvos", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(Throwable t) {
-                Toast.makeText(view.getContext(), "Erro ao remover dos favoritos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), "Erro ao remover dos salvos", Toast.LENGTH_SHORT).show();
             }
         });
     }

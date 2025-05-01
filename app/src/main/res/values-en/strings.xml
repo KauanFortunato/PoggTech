@@ -32,14 +32,14 @@
     <string name="termosDeCondicoes">By accessing PogTech, you agree to comply with these terms of service and privacy policy.</string>
     <string name="menu_lateral">Side menu</string>
     <string name="menu_lateral_perfil">Profile icon</string>
-    <string name="add_favoritos">Add to favorites</string>
+    <string name="add_saved">Add to saved</string>
     <string name="add_cart">Add to cart</string>
     <string name="carrinho">Cart</string>
-    <string name="favoritos">Favorites</string>
+    <string name="salvos">Saved</string>
     <string name="inicio">Home</string>
     <string name="meusAnuncios">My Ads</string>
     <string name="remove">Remove</string>
-    <string name="noFavProducts">You have no favorite products</string>
+    <string name="noSavedProducts">You have no saved products</string>
     <string name="noCartProducts">Your cart is empty</string>
     <string name="venda">Selling</string>
     <string name="paraVoce">For you</string>

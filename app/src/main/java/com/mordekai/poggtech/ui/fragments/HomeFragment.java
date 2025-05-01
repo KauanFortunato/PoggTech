@@ -35,14 +35,13 @@ import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.InteractionManager;
 import com.mordekai.poggtech.domain.ProductManager;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
-import com.mordekai.poggtech.utils.SnackbarUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment
         implements ProductAdapter.OnProductClickListener,
-                    ProductAdapter.OnFavoritesChangedListener,
+        ProductAdapter.OnSavedChangedListener,
                     ProductContinueAdapter.OnProductContinueClickListener {
 
     private SharedPrefHelper sharedPrefHelper;
@@ -235,10 +234,10 @@ public class HomeFragment extends Fragment
 
     @SuppressLint("NotifyDataSetChanged")
     public void updateAllAdapters() {
-        forYouAdapter.setFavoriteIds(favoriteIds);
-        consolasAdapter.setFavoriteIds(favoriteIds);
-        popularAdapter.setFavoriteIds(favoriteIds);
-        accessoryAdapter.setFavoriteIds(favoriteIds);
+        forYouAdapter.setSavedIds(favoriteIds);
+        consolasAdapter.setSavedIds(favoriteIds);
+        popularAdapter.setSavedIds(favoriteIds);
+        accessoryAdapter.setSavedIds(favoriteIds);
 
         forYouAdapter.notifyDataSetChanged();
         consolasAdapter.notifyDataSetChanged();
@@ -294,7 +293,7 @@ public class HomeFragment extends Fragment
     }
 
     @Override
-    public void onFavoritesChanged() {
+    public void onSaveChanged() {
         updateAllAdapters();
     }
 

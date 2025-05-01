@@ -1,6 +1,7 @@
 package com.mordekai.poggtech.data.adapter;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
@@ -12,9 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.Product;
@@ -31,33 +32,33 @@ import okhttp3.ResponseBody;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
     private final List<Product> products;
-    private List<Integer> favoriteIds = new ArrayList<>();
+    private List<Integer> savedIds = new ArrayList<>();
     private final int userId;
     private final OnProductClickListener productClickListener;
-    private final OnFavoritesChangedListener favoritesChangedListener;
+    private final OnSavedChangedListener savedChangedListener;
     private final int layoutResId;
 
     public interface OnProductClickListener {
         void onProductClick(Product product);
     }
 
-    public interface OnFavoritesChangedListener {
-        void onFavoritesChanged();
+    public interface OnSavedChangedListener {
+        void onSaveChanged();
     }
 
     public ProductAdapter(List<Product> products, int userId, int layoutResId,
                           OnProductClickListener productClickListener,
-                          OnFavoritesChangedListener favoritesChangedListener) {
+                          OnSavedChangedListener savedChangedListener) {
         this.products = products;
         this.userId = userId;
         this.productClickListener = productClickListener;
-        this.favoritesChangedListener = favoritesChangedListener;
+        this.savedChangedListener = savedChangedListener;
         this.layoutResId = layoutResId;
     }
 
 
-    public void setFavoriteIds(List<Integer> favoriteIds) {
-        this.favoriteIds = favoriteIds;
+    public void setSavedIds(List<Integer> savedIds) {
+        this.savedIds = savedIds;
         notifyDataSetChanged();
     }
 
@@ -70,6 +71,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         return new ViewHolder(view);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.R)
     @SuppressLint("DefaultLocale")
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.ViewHolder holder, int position) {
@@ -80,34 +82,34 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.productPrice.setText(String.format("%.2f€", product.getPrice()));
         holder.productType.setText(product.getCategory());
 
-        if (favoriteIds.contains(product.getProduct_id())) {
-            holder.favoriteButton.setImageResource(R.drawable.ic_favorite_filled);
+        if (savedIds.contains(product.getProduct_id())) {
+            holder.saveButton.setImageResource(R.drawable.ic_bookmark_fill);
         } else {
-            holder.favoriteButton.setImageResource(R.drawable.ic_favorite);
+            holder.saveButton.setImageResource(R.drawable.ic_bookmark);
         }
 
-        holder.favoriteButton.setOnClickListener(v -> {
-            if (holder.favoriteButton.isHapticFeedbackEnabled()) {
+        holder.saveButton.setOnClickListener(v -> {
+            if (holder.saveButton.isHapticFeedbackEnabled()) {
                 v.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
             }
 
-            boolean isFavorite = favoriteIds.contains(product.getProduct_id());
+            boolean isSave = savedIds.contains(product.getProduct_id());
 
-            if (isFavorite) {
+            if (isSave) {
                 // Remove dos favoritos
-                favoriteIds.remove(Integer.valueOf(product.getProduct_id()));
-                holder.favoriteButton.setImageResource(R.drawable.ic_favorite);
-                removeFromFavorites(product.getProduct_id(), v, holder.getAdapterPosition());
+                savedIds.remove(Integer.valueOf(product.getProduct_id()));
+                holder.saveButton.setImageResource(R.drawable.ic_bookmark);
+                removeFromSaved(product.getProduct_id(), v, holder.getAdapterPosition());
             } else {
                 // Adiciona aos favoritos
-                favoriteIds.add(product.getProduct_id());
-                holder.favoriteButton.setImageResource(R.drawable.ic_favorite_filled);
-                addToFavorites(product.getProduct_id(), v, holder.getAdapterPosition());
+                savedIds.add(product.getProduct_id());
+                holder.saveButton.setImageResource(R.drawable.ic_bookmark_fill);
+                addToSaved(product.getProduct_id(), v, holder.getAdapterPosition());
             }
 
             // Atualiza todas as listas em tempo real
-            if (favoritesChangedListener != null) {
-                favoritesChangedListener.onFavoritesChanged();
+            if (savedChangedListener != null) {
+                savedChangedListener.onSaveChanged();
             }
 
         });
@@ -134,7 +136,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         notifyDataSetChanged();
     }
 
-    private void addToFavorites(int productId, View view, int position) {
+    private void addToSaved(int productId, View view, int position) {
         CartManager cartManager = new CartManager(RetrofitClient.getRetrofitInstance().create(ApiProduct.class));
         cartManager.addToCart(productId, userId, 1, new RepositoryCallback<ResponseBody>() {
             @Override
@@ -150,7 +152,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         });
     }
 
-    private void removeFromFavorites(int productId, View view, int position) {
+    private void removeFromSaved(int productId, View view, int position) {
         CartManager cartManager = new CartManager(RetrofitClient.getRetrofitInstance().create(ApiProduct.class));
         cartManager.removeFromCart(productId, userId, 1, new RepositoryCallback<ResponseBody>() {
             @Override
@@ -168,7 +170,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView productImage;
-        ImageButton favoriteButton;
+        ImageButton saveButton;
         TextView productTitle;
         TextView productType;
         TextView productPrice;
@@ -178,7 +180,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
             // Inicializa os componentes do layout
             productImage = itemView.findViewById(R.id.productImage);
-            favoriteButton = itemView.findViewById(R.id.favoriteButton);
+            saveButton = itemView.findViewById(R.id.saveButton);
             productTitle = itemView.findViewById(R.id.productTitle);
             productType = itemView.findViewById(R.id.productType);
             productPrice = itemView.findViewById(R.id.productPrice);

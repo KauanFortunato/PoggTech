@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,7 +38,7 @@ import java.util.List;
 
 public class UserAccountFragment extends Fragment
         implements ProductAdapter.OnProductClickListener,
-        ProductAdapter.OnFavoritesChangedListener {
+        ProductAdapter.OnSavedChangedListener {
     private TextView helloUser, numberAccount;
     private ImageButton buttonConfig, buttonMyPurchases, buttonMyAds;
     private FirebaseUser currentUser;
@@ -198,7 +196,7 @@ public class UserAccountFragment extends Fragment
                     public void onSuccess(List<Integer> favorites) {
                         favoriteIds.clear();
                         favoriteIds.addAll(favorites);
-                        forYouAdapter.setFavoriteIds(favoriteIds);
+                        forYouAdapter.setSavedIds(favoriteIds);
                         forYouAdapter.notifyDataSetChanged();
                     }
 
@@ -220,8 +218,8 @@ public class UserAccountFragment extends Fragment
     private void setLayout() {}
 
     @Override
-    public void onFavoritesChanged() {
-        forYouAdapter.setFavoriteIds(favoriteIds);
+    public void onSaveChanged() {
+        forYouAdapter.setSavedIds(favoriteIds);
         forYouAdapter.notifyDataSetChanged();
     }
 

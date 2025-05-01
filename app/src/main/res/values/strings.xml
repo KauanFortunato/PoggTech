@@ -30,13 +30,13 @@
     <string name="verfInternet">Verifique a sua conexão de Internet</string>
     <string name="naoTemInternet" translatable="false">Ops! Conexão perdida</string>
     <string name="carrinho">Carrinho</string>
-    <string name="favoritos">Favoritos</string>
+    <string name="salvos">Salvos</string>
     <string name="inicio">Início</string>
     <string name="minhasCompras">As Minhas Compras</string>
     <string name="meusAnuncios">Os Meus Anúncios</string>
     <string name="linkDeRecuperacao">Um link para redefinir sua senha será enviado para o e-mail cadastrado em sua conta</string>
     <string name="remove">Remover</string>
-    <string name="noFavProducts">Você não tem produtos favoritos</string>
+    <string name="noSavedProducts">Você não tem produtos salvos</string>
     <string name="noCartProducts">Seu carrinho está vázio</string>
     <string name="noChat">Você não tem nenhum chat</string>
     <string name="recuperarSenha">Recuperar senha</string>
@@ -73,7 +73,7 @@
     <!-- Descriptions -->
     <string name="menu_lateral">Menu lateral</string>
     <string name="menu_lateral_perfil">Ícone de perfil</string>
-    <string name="add_favoritos">Adicionar aos favoritos</string>
+    <string name="add_saved">Adicionar aos salvos</string>
     <string name="add_cart">Adicionar ao carrinho</string>
 
     <!-- Erros -->
