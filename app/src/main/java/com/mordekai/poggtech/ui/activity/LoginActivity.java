@@ -11,8 +11,11 @@ import com.mordekai.poggtech.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
@@ -32,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 // Google auth
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.credentials.Credential;
 import androidx.credentials.CredentialManagerCallback;
@@ -76,6 +80,16 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{android.Manifest.permission.POST_NOTIFICATIONS},
+                        1);
+            }
+        }
+
 
         AppConfig.initialize(this);
         showIpInputDialog();
@@ -128,6 +142,20 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         fcmManager = new FCMManager(RetrofitClient.getRetrofitInstance().create(ApiService.class));
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 1) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.d("Permissao", "Notificações permitidas");
+            } else {
+                Log.d("Permissao", "Notificações negadas");
+            }
+        }
     }
 
     private void loginUser(AppCompatButton buttonLogin, ProgressBar buttonProgress) {

@@ -49,7 +49,7 @@ public class ProductDetailsFragment extends Fragment {
     private EditText inputText;
     private LinearLayout contactSellerContainer;
     private AppCompatButton actionButton;
-    private ImageButton favoriteButton, btnSend;
+    private ImageButton saveButton, btnSend;
     private View skeletonView, contentView;
     private ViewPager2 viewPagerGallery;
     private GalleryAdapter galleryAdapter;
@@ -60,7 +60,7 @@ public class ProductDetailsFragment extends Fragment {
     private MessageManager messageManager;
     private ApiProduct apiProduct;
     private SharedPrefHelper sharedPrefHelper;
-    private Boolean isFavorite;
+    private Boolean isSaved;
     private Chat chatProduct;
     private User user;
     private Product product;
@@ -89,7 +89,7 @@ public class ProductDetailsFragment extends Fragment {
         }
 
         startComponents(contentView);
-        verifyProductIsFavorite(productId, user.getUserId(), 1);
+        verifyProductIsSaved(productId, user.getUserId(), 1);
 
         apiProduct = RetrofitClient.getRetrofitInstance().create(ApiProduct.class);
         productManager = new ProductManager(apiProduct);
@@ -284,8 +284,14 @@ public class ProductDetailsFragment extends Fragment {
         Log.d("ProductDetailsFragment", "Logs: " + product.getDiscountPercentage());
 
         if(product.getUser_id() != user.getUserId()) {
-            actionButton.setVisibility(View.GONE);
-            contactSellerContainer.setVisibility(View.VISIBLE);
+            if(product.getSeller_type().equals("admin")){
+                actionButton.setVisibility(View.VISIBLE);
+                contactSellerContainer.setVisibility(View.GONE);
+                actionButton.setBackgroundResource(R.drawable.rounded_button);
+            } else {
+                actionButton.setVisibility(View.GONE);
+                contactSellerContainer.setVisibility(View.VISIBLE);
+            }
         } else {
             actionButton.setBackgroundResource(R.drawable.bg_button_unable);
             actionButton.setVisibility(View.VISIBLE);
@@ -318,40 +324,40 @@ public class ProductDetailsFragment extends Fragment {
         });
     }
 
-    private void updateFavoriteButton(boolean isFavorite) {
-        if (isFavorite) {
-            favoriteButton.setImageResource(R.drawable.ic_favorite_filled);
+    private void updateSaveButton(boolean isSaved) {
+        if (isSaved) {
+            saveButton.setImageResource(R.drawable.ic_bookmark_fill);
         } else {
-            favoriteButton.setImageResource(R.drawable.ic_favorite);
+            saveButton.setImageResource(R.drawable.ic_bookmark);
         }
     }
 
-    private void addToFavorites(int productId) {
+    private void addToSaved(int productId) {
         cartManager.addToCart(productId, user.getUserId(), 1, new RepositoryCallback<ResponseBody>() {
             @Override
             public void onSuccess(ResponseBody result) {
-                isFavorite = true;
-                updateFavoriteButton(true);
+                isSaved = true;
+                updateSaveButton(true);
             }
 
             @Override
             public void onFailure(Throwable t) {
-                Log.e("ProductDetailsFragment", "Erro ao adicionar aos favoritos", t);
+                Log.e("ProductDetailsFragment", "Erro ao adicionar aos salvos", t);
             }
         });
     }
 
-    private void removeFromFavorites(int productId) {
+    private void removeFromSaved(int productId) {
         cartManager.removeFromCart(productId, user.getUserId(), 1, new RepositoryCallback<ResponseBody>() {
             @Override
             public void onSuccess(ResponseBody result) {
-                isFavorite = false;
-                updateFavoriteButton(false);
+                isSaved = false;
+                updateSaveButton(false);
             }
 
             @Override
             public void onFailure(Throwable t) {
-                Log.e("ProductDetailsFragment", "Erro ao remover dos favoritos", t);
+                Log.e("ProductDetailsFragment", "Erro ao remover dos salvos", t);
             }
         });
     }
@@ -360,24 +366,24 @@ public class ProductDetailsFragment extends Fragment {
         cartManager.addToCart(productId, user.getUserId(), 0, new RepositoryCallback<ResponseBody>() {
             @Override
             public void onSuccess(ResponseBody result) {
-                isFavorite = true;
-                updateFavoriteButton(true);
+                isSaved = true;
+                updateSaveButton(true);
             }
 
             @Override
             public void onFailure(Throwable t) {
-                Log.e("ProductDetailsFragment", "Erro ao adicionar aos favoritos", t);
+                Log.e("ProductDetailsFragment", "Erro ao adicionar aos salvos", t);
             }
         });
     }
 
-    private void verifyProductIsFavorite(int productId, int userId, int tipo) {
+    private void verifyProductIsSaved(int productId, int userId, int tipo) {
         Log.d("ProductDetailsFragment", "Logs: " + productId + " " + userId + " " + tipo + "");
         cartManager.verifyProductOnCart(productId, userId, tipo, new RepositoryCallback<Boolean>() {
             @Override
             public void onSuccess(Boolean result) {
-                isFavorite = result;
-                updateFavoriteButton(result);
+                isSaved = result;
+                updateSaveButton(result);
             }
 
             @Override
@@ -390,7 +396,7 @@ public class ProductDetailsFragment extends Fragment {
     private void startComponents(View view) {
         titleProduct = view.findViewById(R.id.titleProduct);
         category = view.findViewById(R.id.category);
-        favoriteButton = view.findViewById(R.id.favoriteButton);
+        saveButton = view.findViewById(R.id.saveButton);
         price = view.findViewById(R.id.price);
         priceDecimal = view.findViewById(R.id.priceDecimal);
         discount = view.findViewById(R.id.discount);
@@ -403,15 +409,15 @@ public class ProductDetailsFragment extends Fragment {
         viewPagerGallery = view.findViewById(R.id.viewPagerGallery);
         tabLayoutDots = view.findViewById(R.id.tabLayoutDots);
 
-        favoriteButton.setOnClickListener(v -> {
-            if(favoriteButton.isHapticFeedbackEnabled()) {
-                favoriteButton.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
+        saveButton.setOnClickListener(v -> {
+            if(saveButton.isHapticFeedbackEnabled()) {
+                saveButton.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
             }
 
-            if(isFavorite) {
-                removeFromFavorites(productId);
+            if(isSaved) {
+                removeFromSaved(productId);
             } else {
-                addToFavorites(productId);
+                addToSaved(productId);
             }
         });
 

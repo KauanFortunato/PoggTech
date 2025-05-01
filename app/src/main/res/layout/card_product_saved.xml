@@ -35,7 +35,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:paddingEnd="10dp"
-            android:gravity="end"
+            android:gravity="center_horizontal|bottom"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -49,23 +49,6 @@
                 android:text="Remover"
                 android:textColor="@color/colorError"
                 android:textSize="15sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
-
-            <!-- Botão de Carrinho -->
-            <ImageView
-                android:id="@+id/buttonAddToCart"
-                android:layout_width="75dp"
-                android:layout_height="30dp"
-                android:background="@drawable/rounded_button"
-                android:contentDescription="@string/add_cart"
-                android:padding="6dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_cart_plus" />
-
         </LinearLayout>
 
 

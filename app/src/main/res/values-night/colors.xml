@@ -39,7 +39,7 @@
     <color name="textTertiary">#B0B0B0</color>
 
     <!--  Opacity Colors  -->
-    <color name="opacityColor">#CC666666</color>
+    <color name="opacityColor">#1D000000</color>
 
     <color name="skeletonStartColor">#4B4B4B</color>
     <color name="skeletonCenterColor">#464545</color>

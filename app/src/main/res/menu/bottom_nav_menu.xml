@@ -8,10 +8,10 @@
         android:titleCondensed="Iní" />
 
     <item
-        android:id="@+id/cart"
+        android:id="@+id/save"
         android:icon="@drawable/nav_icon_cart"
         android:title="@string/carrinho"
-        android:titleCondensed="Carri" />
+        android:titleCondensed="Cart" />
 
     <item
         android:id="@+id/chat"

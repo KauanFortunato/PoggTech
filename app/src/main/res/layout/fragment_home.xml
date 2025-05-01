@@ -163,7 +163,8 @@
                     <!-- Container "Jogos" -->
                     <LinearLayout
                         android:id="@+id/jogosContainer"
-                        style="@style/popularContainer">
+                        style="@style/popularContainer"
+                        android:paddingBottom="50dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"

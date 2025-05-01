@@ -28,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="10dp"
-                android:paddingBottom="15dp"
+                android:paddingBottom="20dp"
                 android:background="@drawable/section_divisor"
                 android:orientation="vertical">
 
@@ -123,13 +123,13 @@
                             android:text="Jogos"/>
 
                         <ImageButton
-                            android:id="@+id/favoriteButton"
+                            android:id="@+id/saveButton"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_marginTop="5dp"
                             android:background="@android:color/transparent"
-                            android:src="@drawable/ic_favorite"
-                            android:contentDescription="@string/add_favoritos" />
+                            android:src="@drawable/ic_bookmark"
+                            android:contentDescription="@string/add_saved" />
                     </LinearLayout>
 
                     <FrameLayout

@@ -17,12 +17,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.libraries.places.api.Places;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
-import com.mordekai.poggtech.ui.fragments.CartFragment;
+import com.mordekai.poggtech.ui.fragments.ProductManageFragment;
 import com.mordekai.poggtech.ui.fragments.ChatFragment;
 import com.mordekai.poggtech.ui.fragments.HeaderFragment;
 import com.mordekai.poggtech.ui.fragments.HomeFragment;
@@ -83,8 +82,8 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
             } else if (item.getItemId() == R.id.account) {
                 selectedFragment = new UserAccountFragment();
                 findViewById(R.id.headerContainer).setVisibility(View.GONE);
-            } else if (item.getItemId() == R.id.cart) {
-                selectedFragment = new CartFragment();
+            } else if (item.getItemId() == R.id.save) {
+                selectedFragment = new ProductManageFragment();
                 findViewById(R.id.headerContainer).setVisibility(View.GONE);
             } else if (item.getItemId() == R.id.chat) {
                 selectedFragment = new ChatFragment();
@@ -196,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
                     break;
 
                 case "cart":
-                    bottomNavigationView.setSelectedItemId(R.id.cart);
+                    bottomNavigationView.setSelectedItemId(R.id.save);
                     break;
 
                 case "account":

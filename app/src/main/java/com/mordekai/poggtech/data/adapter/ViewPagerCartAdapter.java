@@ -4,8 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.mordekai.poggtech.ui.fragments.FavoritesFragment;
-import com.mordekai.poggtech.ui.fragments.ShoppingCartFragment;
+import com.mordekai.poggtech.ui.fragments.SavedFragment;
+import com.mordekai.poggtech.ui.fragments.CartFragment;
 
 public class ViewPagerCartAdapter extends FragmentStateAdapter {
     public ViewPagerCartAdapter(@NonNull Fragment fragment) {
@@ -17,11 +17,12 @@ public class ViewPagerCartAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position) {
             case 0:
-                return new ShoppingCartFragment();
+                return new CartFragment();
             case 1:
-                return new FavoritesFragment();
+                return new SavedFragment();
             default:
-                return new ShoppingCartFragment();
+                return new CartFragment();
+
         }
     }
 

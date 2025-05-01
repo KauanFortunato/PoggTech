@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.bumptech.glide.Glide;
 
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
@@ -161,7 +160,7 @@ public class ProductSearchedAdapter extends RecyclerView.Adapter<ProductSearched
             super(itemView);
 
             productImage = itemView.findViewById(R.id.productImage);
-            favoriteButton = itemView.findViewById(R.id.favoriteButton);
+            favoriteButton = itemView.findViewById(R.id.saveButton);
             seller = itemView.findViewById(R.id.seller);
             sellerAdmin = itemView.findViewById(R.id.sellerAdmin);
             productTitle = itemView.findViewById(R.id.productTitle);

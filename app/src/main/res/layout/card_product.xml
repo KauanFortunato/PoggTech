@@ -28,16 +28,16 @@
 
         <!-- Botão de Favoritos -->
         <ImageButton
-            android:id="@+id/favoriteButton"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:id="@+id/saveButton"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="3dp"
             android:background="@drawable/rounded_full_background_opacity"
-            android:src="@drawable/ic_favorite"
-            android:contentDescription="@string/add_favoritos" />
+            android:src="@drawable/ic_bookmark"
+            android:contentDescription="@string/add_saved" />
 
         <!-- Título do Produto -->
         <TextView
