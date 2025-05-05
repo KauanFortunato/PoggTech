@@ -23,14 +23,12 @@
             android:padding="10dp"
             android:orientation="vertical">
 
-            <!-- Área do skeleton para a imagem do produto -->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:background="@color/skeletonStartColor"
                 android:layout_centerHorizontal="true"/>
 
-            <!-- Área do skeleton para o título do produto -->
             <View
                 android:layout_width="70dp"
                 android:layout_height="10dp"

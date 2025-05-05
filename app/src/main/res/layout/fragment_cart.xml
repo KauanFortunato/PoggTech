@@ -10,8 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="5dp"
-        android:background="@drawable/section_divisor">
+        android:paddingBottom="5dp">
 
         <ProgressBar
             android:id="@+id/progressBarItems"

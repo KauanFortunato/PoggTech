@@ -206,21 +206,29 @@
                         android:layout_marginTop="12dp"
                         android:text="@string/enderecoEmail" />
 
-                    <TextView
-                        android:id="@+id/textEmail"
-                        style="@style/ConfigText"
-                        android:text="@string/emailExample"
-                        android:textAllCaps="false" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/buttonEditEmail"
-                        style="@style/Button"
-                        android:layout_width="130dp"
-                        android:layout_height="30dp"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/edit"
-                        android:textAllCaps="false"
-                        android:textSize="12sp" />
+                        <TextView
+                            android:id="@+id/textEmail"
+                            style="@style/ConfigText"
+                            android:layout_weight="1"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:paddingEnd="10dp"
+                            android:text="@string/emailExample"
+                            android:textAllCaps="false" />
+
+                        <ImageView
+                            android:id="@+id/providerLogin"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:visibility="visible"
+                            android:src="@drawable/nav_icon_persona"/>
+                    </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

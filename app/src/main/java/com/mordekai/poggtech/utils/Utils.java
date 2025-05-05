@@ -1,13 +1,22 @@
 package com.mordekai.poggtech.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Base64;
+import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -15,6 +24,8 @@ import androidx.fragment.app.FragmentManager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.auth.FirebaseAuth;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.model.Chat;
 import com.mordekai.poggtech.ui.fragments.ChatDetailsFragment;
@@ -101,5 +112,55 @@ public class Utils {
                 .placeholder(R.drawable.exemplo_ft3)
                 .error(R.drawable.placeholder_image_error)
                 .into(imageView);
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    public void showForgotPasswordDialog(Context context) {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
+
+        LinearLayout layout = new LinearLayout(context);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setPadding(60, 10, 60, 10); // Ajustar as margens conforme necessário
+
+        final EditText inputEmail = new EditText(context);
+        inputEmail.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        inputEmail.setHint(R.string.digiteEmail);
+        layout.addView(inputEmail);
+
+        TextView infoText = new TextView(context);
+        infoText.setText(R.string.mensagemRecuperarSenha);
+        infoText.setTextSize(14); // Tamanho do texto
+        infoText.setTextColor(context.getResources().getColor(R.color.textTertiary));
+        infoText.setPadding(0, 25, 0, 0);
+        infoText.setGravity(Gravity.CENTER);
+        layout.addView(infoText);
+
+        builder.setTitle(R.string.recuperarSenha);
+        builder.setBackground(context.getResources().getDrawable(R.drawable.card_product_background, null));
+        builder.setView(layout);
+
+        builder.setPositiveButton(R.string.enviar, (dialog, which) -> {
+            String email = inputEmail.getText().toString();
+            resetUserPassword(email, context);
+        });
+        builder.setNegativeButton(R.string.cancelar, (dialog, which) -> dialog.cancel());
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public void resetUserPassword(String email, Context context) {
+        if (!TextUtils.isEmpty(email)) {
+            FirebaseAuth.getInstance().sendPasswordResetEmail(email)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(context, R.string.checkEmail, Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(context, R.string.falhaCheckEmail, Toast.LENGTH_LONG).show();
+                        }
+                    });
+        } else {
+            Toast.makeText(context, "Digite um e-mail válido.", Toast.LENGTH_SHORT).show();
+        }
     }
 }

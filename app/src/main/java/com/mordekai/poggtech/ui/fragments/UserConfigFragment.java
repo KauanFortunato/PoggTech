@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatButton;
@@ -22,6 +23,7 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.ApiResponse;
@@ -32,10 +34,12 @@ import com.mordekai.poggtech.data.repository.MySqlUserRepository;
 import com.mordekai.poggtech.domain.FCMManager;
 import com.mordekai.poggtech.domain.UserManager;
 import com.mordekai.poggtech.ui.activity.LoginActivity;
+import com.mordekai.poggtech.ui.bottomsheets.ConfirmBottomSheet;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
 import com.mordekai.poggtech.data.remote.ApiService;
 import com.mordekai.poggtech.utils.SnackbarUtil;
+import com.mordekai.poggtech.utils.Utils;
 
 import java.util.Objects;
 
@@ -47,6 +51,7 @@ public class UserConfigFragment extends Fragment {
 
     private TextView textEmail;
     private EditText editName, editSurname, editContact;
+    private ImageView providerLogin;
     private ImageButton btn_back;
     private AppCompatButton buttonEditPersonInfo, buttonCancelPersonInfo, buttonLogout, buttonEditEmail, buttonResetPass;
     private BottomNavigationView bottomNavigationView;
@@ -83,7 +88,7 @@ public class UserConfigFragment extends Fragment {
 
         buttonEditPersonInfo.setOnClickListener(v -> {
             if (buttonEditPersonInfo.isHapticFeedbackEnabled()) {
-                v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
             }
 
             if (!isEditing) {
@@ -95,27 +100,34 @@ public class UserConfigFragment extends Fragment {
                 enableEditingMode(editSurname);
                 enableEditingMode(editContact);
             } else {
-                isEditing = false;
-                buttonEditPersonInfo.setText(R.string.edit);
-                buttonCancelPersonInfo.setVisibility(View.GONE);
+                if(!editName.getText().toString().isEmpty()){
 
-                resetToInitialState(editName);
-                resetToInitialState(editSurname);
-                resetToInitialState(editContact);
+                    isEditing = false;
+                    buttonEditPersonInfo.setText(R.string.edit);
+                    buttonCancelPersonInfo.setVisibility(View.GONE);
 
-                // Atualizar o objeto user
-                user.setName(editName.getText().toString());
-                user.setLastName(editSurname.getText().toString());
-                user.setPhone(editContact.getText().toString());
+                    resetToInitialState(editName);
+                    resetToInitialState(editSurname);
+                    resetToInitialState(editContact);
 
-                // Salvar alterações no servidor ou localmente
-                saveUserChanges();
+                    // Atualizar o objeto user
+                    user.setName(editName.getText().toString());
+                    user.setLastName(editSurname.getText().toString());
+                    user.setPhone(editContact.getText().toString());
+
+                    // Salvar alterações no servidor ou localmente
+                    saveUserChanges();
+                } else {
+                    if(editName.getText().toString().isEmpty()){
+                        editName.setError("Campo obrigatório");
+                    }
+                }
             }
         });
 
         buttonCancelPersonInfo.setOnClickListener(v -> {
             if (buttonCancelPersonInfo.isHapticFeedbackEnabled()) {
-                v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
             }
             // Cancelar alterações
             isEditing = false;
@@ -143,11 +155,11 @@ public class UserConfigFragment extends Fragment {
         editSurname = view.findViewById(R.id.editSurname);
         editContact = view.findViewById(R.id.editContact);
         textEmail = view.findViewById(R.id.textEmail);
+        providerLogin = view.findViewById(R.id.providerLogin);
 
         btn_back = view.findViewById(R.id.btn_back);
         buttonEditPersonInfo = view.findViewById(R.id.buttonEditPersonInfo);
         buttonCancelPersonInfo = view.findViewById(R.id.buttonCancelPersonInfo);
-        buttonEditEmail = view.findViewById(R.id.buttonEditEmail);
         buttonResetPass = view.findViewById(R.id.buttonResetPass);
         bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setVisibility(View.GONE);
@@ -171,7 +183,7 @@ public class UserConfigFragment extends Fragment {
                 }
             });
             userManager.logoutUser();
-            sharedPrefHelper.clearUser();
+            sharedPrefHelper.logOut();
             startActivity(new Intent(requireContext(), LoginActivity.class));
         });
 
@@ -180,6 +192,33 @@ public class UserConfigFragment extends Fragment {
                 v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
             }
             requireActivity().getSupportFragmentManager().popBackStack();
+        });
+
+        if(user.getIsGoogle()) {
+            providerLogin.setImageResource(R.drawable.ic_google);
+            providerLogin.setVisibility(View.VISIBLE);
+        } else {
+            providerLogin.setImageResource(R.drawable.nav_icon_persona);
+            providerLogin.setVisibility(View.VISIBLE);
+        }
+
+        buttonResetPass.setOnClickListener(v -> {
+            if(buttonResetPass.isHapticFeedbackEnabled()) {
+                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
+            }
+
+            Bundle bundle = new Bundle();
+            bundle.putString("title", getString(R.string.sendEmail));
+
+            ConfirmBottomSheet confirmBottomSheet = new ConfirmBottomSheet(new ConfirmBottomSheet.OnClickConfirmed() {
+                @Override
+                public void onConfirmed() {
+                    Utils utils = new Utils();
+                    utils.resetUserPassword(user.getEmail(), getContext());
+                }
+            });
+            confirmBottomSheet.setArguments(bundle);
+            confirmBottomSheet.show(requireActivity().getSupportFragmentManager(), confirmBottomSheet.getTag());
         });
     }
 

@@ -5,6 +5,7 @@ import static com.mordekai.poggtech.utils.NetworkUtil.isConnectedXampp;
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption;
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.mordekai.poggtech.R;
 
@@ -62,11 +63,11 @@ import com.mordekai.poggtech.domain.UserManager;
 import com.mordekai.poggtech.utils.AppConfig;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 import com.mordekai.poggtech.utils.SnackbarUtil;
+import com.mordekai.poggtech.utils.Utils;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText inputEmail, inputPassword;
     private TextView textNaoTemConta, forgotPassword;
-    private FirebaseUser currentUser;
     private boolean isPasswordVisible = false;
     private AppCompatButton buttonGoogle;
     private ProgressBar buttonProgressGoogle;
@@ -200,6 +201,17 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d("Sucesso", "Usuário logado com sucesso! Response: " + result.getName());
 
                         // Envia o token de dispositivo para o servidor
+                        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                        if (currentUser != null) {
+                            for(UserInfo userInfo : currentUser.getProviderData()) {
+                                if(userInfo.getProviderId().equals("google.com")) {
+                                    result.setIsGoogle(true);
+                                    break;
+                                }
+                            }
+                        } else {
+                            result.setIsGoogle(false);
+                        }
                         saveToken(result);
                     }
 
@@ -326,7 +338,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 buttonGoogle.setText(R.string.googleLogin);
                 buttonProgressGoogle.setVisibility(View.GONE);
-
+                user.setIsGoogle(true);
                 saveToken(user);
             }
 
@@ -376,7 +388,9 @@ public class LoginActivity extends AppCompatActivity {
                 if (forgotPassword.isHapticFeedbackEnabled()) {
                     v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
                 }
-                showForgotPasswordDialog();
+                Utils utils = new Utils();
+
+                utils.showForgotPasswordDialog(LoginActivity.this);
             }
         });
     }
@@ -431,54 +445,4 @@ public class LoginActivity extends AppCompatActivity {
 
         builder.show();
     }
-
-    private void showForgotPasswordDialog() {
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
-
-        LinearLayout layout = new LinearLayout(this);
-        layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setPadding(60, 10, 60, 10); // Ajustar as margens conforme necessário
-
-        final EditText inputEmail = new EditText(this);
-        inputEmail.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-        inputEmail.setHint(R.string.digiteEmail);
-        layout.addView(inputEmail);
-
-        TextView infoText = new TextView(this);
-        infoText.setText(R.string.mensagemRecuperarSenha);
-        infoText.setTextSize(14); // Tamanho do texto
-        infoText.setTextColor(getResources().getColor(R.color.textTertiary));
-        infoText.setPadding(0, 25, 0, 0);
-        infoText.setGravity(Gravity.CENTER);
-        layout.addView(infoText);
-
-        builder.setTitle(R.string.recuperarSenha);
-        builder.setBackground(getResources().getDrawable(R.drawable.card_product_background, null));
-        builder.setView(layout);
-
-        builder.setPositiveButton(R.string.enviar, (dialog, which) -> {
-            String email = inputEmail.getText().toString();
-            resetUserPassword(email);
-        });
-        builder.setNegativeButton(R.string.cancelar, (dialog, which) -> dialog.cancel());
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
-    private void resetUserPassword(String email) {
-        if (!TextUtils.isEmpty(email)) {
-            FirebaseAuth.getInstance().sendPasswordResetEmail(email)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(LoginActivity.this, R.string.checkEmail, Toast.LENGTH_LONG).show();
-                        } else {
-                            Toast.makeText(LoginActivity.this, R.string.falhaCheckEmail, Toast.LENGTH_LONG).show();
-                        }
-                    });
-        } else {
-            Toast.makeText(LoginActivity.this, "Digite um e-mail válido.", Toast.LENGTH_SHORT).show();
-        }
-    }
-
 }

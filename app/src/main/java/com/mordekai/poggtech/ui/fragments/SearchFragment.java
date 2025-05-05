@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,6 +30,7 @@ public class SearchFragment extends Fragment {
     private SharedPrefHelper sharedPrefHelper;
     private HistoryAdapter historyAdapter;
     private RecyclerView rvHistory;
+    private TextView searchTitle;
     private EditText searchProd;
     private ImageButton delHistory;
 
@@ -49,7 +52,6 @@ public class SearchFragment extends Fragment {
         rvHistory.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rvHistory.setAdapter(historyAdapter);
 
-
         HeaderFragment.HeaderListener listener = (HeaderFragment.HeaderListener) getActivity();
 
         if (listener != null) {
@@ -63,6 +65,11 @@ public class SearchFragment extends Fragment {
             Utils.hideKeyboard(this);
         });
 
+        if(history.isEmpty()){
+            searchTitle.setVisibility(View.GONE);
+            delHistory.setVisibility(View.GONE);
+        }
+
         return view;
     }
 
@@ -70,7 +77,8 @@ public class SearchFragment extends Fragment {
         rvHistory = view.findViewById(R.id.rvHistory);
         rvHistory.setAdapter(historyAdapter);
         delHistory = view.findViewById(R.id.delHistory);
-        searchProd = getActivity().findViewById(R.id.searchProd);
+        searchProd = view.findViewById(R.id.searchProd);
+        searchTitle = view.findViewById(R.id.searchTitle);
         getActivity().findViewById(R.id.bottomNavigationView).setVisibility(View.GONE);
 
         delHistory.setOnClickListener(v -> {

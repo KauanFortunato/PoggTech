@@ -26,7 +26,8 @@ public class SharedPrefHelper {
         gson = new Gson();
     }
 
-    //User
+    // ---------- User ----------
+
     public void saveUser(User user) {
         clearUser();
         String userJson = gson.toJson(user);
@@ -96,4 +97,10 @@ public class SharedPrefHelper {
         editor.apply();
     }
 
+    // ---------- LogOut ----------
+
+    public void logOut() {
+        clearUser();
+        clearSearchHistory();
+    }
 }
