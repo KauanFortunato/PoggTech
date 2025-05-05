@@ -5,6 +5,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.adapter.GalleryAdapter;
+import com.mordekai.poggtech.data.adapter.MyAdAdapter;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.Chat;
 import com.mordekai.poggtech.data.model.Product;
@@ -16,6 +17,7 @@ import com.mordekai.poggtech.domain.CartManager;
 import com.mordekai.poggtech.domain.MessageManager;
 import com.mordekai.poggtech.domain.ProductManager;
 import com.mordekai.poggtech.ui.activity.MainActivity;
+import com.mordekai.poggtech.ui.bottomsheets.ProductAddedBottomSheet;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 import com.mordekai.poggtech.utils.SnackbarUtil;
 import com.mordekai.poggtech.utils.Utils;
@@ -134,6 +136,7 @@ public class ProductDetailsFragment extends Fragment {
                             public void onSuccess(List<String> result) {
                                 if (result != null && !result.isEmpty()) {
                                     product.setImages(result);
+                                    imageUrls.clear();
                                     imageUrls.addAll(result);
                                 } else {
                                     if (product.getCover() != null) {
@@ -368,6 +371,7 @@ public class ProductDetailsFragment extends Fragment {
             public void onSuccess(ResponseBody result) {
                 isSaved = true;
                 updateSaveButton(true);
+                showBottomSheet();
             }
 
             @Override
@@ -421,6 +425,15 @@ public class ProductDetailsFragment extends Fragment {
             }
         });
 
+        actionButton.setOnClickListener(v -> {
+            if(actionButton.isHapticFeedbackEnabled()) {
+                actionButton.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
+            }
+
+//            addToCart(productId);
+            showBottomSheet();
+        });
+
         getActivity().findViewById(R.id.bottomNavigationView).setVisibility(View.GONE);
         getActivity().findViewById(R.id.btnBackHeader).setVisibility(View.VISIBLE);
         getActivity().findViewById(R.id.headerContainer).setVisibility(View.VISIBLE);
@@ -439,5 +452,14 @@ public class ProductDetailsFragment extends Fragment {
 
     private void animateContentView(View view) {
         view.setVisibility(View.VISIBLE);
+    }
+
+    private void showBottomSheet() {
+        Bundle bundle = new Bundle();
+        bundle.putString("image_product", product.getCover());
+
+        ProductAddedBottomSheet bottomSheet = new ProductAddedBottomSheet();
+        bottomSheet.setArguments(bundle);
+        bottomSheet.show(getChildFragmentManager(), bottomSheet.getTag());
     }
 }

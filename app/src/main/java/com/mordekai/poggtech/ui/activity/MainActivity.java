@@ -242,4 +242,3 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
         }
     }
 }
-

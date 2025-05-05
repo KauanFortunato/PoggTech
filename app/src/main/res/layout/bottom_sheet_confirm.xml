@@ -7,6 +7,7 @@
     android:paddingHorizontal="24dp"
     android:paddingBottom="24dp"
     android:paddingTop="10dp"
+    android:background="@drawable/bg_bottom_sheet"
     android:gravity="center_horizontal">
 
     <ImageView
@@ -27,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Deseja excluir este produto?"
+            android:text="Enviar email?"
             android:textSize="18sp"
             android:textColor="@color/textPrimary"
             android:fontFamily="@font/roboto_bold"/>
@@ -45,9 +46,9 @@
         android:id="@+id/buttonConfirm"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@drawable/bg_button_delete"
-        android:textColor="@color/colorOnError"
-        android:text="Excluir" />
+        android:background="@drawable/bg_button_confirm"
+        android:textColor="@color/colorOnPrimary"
+        android:text="@string/confirm" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonCancel"

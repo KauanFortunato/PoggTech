@@ -50,6 +50,13 @@
     <string name="soldeBy">Vendido por</string>
     <string name="discount">de desconto</string>
     <string name="choose">Escolha</string>
+    <string name="ok" translatable="false">Ok</string>
+    <string name="goToCart">Ir ao carrinho</string>
+    <string name="addedToCart">Adicionado ao carrinho</string>
+    <string name="confirm">Confirmar</string>
+    <string name="sendEmail">Enviar email?</string>
+    <string name="searchHistory">Histórico de Busca</string>
+
 
     <!-- Chat -->
     <string name="chat" translatable="false">Chat</string>

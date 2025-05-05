@@ -22,6 +22,9 @@ public class ProductManageFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_manage_product, container, false);
 
+        getActivity().findViewById(R.id.headerContainer).setVisibility(View.GONE);
+        getActivity().findViewById(R.id.bottomNavigationView).setVisibility(View.VISIBLE);
+
         TabLayout tabLayout = view.findViewById(R.id.tabLayout);
         ViewPager2 viewPager = view.findViewById(R.id.viewPager);
 

@@ -27,13 +27,14 @@
                 android:gravity="center_vertical">
 
                 <TextView
+                    android:id="@+id/searchTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/roboto_medium"
                     android:textSize="15sp"
                     android:textColor="@color/textPrimary"
-                    android:text="Histórico de Busca"/>
+                    android:text="@string/searchHistory"/>
 
                 <ImageButton
                     android:id="@+id/delHistory"
@@ -42,7 +43,6 @@
                     android:layout_gravity="center_vertical|end"
                     android:background="@android:color/transparent"
                     android:layout_marginStart="8dp"
-                    android:contentDescription="Enviar mensagem_button"
                     android:src="@drawable/ic_trash_outline" />
             </LinearLayout>
 

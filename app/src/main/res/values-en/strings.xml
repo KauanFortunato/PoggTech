@@ -62,4 +62,9 @@
     <string name="soldeBy">Sold by</string>
     <string name="discount">discount</string>
     <string name="choose">Choose</string>
+    <string name="goToCart">Go to cart</string>
+    <string name="addedToCart">Product added to cart</string>
+    <string name="confirm">Confirm</string>
+    <string name="sendEmail">Send email?</string>
+    <string name="searchHistory">Search History</string>
 </resources>

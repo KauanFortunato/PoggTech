@@ -34,6 +34,7 @@ import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.MessageManager;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
+import com.mordekai.poggtech.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,10 +91,7 @@ public class ChatDetailsFragment extends Fragment {
             productPrice.setText(productPriceString + " €");
             chatId.setText("ID: " + chatChatId);
 
-            Glide.with(
-                            imageProduct.getContext())
-                    .load(productImage)
-                    .into(imageProduct);
+            Utils.loadImageBasicAuth(imageProduct, productImage);
 
             messageManager.markIsRead(chatChatId, currentUser.getUserId(), new RepositoryCallback<ApiResponse<Void>>() {
 

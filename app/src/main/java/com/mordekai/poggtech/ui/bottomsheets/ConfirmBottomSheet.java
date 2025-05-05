@@ -5,26 +5,25 @@ import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 
-
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.mordekai.poggtech.R;
 
-public class DeleteProductBottomSheet extends BottomSheetDialogFragment {
+public class ConfirmBottomSheet extends BottomSheetDialogFragment {
 
-    public interface OnDeleteConfirmedListener  {
-        void onDeleteConfirmed();
+    public interface OnClickConfirmed  {
+        void onConfirmed();
     }
 
-    private OnDeleteConfirmedListener listener;
+    private ConfirmBottomSheet.OnClickConfirmed listener;
 
-    public DeleteProductBottomSheet(OnDeleteConfirmedListener listener) {
+    public ConfirmBottomSheet(ConfirmBottomSheet.OnClickConfirmed listener) {
         this.listener = listener;
     }
 
@@ -33,11 +32,17 @@ public class DeleteProductBottomSheet extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.bottom_sheet_delete_product, container, false);
+        View view = inflater.inflate(R.layout.bottom_sheet_confirm, container, false);
 
         AppCompatButton buttonConfirm = view.findViewById(R.id.buttonConfirm);
         AppCompatButton buttonCancel = view.findViewById(R.id.buttonCancel);
         ImageButton closeButton = view.findViewById(R.id.closeButton);
+        TextView textViewTitle = view.findViewById(R.id.textViewTitle);
+
+        if(getArguments() != null) {
+            String text = getArguments().getString("title");
+            textViewTitle.setText(text);
+        }
 
         buttonConfirm.setOnClickListener(v -> {
             if(buttonConfirm.isHapticFeedbackEnabled()) {
@@ -45,7 +50,7 @@ public class DeleteProductBottomSheet extends BottomSheetDialogFragment {
             }
 
             if (listener != null) {
-                listener.onDeleteConfirmed();
+                listener.onConfirmed();
             }
             dismiss();
         });

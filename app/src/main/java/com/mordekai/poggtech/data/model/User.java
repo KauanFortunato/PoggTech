@@ -10,6 +10,7 @@ public class User {
     private String created_at;
     private String error;
     private String token;
+    private boolean isGoogle;
 
     public User() {
     }
@@ -88,4 +89,8 @@ public class User {
     public String getToken() { return token; }
 
     public void setToken(String token) { this.token = token; }
+
+    public boolean getIsGoogle() { return isGoogle; }
+
+    public void setIsGoogle(boolean isGoogle) { this.isGoogle = isGoogle; }
 }
