@@ -20,9 +20,10 @@
             android:layout_height="220dp"
             android:contentDescription="@string/productImg"
             android:background="@drawable/bg_image_product"
+            android:scaleType="centerCrop"
             android:layout_marginBottom="8dp"
-            android:src="@drawable/xbox_series_x">
-        </ImageView>
+            android:clipToOutline="true"
+            android:src="@drawable/img_xbox_series_x_text"/>
 
     </FrameLayout>
 
@@ -172,9 +173,6 @@
             android:textColor="@color/textSecondary"
             android:text="Entrega COMBINAR com o vendedor"
             android:visibility="gone"/>
-
-
-
     </LinearLayout>
 
 </LinearLayout>

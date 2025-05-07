@@ -13,15 +13,15 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/card_product_background"
-        android:padding="10dp">
+        android:padding="8dp">
 
         <!-- Imagem do Produto -->
         <ImageView
             android:id="@+id/productImage"
             android:layout_width="match_parent"
             android:layout_height="95dp"
-            android:padding="5dp"
-            android:scaleType="fitCenter"
+            android:scaleType="centerCrop"
+            android:clipToOutline="true"
             android:adjustViewBounds="true"
             android:background="@drawable/bg_image_product" />
 

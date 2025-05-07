@@ -430,8 +430,7 @@ public class ProductDetailsFragment extends Fragment {
                 actionButton.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
             }
 
-//            addToCart(productId);
-            showBottomSheet();
+            addToCart(productId);
         });
 
         getActivity().findViewById(R.id.bottomNavigationView).setVisibility(View.GONE);

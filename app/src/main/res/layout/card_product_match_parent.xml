@@ -6,85 +6,116 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     app:cardElevation="0dp"
+    android:adjustViewBounds="true"
     app:cardCornerRadius="13dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:adjustViewBounds="true"
         android:background="@drawable/card_product_background"
-        android:padding="8dp">
+        android:padding="10dp">
 
-        <!-- Imagem do Produto -->
-        <ImageView
-            android:id="@+id/productImage"
-            android:layout_width="match_parent"
-            android:layout_height="130dp"
-            android:scaleType="fitCenter"
-            android:adjustViewBounds="true"
-            android:padding="10dp"
-            android:background="@drawable/bg_image_product"
-            android:src="@drawable/xbox_series_x" />
-
-        <!-- Botão de Favoritos -->
-        <ImageButton
-            android:id="@+id/saveButton"
-            android:layout_width="34dp"
-            android:layout_height="34dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="3dp"
-            android:layout_marginEnd="3dp"
-            android:background="@drawable/rounded_full_background_opacity"
-            android:src="@drawable/ic_bookmark"
-            android:contentDescription="@string/add_saved" />
-
-        <!-- Título do Produto -->
-        <TextView
-            android:id="@+id/productTitle"
+        <RelativeLayout
+            android:id="@+id/containerImg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Xbox Series X, 1tb, Preto"
-            android:textColor="@color/textSecondary"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:paddingTop="8dp"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:scrollHorizontally="false"
-            android:layout_below="@id/productImage"/>
+            android:orientation="vertical"
+            android:padding="0dp"
+            android:clipToOutline="true"
+            android:background="@drawable/bg_image_product">
 
-        <!-- Tipo do Produto -->
-        <TextView
-            android:id="@+id/productType"
+            <!-- Imagem do Produto -->
+            <ImageView
+                android:id="@+id/productImage"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:scaleType="centerCrop"
+                android:background="@drawable/bg_image_product"
+                android:adjustViewBounds="true"
+                android:src="@drawable/img_xbox_series_x_text" />
+
+            <!-- Botão de Favoritos -->
+            <ImageButton
+                android:id="@+id/saveButton"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="3dp"
+                android:background="@drawable/rounded_full_background_opacity"
+                android:src="@drawable/ic_bookmark"
+                android:contentDescription="@string/add_saved" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Consolas"
-            android:textSize="15sp"
-            android:textColor="#616161"
-            android:paddingTop="2dp"
-            android:layout_below="@id/productTitle"/>
+            android:orientation="vertical"
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/containerImg">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:orientation="horizontal"
-            android:layout_marginTop="0dp"
-            android:layout_below="@id/productType"
-            android:gravity="center_vertical">
-
-            <!-- Preço -->
             <TextView
-                android:id="@+id/productPrice"
-                android:layout_width="0dp"
+                android:id="@+id/sellerAdmin"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/roboto_medium"
-                android:paddingTop="0dp"
-                android:text="€ 635,29"
-                android:textSize="18sp"
+                android:fontFamily="@font/roboto_bold"
+                android:textSize="@dimen/text_normal"
+                android:textColor="@color/colorSuccess"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="@string/poggers"
+                android:visibility="gone"/>
+
+            <!-- Título do Produto -->
+            <TextView
+                android:id="@+id/productTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Xbox Series X, 1tb, Preto"
+                android:textColor="@color/textSecondary"
                 android:textStyle="bold"
-                android:textColor="@color/textPrimary"/>
-        </LinearLayout>
+                android:textSize="16sp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:scrollHorizontally="false"
+                android:layout_below="@id/sellerAdmin"/>
+
+            <!-- Tipo do Produto -->
+            <TextView
+                android:id="@+id/productType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Consolas"
+                android:textSize="15sp"
+                android:textColor="#616161"
+                android:paddingTop="2dp"
+                android:layout_below="@id/productTitle"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="0dp"
+                android:layout_below="@id/productType"
+                android:gravity="center_vertical">
+
+                <!-- Preço -->
+                <TextView
+                    android:id="@+id/productPrice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_medium"
+                    android:paddingTop="0dp"
+                    android:text="€ 635,29"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/textPrimary"/>
+            </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
