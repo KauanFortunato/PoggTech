@@ -82,6 +82,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.productPrice.setText(String.format("%.2f€", product.getPrice()));
         holder.productType.setText(product.getCategory());
 
+        if(product.getSeller_type().equals("admin")) {
+            holder.sellerAdmin.setVisibility(View.VISIBLE);
+            holder.seller.setVisibility(View.GONE);
+        } else {
+            holder.seller.setVisibility(View.VISIBLE);
+            holder.sellerAdmin.setVisibility(View.GONE);
+        }
+
         if (savedIds.contains(product.getProduct_id())) {
             holder.saveButton.setImageResource(R.drawable.ic_bookmark_fill);
         } else {
@@ -174,6 +182,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         TextView productTitle;
         TextView productType;
         TextView productPrice;
+        TextView sellerAdmin;
+        TextView seller;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -184,6 +194,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             productTitle = itemView.findViewById(R.id.productTitle);
             productType = itemView.findViewById(R.id.productType);
             productPrice = itemView.findViewById(R.id.productPrice);
+            sellerAdmin = itemView.findViewById(R.id.sellerAdmin);
+            seller = itemView.findViewById(R.id.seller);
         }
     }
 }

@@ -21,11 +21,11 @@
             android:id="@+id/productImage"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:scaleType="fitCenter"
-            android:padding="5dp"
+            android:scaleType="centerCrop"
+            android:clipToOutline="true"
             android:adjustViewBounds="true"
             android:background="@drawable/bg_image_product"
-            android:src="@drawable/xbox_series_x" />
+            android:src="@drawable/img_xbox_series_x_text" />
 
         <!-- Informações do Produto -->
         <LinearLayout
@@ -77,13 +77,17 @@
             android:orientation="vertical">
 
             <!-- Botão de Remover -->
-            <ImageView
+            <TextView
                 android:id="@+id/buttonRemove"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_marginTop="5dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_delete" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="6dp"
+                android:paddingVertical="3dp"
+                android:text="Apagar"
+                android:textSize="12sp"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/textPrimary"
+                android:background="@drawable/bg_rounded_stroke" />
         </LinearLayout>
 
     </LinearLayout>

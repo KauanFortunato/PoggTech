@@ -11,16 +11,17 @@
     <FrameLayout
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:background="@drawable/rounded_full">
+        android:background="@drawable/rounded_full"
+        android:clipToOutline="true"
+        android:adjustViewBounds="true">
 
         <ImageView
             android:id="@+id/imageProduct"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            android:padding="5dp"
-            android:src="@drawable/xbox_series_x" />
+            android:src="@drawable/img_xbox_series_x_text" />
 
     </FrameLayout>
 

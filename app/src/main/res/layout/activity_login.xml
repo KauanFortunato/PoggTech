@@ -121,7 +121,7 @@
                     android:id="@+id/forgotPassword"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_bold"
+                    android:fontFamily="@font/roboto_medium_italic"
                     android:text="@string/esqueceuSenha"
                     android:textColor="@color/colorPrimaryVariant"
                     android:textSize="13sp" />
@@ -136,7 +136,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/roboto_bold"
+                    android:fontFamily="@font/roboto_medium_italic"
                     android:text="@string/naoTemConta"
                     android:textSize="13sp"
                     android:textColor="@color/colorPrimaryVariant" />
