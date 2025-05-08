@@ -71,6 +71,7 @@ public class UserAccountFragment extends Fragment
         }
 
         StartComponents(view);
+
         helloUser.setText("Olá, " + user.getName());
         numberAccount.setText("Número Da Conta: " + user.getUserId());
 
@@ -183,7 +184,7 @@ public class UserAccountFragment extends Fragment
     }
 
     private void getForYou() {
-        productManager.getProductsFavCategory(user.getUserId(), 10, new RepositoryCallback<List<Product>>() {
+        productManager.getProductsFavCategories(user.getUserId(), 10, new RepositoryCallback<List<Product>>() {
             @Override
             public void onSuccess(List<Product> result) {
                 productList.clear();

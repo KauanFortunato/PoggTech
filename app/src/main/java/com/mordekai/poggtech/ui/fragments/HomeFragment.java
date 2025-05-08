@@ -6,8 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 
 
 import androidx.annotation.NonNull;
@@ -44,11 +44,10 @@ public class HomeFragment extends Fragment
 
     private SharedPrefHelper sharedPrefHelper;
     private LinearLayout containerProductsHome, containerCategorias;
-    private LinearLayout jogosContainer, forYouContainer;
-    private ProgressBar progressBar;
-    private RecyclerView rvForYou, rvConsolas, rvPopular, rvAccessory, rvContinueBuySkeleton, rvContinueBuy;
+    private LinearLayout popularContainer, forYouContainer, maybeYouLikeContainer;
+    private RecyclerView rvForYou, rvPopular, rvContinueBuySkeleton, rvContinueBuy, rvMaybeYouLike;
     private CategoryAdapter categoryAdapter;
-    private ProductAdapter forYouAdapter, consolasAdapter, popularAdapter, accessoryAdapter;
+    private ProductAdapter forYouAdapter, consolasAdapter, popularAdapter, accessoryAdapter, maybeYouLikeAdapter;
     private ProductContinueAdapter productContinueAdapter;
     private ApiService apiService;
     private ApiProduct apiProduct;
@@ -62,6 +61,8 @@ public class HomeFragment extends Fragment
     private int loadingCount = 0;
     private List<Integer> favoriteIds = new ArrayList<>();
     private ShimmerFrameLayout shimmerCategories, shimmerForYouSkeleton;
+    HorizontalScrollView horizontalScrollViewCategories;
+    View fakeScrollbar, fakeScrollbarTrack;
 
 
     @Override
@@ -114,21 +115,22 @@ public class HomeFragment extends Fragment
 
         setupSkeletonLoader();
 
-        progressBar.setVisibility(View.VISIBLE);
         containerProductsHome.setVisibility(View.VISIBLE);
 
         consolasAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), R.layout.card_product_match_parent,this, this);
         popularAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), R.layout.card_product_match_parent, this, this);
         accessoryAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), R.layout.card_product_match_parent, this, this);
+        maybeYouLikeAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), R.layout.card_product, this, this);
         productContinueAdapter = new ProductContinueAdapter(new ArrayList<>(), user.getUserId(), this, this);
 
-        rvConsolas.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rvPopular.setLayoutManager(new GridLayoutManager(getContext(),2));
-        rvAccessory.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
-        rvConsolas.setAdapter(consolasAdapter);
         rvPopular.setAdapter(popularAdapter);
-        rvAccessory.setAdapter(accessoryAdapter);
+
+        rvMaybeYouLike.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        rvMaybeYouLike.setNestedScrollingEnabled(false);
+
+        maybeYouLikeAdapter  = new ProductAdapter(productList, user.getUserId(), R.layout.card_product, this, this);
+        rvMaybeYouLike.setAdapter(maybeYouLikeAdapter);
 
         categoryAdapter = new CategoryAdapter(categoryList);
         apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
@@ -144,7 +146,8 @@ public class HomeFragment extends Fragment
 
         apiInteraction = RetrofitClient.getRetrofitInstance().create(ApiInteraction.class);
         interactionManager = new InteractionManager(apiInteraction);
-        
+
+        maybeYouLike();
         getContinueBuy();
         getPopular();
         getForYou();
@@ -181,7 +184,7 @@ public class HomeFragment extends Fragment
     }
 
     private void getForYou() {
-        productManager.getProductsFavCategory(user.getUserId(), 4, new RepositoryCallback<List<Product>>() {
+        productManager.getProductsFavCategories(user.getUserId(), 4, new RepositoryCallback<List<Product>>() {
             @Override
             public void onSuccess(List<Product> result) {
                 productForYouList.clear();
@@ -231,25 +234,42 @@ public class HomeFragment extends Fragment
         });
     }
 
+    private void maybeYouLike() {
+        productManager.getProductsByFavCategory(user.getUserId(), new RepositoryCallback<List<Product>>() {
+            @Override
+            public void onSuccess(List<Product> result) {
+                maybeYouLikeAdapter.updateProducts(result);
+                checkIfLoadingFinished();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("API_RESPONSE", "Erro ao buscar produtos", t);
+                checkIfLoadingFinished();
+            }
+        });
+    }
+
     @SuppressLint("NotifyDataSetChanged")
     public void updateAllAdapters() {
         forYouAdapter.setSavedIds(favoriteIds);
         consolasAdapter.setSavedIds(favoriteIds);
         popularAdapter.setSavedIds(favoriteIds);
         accessoryAdapter.setSavedIds(favoriteIds);
+        maybeYouLikeAdapter.setSavedIds(favoriteIds);
 
         forYouAdapter.notifyDataSetChanged();
         consolasAdapter.notifyDataSetChanged();
         popularAdapter.notifyDataSetChanged();
         accessoryAdapter.notifyDataSetChanged();
         productContinueAdapter.notifyDataSetChanged();
+        maybeYouLikeAdapter.notifyDataSetChanged();
     }
 
     private void checkIfLoadingFinished() {
         loadingCount++;
 
-        if (loadingCount >= 3) {
-            progressBar.setVisibility(View.GONE);
+        if (loadingCount >= 4) {
             containerProductsHome.setVisibility(View.VISIBLE);
 
             shimmerForYouSkeleton.stopShimmer();
@@ -263,17 +283,16 @@ public class HomeFragment extends Fragment
     }
 
     private void startComponentes(View view) {
-        rvConsolas = view.findViewById(R.id.rvConsolas);
         rvPopular = view.findViewById(R.id.rvPopular);
-        rvAccessory = view.findViewById(R.id.rvAcessory);
         rvContinueBuy = view.findViewById(R.id.rvContinueBuy);
+        rvMaybeYouLike = view.findViewById(R.id.rvMaybeYouLike);
 
-        jogosContainer = view.findViewById(R.id.popularContainer);
+        popularContainer = view.findViewById(R.id.popularContainer);
         forYouContainer = view.findViewById(R.id.forYouContainer);
+        maybeYouLikeContainer = view.findViewById(R.id.maybeYouLikeContainer);
 
         rvContinueBuySkeleton = view.findViewById(R.id.rvContinueBuySkeleton);
         containerProductsHome = view.findViewById(R.id.containerProductsHome);
-        progressBar = view.findViewById(R.id.progressBar);
         containerCategorias = view.findViewById(R.id.containerCategorias);
         shimmerForYouSkeleton = view.findViewById(R.id.forYouSkeleton);
         shimmerCategories = view.findViewById(R.id.shimmerCategorias);
@@ -285,11 +304,38 @@ public class HomeFragment extends Fragment
         rvContinueBuy.setVisibility(View.GONE);
         containerCategorias.setVisibility(View.GONE);
 
+        horizontalScrollViewCategories = view.findViewById(R.id.horizontalScrollViewCategories);
+        fakeScrollbar = view.findViewById(R.id.fakeScrollbar);
+        fakeScrollbarTrack = view.findViewById(R.id.fakeScrollbarTrack);
+
         HeaderFragment.HeaderListener listener = (HeaderFragment.HeaderListener) getActivity();
 
         if (listener != null) {
             listener.hideBackButton();
         }
+
+        horizontalScrollViewCategories.getViewTreeObserver().addOnScrollChangedListener(() -> {
+            int scrollX = horizontalScrollViewCategories.getScrollX();
+            int contentWidth = horizontalScrollViewCategories.getChildAt(0).getWidth();
+            int visibleWidth = horizontalScrollViewCategories.getWidth();
+
+            int maxScrollX = contentWidth - visibleWidth;
+            int trackWidth = fakeScrollbarTrack.getWidth();
+            int thumbWidth = fakeScrollbar.getWidth();
+
+            int maxThumbTranslation = trackWidth - thumbWidth;
+
+            if (maxScrollX > 0 && maxThumbTranslation > 0) {
+                float proportion = (float) scrollX / maxScrollX;
+                float translationX = proportion * maxThumbTranslation;
+
+                fakeScrollbar.setTranslationX(
+                        fakeScrollbarTrack.getX() + translationX
+                );
+            } else {
+                fakeScrollbar.setTranslationX(fakeScrollbarTrack.getX());
+            }
+        });
 
         getActivity().findViewById(R.id.bottomNavigationView).setVisibility(View.VISIBLE);
     }
@@ -305,13 +351,15 @@ public class HomeFragment extends Fragment
     }
 
     private void hideContainers() {
-        jogosContainer.setVisibility(View.GONE);
+        popularContainer.setVisibility(View.GONE);
         forYouContainer.setVisibility(View.GONE);
+        maybeYouLikeContainer.setVisibility(View.GONE);
     }
 
     private void showContainers() {
-        jogosContainer.setVisibility(View.VISIBLE);
+        popularContainer.setVisibility(View.VISIBLE);
         forYouContainer.setVisibility(View.VISIBLE);
+        maybeYouLikeContainer.setVisibility(View.VISIBLE);
     }
 
     @Override
