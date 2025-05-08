@@ -26,6 +26,7 @@
     <string name="salvar">Save</string>
     <string name="cancelar">Cancel</string>
     <string name="logout">Log Out</string>
+    <string name="logoutInfo">Do you want to log out?</string>
     <string name="tentarNovamente">Try Again</string>
     <string name="verfInternet">Check your Internet connection</string>
     <string name="numContaExample">Account ID: 1A2B3C</string>

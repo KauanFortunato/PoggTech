@@ -171,20 +171,18 @@ public class UserConfigFragment extends Fragment {
                 v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
             }
 
-            fcmManager.removeToken(user.getUserId(), user.getToken(), new RepositoryCallback<ApiResponse>() {
-                @Override
-                public void onSuccess(ApiResponse result) {
-                    Log.d("FCM_TOKEN", "Token removido com sucesso!");
-                }
+            Bundle bundle = new Bundle();
+            bundle.putString("title", getString(R.string.logoutInfo));
 
+            ConfirmBottomSheet confirmBottomSheet = new ConfirmBottomSheet(new ConfirmBottomSheet.OnClickConfirmed() {
                 @Override
-                public void onFailure(Throwable t) {
-                    Log.e("FCM_TOKEN", "Erro ao remover token: " + t.getMessage());
+                public void onConfirmed() {
+                    logOutUser();
                 }
             });
-            userManager.logoutUser();
-            sharedPrefHelper.logOut();
-            startActivity(new Intent(requireContext(), LoginActivity.class));
+            confirmBottomSheet.setArguments(bundle);
+            confirmBottomSheet.show(requireActivity().getSupportFragmentManager(), confirmBottomSheet.getTag());
+
         });
 
         btn_back.setOnClickListener(v -> {
@@ -220,6 +218,24 @@ public class UserConfigFragment extends Fragment {
             confirmBottomSheet.setArguments(bundle);
             confirmBottomSheet.show(requireActivity().getSupportFragmentManager(), confirmBottomSheet.getTag());
         });
+    }
+
+    private void logOutUser() {
+        fcmManager.removeToken(user.getUserId(), user.getToken(), new RepositoryCallback<ApiResponse>() {
+            @Override
+            public void onSuccess(ApiResponse result) {
+                Log.d("FCM_TOKEN", "Token removido com sucesso!");
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("FCM_TOKEN", "Erro ao remover token: " + t.getMessage());
+            }
+        });
+
+        userManager.logoutUser();
+        sharedPrefHelper.logOut();
+        startActivity(new Intent(requireContext(), LoginActivity.class));
     }
 
     private void enableEditingMode(EditText editText) {

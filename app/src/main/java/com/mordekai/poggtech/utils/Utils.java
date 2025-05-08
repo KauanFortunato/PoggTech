@@ -136,7 +136,7 @@ public class Utils {
         layout.addView(infoText);
 
         builder.setTitle(R.string.recuperarSenha);
-        builder.setBackground(context.getResources().getDrawable(R.drawable.card_product_background, null));
+        builder.setBackground(context.getResources().getDrawable(R.drawable.bg_card_product, null));
         builder.setView(layout);
 
         builder.setPositiveButton(R.string.enviar, (dialog, which) -> {

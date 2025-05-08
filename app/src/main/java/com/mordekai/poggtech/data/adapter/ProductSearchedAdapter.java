@@ -104,9 +104,9 @@ public class ProductSearchedAdapter extends RecyclerView.Adapter<ProductSearched
         }
 
         if (favoriteIds.contains(product.getProduct_id())) {
-            holder.favoriteButton.setImageResource(R.drawable.ic_favorite_filled);
+            holder.favoriteButton.setImageResource(R.drawable.ic_bookmark_fill);
         } else {
-            holder.favoriteButton.setImageResource(R.drawable.ic_favorite);
+            holder.favoriteButton.setImageResource(R.drawable.ic_bookmark);
         }
 
         holder.favoriteButton.setOnClickListener(v -> {
@@ -119,12 +119,12 @@ public class ProductSearchedAdapter extends RecyclerView.Adapter<ProductSearched
             if (isFavorite) {
                 // Remove dos favoritos
                 favoriteIds.remove(Integer.valueOf(product.getProduct_id()));
-                holder.favoriteButton.setImageResource(R.drawable.ic_favorite);
+                holder.favoriteButton.setImageResource(R.drawable.ic_bookmark);
                 removeFromFavorites(product.getProduct_id(), v, holder.getAdapterPosition());
             } else {
                 // Adiciona aos favoritos
                 favoriteIds.add(product.getProduct_id());
-                holder.favoriteButton.setImageResource(R.drawable.ic_favorite_filled);
+                holder.favoriteButton.setImageResource(R.drawable.ic_bookmark_fill);
                 addToFavorites(product.getProduct_id(), v, holder.getAdapterPosition());
             }
         });

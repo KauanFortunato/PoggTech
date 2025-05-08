@@ -10,18 +10,18 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/card_product_background">
+        android:background="@drawable/bg_card_product">
 
         <!-- Imagem do Produto -->
         <ImageView
             android:id="@+id/productImage"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:scaleType="fitCenter"
+            android:scaleType="centerCrop"
             android:adjustViewBounds="true"
-            android:padding="5dp"
+            android:clipToOutline="true"
             android:background="@drawable/bg_image_product"
-            android:src="@drawable/xbox_series_x"
+            android:src="@drawable/img_xbox_series_x_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -35,7 +35,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:paddingEnd="10dp"
-            android:gravity="center_horizontal|bottom"
+            android:gravity="center_horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -45,10 +45,18 @@
                 android:id="@+id/removeButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_medium"
+                android:paddingHorizontal="6dp"
+                android:paddingVertical="3dp"
                 android:text="Remover"
-                android:textColor="@color/colorError"
-                android:textSize="15sp" />
+                android:textSize="12sp"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/backgroundColor"
+                android:background="@drawable/bg_manage_stock" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
         </LinearLayout>
 
 

@@ -75,7 +75,7 @@
                     android:padding="10dp"
                     android:layout_marginHorizontal="3dp"
                     android:gravity="center"
-                    android:background="@drawable/card_product_background"
+                    android:background="@drawable/bg_card_product"
                     android:orientation="vertical">
 
                     <ImageView
@@ -100,7 +100,7 @@
                     android:padding="10dp"
                     android:layout_marginHorizontal="3dp"
                     android:gravity="center"
-                    android:background="@drawable/card_product_background"
+                    android:background="@drawable/bg_card_product"
                     android:orientation="vertical">
 
                     <ImageView
@@ -124,7 +124,7 @@
                     android:padding="10dp"
                     android:layout_marginHorizontal="3dp"
                     android:gravity="center"
-                    android:background="@drawable/card_product_background"
+                    android:background="@drawable/bg_card_product"
                     android:orientation="vertical">
                     <ImageView
                         android:layout_width="90dp"

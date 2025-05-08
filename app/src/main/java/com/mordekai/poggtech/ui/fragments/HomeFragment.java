@@ -8,12 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -45,8 +43,8 @@ public class HomeFragment extends Fragment
                     ProductContinueAdapter.OnProductContinueClickListener {
 
     private SharedPrefHelper sharedPrefHelper;
-    private LinearLayout containerProductsHome;
-    private TextView tudoCategorie;
+    private LinearLayout containerProductsHome, containerCategorias;
+    private LinearLayout jogosContainer, forYouContainer;
     private ProgressBar progressBar;
     private RecyclerView rvForYou, rvConsolas, rvPopular, rvAccessory, rvContinueBuySkeleton, rvContinueBuy;
     private CategoryAdapter categoryAdapter;
@@ -63,7 +61,7 @@ public class HomeFragment extends Fragment
     private User user;
     private int loadingCount = 0;
     private List<Integer> favoriteIds = new ArrayList<>();
-    private ShimmerFrameLayout shimmerContinueBuy;
+    private ShimmerFrameLayout shimmerCategories, shimmerForYouSkeleton;
 
 
     @Override
@@ -112,11 +110,12 @@ public class HomeFragment extends Fragment
         }
 
         startComponentes(view);
+        hideContainers();
 
         setupSkeletonLoader();
 
         progressBar.setVisibility(View.VISIBLE);
-        containerProductsHome.setVisibility(View.GONE);
+        containerProductsHome.setVisibility(View.VISIBLE);
 
         consolasAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), R.layout.card_product_match_parent,this, this);
         popularAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), R.layout.card_product_match_parent, this, this);
@@ -252,6 +251,14 @@ public class HomeFragment extends Fragment
         if (loadingCount >= 3) {
             progressBar.setVisibility(View.GONE);
             containerProductsHome.setVisibility(View.VISIBLE);
+
+            shimmerForYouSkeleton.stopShimmer();
+            shimmerCategories.stopShimmer();
+            shimmerCategories.setVisibility(View.GONE);
+            shimmerForYouSkeleton.setVisibility(View.GONE);
+            containerCategorias.setVisibility(View.VISIBLE);
+
+            showContainers();
         }
     }
 
@@ -261,14 +268,22 @@ public class HomeFragment extends Fragment
         rvAccessory = view.findViewById(R.id.rvAcessory);
         rvContinueBuy = view.findViewById(R.id.rvContinueBuy);
 
+        jogosContainer = view.findViewById(R.id.popularContainer);
+        forYouContainer = view.findViewById(R.id.forYouContainer);
+
         rvContinueBuySkeleton = view.findViewById(R.id.rvContinueBuySkeleton);
         containerProductsHome = view.findViewById(R.id.containerProductsHome);
         progressBar = view.findViewById(R.id.progressBar);
-        tudoCategorie = view.findViewById(R.id.tudoCategorie);
-        shimmerContinueBuy = view.findViewById(R.id.shimmerContinueBuy);
-        shimmerContinueBuy.startShimmer();
-        shimmerContinueBuy.setVisibility(View.VISIBLE);
+        containerCategorias = view.findViewById(R.id.containerCategorias);
+        shimmerForYouSkeleton = view.findViewById(R.id.forYouSkeleton);
+        shimmerCategories = view.findViewById(R.id.shimmerCategorias);
+
+        shimmerCategories.startShimmer();
+        shimmerForYouSkeleton.startShimmer();
+
+        shimmerForYouSkeleton.startShimmer();
         rvContinueBuy.setVisibility(View.GONE);
+        containerCategorias.setVisibility(View.GONE);
 
         HeaderFragment.HeaderListener listener = (HeaderFragment.HeaderListener) getActivity();
 
@@ -277,9 +292,6 @@ public class HomeFragment extends Fragment
         }
 
         getActivity().findViewById(R.id.bottomNavigationView).setVisibility(View.VISIBLE);
-
-        tudoCategorie.setTypeface(tudoCategorie.getTypeface(), tudoCategorie.getTypeface().BOLD);
-        tudoCategorie.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
     }
 
     private void setupSkeletonLoader() {
@@ -290,6 +302,16 @@ public class HomeFragment extends Fragment
 
         ProductContinueAdapter skeletonAdapter = new ProductContinueAdapter(fakeList, user.getUserId(), this, this);
         rvContinueBuySkeleton.setAdapter(skeletonAdapter);
+    }
+
+    private void hideContainers() {
+        jogosContainer.setVisibility(View.GONE);
+        forYouContainer.setVisibility(View.GONE);
+    }
+
+    private void showContainers() {
+        jogosContainer.setVisibility(View.VISIBLE);
+        forYouContainer.setVisibility(View.VISIBLE);
     }
 
     @Override

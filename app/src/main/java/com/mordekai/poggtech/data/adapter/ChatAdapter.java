@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.model.Chat;
 import com.mordekai.poggtech.utils.Utils;
@@ -37,7 +36,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_chat, parent, false);
+                .inflate(R.layout.item_chat, parent, false);
         return new ChatAdapter.ViewHolder(view);
     }
 

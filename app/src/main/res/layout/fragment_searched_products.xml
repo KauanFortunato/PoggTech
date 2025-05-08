@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/roboto_bold"
-                android:textColor="@color/colorPrimaryVariant"
+                android:textColor="@color/colorSuccess"
                 android:textSize="12sp"
                 android:text="@string/poggers"/>
 

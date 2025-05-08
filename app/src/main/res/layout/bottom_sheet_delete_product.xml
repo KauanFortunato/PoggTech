@@ -45,6 +45,8 @@
         android:id="@+id/buttonConfirm"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:textAllCaps="false"
+        android:fontFamily="@font/roboto_medium"
         android:background="@drawable/bg_button_delete"
         android:textColor="@color/colorOnError"
         android:text="Excluir" />
@@ -54,7 +56,10 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@drawable/bg_button_cancel"
-        android:text="Cancelar"
+        android:fontFamily="@font/roboto"
+        android:textAllCaps="false"
+        android:textColor="@color/textPrimary"
+        android:text="@string/cancelar"
         android:layout_marginTop="8dp"/>
 
 </LinearLayout>

@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="115dp"
+    android:layout_width="110dp"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     app:cardCornerRadius="15dp"
@@ -12,8 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@drawable/card_product_background"
-        android:padding="8dp">
+        android:background="@drawable/bg_card_product">
 
         <!-- Imagem do Produto -->
         <ImageView
@@ -21,8 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="95dp"
             android:scaleType="centerCrop"
-            android:clipToOutline="true"
             android:adjustViewBounds="true"
+            android:src="@drawable/bg_skeleton_background"
             android:background="@drawable/bg_image_product" />
 
         <!-- Título do Produto -->
@@ -37,6 +36,7 @@
             android:paddingTop="8dp"
             android:maxLines="2"
             android:ellipsize="end"
+            android:padding="8dp"
             android:scrollHorizontally="false"
             android:layout_below="@id/productImage"/>
     </RelativeLayout>

@@ -4,25 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="10dp"
-    android:paddingHorizontal="15dp"
-    android:paddingVertical="10dp"
     android:layout_marginBottom="15dp"
-    android:background="@drawable/card_product_background">
+    android:clipToOutline="true"
+    android:background="@drawable/bg_card_product">
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_divisor_bottom_product">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/productImage"
             android:layout_width="match_parent"
             android:layout_height="220dp"
             android:contentDescription="@string/productImg"
-            android:background="@drawable/bg_image_product"
+            android:layout_gravity="center"
             android:scaleType="centerCrop"
-            android:layout_marginBottom="8dp"
-            android:clipToOutline="true"
             android:src="@drawable/img_xbox_series_x_text"/>
 
     </FrameLayout>
@@ -31,6 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingVertical="5dp"
+        android:padding="10dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -99,7 +96,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:background="@android:color/transparent"
-                android:src="@drawable/ic_favorite"
+                android:src="@drawable/ic_bookmark"
                 android:layout_gravity="top"
                 android:padding="4dp"
                 android:scaleX="1.3"
