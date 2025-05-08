@@ -14,7 +14,7 @@
         android:orientation="horizontal"
         android:padding="10dp"
         android:gravity="center_vertical"
-        android:background="@drawable/card_product_background">
+        android:background="@drawable/bg_card_product">
 
         <!-- Imagem do Produto -->
         <ImageView
@@ -73,21 +73,57 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="bottom"
             android:orientation="vertical">
 
             <!-- Botão de Remover -->
-            <TextView
+            <ImageView
                 android:id="@+id/buttonRemove"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="7dp"
+                android:layout_gravity="end"
+                android:src="@drawable/ic_trash_outline"
+                android:background="@drawable/bg_oval_icons"
+                app:tint="@color/backgroundColor"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="6dp"
-                android:paddingVertical="3dp"
-                android:text="Apagar"
-                android:textSize="12sp"
-                android:fontFamily="@font/roboto"
-                android:textColor="@color/textPrimary"
-                android:background="@drawable/bg_rounded_stroke" />
+                android:gravity="center"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="2dp"
+                android:background="@drawable/bg_manage_stock"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:padding="2dp"
+                    android:src="@drawable/ic_minus"
+                    app:tint="@color/backgroundColor"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="5dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textColor="@color/textSecondary"
+                    android:text="1"/>
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:padding="2dp"
+                    android:src="@drawable/ic_add"
+                    app:tint="@color/backgroundColor"/>
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>

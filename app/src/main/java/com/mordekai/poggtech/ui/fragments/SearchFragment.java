@@ -38,6 +38,7 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search_home, container, false);
+
         sharedPrefHelper = new SharedPrefHelper(requireContext());
         List<String> history = sharedPrefHelper.getSearchHistory();
         Log.d("History", history.toString());
@@ -75,9 +76,8 @@ public class SearchFragment extends Fragment {
 
     public void startComponents(View view) {
         rvHistory = view.findViewById(R.id.rvHistory);
-        rvHistory.setAdapter(historyAdapter);
         delHistory = view.findViewById(R.id.delHistory);
-        searchProd = view.findViewById(R.id.searchProd);
+        searchProd = getActivity().findViewById(R.id.searchProd);
         searchTitle = view.findViewById(R.id.searchTitle);
         getActivity().findViewById(R.id.bottomNavigationView).setVisibility(View.GONE);
 

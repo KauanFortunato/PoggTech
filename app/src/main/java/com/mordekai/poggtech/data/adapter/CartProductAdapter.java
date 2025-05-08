@@ -38,7 +38,7 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
         TextView productTitle;
         TextView productType;
         TextView productPrice;
-        TextView buttonRemove;
+        ImageView buttonRemove;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

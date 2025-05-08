@@ -10,7 +10,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="10dp"
         android:orientation="vertical">
 
         <ProgressBar
@@ -37,14 +36,17 @@
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingTop="10dp"
+            android:paddingHorizontal="10dp"
+            android:background="@color/backgroundColor">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvChats"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/card_chat"
+                tools:listitem="@layout/item_chat"
                 android:nestedScrollingEnabled="false"/>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </LinearLayout>

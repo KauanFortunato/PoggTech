@@ -3,10 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingVertical="18dp"
+    android:paddingVertical="10dp"
     android:paddingHorizontal="5dp"
     android:orientation="horizontal"
-    android:background="@drawable/section_divisor">
+    android:background="@color/backgroundColor">
 
     <FrameLayout
         android:layout_width="60dp"
@@ -57,7 +57,7 @@
                 android:layout_gravity="end|top"
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="0dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:background="@drawable/background_notification">
 
                 <TextView
@@ -68,7 +68,7 @@
                     android:text="3"
                     android:textColor="@android:color/white"
                     android:textSize="11sp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:textStyle="bold" />
             </FrameLayout>
         </LinearLayout>

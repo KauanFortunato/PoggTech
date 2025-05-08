@@ -6,14 +6,14 @@
     android:layout_height="263dp"
     android:layout_margin="8dp"
     app:cardElevation="0dp"
-    android:background="@drawable/skeleton_background"
+    android:background="@drawable/bg_skeleton_background"
     app:cardCornerRadius="13dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@drawable/skeleton_background"
+        android:background="@drawable/bg_skeleton_background"
         android:padding="8dp">
 
     </RelativeLayout>

@@ -6,12 +6,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
+        android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <RelativeLayout
             android:id="@+id/header"
@@ -34,10 +35,10 @@
                 style="@style/TextHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"
-                android:text="Anúncio" />
+                android:layout_centerHorizontal="true"
+                android:text="Anúncio"
+                android:textAlignment="center" />
         </RelativeLayout>
 
         <LinearLayout
@@ -54,25 +55,45 @@
                     android:id="@+id/rvMyAds"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    tools:listitem="@layout/item_my_ad"
+                    android:nestedScrollingEnabled="false"
                     tools:itemCount="3"
-                    android:nestedScrollingEnabled="false"/>
+                    tools:listitem="@layout/item_my_ad" />
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         </LinearLayout>
 
     </LinearLayout>
 
-    <ImageButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/addNewProduct"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:background="@drawable/bg_image_product"
-        android:layout_marginBottom="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:elevation="4dp"
-        android:src="@drawable/ic_add"
+        android:background="@drawable/bg_button_confirm"
+        android:text="Adicionar produto"
+        android:fontFamily="@font/roboto_medium"
+        android:textAllCaps="false"
+        android:textColor="@color/colorOnPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:paddingHorizontal="30dp"
+        android:layout_marginBottom="50dp" />
+
+    <TextView
+        android:id="@+id/infoNoAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/roboto"
+        android:textSize="@dimen/text_normal"
+        android:text="Você não possui nenhum anúncio"
+        android:textColor="@color/textPrimary"
+        android:layout_marginTop="100dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

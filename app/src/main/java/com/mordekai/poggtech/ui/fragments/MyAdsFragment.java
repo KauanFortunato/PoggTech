@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,8 +36,10 @@ public class MyAdsFragment extends Fragment {
     private List<Product> products = new ArrayList<>();
     private User user;
     private ProductManager productManager;
-    private ImageButton btnBack, addNewProduct;
+    private ImageButton btnBack;
+    private AppCompatButton addNewProduct;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private TextView infoNoAdd;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -67,12 +71,19 @@ public class MyAdsFragment extends Fragment {
                 myAdAdapter.updateProducts(products);
                 myAdAdapter.notifyDataSetChanged();
 
+                if (products.isEmpty()) {
+                    infoNoAdd.setVisibility(View.VISIBLE);
+                } else {
+                    infoNoAdd.setVisibility(View.GONE);
+                }
+
                 swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onFailure(Throwable t) {
                 Log.e("API_RESPONSE", "Erro ao buscar produtos", t);
+                infoNoAdd.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -81,6 +92,7 @@ public class MyAdsFragment extends Fragment {
         btnBack = view.findViewById(R.id.btn_back);
         addNewProduct = view.findViewById(R.id.addNewProduct);
         rvMyAds = view.findViewById(R.id.rvMyAds);
+        infoNoAdd = view.findViewById(R.id.infoNoAdd);
 
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
 

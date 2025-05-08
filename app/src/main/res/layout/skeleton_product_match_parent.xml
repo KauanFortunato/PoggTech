@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/shimmerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:layout_margin="5dp"
+    android:padding="0dp"
+    android:background="@null"
+    android:orientation="vertical"
+    android:clipToPadding="false">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="13dp"
+        app:cardElevation="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card_product">
+
+            <!-- Imagem Placeholder -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:background="@drawable/bg_skeleton_background" />
+
+            <!-- Conteúdo texto -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="140dp"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <View
+                    android:layout_width="70dp"
+                    android:layout_height="12dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/bg_skeleton_background" />
+
+                <View
+                    android:layout_width="160dp"
+                    android:layout_height="16dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_skeleton_background" />
+
+                <View
+                    android:layout_width="100dp"
+                    android:layout_height="14dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/bg_skeleton_background" />
+
+                <View
+                    android:layout_width="80dp"
+                    android:layout_height="18dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_skeleton_background" />
+            </LinearLayout>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</com.facebook.shimmer.ShimmerFrameLayout>
