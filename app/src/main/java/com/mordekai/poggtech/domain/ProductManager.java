@@ -89,6 +89,7 @@ public class ProductManager {
                 });
     }
 
+
     public void fetchUserFavOrCart(int userId, int tipo, RepositoryCallback<List<Integer>> callback) {
         apiProduct.getUserFavOrCart(userId, tipo)
                 .enqueue(new Callback<ApiResponse<List<Integer>>>() {
@@ -158,8 +159,33 @@ public class ProductManager {
         });
     }
 
-    public void getProductsFavCategory(int userId, int quantity, RepositoryCallback<List<Product>> callback) {
-        apiProduct.getProductsFavCategory(userId, quantity).enqueue(new Callback<ApiResponse<List<Product>>>() {
+    public void getProductsFavCategories(int userId, int quantity, RepositoryCallback<List<Product>> callback) {
+        apiProduct.getProductsFavCategories(userId, quantity).enqueue(new Callback<ApiResponse<List<Product>>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<List<Product>>> call, Response<ApiResponse<List<Product>>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ApiResponse<List<Product>> apiResponse = response.body();
+                    if(apiResponse.isSuccess()) {
+                        List<Product> products = apiResponse.getData();
+                        callback.onSuccess(products);
+                    } else {
+                        callback.onFailure(new Exception("Erro ao buscar produtos"));
+                    }
+                } else {
+                    callback.onFailure(new Exception("Erro ao buscar produtos pela categoria"));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<List<Product>>> call, Throwable t) {
+                callback.onFailure(new Exception("Erro ao buscar produtos"));
+            }
+        });
+    }
+
+    public void getProductsByFavCategory(int userId, RepositoryCallback<List<Product>> callback) {
+        apiProduct.getProductsByFavCategory(userId).enqueue(new Callback<ApiResponse<List<Product>>>() {
+
             @Override
             public void onResponse(Call<ApiResponse<List<Product>>> call, Response<ApiResponse<List<Product>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
