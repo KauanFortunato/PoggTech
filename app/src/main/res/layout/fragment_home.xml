@@ -109,7 +109,7 @@
 
                                     <ImageView
                                         style="@style/categoryHome"
-                                        android:src="@drawable/ic_category_retro" />
+                                        android:src="@drawable/ic_category_games" />
 
                                     <TextView
                                         android:layout_width="70dp"
@@ -163,6 +163,28 @@
                                         android:textColor="@color/textPrimary"
                                         android:textSize="11sp" />
                                 </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginHorizontal="10dp"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        style="@style/categoryHome"
+                                        android:src="@drawable/ic_category_retro" />
+
+                                    <TextView
+                                        android:layout_width="70dp"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:text="Retro Games"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/textPrimary"
+                                        android:textSize="11sp" />
+                                </LinearLayout>
+
                             </LinearLayout>
 
                         </HorizontalScrollView>
@@ -205,16 +227,45 @@
                             android:orientation="horizontal"
                             android:paddingBottom="10dp">
 
-                            <include layout="@layout/item_category_skeleton" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
 
-                            <include layout="@layout/item_category_skeleton" />
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layoutAnimation="@anim/layout_animation_fade_slide_up"
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    android:paddingBottom="10dp">
 
-                            <include layout="@layout/item_category_skeleton" />
+                                    <include layout="@layout/item_category_skeleton" />
 
-                            <include layout="@layout/item_category_skeleton" />
+                                    <include layout="@layout/item_category_skeleton" />
 
-                            <include layout="@layout/item_category_skeleton" />
+                                    <include layout="@layout/item_category_skeleton" />
 
+                                    <include layout="@layout/item_category_skeleton" />
+
+                                    <include layout="@layout/item_category_skeleton" />
+
+                                </LinearLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center">
+
+                                    <View
+                                        android:layout_width="20dp"
+                                        android:layout_height="5dp"
+                                        android:layout_gravity="bottom|center_horizontal"
+                                        android:layout_marginBottom="6dp"
+                                        android:background="@drawable/custom_scroll_track" />
+                                </RelativeLayout>
+
+                            </LinearLayout>
                         </LinearLayout>
                     </com.facebook.shimmer.ShimmerFrameLayout>
                 </LinearLayout>
@@ -239,6 +290,7 @@
                         android:id="@+id/shimmerContinueBuy"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layoutAnimation="@anim/layout_animation_fade_slide_up"
                         app:shimmer_auto_start="true"
                         app:shimmer_base_alpha="0.7"
                         app:shimmer_duration="1000"
@@ -257,10 +309,11 @@
                         android:id="@+id/rvContinueBuy"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layoutAnimation="@anim/layout_animation_fade_slide_up"
                         android:orientation="horizontal"
                         android:visibility="gone"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/card_continue_product" />
+                        tools:listitem="@layout/item_continue_buy" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -310,9 +363,10 @@
                                 android:id="@+id/rvForYou"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layoutAnimation="@anim/layout_animation_fade_slide_up"
                                 android:orientation="horizontal"
                                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                                tools:listitem="@layout/card_product_match_parent" />
+                                tools:listitem="@layout/item_product_match_parent" />
                         </LinearLayout>
 
                         <com.facebook.shimmer.ShimmerFrameLayout
@@ -332,6 +386,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal"
+                                    android:layoutAnimation="@anim/layout_animation_fade_slide_up"
                                     android:paddingBottom="10dp">
 
                                     <include layout="@layout/skeleton_product_match_parent" />
@@ -385,6 +440,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
+                            android:layout_marginStart="10dp"
                             android:paddingBottom="10dp">
 
                             <androidx.recyclerview.widget.RecyclerView
@@ -439,7 +495,7 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
                                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                                tools:listitem="@layout/card_product_match_parent" />
+                                tools:listitem="@layout/item_product_match_parent" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>

@@ -21,7 +21,7 @@
             android:layout_height="95dp"
             android:scaleType="centerCrop"
             android:adjustViewBounds="true"
-            android:src="@drawable/bg_skeleton_background"
+            android:src="@drawable/bg_skeleton"
             android:background="@drawable/bg_image_product" />
 
         <!-- Título do Produto -->

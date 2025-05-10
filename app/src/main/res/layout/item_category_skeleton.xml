@@ -13,11 +13,11 @@
         android:layout_height="48dp"
         android:layout_marginBottom="8dp"
         android:padding="5dp"
-        android:background="@drawable/bg_skeleton_background_oval" />
+        android:background="@drawable/bg_skeleton_oval" />
 
     <!-- Placeholder retangular para texto -->
     <View
         android:layout_width="60dp"
         android:layout_height="15dp"
-        android:background="@drawable/bg_skeleton_background" />
+        android:background="@drawable/bg_skeleton" />
 </LinearLayout>

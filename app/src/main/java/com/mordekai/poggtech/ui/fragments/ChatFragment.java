@@ -30,6 +30,7 @@ public class ChatFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
 
         iniciarComponentes(view);
+
         fragmentManager = getChildFragmentManager();
 
         if (savedInstanceState != null) {
@@ -46,7 +47,7 @@ public class ChatFragment extends Fragment {
 
         btnShop.setOnClickListener(v->{
             if(btnShop.isHapticFeedbackEnabled()){
-                v.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
+                v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_RELEASE);
             }
 
             updateButtonStyle(true);
@@ -56,7 +57,7 @@ public class ChatFragment extends Fragment {
 
         btnSell.setOnClickListener(v->{
             if(btnSell.isHapticFeedbackEnabled()){
-                v.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
+                v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_RELEASE);
             }
 
             isCompraSelected = false;

@@ -26,7 +26,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
-                android:background="@drawable/bg_skeleton_background" />
+                android:background="@drawable/bg_skeleton" />
 
             <!-- Conteúdo texto -->
             <LinearLayout
@@ -40,25 +40,25 @@
                     android:layout_width="70dp"
                     android:layout_height="12dp"
                     android:layout_marginTop="4dp"
-                    android:background="@drawable/bg_skeleton_background" />
+                    android:background="@drawable/bg_skeleton" />
 
                 <View
                     android:layout_width="160dp"
                     android:layout_height="16dp"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/bg_skeleton_background" />
+                    android:background="@drawable/bg_skeleton" />
 
                 <View
                     android:layout_width="100dp"
                     android:layout_height="14dp"
                     android:layout_marginTop="6dp"
-                    android:background="@drawable/bg_skeleton_background" />
+                    android:background="@drawable/bg_skeleton" />
 
                 <View
                     android:layout_width="80dp"
                     android:layout_height="18dp"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/bg_skeleton_background" />
+                    android:background="@drawable/bg_skeleton" />
             </LinearLayout>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

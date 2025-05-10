@@ -189,6 +189,9 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
         filterHigh = view.findViewById(R.id.filterHigh);
         filterLow = view.findViewById(R.id.filterLow);
 
+        getActivity().findViewById(R.id.headerContainer).setVisibility(View.VISIBLE);
+        getActivity().findViewById(R.id.bottomNavigationView).setVisibility(View.GONE);
+
         poggersFilter.setOnCheckedChangeListener((buttonView, isChecked) -> {
             applyCombinedFitlers();
         });

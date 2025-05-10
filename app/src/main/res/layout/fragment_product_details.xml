@@ -7,10 +7,17 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <include
-        android:id="@+id/skeletonView"
-        layout="@layout/skeleton_product_details"
-        android:visibility="gone"/>
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:layoutAnimation="@anim/layout_animation_fade_slide_up"
+        android:id="@+id/shimmerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:shimmer_auto_start="true"
+        app:shimmer_duration="1000">
+
+        <include layout="@layout/skeleton_product_details" />
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/contentView"
@@ -19,6 +26,7 @@
         android:visibility="visible">
 
         <LinearLayout
+            android:layoutAnimation="@anim/layout_animation_fade_slide_up"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
@@ -448,7 +456,7 @@
                         android:layout_height="match_parent"
                         android:overScrollMode="never"
                         android:scrollbars="vertical"
-                        tools:listitem="@layout/card_user_review"/>
+                        tools:listitem="@layout/item_user_review"/>
 
                 </LinearLayout>
             </LinearLayout>

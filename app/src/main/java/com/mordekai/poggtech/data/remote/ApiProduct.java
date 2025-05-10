@@ -79,8 +79,8 @@ public interface ApiProduct {
             @Query("quantity") int quantity
     );
 
-    @GET("Product/GetProductsByFavCategory.php")
-    Call<ApiResponse<List<Product>>> getProductsByFavCategory(
+    @GET("Product/GetProductsFromFavCategory.php")
+    Call<ApiResponse<List<Product>>> getProductsFromFavCategory(
             @Query("user_id") int userId
     );
 

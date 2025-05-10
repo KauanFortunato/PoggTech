@@ -37,7 +37,7 @@ public class SavedProductAdapter extends RecyclerView.Adapter<SavedProductAdapte
     public SavedProductAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Infla o layout do card
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_product_saved, parent, false);
+                .inflate(R.layout.item_product_saved, parent, false);
         return new SavedProductAdapter.ViewHolder(view);
     }
 

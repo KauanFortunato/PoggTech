@@ -2,17 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/colorSecondaryVariant">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="30dp"
+        android:paddingTop="45dp"
         android:paddingHorizontal="10dp"
-        android:elevation="2dp"
-        android:orientation="vertical"
-        android:background="@drawable/rounded_bottom_med">
+        android:paddingBottom="5dp"
+        android:background="@color/backgroundColor"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,44 +21,93 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/chat"
+                android:layout_gravity="center"
                 android:fontFamily="@font/roboto_black"
                 android:textColor="@color/textPrimary"
                 android:textSize="30sp" />
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="10dp"
-            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingHorizontal="25dp"
+                android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnShop"
-                style="@style/buttonChat"
-                android:text="@string/compra"
-                android:layout_marginStart="2dp"
-                android:layout_marginVertical="8dp"
-                android:background="@drawable/bg_button_selected"
-                android:textColor="@color/colorOnPrimary" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnShop"
+                    style="@style/buttonChat"
+                    android:text="@string/compra"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginVertical="8dp"
+                    android:background="@drawable/bg_button_selected"
+                    android:textColor="@color/colorOnPrimary" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnSell"
-                style="@style/buttonChat"
-                android:text="@string/venda"
-                android:layout_marginVertical="8dp"
-                android:layout_marginStart="15dp"
-                android:background="@drawable/bg_button_unselected"
-                android:textColor="@color/textPrimary" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnSell"
+                    style="@style/buttonChat"
+                    android:text="@string/venda"
+                    android:layout_marginVertical="8dp"
+                    android:layout_marginStart="15dp"
+                    android:background="@drawable/bg_button_unselected"
+                    android:textColor="@color/textPrimary" />
+            </LinearLayout>
+
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical|end"
+                app:tint="@color/textPrimary"
+                app:srcCompat="@drawable/ic_more_vert" />
         </LinearLayout>
     </LinearLayout>
 
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainer"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="0dp"/>
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/containerSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/backgroundColor"
+                android:gravity="end"
+                android:paddingTop="10dp"
+                android:paddingHorizontal="10dp"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <EditText
+                    android:id="@+id/searchProd"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginBottom="8dp"
+                    android:autofillHints="produtopesquisa"
+                    android:background="@drawable/rounded_menu_stroke"
+                    android:drawableStart="@drawable/ic_lupa"
+                    android:drawablePadding="10dp"
+                    android:elevation="1dp"
+                    android:hint="@string/pesquisaHint"
+                    android:inputType="text"
+                    android:padding="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fragmentContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="0dp"/>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
 </LinearLayout>

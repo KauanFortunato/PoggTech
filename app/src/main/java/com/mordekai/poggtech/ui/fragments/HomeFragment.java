@@ -47,7 +47,7 @@ public class HomeFragment extends Fragment
     private LinearLayout popularContainer, forYouContainer, maybeYouLikeContainer;
     private RecyclerView rvForYou, rvPopular, rvContinueBuySkeleton, rvContinueBuy, rvMaybeYouLike;
     private CategoryAdapter categoryAdapter;
-    private ProductAdapter forYouAdapter, consolasAdapter, popularAdapter, accessoryAdapter, maybeYouLikeAdapter;
+    private ProductAdapter forYouAdapter, popularAdapter, accessoryAdapter, maybeYouLikeAdapter;
     private ProductContinueAdapter productContinueAdapter;
     private ApiService apiService;
     private ApiProduct apiProduct;
@@ -117,10 +117,9 @@ public class HomeFragment extends Fragment
 
         containerProductsHome.setVisibility(View.VISIBLE);
 
-        consolasAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), R.layout.card_product_match_parent,this, this);
-        popularAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), R.layout.card_product_match_parent, this, this);
-        accessoryAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), R.layout.card_product_match_parent, this, this);
-        maybeYouLikeAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), R.layout.card_product, this, this);
+        popularAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), R.layout.item_product_match_parent, this, this);
+        accessoryAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), R.layout.item_product_match_parent, this, this);
+        maybeYouLikeAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), R.layout.item_product, this, this);
         productContinueAdapter = new ProductContinueAdapter(new ArrayList<>(), user.getUserId(), this, this);
 
         rvPopular.setLayoutManager(new GridLayoutManager(getContext(),2));
@@ -129,7 +128,6 @@ public class HomeFragment extends Fragment
         rvMaybeYouLike.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rvMaybeYouLike.setNestedScrollingEnabled(false);
 
-        maybeYouLikeAdapter  = new ProductAdapter(productList, user.getUserId(), R.layout.card_product, this, this);
         rvMaybeYouLike.setAdapter(maybeYouLikeAdapter);
 
         categoryAdapter = new CategoryAdapter(categoryList);
@@ -141,16 +139,16 @@ public class HomeFragment extends Fragment
 
         apiProduct = RetrofitClient.getRetrofitInstance().create(ApiProduct.class);
         productManager = new ProductManager(apiProduct);
-        forYouAdapter = new ProductAdapter(productList, user.getUserId(), R.layout.card_product_match_parent, this, this);
+        forYouAdapter = new ProductAdapter(productForYouList, user.getUserId(), R.layout.item_product_match_parent, this, this);
         rvForYou.setAdapter(forYouAdapter);
 
         apiInteraction = RetrofitClient.getRetrofitInstance().create(ApiInteraction.class);
         interactionManager = new InteractionManager(apiInteraction);
 
-        maybeYouLike();
         getContinueBuy();
-        getPopular();
         getForYou();
+        maybeYouLike();
+        getPopular();
 
         return view;
     }
@@ -198,7 +196,7 @@ public class HomeFragment extends Fragment
                         favoriteIds.addAll(favorites);
 
                         updateAllAdapters();
-                        forYouAdapter.updateProducts(productForYouList);
+                        forYouAdapter.updateProducts(result);
                         checkIfLoadingFinished();
                     }
 
@@ -235,7 +233,7 @@ public class HomeFragment extends Fragment
     }
 
     private void maybeYouLike() {
-        productManager.getProductsByFavCategory(user.getUserId(), new RepositoryCallback<List<Product>>() {
+        productManager.getProductsFromFavCategory(user.getUserId(), new RepositoryCallback<List<Product>>() {
             @Override
             public void onSuccess(List<Product> result) {
                 maybeYouLikeAdapter.updateProducts(result);
@@ -244,7 +242,7 @@ public class HomeFragment extends Fragment
 
             @Override
             public void onFailure(Throwable t) {
-                Log.e("API_RESPONSE", "Erro ao buscar produtos", t);
+                Log.e("API_RESPONSE", "Erro ao buscar produtos recomendados", t);
                 checkIfLoadingFinished();
             }
         });
@@ -253,13 +251,11 @@ public class HomeFragment extends Fragment
     @SuppressLint("NotifyDataSetChanged")
     public void updateAllAdapters() {
         forYouAdapter.setSavedIds(favoriteIds);
-        consolasAdapter.setSavedIds(favoriteIds);
         popularAdapter.setSavedIds(favoriteIds);
         accessoryAdapter.setSavedIds(favoriteIds);
         maybeYouLikeAdapter.setSavedIds(favoriteIds);
 
         forYouAdapter.notifyDataSetChanged();
-        consolasAdapter.notifyDataSetChanged();
         popularAdapter.notifyDataSetChanged();
         accessoryAdapter.notifyDataSetChanged();
         productContinueAdapter.notifyDataSetChanged();
@@ -268,6 +264,7 @@ public class HomeFragment extends Fragment
 
     private void checkIfLoadingFinished() {
         loadingCount++;
+        Log.d("DEBUG", "loadingCount: " + loadingCount);
 
         if (loadingCount >= 4) {
             containerProductsHome.setVisibility(View.VISIBLE);
@@ -277,7 +274,6 @@ public class HomeFragment extends Fragment
             shimmerCategories.setVisibility(View.GONE);
             shimmerForYouSkeleton.setVisibility(View.GONE);
             containerCategorias.setVisibility(View.VISIBLE);
-
             showContainers();
         }
     }

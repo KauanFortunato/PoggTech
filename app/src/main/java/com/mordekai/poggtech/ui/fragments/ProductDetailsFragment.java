@@ -1,5 +1,6 @@
 package com.mordekai.poggtech.ui.fragments;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -52,7 +53,7 @@ public class ProductDetailsFragment extends Fragment {
     private LinearLayout contactSellerContainer;
     private AppCompatButton actionButton;
     private ImageButton saveButton, btnSend;
-    private View skeletonView, contentView;
+    private View contentView;
     private ViewPager2 viewPagerGallery;
     private GalleryAdapter galleryAdapter;
     private TabLayout tabLayoutDots;
@@ -67,6 +68,7 @@ public class ProductDetailsFragment extends Fragment {
     private User user;
     private Product product;
     private int productId;
+    private ShimmerFrameLayout shimmerLayout;
 
     private BottomNavigationView bottomNavigationView;
 
@@ -75,10 +77,8 @@ public class ProductDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_product_details, container, false);
         ((MainActivity) requireActivity()).setForceBackToHome(false);
 
-        // Referencias das views
-        skeletonView = view.findViewById(R.id.skeletonView);
-        animateContentView(skeletonView);
         contentView = view.findViewById(R.id.contentView);
+        shimmerLayout = view.findViewById(R.id.shimmerLayout);
 
         sharedPrefHelper = new SharedPrefHelper(requireContext());
         user = sharedPrefHelper.getUser();
@@ -112,9 +112,6 @@ public class ProductDetailsFragment extends Fragment {
                 }
             }
         });
-
-        // Iniciar animação do Skeleton
-        animateSkeleton(skeletonView);
 
         // Buscar os detalhes do produto
         fetchProduct(productId);
@@ -160,7 +157,9 @@ public class ProductDetailsFragment extends Fragment {
                                     }
                                 }
 
-                                skeletonView.setVisibility(View.GONE);
+                                shimmerLayout.setVisibility(View.GONE);
+                                shimmerLayout.stopShimmer();
+
                                 contentView.setVisibility(View.VISIBLE);
                             }
 
@@ -169,7 +168,10 @@ public class ProductDetailsFragment extends Fragment {
                                 Log.e("ProductDetailsFragment", "Erro ao buscar imagens do produto", t);
                                 imageUrls.add(product.getCover());
                                 galleryAdapter.updateImages(imageUrls);
-                                skeletonView.setVisibility(View.GONE);
+
+                                shimmerLayout.setVisibility(View.GONE);
+                                shimmerLayout.stopShimmer();
+
                                 contentView.setVisibility(View.VISIBLE);
                             }
                         });
@@ -179,7 +181,9 @@ public class ProductDetailsFragment extends Fragment {
                 @Override
                 public void onFailure(Throwable t) {
                     Log.e("ProductDetailsFragment", "Erro ao buscar detalhes do produto", t);
-                    skeletonView.setVisibility(View.GONE);
+                    shimmerLayout.setVisibility(View.GONE);
+                    shimmerLayout.stopShimmer();
+
                     contentView.setVisibility(View.VISIBLE);
                 }
             });
@@ -413,6 +417,9 @@ public class ProductDetailsFragment extends Fragment {
         viewPagerGallery = view.findViewById(R.id.viewPagerGallery);
         tabLayoutDots = view.findViewById(R.id.tabLayoutDots);
 
+        shimmerLayout.setVisibility(View.VISIBLE);
+        shimmerLayout.startShimmer();
+
         saveButton.setOnClickListener(v -> {
             if(saveButton.isHapticFeedbackEnabled()) {
                 saveButton.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
@@ -436,17 +443,6 @@ public class ProductDetailsFragment extends Fragment {
         getActivity().findViewById(R.id.bottomNavigationView).setVisibility(View.GONE);
         getActivity().findViewById(R.id.btnBackHeader).setVisibility(View.VISIBLE);
         getActivity().findViewById(R.id.headerContainer).setVisibility(View.VISIBLE);
-    }
-
-    private void animateSkeleton(View view) {
-        for (int i = 0; i < ((ViewGroup)view).getChildCount(); i++) {
-            View child = ((ViewGroup)view).getChildAt(i);
-            ObjectAnimator animator = ObjectAnimator.ofFloat(child, "alpha", 0.5f, 1f);
-            animator.setDuration(1000);
-            animator.setRepeatMode(ValueAnimator.REVERSE);
-            animator.setRepeatCount(ValueAnimator.INFINITE);
-            animator.start();
-        }
     }
 
     private void animateContentView(View view) {

@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.ui.fragments.HomeFragment;
@@ -40,7 +39,7 @@ public class ProductContinueAdapter extends RecyclerView.Adapter<ProductContinue
     public ProductContinueAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Infla o layout do card
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_continue_product, parent, false);
+                .inflate(R.layout.item_continue_buy, parent, false);
         return new ProductContinueAdapter.ViewHolder(view);
     }
 

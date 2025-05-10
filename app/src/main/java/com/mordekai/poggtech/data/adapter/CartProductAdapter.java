@@ -11,7 +11,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.Product;
@@ -57,7 +56,7 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Infla o layout do card
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_product_cart, parent, false);
+                .inflate(R.layout.item_product_cart, parent, false);
         return new ViewHolder(view);
     }
 

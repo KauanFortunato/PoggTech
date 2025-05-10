@@ -211,7 +211,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/card_product" />
+                tools:listitem="@layout/item_product" />
         </LinearLayout>
     </LinearLayout>
 
