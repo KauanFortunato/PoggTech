@@ -183,8 +183,8 @@ public class ProductManager {
         });
     }
 
-    public void getProductsByFavCategory(int userId, RepositoryCallback<List<Product>> callback) {
-        apiProduct.getProductsByFavCategory(userId).enqueue(new Callback<ApiResponse<List<Product>>>() {
+    public void getProductsFromFavCategory(int userId, RepositoryCallback<List<Product>> callback) {
+        apiProduct.getProductsFromFavCategory(userId).enqueue(new Callback<ApiResponse<List<Product>>>() {
 
             @Override
             public void onResponse(Call<ApiResponse<List<Product>>> call, Response<ApiResponse<List<Product>>> response) {

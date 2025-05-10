@@ -54,7 +54,7 @@ public class ProductSearchedAdapter extends RecyclerView.Adapter<ProductSearched
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_product_searched, parent, false);
+                .inflate(R.layout.item_product_searched, parent, false);
 
         return new ViewHolder(view);
     }

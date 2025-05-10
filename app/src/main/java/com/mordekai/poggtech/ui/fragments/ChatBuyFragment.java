@@ -1,4 +1,5 @@
 package com.mordekai.poggtech.ui.fragments;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.adapter.ChatAdapter;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
@@ -36,9 +37,8 @@ public class ChatBuyFragment extends Fragment {
     private MessageManager messageManager;
     private ApiMessage apiMessage;
     private List<Chat> chatList;
-    private ProgressBar progressBar;
     private TextView textNoChats;
-    private SwipeRefreshLayout swipeRefreshLayout;
+    private ShimmerFrameLayout shimmerLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,9 +64,6 @@ public class ChatBuyFragment extends Fragment {
         apiMessage = RetrofitClient.getRetrofitInstance().create(ApiMessage.class);
         messageManager = new MessageManager(apiMessage);
 
-        swipeRefreshLayout.setOnRefreshListener(this::fetchUserChats);
-
-        progressBar.setVisibility(View.VISIBLE);
         fetchUserChats();
 
         return view;
@@ -94,38 +91,41 @@ public class ChatBuyFragment extends Fragment {
         messageManager.fetchUserChatsBuy(user.getUserId(), new RepositoryCallback<List<Chat>>() {
             @Override
             public void onSuccess(List<Chat> chats) {
-                progressBar.setVisibility(View.GONE);
-                swipeRefreshLayout.setRefreshing(false);
-                chatList.clear();
+                rvChats.postDelayed(() -> {
+                    shimmerLayout.setVisibility(View.GONE);
+                    chatList.clear();
 
-                if (chats.isEmpty()) {
-                    textNoChats.setVisibility(View.VISIBLE);
-                    rvChats.setVisibility(View.GONE);
-                } else {
-                    chatList.addAll(chats);
-                    chatAdapter.notifyDataSetChanged();
-                    textNoChats.setVisibility(View.GONE);
-                    rvChats.setVisibility(View.VISIBLE);
-                    Log.d("API_RESPONSE", "Item 0: " + chats.get(0).getLast_message());
-                }
+                    if (chats.isEmpty()) {
+                        textNoChats.setVisibility(View.VISIBLE);
+                        rvChats.setVisibility(View.GONE);
+                    } else {
+                        chatList.addAll(chats);
+                        chatAdapter.notifyDataSetChanged();
+                        Log.d("API_RESPONSE", "Item 0: " + chats.get(0).getLast_message());
+                    }
+                }, 600);
             }
 
             @Override
             public void onFailure(Throwable t) {
                 Log.e("API_RESPONSE", "Erro ao buscar chats", t);
-                progressBar.setVisibility(View.GONE);
-                textNoChats.setVisibility(View.VISIBLE);
-                swipeRefreshLayout.setRefreshing(false);
 
-                rvChats.setVisibility(View.GONE);
+                rvChats.postDelayed(() -> {
+                    shimmerLayout.setVisibility(View.GONE);
+                    textNoChats.setVisibility(View.VISIBLE);
+
+                    rvChats.setVisibility(View.GONE);
+                }, 600);
             }
         });
     }
 
     private void initComponents(View view) {
-        progressBar = view.findViewById(R.id.progressBarItems);
         rvChats = view.findViewById(R.id.rvChats);
-        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
         textNoChats = view.findViewById(R.id.textNoChats);
+        shimmerLayout = view.findViewById(R.id.shimmerLayout);
+
+        shimmerLayout.startShimmer();
+        shimmerLayout.setVisibility(View.VISIBLE);
     }
 }

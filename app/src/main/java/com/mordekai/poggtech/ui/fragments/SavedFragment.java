@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.adapter.SavedProductAdapter;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
@@ -33,12 +33,12 @@ public class SavedFragment extends Fragment {
     private SharedPrefHelper sharedPrefHelper;
     private User user;
     private SavedProductAdapter savedProductAdapter;
-    private RecyclerView rvItemsFav;
+    private RecyclerView rvItemsSaved;
     private ApiProduct apiProduct;
     private ProductManager productManager;
     private CartManager cartManager;
     private List<Product> productList;
-    private ProgressBar progressBar;
+    private ShimmerFrameLayout shimmerLayout;
     private TextView textNoFavProducts;
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean isLoading = true;
@@ -58,9 +58,9 @@ public class SavedFragment extends Fragment {
         // Recycler View
         productList = new ArrayList<>();
         savedProductAdapter = new SavedProductAdapter(productList, user.getUserId());
-        rvItemsFav.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        rvItemsFav.setNestedScrollingEnabled(false);
-        rvItemsFav.setAdapter(savedProductAdapter);
+        rvItemsSaved.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        rvItemsSaved.setNestedScrollingEnabled(false);
+        rvItemsSaved.setAdapter(savedProductAdapter);
 
         // Iniciar API e gerenciador de produtos
         apiProduct = RetrofitClient.getRetrofitInstance().create(ApiProduct.class);
@@ -70,7 +70,6 @@ public class SavedFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(this::fetchFavProducts);
 
         // Carregar produtos
-        progressBar.setVisibility(View.VISIBLE);
         fetchFavProducts();
 
         return view;
@@ -80,47 +79,56 @@ public class SavedFragment extends Fragment {
         cartManager.fetchCartProducts(user.getUserId(), 1, new RepositoryCallback<List<Product>>() {
             @Override
             public void onSuccess(List<Product> products) {
-                progressBar.setVisibility(View.GONE);
-                swipeRefreshLayout.setRefreshing(false);
-                isLoading = false;
+                rvItemsSaved.postDelayed(() -> {
+                    shimmerLayout.setVisibility(View.GONE);
+                    shimmerLayout.startShimmer();
+                    swipeRefreshLayout.setRefreshing(false);
+                    isLoading = false;
 
-                productList.clear();
+                    productList.clear();
 
-                if (products.isEmpty()) {
-                    isEmpty = true;
-                    rvItemsFav.setVisibility(View.GONE);
-                    textNoFavProducts.setVisibility(View.VISIBLE);
-                    Log.d("API_RESPONSE", "Nenhum produto encontrado");
-                } else {
-                    isEmpty = false;
-                    productList.addAll(products);
-                    savedProductAdapter.notifyDataSetChanged();
+                    if (products.isEmpty()) {
+                        isEmpty = true;
+                        rvItemsSaved.setVisibility(View.GONE);
+                        textNoFavProducts.setVisibility(View.VISIBLE);
+                        Log.d("API_RESPONSE", "Nenhum produto encontrado");
+                    } else {
+                        isEmpty = false;
+                        productList.addAll(products);
+                        savedProductAdapter.notifyDataSetChanged();
 
-                    rvItemsFav.setVisibility(View.VISIBLE);
-                    textNoFavProducts.setVisibility(View.GONE);
-                    Log.d("API_RESPONSE", "Item 0: " + productList.get(0).getTitle());
-                }
+                        rvItemsSaved.setVisibility(View.VISIBLE);
+                        textNoFavProducts.setVisibility(View.GONE);
+                        Log.d("API_RESPONSE", "Item 0: " + productList.get(0).getTitle());
+                    }
+                }, 600);
             }
 
             @Override
             public void onFailure(Throwable t) {
                 Log.e("API_RESPONSE", "Erro ao buscar produtos", t);
-                progressBar.setVisibility(View.GONE);
-                swipeRefreshLayout.setRefreshing(false);
-                isLoading = false;
-                isEmpty = true;
+                rvItemsSaved.postDelayed(() -> {
+                    shimmerLayout.setVisibility(View.GONE);
+                    shimmerLayout.startShimmer();
+                    swipeRefreshLayout.setRefreshing(false);
+                    isLoading = false;
+                    isEmpty = true;
 
-                rvItemsFav.setVisibility(View.GONE);
-                textNoFavProducts.setVisibility(View.VISIBLE);
+                    rvItemsSaved.setVisibility(View.GONE);
+                    textNoFavProducts.setVisibility(View.VISIBLE);
+                }, 600);
             }
         });
     }
 
     private void initComponents(View view) {
         // Componentes
-        progressBar = view.findViewById(R.id.progressBarItems);
-        rvItemsFav = view.findViewById(R.id.rvItemsSaved);
+        shimmerLayout = view.findViewById(R.id.shimmerLayout);
+        rvItemsSaved = view.findViewById(R.id.rvItemsSaved);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
         textNoFavProducts = view.findViewById(R.id.textNoSaveProducts);
+
+        shimmerLayout.setVisibility(View.VISIBLE);
+        shimmerLayout.startShimmer();
     }
 }

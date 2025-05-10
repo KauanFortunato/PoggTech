@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="10dp"
+    android:paddingHorizontal="5dp"
+    android:orientation="horizontal">
+
+    <!-- Ícone redondo -->
+    <FrameLayout
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/bg_skeleton_oval"
+        android:clipToOutline="true" />
+
+    <!-- Conteúdo textual (skeletons em retângulos) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="10dp"
+        android:orientation="vertical"
+        android:layout_marginStart="10dp">
+
+        <!-- Linha do título e badge -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="12dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="100dp"
+                android:background="@drawable/bg_skeleton" />
+
+            <View
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/bg_skeleton_oval"/>
+        </LinearLayout>
+
+        <!-- Nome da pessoa -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="120dp"
+            android:background="@drawable/bg_skeleton"/>
+
+        <!-- Última mensagem e hora -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="12dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="40dp"
+                android:background="@drawable/bg_skeleton"/>
+
+            <View
+                android:layout_width="30dp"
+                android:layout_height="12dp"
+                android:background="@drawable/bg_skeleton"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

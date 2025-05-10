@@ -9,17 +9,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/colorSecondaryVariant"
         android:orientation="vertical">
-
-        <ProgressBar
-            android:id="@+id/progressBarItems"
-            style="?android:attr/progressBarStyleSmall"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_marginTop="50dp"
-            android:layout_gravity="center"
-            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/textNoChats"
@@ -33,21 +25,45 @@
             android:textColor="@color/textTertiary"
             android:visibility="gone"/>
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipeRefreshLayout"
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="10dp"
+            app:shimmer_auto_start="true"
             android:paddingHorizontal="10dp"
-            android:background="@color/backgroundColor">
+            app:shimmer_duration="1000">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layoutAnimation="@anim/layout_animation_fade_slide_up"
+                android:orientation="vertical">
+
+                <include layout="@layout/skeleton_item_chat" />
+                <include layout="@layout/skeleton_item_chat" />
+                <include layout="@layout/skeleton_item_chat" />
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/colorSecondaryVariant">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvChats"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingHorizontal="10dp"
+                android:layoutAnimation="@anim/layout_animation_fade_slide_up"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_chat"
                 android:nestedScrollingEnabled="false"/>
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>

@@ -80,7 +80,7 @@ public class UserAccountFragment extends Fragment
         rvForYou.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rvForYou.setNestedScrollingEnabled(false);
 
-        forYouAdapter = new ProductAdapter(productList, user.getUserId(), R.layout.card_product, this, this);
+        forYouAdapter = new ProductAdapter(productList, user.getUserId(), R.layout.item_product, this, this);
         rvForYou.setAdapter(forYouAdapter);
 
         apiProduct = RetrofitClient.getRetrofitInstance().create(ApiProduct.class);

@@ -36,13 +36,14 @@
                     android:textColor="@color/textPrimary"
                     android:text="@string/searchHistory"/>
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/delHistory"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="center_vertical|end"
                     android:background="@android:color/transparent"
                     android:layout_marginStart="8dp"
+                    app:tint="@color/textPrimary"
                     android:src="@drawable/ic_trash_outline" />
             </LinearLayout>
 

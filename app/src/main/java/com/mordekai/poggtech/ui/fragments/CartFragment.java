@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.adapter.CartProductAdapter;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
@@ -39,11 +40,11 @@ public class CartFragment extends Fragment {
     private ProductManager productManager;
     private CartManager cartManager;
     private List<Product> productList;
-    private ProgressBar progressBar;
     private TextView textNoCartProducts;
     private boolean isLoading = true;
     private boolean isEmpty = false;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private ShimmerFrameLayout shimmerLayout;
 
     @Nullable
     @Override
@@ -70,7 +71,6 @@ public class CartFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(this::fetchCartProducts);
 
         // Carregar produtos
-        progressBar.setVisibility(View.VISIBLE);
         fetchCartProducts();
 
         return view;
@@ -79,51 +79,59 @@ public class CartFragment extends Fragment {
     // Tipo 0 = Carrinho
     private void fetchCartProducts () {
         cartManager.fetchCartProducts(user.getUserId(), 0, new RepositoryCallback<List<Product>>() {
-
             @Override
             public void onSuccess(List<Product> products) {
-                progressBar.setVisibility(View.GONE);
-                swipeRefreshLayout.setRefreshing(false);
-                isLoading = false;
+                rvItemsCart.postDelayed(() -> {
+                    shimmerLayout.setVisibility(View.GONE);
+                    shimmerLayout.stopShimmer();
+                    swipeRefreshLayout.setRefreshing(false);
+                    isLoading = false;
 
-                productList.clear();
+                    productList.clear();
 
-                if (products.isEmpty()) {
-                    isEmpty = true;
-                    rvItemsCart.setVisibility(View.GONE);
-                    textNoCartProducts.setVisibility(View.VISIBLE);
+                    if (products.isEmpty()) {
+                        isEmpty = true;
+                        rvItemsCart.setVisibility(View.GONE);
+                        textNoCartProducts.setVisibility(View.VISIBLE);
 
-                    Log.d("API_RESPONSE", "Nenhum produto encontrado");
-                } else {
-                    isEmpty = false;
-                    productList.addAll(products);
-                    cartProductAdapter.notifyDataSetChanged();
+                        Log.d("API_RESPONSE", "Nenhum produto encontrado");
+                    } else {
+                        isEmpty = false;
+                        productList.addAll(products);
+                        cartProductAdapter.notifyDataSetChanged();
 
-                    rvItemsCart.setVisibility(View.VISIBLE);
-                    textNoCartProducts.setVisibility(View.GONE);
-                    Log.d("API_RESPONSE", "Item 0: " + productList.get(0).getTitle());
-                }
+                        rvItemsCart.setVisibility(View.VISIBLE);
+                        textNoCartProducts.setVisibility(View.GONE);
+                        Log.d("API_RESPONSE", "Item 0: " + productList.get(0).getTitle());
+                    }
+                }, 600);
             }
 
             @Override
             public void onFailure(Throwable t) {
                 Log.e("API_RESPONSE", "Erro ao buscar produtos", t);
-                progressBar.setVisibility(View.GONE);
-                swipeRefreshLayout.setRefreshing(false);
-                isLoading = false;
-                isEmpty = true;
+                rvItemsCart.postDelayed(() -> {
+                    shimmerLayout.setVisibility(View.GONE);
+                    shimmerLayout.stopShimmer();
+                    swipeRefreshLayout.setRefreshing(false);
+                    isLoading = false;
+                    isEmpty = true;
 
-                rvItemsCart.setVisibility(View.GONE);
-                textNoCartProducts.setVisibility(View.VISIBLE);
+                    rvItemsCart.setVisibility(View.GONE);
+                    textNoCartProducts.setVisibility(View.VISIBLE);
+                }, 600);
             }
         });
     }
 
     private void initComponents(View view) {
         // Componentes
-        progressBar = view.findViewById(R.id.progressBarItems);
+        shimmerLayout = view.findViewById(R.id.shimmerLayout);
         rvItemsCart = view.findViewById(R.id.rvItemsCart);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
         textNoCartProducts = view.findViewById(R.id.textNoCartProducts);
+
+        shimmerLayout.setVisibility(View.VISIBLE);
+        shimmerLayout.startShimmer();
     }
 }

@@ -109,7 +109,7 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/card_product_searched" />
+            tools:listitem="@layout/item_product_searched" />
     </LinearLayout>
 
 </LinearLayout>
