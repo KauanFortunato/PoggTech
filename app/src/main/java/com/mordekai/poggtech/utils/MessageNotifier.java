@@ -1,7 +1,7 @@
 package com.mordekai.poggtech.utils;
 
 public class MessageNotifier {
-    private static MessageListener  listener;
+    private static MessageListener listener;
 
     public static void setListener(MessageListener newListener) {
         listener = newListener;

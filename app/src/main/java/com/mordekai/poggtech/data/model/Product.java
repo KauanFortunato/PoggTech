@@ -19,7 +19,7 @@ public class Product {
     private String updated_at;
     private String seller_type;
     private int views;
-    private int favorite_count;
+    private int favorites_count;
 
 
     // GET and SETTERS
@@ -88,5 +88,5 @@ public class Product {
 
     public int getViews() { return views; }
 
-    public int getFavorite_count() { return favorite_count; }
+    public int getSaved_count() { return favorites_count; }
 }
