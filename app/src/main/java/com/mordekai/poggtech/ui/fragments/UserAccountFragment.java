@@ -30,6 +30,7 @@ import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.InteractionManager;
 import com.mordekai.poggtech.domain.ProductManager;
 import com.mordekai.poggtech.ui.activity.LoginActivity;
+import com.mordekai.poggtech.utils.BottomNavVisibilityController;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 import com.mordekai.poggtech.data.model.User;
 
@@ -42,7 +43,6 @@ public class UserAccountFragment extends Fragment
     private TextView helloUser, numberAccount;
     private ImageButton buttonConfig, buttonMyPurchases, buttonMyAds;
     private FirebaseUser currentUser;
-    private BottomNavigationView bottomNavigationView;
     private SharedPrefHelper sharedPrefHelper;
     private InteractionManager interactionManager;
     private User user;
@@ -110,8 +110,8 @@ public class UserAccountFragment extends Fragment
         buttonConfig = view.findViewById(R.id.buttonConfig);
         buttonMyPurchases = view.findViewById(R.id.buttonMyPurchases);
         buttonMyAds = view.findViewById(R.id.buttonMyAds);
-        bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setVisibility(View.VISIBLE);
+
+        ((BottomNavVisibilityController) requireActivity()).showBottomNav();
 
         buttonConfig.setOnTouchListener((v, event) -> {
             switch (event.getAction()) {

@@ -22,8 +22,6 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.ApiResponse;
@@ -35,6 +33,7 @@ import com.mordekai.poggtech.domain.FCMManager;
 import com.mordekai.poggtech.domain.UserManager;
 import com.mordekai.poggtech.ui.activity.LoginActivity;
 import com.mordekai.poggtech.ui.bottomsheets.ConfirmBottomSheet;
+import com.mordekai.poggtech.utils.BottomNavVisibilityController;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
 import com.mordekai.poggtech.data.remote.ApiService;
@@ -54,7 +53,7 @@ public class UserConfigFragment extends Fragment {
     private ImageView providerLogin;
     private ImageButton btn_back;
     private AppCompatButton buttonEditPersonInfo, buttonCancelPersonInfo, buttonLogout, buttonEditEmail, buttonResetPass;
-    private BottomNavigationView bottomNavigationView;
+
     private SharedPrefHelper sharedPrefHelper;
     private UserManager userManager;
     private FCMManager fcmManager;
@@ -161,8 +160,9 @@ public class UserConfigFragment extends Fragment {
         buttonEditPersonInfo = view.findViewById(R.id.buttonEditPersonInfo);
         buttonCancelPersonInfo = view.findViewById(R.id.buttonCancelPersonInfo);
         buttonResetPass = view.findViewById(R.id.buttonResetPass);
-        bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setVisibility(View.GONE);
+
+        ((BottomNavVisibilityController) requireActivity()).hideBottomNav();
+
 
         buttonLogout = view.findViewById(R.id.buttonLogout);
 
