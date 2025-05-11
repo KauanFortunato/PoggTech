@@ -8,18 +8,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.transition.TransitionManager;
 
-import com.bumptech.glide.Glide;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
-import com.mordekai.poggtech.domain.CartManager;
 import com.mordekai.poggtech.domain.ProductManager;
 import com.mordekai.poggtech.ui.bottomsheets.DeleteProductBottomSheet;
 import com.mordekai.poggtech.utils.SnackbarUtil;
@@ -102,7 +98,7 @@ public class MyAdAdapter extends RecyclerView.Adapter<MyAdAdapter.ViewHolder> {
 
             productViews.setText(String.format("%d visualizações", product.getViews()));
             productReleaseDate.setText(product.getCreated_at());
-            productFav.setText(String.format("%d favoritos", product.getFavorite_count()));
+            productFav.setText(String.format("%d salvos", product.getSaved_count()));
             productLastUpdate.setText(product.getUpdated_at());
 
             removeButton.setOnClickListener(v -> {
