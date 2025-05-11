@@ -1,6 +1,7 @@
 package com.mordekai.poggtech.ui.fragments;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 
 import androidx.annotation.NonNull;
@@ -16,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.mordekai.poggtech.R;
@@ -63,7 +66,7 @@ public class HomeFragment extends Fragment
     private ShimmerFrameLayout shimmerCategories, shimmerForYouSkeleton;
     HorizontalScrollView horizontalScrollViewCategories;
     View fakeScrollbar, fakeScrollbarTrack;
-
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public void onProductClick(Product product) {
@@ -92,8 +95,8 @@ public class HomeFragment extends Fragment
                         R.anim.enter_from_left,
                         R.anim.exit_to_right
                 )
-                .replace(R.id.containerFrame, fragment)
-                .addToBackStack(null)
+                .add(R.id.containerFrame, fragment)
+                .addToBackStack("product_details")
                 .commit();
     }
 
@@ -151,6 +154,29 @@ public class HomeFragment extends Fragment
         getPopular();
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        HeaderFragment.HeaderListener listener = (HeaderFragment.HeaderListener) getActivity();
+
+        if (listener != null) {
+            listener.hideBackButton();
+        }
+
+        // Garante que o headerContainer seja visível, mesmo se o fragmento estiver a ser restaurado
+        View root = getActivity().findViewById(android.R.id.content);
+        if (root != null) {
+            root.post(() -> {
+                View headerContainer = getActivity().findViewById(R.id.headerContainer);
+                if (headerContainer != null) {
+                    headerContainer.setVisibility(View.VISIBLE);
+                }
+            });
+        }
+
     }
 
     private void getContinueBuy() {
@@ -275,6 +301,8 @@ public class HomeFragment extends Fragment
             shimmerForYouSkeleton.setVisibility(View.GONE);
             containerCategorias.setVisibility(View.VISIBLE);
             showContainers();
+
+            swipeRefreshLayout.setRefreshing(false); // para o swipe
         }
     }
 
@@ -292,6 +320,8 @@ public class HomeFragment extends Fragment
         containerCategorias = view.findViewById(R.id.containerCategorias);
         shimmerForYouSkeleton = view.findViewById(R.id.forYouSkeleton);
         shimmerCategories = view.findViewById(R.id.shimmerCategorias);
+
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
 
         shimmerCategories.startShimmer();
         shimmerForYouSkeleton.startShimmer();
@@ -334,6 +364,16 @@ public class HomeFragment extends Fragment
         });
 
         getActivity().findViewById(R.id.bottomNavigationView).setVisibility(View.VISIBLE);
+
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            showSkeletons();
+
+            loadingCount = 0;
+            getContinueBuy();
+            getForYou();
+            maybeYouLike();
+            getPopular();
+        });
     }
 
     private void setupSkeletonLoader() {
@@ -344,6 +384,18 @@ public class HomeFragment extends Fragment
 
         ProductContinueAdapter skeletonAdapter = new ProductContinueAdapter(fakeList, user.getUserId(), this, this);
         rvContinueBuySkeleton.setAdapter(skeletonAdapter);
+    }
+
+    private void showSkeletons() {
+        shimmerForYouSkeleton.setVisibility(View.VISIBLE);
+        shimmerCategories.setVisibility(View.VISIBLE);
+        shimmerForYouSkeleton.startShimmer();
+        shimmerCategories.startShimmer();
+
+        rvContinueBuy.setVisibility(View.GONE);
+        containerCategorias.setVisibility(View.GONE);
+
+        hideContainers();
     }
 
     private void hideContainers() {

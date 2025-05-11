@@ -79,6 +79,7 @@ public class HeaderFragment extends Fragment {
             if (btnBackHeader.isHapticFeedbackEnabled()) {
                 btnBackHeader.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
             }
+
             closeSearchProd();
             handleBackNavigation();
         });
@@ -244,30 +245,22 @@ public class HeaderFragment extends Fragment {
 
         if (forceBackHome) {
             searchProd.setText("");
-            fragmentManager.beginTransaction()
-                    .setCustomAnimations(
-                            R.anim.fade_in,
-                            R.anim.fade_out,
-                            R.anim.fade_in,
-                            R.anim.fade_out
-                    )
-                    .replace(R.id.containerFrame, new HomeFragment(), "home_fragment")
-                    .commit();
 
-            ((MainActivity) requireActivity()).setForceBackToHome(false); // reset
+            // Aqui limpo toda a backstack
+            while (fragmentManager.getBackStackEntryCount() > 0) {
+                fragmentManager.popBackStackImmediate();
+            }
+
+            // vai para a HomeFragment sendo froçado
+            ((MainActivity) requireActivity()).switchToFragment("HOME");
+
+            ((MainActivity) requireActivity()).setForceBackToHome(false);
+
         } else {
             if (fragmentManager.getBackStackEntryCount() > 0) {
                 fragmentManager.popBackStack();
             } else {
-                fragmentManager.beginTransaction()
-                        .setCustomAnimations(
-                                R.anim.fade_in,
-                                R.anim.fade_out,
-                                R.anim.fade_in,
-                                R.anim.fade_out
-                        )
-                        .replace(R.id.containerFrame, new HomeFragment(), "home_fragment")
-                        .commit();
+                ((MainActivity) requireActivity()).switchToFragment("HOME");
             }
         }
     }

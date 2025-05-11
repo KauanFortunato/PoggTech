@@ -6,7 +6,6 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.adapter.GalleryAdapter;
-import com.mordekai.poggtech.data.adapter.MyAdAdapter;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.Chat;
 import com.mordekai.poggtech.data.model.Product;
@@ -21,10 +20,9 @@ import com.mordekai.poggtech.ui.activity.MainActivity;
 import com.mordekai.poggtech.ui.bottomsheets.ProductAddedBottomSheet;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 import com.mordekai.poggtech.utils.SnackbarUtil;
+import com.mordekai.poggtech.utils.BottomNavVisibilityController;
 import com.mordekai.poggtech.utils.Utils;
 
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
@@ -75,6 +73,7 @@ public class ProductDetailsFragment extends Fragment {
     @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product_details, container, false);
+
         ((MainActivity) requireActivity()).setForceBackToHome(false);
 
         contentView = view.findViewById(R.id.contentView);
@@ -117,6 +116,15 @@ public class ProductDetailsFragment extends Fragment {
         fetchProduct(productId);
 
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        if (requireActivity() instanceof BottomNavVisibilityController) {
+            ((BottomNavVisibilityController) requireActivity()).showBottomNav();
+        }
     }
 
     private void fetchProduct(int productId) {
@@ -440,13 +448,9 @@ public class ProductDetailsFragment extends Fragment {
             addToCart(productId);
         });
 
-        getActivity().findViewById(R.id.bottomNavigationView).setVisibility(View.GONE);
+        ((BottomNavVisibilityController) requireActivity()).hideBottomNav();
         getActivity().findViewById(R.id.btnBackHeader).setVisibility(View.VISIBLE);
         getActivity().findViewById(R.id.headerContainer).setVisibility(View.VISIBLE);
-    }
-
-    private void animateContentView(View view) {
-        view.setVisibility(View.VISIBLE);
     }
 
     private void showBottomSheet() {
