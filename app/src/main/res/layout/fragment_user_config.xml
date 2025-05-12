@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/secundaria_2" >
+    android:background="@color/colorSecondaryVariant" >
 
     <RelativeLayout
         android:id="@+id/header"
@@ -17,10 +17,10 @@
             android:id="@+id/btn_back"
             android:layout_width="45dp"
             android:layout_height="45dp"
+            android:layout_alignParentBottom="true"
             android:layout_marginLeft="12dp"
             android:layout_marginBottom="6dp"
-            android:layout_alignParentBottom="true"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:background="@drawable/rounded_menu"
             android:contentDescription="@string/voltar"
             android:src="@drawable/ic_back" />
 
@@ -43,20 +43,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:padding="16dp">
+        android:paddingHorizontal="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:paddingTop="16dp"
+            android:paddingBottom="40dp">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardPersonInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                app:cardBackgroundColor="@color/secundaria_2"
+                app:cardBackgroundColor="@color/colorSecondaryVariant"
                 app:cardElevation="0dp">
 
                 <LinearLayout
@@ -133,6 +135,7 @@
                         android:enabled="false"
                         android:focusable="false"
                         android:focusableInTouchMode="false"
+                        android:inputType="number"
                         android:text="@string/contactoExample" />
 
                     <RelativeLayout
@@ -146,12 +149,10 @@
                             android:layout_width="130dp"
                             android:layout_height="30dp"
                             android:layout_alignParentTop="true"
-                            android:layout_marginTop="2dp"
+                            android:layout_marginTop="10dp"
                             android:layout_marginBottom="5dp"
-                            android:backgroundTint="@color/black"
                             android:text="@string/edit"
                             android:textAllCaps="false"
-                            android:textColor="@color/principal_2"
                             android:textSize="12sp" />
 
 
@@ -162,15 +163,15 @@
                             android:layout_height="30dp"
                             android:layout_alignParentTop="true"
                             android:layout_marginStart="15dp"
-                            android:layout_marginTop="2dp"
+                            android:layout_marginTop="10dp"
                             android:layout_marginBottom="5dp"
                             android:layout_toEndOf="@id/buttonEditPersonInfo"
-                            android:backgroundTint="@color/suporte_1"
+                            android:backgroundTint="@color/colorOnSurface"
                             android:text="@string/cancelar"
                             android:textAllCaps="false"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorSurface"
                             android:textSize="12sp"
-                            android:visibility="invisible" />
+                            android:visibility="invisible"/>
                     </RelativeLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -179,7 +180,7 @@
                 android:id="@+id/cardEmailInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/secundaria_2"
+                app:cardBackgroundColor="@color/colorSecondaryVariant"
                 app:cardElevation="0dp"
                 android:layout_marginBottom="20dp">
 
@@ -205,23 +206,29 @@
                         android:layout_marginTop="12dp"
                         android:text="@string/enderecoEmail" />
 
-                    <TextView
-                        android:id="@+id/textEmail"
-                        style="@style/ConfigText"
-                        android:text="@string/emailExample"
-                        android:textAllCaps="false" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/buttonEditEmail"
-                        style="@style/Button"
-                        android:layout_width="130dp"
-                        android:layout_height="30dp"
-                        android:layout_marginTop="20dp"
-                        android:backgroundTint="@color/black"
-                        android:text="@string/edit"
-                        android:textAllCaps="false"
-                        android:textColor="@color/principal_2"
-                        android:textSize="12sp" />
+                        <TextView
+                            android:id="@+id/textEmail"
+                            style="@style/ConfigText"
+                            android:layout_weight="1"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:paddingEnd="10dp"
+                            android:text="@string/emailExample"
+                            android:textAllCaps="false" />
+
+                        <ImageView
+                            android:id="@+id/providerLogin"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:visibility="visible"
+                            android:src="@drawable/nav_icon_persona"/>
+                    </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -229,8 +236,8 @@
                 android:id="@+id/cardPassReset"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/secundaria_2"
                 app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/colorSecondaryVariant"
                 android:layout_marginBottom="10dp">
 
                 <LinearLayout
@@ -254,10 +261,8 @@
                         android:layout_width="130dp"
                         android:layout_height="30dp"
                         android:layout_marginTop="20dp"
-                        android:backgroundTint="@color/black"
                         android:text="@string/redefinir"
                         android:textAllCaps="false"
-                        android:textColor="@color/principal_2"
                         android:textSize="12sp" />
 
                 </LinearLayout>
@@ -268,12 +273,12 @@
                 style="@style/Button"
                 android:layout_width="130dp"
                 android:layout_height="30dp"
-                android:layout_marginTop="20dp"
+                android:layout_margin="20dp"
                 android:layout_alignParentTop="true"
-                android:backgroundTint="@color/feedback_2"
+                android:backgroundTint="@color/colorError"
+                android:textColor="@color/colorOnError"
                 android:text="@string/logout"
                 android:textAllCaps="false"
-                android:textColor="@color/principal_2"
                 android:textSize="13sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

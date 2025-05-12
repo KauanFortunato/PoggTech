@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="13dp"
+    app:cardBackgroundColor="@color/colorSurface">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/bg_card_product">
+
+        <!-- Imagem do Produto -->
+        <ImageView
+            android:id="@+id/productImage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:clipToOutline="true"
+            android:adjustViewBounds="true"
+            android:background="@drawable/bg_image_product"
+            android:src="@drawable/img_xbox_series_x_text" />
+
+        <!-- Informações do Produto -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingStart="10dp">
+
+            <!-- Nome do Produto -->
+            <TextView
+                android:id="@+id/productTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ben 10 Alien Force"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/textPrimary"
+                android:maxLines="1"
+                android:ellipsize="end"/>
+
+            <!-- Tipo do Produto -->
+            <TextView
+                android:id="@+id/productType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Jogos"
+                android:textSize="14sp"
+                android:textColor="@color/textTertiary"/>
+
+            <!-- Preço -->
+            <TextView
+                android:id="@+id/productPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="€11,22"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/textPrimary"
+                android:layout_marginTop="5dp"/>
+        </LinearLayout>
+
+        <!-- Contador e Botão de Remover -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- Botão de Remover -->
+            <ImageView
+                android:id="@+id/buttonRemove"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="7dp"
+                android:layout_gravity="end"
+                android:src="@drawable/ic_trash_outline"
+                android:background="@drawable/bg_oval_icons"
+                app:tint="@color/backgroundColor"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="2dp"
+                android:background="@drawable/bg_manage_stock"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:padding="2dp"
+                    android:src="@drawable/ic_minus"
+                    app:tint="@color/backgroundColor"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="5dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textColor="@color/textSecondary"
+                    android:text="1"/>
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:padding="2dp"
+                    android:src="@drawable/ic_add"
+                    app:tint="@color/backgroundColor"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

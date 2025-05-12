@@ -1,26 +1,516 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainContent"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCategories"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:background="@drawable/rounded_corners"
-        android:elevation="2dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvProducts"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@+id/rvCategories" />
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/backgroundColor"
+            android:paddingTop="0dp">
+
+            <!-- ScrollView que contém os LinearLayouts -->
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:id="@+id/containerHome"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- Skeleton e Categories -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/backgroundColor"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="8dp">
+
+                        <TextView
+                            style="@style/productSectionTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
+                            android:paddingStart="0dp"
+                            android:text="Explore nossas categorias"
+                            android:textColor="@color/textPrimary" />
+
+                        <LinearLayout
+                            android:id="@+id/containerCategorias"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <HorizontalScrollView
+                                android:id="@+id/horizontalScrollViewCategories"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:overScrollMode="never"
+                                android:scrollbars="none">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    android:paddingHorizontal="4dp">
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            style="@style/categoryHome"
+                                            android:layout_marginBottom="5dp"
+                                            android:padding="12dp"
+                                            android:src="@drawable/ic_all_categories" />
+
+                                        <TextView
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
+                                            android:text="Todas as Categorias"
+                                            android:textAlignment="center"
+                                            android:textColor="@color/textPrimary"
+                                            android:textSize="11sp" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginHorizontal="10dp"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            style="@style/categoryHome"
+                                            android:src="@drawable/ic_category_consoles" />
+
+                                        <TextView
+                                            android:layout_width="70dp"
+                                            android:layout_height="0dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="Consoles"
+                                            android:textAlignment="center"
+                                            android:textColor="@color/textPrimary"
+                                            android:textSize="11sp" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            style="@style/categoryHome"
+                                            android:src="@drawable/ic_category_games" />
+
+                                        <TextView
+                                            android:layout_width="70dp"
+                                            android:layout_height="0dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="Jogos"
+                                            android:textAlignment="center"
+                                            android:textColor="@color/textPrimary"
+                                            android:textSize="11sp" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginHorizontal="10dp"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            style="@style/categoryHome"
+                                            android:src="@drawable/ic_headphones" />
+
+                                        <TextView
+                                            android:layout_width="70dp"
+                                            android:layout_height="0dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="Acessórios"
+                                            android:textAlignment="center"
+                                            android:textColor="@color/textPrimary"
+                                            android:textSize="11sp" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginHorizontal="10dp"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            style="@style/categoryHome"
+                                            android:src="@drawable/ic_trophy" />
+
+                                        <TextView
+                                            android:layout_width="70dp"
+                                            android:layout_height="0dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="Colecionáveis"
+                                            android:textAlignment="center"
+                                            android:textColor="@color/textPrimary"
+                                            android:textSize="11sp" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginHorizontal="10dp"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            style="@style/categoryHome"
+                                            android:src="@drawable/ic_category_retro" />
+
+                                        <TextView
+                                            android:layout_width="70dp"
+                                            android:layout_height="0dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="Retro Games"
+                                            android:textAlignment="center"
+                                            android:textColor="@color/textPrimary"
+                                            android:textSize="11sp" />
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                            </HorizontalScrollView>
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center">
+
+                                <View
+                                    android:id="@+id/fakeScrollbarTrack"
+                                    android:layout_width="20dp"
+                                    android:layout_height="5dp"
+                                    android:layout_gravity="bottom|center_horizontal"
+                                    android:layout_marginBottom="6dp"
+                                    android:background="@drawable/custom_scroll_track" />
+
+                                <View
+                                    android:id="@+id/fakeScrollbar"
+                                    android:layout_width="10dp"
+                                    android:layout_height="5dp"
+                                    android:layout_gravity="bottom|center_horizontal"
+                                    android:layout_marginBottom="6dp"
+                                    android:background="@drawable/custom_scroll_thumb" />
+                            </RelativeLayout>
+                        </LinearLayout>
+
+                        <com.facebook.shimmer.ShimmerFrameLayout
+                            android:id="@+id/shimmerCategorias"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="visible"
+                            app:shimmer_auto_start="true"
+                            app:shimmer_duration="1500">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:paddingBottom="10dp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:layoutAnimation="@anim/layout_animation_fade_slide_up"
+                                        android:orientation="horizontal"
+                                        android:paddingBottom="10dp">
+
+                                        <include layout="@layout/item_category_skeleton" />
+
+                                        <include layout="@layout/item_category_skeleton" />
+
+                                        <include layout="@layout/item_category_skeleton" />
+
+                                        <include layout="@layout/item_category_skeleton" />
+
+                                        <include layout="@layout/item_category_skeleton" />
+
+                                    </LinearLayout>
+
+                                    <RelativeLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center">
+
+                                        <View
+                                            android:layout_width="20dp"
+                                            android:layout_height="5dp"
+                                            android:layout_gravity="bottom|center_horizontal"
+                                            android:layout_marginBottom="6dp"
+                                            android:background="@drawable/custom_scroll_track" />
+                                    </RelativeLayout>
+
+                                </LinearLayout>
+                            </LinearLayout>
+                        </com.facebook.shimmer.ShimmerFrameLayout>
+                    </LinearLayout>
+
+                    <!-- Skeleton Loader para "Continuar a Comprar" -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/backgroundColor"
+                        android:orientation="vertical"
+                        android:paddingVertical="10dp">
+
+                        <TextView
+                            style="@style/productSectionTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_bold"
+                            android:text="Continue as suas compras"
+                            android:textColor="@color/textPrimary" />
+
+                        <com.facebook.shimmer.ShimmerFrameLayout
+                            android:id="@+id/shimmerContinueBuy"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layoutAnimation="@anim/layout_animation_fade_slide_up"
+                            app:shimmer_auto_start="true"
+                            app:shimmer_base_alpha="0.7"
+                            app:shimmer_duration="1000"
+                            app:shimmer_highlight_alpha="1.0">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rvContinueBuySkeleton"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                        </com.facebook.shimmer.ShimmerFrameLayout>
+
+                        <!-- RecyclerView real -->
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvContinueBuy"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layoutAnimation="@anim/layout_animation_fade_slide_up"
+                            android:orientation="horizontal"
+                            android:visibility="gone"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            tools:listitem="@layout/item_continue_buy" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- Container "Para Você" -->
+                        <LinearLayout
+                            android:id="@+id/containerProductsHome"
+                            style="@style/productContainer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/productSectionSubTitle"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/paraVoce" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="10dp"
+                                    android:fontFamily="@font/roboto_medium"
+                                    android:text="Ver mais"
+                                    android:textColor="@color/colorPrimaryVariant"
+                                    android:textSize="15sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/forYouContainer"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingBottom="10dp">
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/rvForYou"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layoutAnimation="@anim/layout_animation_fade_slide_up"
+                                    android:orientation="horizontal"
+                                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                    tools:listitem="@layout/item_product_match_parent" />
+                            </LinearLayout>
+
+                            <com.facebook.shimmer.ShimmerFrameLayout
+                                android:id="@+id/forYouSkeleton"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="visible"
+                                app:shimmer_auto_start="true"
+                                app:shimmer_duration="1500">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layoutAnimation="@anim/layout_animation_fade_slide_up"
+                                        android:orientation="horizontal"
+                                        android:paddingBottom="10dp">
+
+                                        <include layout="@layout/skeleton_product_match_parent" />
+
+                                        <include layout="@layout/skeleton_product_match_parent" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal"
+                                        android:paddingBottom="10dp">
+
+                                        <include layout="@layout/skeleton_product_match_parent" />
+
+                                        <include layout="@layout/skeleton_product_match_parent" />
+
+                                    </LinearLayout>
+                                </LinearLayout>
+                            </com.facebook.shimmer.ShimmerFrameLayout>
+
+                        </LinearLayout>
+
+                        <!-- Talvez Você goste -->
+                        <LinearLayout
+                            android:id="@+id/maybeYouLikeContainer"
+                            style="@style/productContainer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="0dp"
+                            android:paddingBottom="10dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:paddingHorizontal="10dp">
+
+                                <TextView
+                                    style="@style/productSectionSubTitle"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Talves gostes" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:orientation="horizontal"
+                                android:paddingBottom="10dp">
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/rvMaybeYouLike"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- Container "Popular" -->
+                        <LinearLayout
+                            android:id="@+id/popularContainer"
+                            style="@style/popularContainer"
+                            android:paddingBottom="50dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/productSectionSubTitle"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Popular" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="10dp"
+                                    android:fontFamily="@font/roboto_medium"
+                                    android:text="Ver mais"
+                                    android:textColor="@color/colorPrimaryVariant"
+                                    android:textSize="15sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingBottom="10dp">
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/rvPopular"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                    tools:listitem="@layout/item_product_match_parent" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </FrameLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

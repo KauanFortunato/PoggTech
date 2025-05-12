@@ -1,6 +1,9 @@
 package com.mordekai.poggtech.data.repository;
 
+import android.util.Log;
+
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
+import com.mordekai.poggtech.data.model.ApiResponse;
 import com.mordekai.poggtech.data.model.User;
 import com.mordekai.poggtech.data.remote.ApiService;
 
@@ -37,25 +40,29 @@ public class MySqlUserRepository implements UserRepository {
 
     @Override
     public void getUser(String firebaseUid, RepositoryCallback<User> callback) {
-        Call<User> call = apiService.getUser(firebaseUid);
-        call.enqueue(new Callback<User>() {
+        Call<ApiResponse<User>> call = apiService.getUser(firebaseUid);
+        call.enqueue(new Callback<ApiResponse<User>>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<ApiResponse<User>> call, Response<ApiResponse<User>> response) {
                 if(response.isSuccessful() && response.body() != null) {
-                    User user = response.body();
+                    ApiResponse<User> apiResponse = response.body();
 
-                    if (user.getError() != null) {
-                        callback.onFailure(new Exception(user.getError()));
-                    } else {
+                    if(apiResponse.isSuccess()) {
+                        User user = apiResponse.getData();
+                        Log.d("Sucesso", "Usuário encontrado no XAMPP: " + user.getName());
+
                         callback.onSuccess(user);
+                    } else {
+                        callback.onFailure(new Exception(apiResponse.getMessage()));
                     }
+
                 } else {
                     callback.onFailure(new Exception("Erro ao buscar usuário no Servidor"));
                 }
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<ApiResponse<User>> call, Throwable t) {
                 callback.onFailure(t);
             }
         });
@@ -68,6 +75,11 @@ public class MySqlUserRepository implements UserRepository {
 
     @Override
     public void loginUser(String email, String password, RepositoryCallback<String> callback) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void googleLogin(String idToken, RepositoryCallback<User> callback) {
         throw new UnsupportedOperationException();
     }
 }

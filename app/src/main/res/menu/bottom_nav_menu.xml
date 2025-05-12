@@ -1,32 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/home"
-        android:title="Início"
+        android:title="@string/inicio"
         android:icon="@drawable/nav_icon_home"
-        android:titleCondensed="Ini" />
+        android:titleCondensed="Iní" />
+
+    <item
+        android:id="@+id/save"
+        android:icon="@drawable/nav_icon_cart"
+        android:title="@string/carrinho"
+        android:titleCondensed="Cart" />
+
+    <item
+        android:id="@+id/chat"
+        android:icon="@drawable/nav_icon_chat"
+        android:title="@string/chat"
+        android:titleCondensed="Chat" />
 
     <item
         android:id="@+id/account"
         android:icon="@drawable/nav_icon_persona"
-        android:title="Conta"
-        android:titleCondensed="Conta" />
-
-    <item
-        android:id="@+id/cart"
-        android:icon="@drawable/nav_icon_cart"
-        android:title="Carrinho"
-        android:titleCondensed="Carri" />
-    <item
-        android:id="@+id/favorite"
-        android:icon="@drawable/nav_icon_favorite"
-        android:title="Favoritos"
-        android:titleCondensed="Fav" />
-    <item
-        android:id="@+id/chat"
-        android:icon="@drawable/nav_icon_chat"
-        android:title="Chat"
-        android:titleCondensed="Chat" />
+        android:title="@string/conta"
+        android:titleCondensed="@string/conta" />
 </menu>

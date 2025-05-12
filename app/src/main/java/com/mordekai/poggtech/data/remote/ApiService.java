@@ -16,10 +16,13 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 
 public interface ApiService {
+    // Test Connection
+    @GET("TestConnection.php")
+    Call<ApiResponse<Void>> testConnection();
 
     // User
     @FormUrlEncoded
-    @POST("RegisterUser.php")
+    @POST("User/RegisterUser.php")
     Call<ResponseBody> insertUser(
             @Field("firebase_uid") String firebase_uid,
             @Field("name") String name,
@@ -28,15 +31,25 @@ public interface ApiService {
     );
 
     @FormUrlEncoded
-    @POST("GetUser.php")
-    Call<User> getUser(
+    @POST("User/GetUser.php")
+    Call<ApiResponse<User>> getUser(
             @Field("firebase_uid") String firebase_uid
     );
 
-    @PUT("UpdateUser.php")
-    Call<ApiResponse> updateUser(@Body User user);
+    @PUT("User/UpdateUser.php")
+    Call<ApiResponse<Void>> updateUser(@Body User user);
 
-    // Category
-    @GET("GetAllCategories.php")
-    Call<List<Category>> getAllCategories();
+    @FormUrlEncoded
+    @POST("NotificationsFCM/SaveToken.php")
+    Call<ApiResponse<Void>> saveToken(
+            @Field("user_id") int user_id,
+            @Field("token") String token
+    );
+
+    @FormUrlEncoded
+    @POST("NotificationsFCM/RemoveToken.php")
+    Call<ApiResponse<Void>> removeToken(
+            @Field("user_id") int user_id,
+            @Field("token") String token
+    );
 }

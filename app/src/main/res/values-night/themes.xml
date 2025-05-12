@@ -1,32 +1,31 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.PoggTech" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    <style name="Theme.PoggTech" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
 
-        <item name="colorPrimary">@color/principal_1</item>
-        <!-- Variação da Cor Primária -->
-        <item name="colorPrimaryVariant">@color/secundaria_1</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
+        <item name="colorOnSecondary">@color/colorOnSecondary</item>
 
-        <!-- Cor Secundária -->
-        <item name="colorSecondary">@color/secundaria_2</item>
-        <!-- Variação da Cor Secundária -->
-        <item name="colorOnBackground">@color/suporte_1</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorOnSurface">@color/colorOnSurface</item>
+        <item name="colorOnSurfaceVariant">@color/colorOnSurfaceVariant</item>
 
-        <!-- Status Bar -->
-        <item name="android:statusBarColor">@color/principal_2</item>
-        <!-- Ativar texto escuro na Status Bar -->
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowBackground">@color/backgroundColor</item>
+        <item name="colorOnBackground">@color/colorOnBackground</item>
 
-        <!-- Navigation Bar -->
-        <item name="android:navigationBarColor">@color/secundaria_2</item>
+        <item name="colorError">@color/colorError</item>
+        <item name="colorOnError">@color/colorOnError</item>
 
-        <!-- Fundo de Janela -->
-        <item name="android:windowBackground">@color/secundaria_2</item>
+        <!-- Cores de texto -->
+        <item name="android:textColorPrimary">@color/textPrimary</item>
+        <item name="android:textColorSecondary">@color/textSecondary</item>
+        <item name="android:textColorTertiary">@color/textTertiary</item>
 
-        <!-- Feedback -->
-        <item name="colorError">@color/feedback_2</item>
+        <item name="android:navigationBarColor">@color/backgroundColor</item>
+        <item name="android:statusBarColor">@color/backgroundColor</item>
+        <item name="android:windowLightStatusBar">false</item>
     </style>
-
-    <style name="Theme.PoggTech" parent="Base.Theme.PoggTech" />
 </resources>
+
