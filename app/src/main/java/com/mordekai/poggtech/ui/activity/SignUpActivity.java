@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.HapticFeedbackConstants;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import android.util.Log;
 import androidx.annotation.NonNull;
@@ -33,6 +35,7 @@ import retrofit2.Response;
 public class SignUpActivity extends AppCompatActivity  {
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
+    private ImageButton btnBack;
     private EditText inputEmail, inputPassword, inputName, inputLastName, inputConfirmPassword;
 
 
@@ -59,6 +62,15 @@ public class SignUpActivity extends AppCompatActivity  {
         inputName = findViewById(R.id.inputNome);
         inputLastName = findViewById(R.id.inputSobrenome);
         inputConfirmPassword = findViewById(R.id.inputConfirmPassword);
+        btnBack = findViewById(R.id.btn_back);
+
+        btnBack.setOnClickListener(view -> {
+            if (btnBack.isHapticFeedbackEnabled()) {
+                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
+            }
+            startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+            finish();
+        });
 
         findViewById(R.id.buttonSignUp).setOnClickListener(view -> {
 

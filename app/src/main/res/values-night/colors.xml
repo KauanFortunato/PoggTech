@@ -1,0 +1,46 @@
+<resources>
+    <color name="colorWhite">#FFFFFF</color>
+
+    <color name="colorPrimary">#1565C0</color>
+    <color name="colorPrimaryVariant">#1E88E5</color>
+    <color name="colorOnPrimary">#FFFFFF</color>
+
+    <color name="colorSecondary">#2196F3</color>
+    <color name="colorSecondaryVariant">#1D1D1D</color>
+    <color name="colorOnSecondary">#FFFFFF</color>
+
+    <color name="colorSurface">#202020</color>
+    <color name="colorOnSurface">#FFFFFF</color>
+    <color name="colorOnSurfaceVariant">#464646</color>
+
+    <color name="backgroundColor">#181818</color>
+    <color name="colorOnBackground">#FFFFFF</color>
+
+    <!-- Cores de Feedback -->
+    <color name="colorError">#EF5350</color>
+    <color name="colorOnError">#FFFFFF</color>
+
+    <color name="colorSuccess">#66BB6A</color>
+    <color name="colorOnSuccess">#000000</color>
+
+    <color name="colorAccent">#F9E400</color>
+
+
+    <!-- Cores para Divisões e Bordas -->
+    <color name="colorDivider">#424242</color>
+    <color name="colorOnDivider">#757575</color>
+    <color name="colorBorder">#616161</color>
+    <color name="colorBorderVariant">#303030</color>
+
+
+    <!-- Cores de Texto -->
+    <color name="textPrimary">#FFFFFF</color>
+    <color name="textSecondary">#E0E0E0</color>
+    <color name="textTertiary">#B0B0B0</color>
+
+    <!--  Opacity Colors  -->
+    <color name="opacityColor">#CC000000</color>
+
+    <color name="skeletonStartColor">#DCDCDC</color>
+    <color name="skeletonCenterColor">#C4C4C4</color>
+</resources>

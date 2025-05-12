@@ -3,6 +3,17 @@ package com.mordekai.poggtech.utils;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
+
+
+import com.mordekai.poggtech.data.callback.ConnectionCallback;
+import com.mordekai.poggtech.data.model.ApiResponse;
+import com.mordekai.poggtech.data.remote.ApiService;
+import com.mordekai.poggtech.data.remote.RetrofitClient;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class NetworkUtil {
     public static boolean isConnected(Context context) {
@@ -15,8 +26,24 @@ public class NetworkUtil {
         return false;
     }
 
-    // TODO: 09/01/2025 Testar conexão com o xampp
-    public static boolean isConnectedXampp() {
+    public static boolean isConnectedXampp(ConnectionCallback callback) {
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        apiService.testConnection().enqueue(new Callback<ApiResponse<Void>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
+                if(response.isSuccessful() && response.body() != null) {
+                    callback.onResult(response.body().isSuccess());
+                } else {
+                    callback.onResult(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
+                Log.e("NetworkUtil", "Erro ao conectar ao servidor: " + t.getMessage());
+                callback.onResult(false);
+            }
+        });
         return true;
     }
 }

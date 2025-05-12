@@ -1,13 +1,16 @@
 <resources>
     <string name="app_name">PoggTech</string>
+    <string name="poggers" translatable="false">poggers</string>
     <string name="login">Login</string>
     <string name="cadastrar">Cadastrar</string>
     <string name="conta">Conta</string>
+    <string name="enviar">Enviar</string>
     <string name="enderecoEmail">Endereço de email</string>
+    <string name="digiteEmail">Digite seu e-mail</string>
     <string name="palavraPasse">Palavra passe</string>
-    <string name="esqueceuSenha">Esqueceu a sua senha?</string>
+    <string name="esqueceuSenha">Esqueceu a senha?</string>
     <string name="googleLogin">Entrar com Google</string>
-    <string name="naoTemConta">Não tem uma conta? Crie aqui!</string>
+    <string name="naoTemConta">Criar uma conta</string>
     <string name="entrar">Iniciar Sessão</string>
     <string name="cadastro">Cadastro</string>
     <string name="nome">Nome</string>
@@ -23,20 +26,67 @@
     <string name="salvar">Salvar</string>
     <string name="cancelar">Cancelar</string>
     <string name="logout">Sair da Conta</string>
+    <string name="logoutInfo">Quer sair da conta?</string>
     <string name="tentarNovamente">Tentar Novamente</string>
     <string name="verfInternet">Verifique a sua conexão de Internet</string>
-    <string name="naoTemInternet">Ops!\nNão tem Internet</string>
+    <string name="naoTemInternet" translatable="false">Ops! Conexão perdida</string>
+    <string name="carrinho">Carrinho</string>
+    <string name="salvos">Salvos</string>
+    <string name="inicio">Início</string>
+    <string name="minhasCompras">As Minhas Compras</string>
+    <string name="meusAnuncios">Os Meus Anúncios</string>
+    <string name="linkDeRecuperacao">Um link para redefinir sua senha será enviado para o e-mail cadastrado em sua conta</string>
+    <string name="remove">Remover</string>
+    <string name="noSavedProducts">Você não tem produtos salvos</string>
+    <string name="noCartProducts">Seu carrinho está vázio</string>
+    <string name="noChat">Você não tem nenhum chat</string>
+    <string name="recuperarSenha">Recuperar senha</string>
+    <string name="mensagemRecuperarSenha">Você receberá um e-mail para redefinir sua senha.</string>
+    <string name="checkEmail">Check o seu email</string>
+    <string name="falhaCheckEmail">Falha ao enviar e-mail de recuperação</string>
+    <string name="antes">Antes</string>
+    <string name="infoPoggersProduct">Os preços dos produtos vendidos pela PoggTech, que são “poggers” já incluem IVA.</string>
+    <string name="iniciarChat">Iniciar chat</string>
+    <string name="productImg">Imagem do produto</string>
+    <string name="soldeBy">Vendido por</string>
+    <string name="discount">de desconto</string>
+    <string name="choose">Escolha</string>
+    <string name="ok" translatable="false">Ok</string>
+    <string name="goToCart">Ir ao carrinho</string>
+    <string name="addedToCart">Adicionado ao carrinho</string>
+    <string name="confirm">Confirmar</string>
+    <string name="sendEmail">Enviar email?</string>
+    <string name="searchHistory">Histórico de Busca</string>
 
+
+    <!-- Chat -->
+    <string name="chat" translatable="false">Chat</string>
+    <string name="compra">Comprando</string>
+    <string name="venda">Vendendo</string>
+
+    <!-- Home -->
+    <string name="paraVoce">Ofertas para si</string>
+    <string name="consolas" translatable="false">Consolas</string>
+    <string name="jogos">Jogos</string>
+    <string name="acessorios">Acessorios</string>
 
     <!-- Examples texts -->
-    <string name="primeiroNome">Kauan</string>
-    <string name="ultimoNome">Fortunato</string>
-    <string name="contactoExample">123 XXX XXX</string>
-    <string name="emailExample">meuemailboladao@gmail.com</string>
+    <string name="primeiroNome" translatable="false">Kauan</string>
+    <string name="ultimoNome" translatable="false">Fortunato</string>
+    <string name="contactoExample" translatable="false">123 XXX XXX</string>
+    <string name="emailExample" translatable="false">meuemailboladao@gmail.com</string>
+    <string name="numContaExample">Número Da Conta: 1A2B3C</string>
+    <string name="termosDeCondicoes">Ao acessar a PogTech, concorda em cumprir estes termos de serviço e política de privacidade.</string>
 
     <!-- Descriptions -->
     <string name="menu_lateral">Menu lateral</string>
     <string name="menu_lateral_perfil">Ícone de perfil</string>
-    <string name="add_favoritos">Adicionar aos favoritos</string>
+    <string name="add_saved">Adicionar aos salvos</string>
     <string name="add_cart">Adicionar ao carrinho</string>
+
+    <!-- Erros -->
+    <string name="erroGoogleAuth">Erro ao autenticar com Google</string>
+
+    <!-- API KEYS -->
+    <string name="google_maps_key" translatable="false">AIzaSyA9knWgp3HxglBy-Gkim0nv86IV9jqTu4c</string>
 </resources>

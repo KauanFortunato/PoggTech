@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/secundaria_2">
+    android:background="@color/colorSecondaryVariant">
 
     <RelativeLayout
         android:id="@+id/header"
@@ -25,137 +27,192 @@
     </RelativeLayout>
 
 
-    <TextView
-        android:id="@+id/helloUser"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Olá, KAUAN"
-        android:textSize="24sp"
-        android:fontFamily="@font/roboto_bold"
-        android:textColor="@color/black"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
+        android:background="@drawable/section_divisor"
+        android:orientation="vertical"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="25dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header" />
+        app:layout_constraintTop_toBottomOf="@id/header">
 
-    <TextView
-        android:id="@+id/numberAccount"
-        android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/helloUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Olá, KAUAN"
+            android:textColor="@color/textPrimary"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/numberAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Número Da Conta: 1A2B3C"
+            android:textColor="@color/textSecondary"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/buttonConfig"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="28dp"
+                    android:background="@drawable/rounded_button_small"
+                    android:contentDescription="@string/configuracoes"
+                    android:src="@drawable/ic_settings_filled" />
+
+                <TextView
+                    android:id="@+id/textConfig"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:breakStrategy="balanced"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/roboto_bold"
+                    android:hyphenationFrequency="full"
+
+                    android:lineSpacingExtra="4dp"
+                    android:maxLines="2"
+                    android:text="@string/configuracoes"
+                    android:textAlignment="center"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/buttonMyPurchases"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="28dp"
+                    android:background="@drawable/rounded_button_small"
+                    android:contentDescription="As Minhas Compras"
+                    android:src="@drawable/ic_package_filled"
+                    android:textAllCaps="false"
+                    android:textColor="@color/textPrimary" />
+
+                <TextView
+                    android:id="@+id/textMyPurchases"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:breakStrategy="balanced"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/roboto_bold"
+                    android:hyphenationFrequency="full"
+
+                    android:lineSpacingExtra="4dp"
+                    android:maxLines="2"
+                    android:text="@string/minhasCompras"
+                    android:textAlignment="center"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/buttonMyAds"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="28dp"
+                    android:background="@drawable/rounded_button_small"
+                    android:contentDescription="Os Meus Anúncios"
+                    android:src="@drawable/ic_sell_filled"
+                    android:textAllCaps="false"
+                    android:textColor="@color/textPrimary" />
+
+                <TextView
+                    android:id="@+id/textMyAds"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:breakStrategy="balanced"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/roboto_bold"
+                    android:hyphenationFrequency="full"
+
+                    android:lineSpacingExtra="4dp"
+                    android:maxLines="2"
+                    android:text="@string/meusAnuncios"
+                    android:textAlignment="center"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/forYouContainer"
+        style="@style/productContainer"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Número Da Conta: 1A2B3C"
-        android:textSize="14sp"
-        android:fontFamily="@font/roboto_bold"
-        android:textColor="@color/suporte_2"
-        android:layout_marginStart="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/helloUser" />
+        android:background="@color/colorSecondaryVariant"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
-    <ImageButton
-        android:id="@+id/buttonConfig"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="28dp"
-        android:background="@drawable/rounded_button_small"
-        android:contentDescription="@string/configuracoes"
-        android:src="@drawable/ic_settings_filled"
-        app:layout_constraintEnd_toStartOf="@+id/buttonMyPurchases"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/numberAccount" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/textConfig"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/configuracoes"
-        android:textSize="12sp"
-        android:fontFamily="@font/roboto_bold"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@id/buttonConfig"
-        app:layout_constraintEnd_toEndOf="@id/buttonConfig"
-        app:layout_constraintTop_toBottomOf="@id/buttonConfig"
+            <TextView
+                style="@style/productSectionTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/paraVoce" />
 
-        android:maxLines="2"
-        android:ellipsize="end"
-        android:lineSpacingExtra="4dp"
-        android:hyphenationFrequency="full"
-        android:breakStrategy="balanced"
-        android:textAlignment="center"
-        />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Ver mais"
+                android:textColor="@color/colorPrimaryVariant"
+                android:textSize="15sp" />
 
-    <ImageButton
-        android:id="@+id/buttonMyPurchases"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="28dp"
-        android:background="@drawable/rounded_button_small"
-        android:contentDescription="As Minhas Compras"
-        android:src="@drawable/ic_package_filled"
-        android:textAllCaps="false"
-        android:textColor="@color/principal_2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/numberAccount" />
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/textMyPurchases"
-        android:layout_width="60dp"
-        android:layout_height="wrap_content"
-        android:text="As Minhas Compras"
-        android:textSize="12sp"
-        android:fontFamily="@font/roboto_bold"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@id/buttonMyPurchases"
-        app:layout_constraintEnd_toEndOf="@id/buttonMyPurchases"
-        app:layout_constraintTop_toBottomOf="@id/buttonMyPurchases"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp">
 
-        android:maxLines="2"
-        android:ellipsize="end"
-        android:lineSpacingExtra="4dp"
-        android:hyphenationFrequency="full"
-        android:breakStrategy="balanced"
-        android:textAlignment="center"
-        />
-
-    <ImageButton
-        android:id="@+id/buttonMyAds"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="28dp"
-        android:background="@drawable/rounded_button_small"
-        android:src="@drawable/ic_sell_filled"
-        android:contentDescription="Os Meus Anúncios"
-        android:textAllCaps="false"
-        android:textColor="@color/principal_2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/buttonMyPurchases"
-        app:layout_constraintTop_toBottomOf="@id/numberAccount" />
-
-    <TextView
-        android:id="@+id/textMyAds"
-        android:layout_width="60dp"
-        android:layout_height="wrap_content"
-        android:text="Os Meus Anúncios"
-        android:textSize="12sp"
-        android:fontFamily="@font/roboto_bold"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@id/buttonMyAds"
-        app:layout_constraintEnd_toEndOf="@id/buttonMyAds"
-        app:layout_constraintTop_toBottomOf="@id/buttonMyAds"
-
-        android:maxLines="2"
-        android:ellipsize="end"
-        android:lineSpacingExtra="4dp"
-        android:hyphenationFrequency="full"
-        android:breakStrategy="balanced"
-        android:textAlignment="center"
-        />
-
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="1dp"
-        android:layout_marginTop="24dp"
-        android:background="@color/suporte_2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textMyPurchases" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvForYou"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_product" />
+        </LinearLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

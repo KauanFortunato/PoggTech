@@ -1,8 +1,9 @@
 package com.mordekai.poggtech.data.model;
 
-public class ApiResponse {
+public class ApiResponse<T> {
     private Boolean success;
     private String message;
+    private T data;
 
     // Getter e Setter
     public Boolean isSuccess() {
@@ -20,4 +21,6 @@ public class ApiResponse {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    public T getData() { return data; }
 }
