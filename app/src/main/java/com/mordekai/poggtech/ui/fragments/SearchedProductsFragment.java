@@ -244,8 +244,6 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
                 button.setTextColor(getResources().getColor(R.color.textSecondary));
             }
         }
-
-
     }
 
     @Override

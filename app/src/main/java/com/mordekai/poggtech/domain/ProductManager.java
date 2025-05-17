@@ -69,8 +69,8 @@ public class ProductManager {
                 });
     }
 
-    public void fetchProductsByCategory(String category, RepositoryCallback<List<Product>> callback) {
-        apiProduct.getProductsByCategory(category)
+    public void getProductsByCategory(String category, Boolean all, RepositoryCallback<List<Product>> callback) {
+        apiProduct.getProductsByCategory(category, all)
                 .enqueue(new Callback<List<Product>>() {
                     @Override
                     public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
@@ -88,7 +88,6 @@ public class ProductManager {
                     }
                 });
     }
-
 
     public void fetchUserFavOrCart(int userId, int tipo, RepositoryCallback<List<Integer>> callback) {
         apiProduct.getUserFavOrCart(userId, tipo)

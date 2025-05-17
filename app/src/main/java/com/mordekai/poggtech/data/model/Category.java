@@ -1,7 +1,10 @@
 package com.mordekai.poggtech.data.model;
 
-public class Category {
-    private int categoryId;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Category implements Parcelable {
+    private int category_id;
 
     private String name;
 
@@ -14,8 +17,8 @@ public class Category {
     private String icon;
 
     // Getters e Setters
-    public int getCategoryId() {
-        return categoryId;
+    public int getCategory_id() {
+        return category_id;
     }
 
     public String getName() {
@@ -49,9 +52,43 @@ public class Category {
     @Override
     public String toString() {
         return "Category{" +
-                "id=" + categoryId +
+                "id=" + category_id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 '}';
+    }
+
+    protected Category(Parcel in) {
+        category_id = in.readInt();
+        name = in.readString();
+        description = in.readString();
+        createdAt = in.readString();
+        icon = in.readString();
+    }
+
+    public static final Creator<Category> CREATOR = new Creator<Category>() {
+        @Override
+        public Category createFromParcel(Parcel in) {
+            return new Category(in);
+        }
+
+        @Override
+        public Category[] newArray(int size) {
+            return new Category[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(category_id);
+        dest.writeString(name);
+        dest.writeString(description);
+        dest.writeString(createdAt);
+        dest.writeString(icon);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 }

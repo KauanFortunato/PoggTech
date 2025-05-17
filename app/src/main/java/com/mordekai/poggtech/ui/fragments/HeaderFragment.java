@@ -274,11 +274,11 @@ public class HeaderFragment extends Fragment {
         int btnWidth = 110;
 
         int margemOriginal = ((ConstraintLayout.LayoutParams) searchProd.getLayoutParams()).getMarginStart();
-        int novaMargem = margemOriginal + btnWidth;
+//        int novaMargem = margemOriginal + btnWidth;
 
         btnBackHeader.setTranslationX(-btnWidth);
 
-        ValueAnimator anim = ValueAnimator.ofInt(margemOriginal, novaMargem);
+        ValueAnimator anim = ValueAnimator.ofInt(margemOriginal, margemOriginal); // Mudar a variavel para novaMargem
         anim.setDuration(200);
         anim.addUpdateListener(animation -> {
             int value = (int) animation.getAnimatedValue();

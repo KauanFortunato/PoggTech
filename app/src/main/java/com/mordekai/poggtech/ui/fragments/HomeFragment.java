@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -21,7 +22,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.adapter.CategoryAdapter;
-import com.mordekai.poggtech.data.adapter.CategoryFormAdapter;
 import com.mordekai.poggtech.data.adapter.ProductAdapter;
 import com.mordekai.poggtech.data.adapter.ProductContinueAdapter;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
@@ -42,7 +42,8 @@ import java.util.List;
 public class HomeFragment extends Fragment
         implements ProductAdapter.OnProductClickListener,
         ProductAdapter.OnSavedChangedListener,
-                    ProductContinueAdapter.OnProductContinueClickListener {
+        ProductContinueAdapter.OnProductContinueClickListener,
+        CategoryAdapter.OnCategoryClickListerner {
 
     private SharedPrefHelper sharedPrefHelper;
     private LinearLayout containerProductsHome, containerCategorias;
@@ -66,37 +67,6 @@ public class HomeFragment extends Fragment
     View fakeScrollbar, fakeScrollbarTrack;
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    @Override
-    public void onProductClick(Product product) {
-        Bundle bundle = new Bundle();
-        bundle.putInt("productId", product.getProduct_id());
-
-        ProductDetailsFragment fragment = new ProductDetailsFragment();
-        fragment.setArguments(bundle);
-
-        interactionManager.userInteraction(product.getProduct_id(), user.getUserId(), "view",new RepositoryCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                Log.d("API_RESPONSE", "Interaction result: " + result);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                Log.e("API_RESPONSE", "Error in userInteraction", t);
-            }
-        });
-
-        getParentFragmentManager().beginTransaction()
-                .setCustomAnimations(
-                        R.anim.enter_from_right,
-                        R.anim.exit_to_left,
-                        R.anim.enter_from_left,
-                        R.anim.exit_to_right
-                )
-                .add(R.id.containerFrame, fragment)
-                .addToBackStack("product_details")
-                .commit();
-    }
 
     @Nullable
     @Override
@@ -122,7 +92,7 @@ public class HomeFragment extends Fragment
         accessoryAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), R.layout.item_product_match_parent, this, this);
         maybeYouLikeAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), R.layout.item_product, this, this);
         productContinueAdapter = new ProductContinueAdapter(new ArrayList<>(), user.getUserId(), this, this);
-        categoryAdapter = new CategoryAdapter(new ArrayList<>(), getContext());
+        categoryAdapter = new CategoryAdapter(new ArrayList<>(), getContext(), this);
 
         rvCategories.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rvCategories.setAdapter(categoryAdapter);
@@ -431,6 +401,57 @@ public class HomeFragment extends Fragment
         popularContainer.setVisibility(View.VISIBLE);
         forYouContainer.setVisibility(View.VISIBLE);
         maybeYouLikeContainer.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onProductClick(Product product) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("productId", product.getProduct_id());
+
+        ProductDetailsFragment fragment = new ProductDetailsFragment();
+        fragment.setArguments(bundle);
+
+        interactionManager.userInteraction(product.getProduct_id(), user.getUserId(), "view",new RepositoryCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("API_RESPONSE", "Interaction result: " + result);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("API_RESPONSE", "Error in userInteraction", t);
+            }
+        });
+
+        getParentFragmentManager().beginTransaction()
+                .setCustomAnimations(
+                        R.anim.enter_from_right,
+                        R.anim.exit_to_left,
+                        R.anim.enter_from_left,
+                        R.anim.exit_to_right
+                )
+                .add(R.id.containerFrame, fragment)
+                .addToBackStack("product_details")
+                .commit();
+    }
+
+    @Override
+    public void onCategoryClick(Category category) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("category", category);
+        Fragment fragment = new CategoryFragment();
+        fragment.setArguments(bundle);
+
+        getParentFragmentManager().beginTransaction()
+                .setCustomAnimations(
+                        R.anim.enter_from_right,
+                        R.anim.exit_to_left,
+                        R.anim.enter_from_left,
+                        R.anim.exit_to_right
+                )
+                .add(R.id.containerFrame, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override

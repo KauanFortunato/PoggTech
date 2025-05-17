@@ -23,7 +23,10 @@ public interface ApiProduct {
     Call<List<Product>> getAllProducts();
 
     @GET("Product/GetProductsByCategory.php")
-    Call<List<Product>> getProductsByCategory(@Query("category") String category);
+    Call<List<Product>> getProductsByCategory(
+            @Query("category") String category,
+            @Query("all") Boolean all
+    );
 
     @GET("Product/GetProduct.php")
     Call<Product> getProductById(

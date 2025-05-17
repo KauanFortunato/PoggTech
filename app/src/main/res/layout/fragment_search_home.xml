@@ -68,77 +68,13 @@
                 android:paddingVertical="10dp"
                 android:orientation="horizontal">
 
-                <LinearLayout
-                    android:id="@+id/consolasCategory"
-                    android:layout_width="0dp"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvCategories"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="10dp"
-                    android:layout_marginHorizontal="3dp"
-                    android:gravity="center"
-                    android:background="@drawable/bg_card_product"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="90dp"
-                        android:layout_height="90dp"
-                        android:padding="2dp"
-                        android:src="@drawable/consoles_categoria_img"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/textPrimary"
-                        android:fontFamily="@font/roboto_medium"
-                        android:text="@string/consolas"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/acessorioCategory"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="10dp"
-                    android:layout_marginHorizontal="3dp"
-                    android:gravity="center"
-                    android:background="@drawable/bg_card_product"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="90dp"
-                        android:layout_height="90dp"
-                        android:src="@drawable/acessorios_categoria_img"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/textPrimary"
-                        android:fontFamily="@font/roboto_medium"
-                        android:text="@string/acessorios"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/jogosCategory"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="10dp"
-                    android:layout_marginHorizontal="3dp"
-                    android:gravity="center"
-                    android:background="@drawable/bg_card_product"
-                    android:orientation="vertical">
-                    <ImageView
-                        android:layout_width="90dp"
-                        android:layout_height="90dp"
-                        android:src="@drawable/jogos_categoria_img"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/textPrimary"
-                        android:fontFamily="@font/roboto_medium"
-                        android:text="@string/jogos"/>
-                </LinearLayout>
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_category_search" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
