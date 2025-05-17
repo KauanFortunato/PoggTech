@@ -72,6 +72,8 @@ public class SearchFragment extends Fragment {
             delHistory.setVisibility(View.GONE);
         }
 
+        // ToDo: Fazer com que mostre as categorias no search de forma adaptativa
+
         return view;
     }
 

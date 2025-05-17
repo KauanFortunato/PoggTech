@@ -19,10 +19,16 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     private List<Category> categories;
     private Context context;
+    private OnCategoryClickListerner listener;
 
-    public CategoryAdapter(List<Category> categories, Context context) {
+    public interface OnCategoryClickListerner {
+        void onCategoryClick(Category category);
+    }
+
+    public CategoryAdapter(List<Category> categories, Context context, OnCategoryClickListerner listener) {
         this.categories = categories;
         this.context = context;
+        this.listener = listener;
     }
 
     public void updateCategories(List<Category> newCategories) {
@@ -72,6 +78,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             } else {
                 categoryIcon.setImageResource(R.drawable.ic_all_categories);
             }
+
+            itemView.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onCategoryClick(category);
+                }
+            });
         }
     }
 }

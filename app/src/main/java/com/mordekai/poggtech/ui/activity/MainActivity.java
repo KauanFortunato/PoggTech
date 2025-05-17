@@ -123,6 +123,17 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
                 clearChatBadge();
             }
 
+            for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+                if (fragment != homeFragment &&
+                        fragment != accountFragment &&
+                        fragment != saveFragment &&
+                        fragment != chatFragment &&
+                        fragment != offlineFragment &&
+                        fragment != headerFragment) {
+                    getSupportFragmentManager().beginTransaction().remove(fragment).commitNow();
+                }
+            }
+
             if (targetFragment != null && targetFragment != currentFragment) {
                 getSupportFragmentManager().beginTransaction()
                         .hide(currentFragment)
