@@ -1,9 +1,10 @@
 package com.mordekai.poggtech.data.adapter;
 
-import android.util.Log;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,10 +16,19 @@ import com.mordekai.poggtech.data.model.Category;
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
-    private List<Category> categories;
 
-    public CategoryAdapter(List<Category> categories) {
+    private List<Category> categories;
+    private Context context;
+
+    public CategoryAdapter(List<Category> categories, Context context) {
         this.categories = categories;
+        this.context = context;
+    }
+
+    public void updateCategories(List<Category> newCategories) {
+        categories.clear();
+        categories.addAll(newCategories);
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -33,21 +43,35 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull CategoryAdapter.ViewHolder holder, int position) {
         Category category = categories.get(position);
-        holder.categoryName.setText(category.getName());
-        Log.d("CategoryAdapter", "Exibindo categoria: " + category.getName());
+        holder.bind(category);
     }
 
     @Override
-    public int getItemCount() {
-        return categories.size();
-    }
+    public int getItemCount() { return categories.size(); }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
         TextView categoryName;
+        ImageView categoryIcon;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
             categoryName = itemView.findViewById(R.id.categoryName);
+            categoryIcon = itemView.findViewById(R.id.categoryIcon);
+        }
+
+        void bind(Category category) {
+            categoryName.setText(category.getName());
+
+            String iconName = category.getIcon();
+            int imageResId = context.getResources().getIdentifier(iconName, "drawable", context.getPackageName());
+
+            if (imageResId != 0) {
+                categoryIcon.setImageResource(imageResId);
+            } else {
+                categoryIcon.setImageResource(R.drawable.ic_all_categories);
+            }
         }
     }
 }

@@ -51,6 +51,15 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
         return forceBackToHome;
     }
 
+    public void showHeader() {
+        findViewById(R.id.headerContainer).setVisibility(View.VISIBLE);
+    }
+
+    public void hideHeader() {
+        findViewById(R.id.headerContainer).setVisibility(View.GONE);
+    }
+
+
     @RequiresApi(api = Build.VERSION_CODES.O_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,7 +1,6 @@
 package com.mordekai.poggtech.ui.fragments;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 
 
 import androidx.annotation.NonNull;
@@ -23,6 +21,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.adapter.CategoryAdapter;
+import com.mordekai.poggtech.data.adapter.CategoryFormAdapter;
 import com.mordekai.poggtech.data.adapter.ProductAdapter;
 import com.mordekai.poggtech.data.adapter.ProductContinueAdapter;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
@@ -48,9 +47,9 @@ public class HomeFragment extends Fragment
     private SharedPrefHelper sharedPrefHelper;
     private LinearLayout containerProductsHome, containerCategorias;
     private LinearLayout popularContainer, forYouContainer, maybeYouLikeContainer;
-    private RecyclerView rvForYou, rvPopular, rvContinueBuySkeleton, rvContinueBuy, rvMaybeYouLike;
-    private CategoryAdapter categoryAdapter;
+    private RecyclerView rvForYou, rvPopular, rvContinueBuySkeleton, rvContinueBuy, rvMaybeYouLike, rvCategories;
     private ProductAdapter forYouAdapter, popularAdapter, accessoryAdapter, maybeYouLikeAdapter;
+    private CategoryAdapter categoryAdapter;
     private ProductContinueAdapter productContinueAdapter;
     private ApiService apiService;
     private ApiProduct apiProduct;
@@ -59,7 +58,6 @@ public class HomeFragment extends Fragment
     private List<Product> productForYouList = new ArrayList<>();
     private ProductManager productManager;
     private InteractionManager interactionManager;
-    private List<Category> categoryList = new ArrayList<>();
     private User user;
     private int loadingCount = 0;
     private List<Integer> favoriteIds = new ArrayList<>();
@@ -124,6 +122,10 @@ public class HomeFragment extends Fragment
         accessoryAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), R.layout.item_product_match_parent, this, this);
         maybeYouLikeAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), R.layout.item_product, this, this);
         productContinueAdapter = new ProductContinueAdapter(new ArrayList<>(), user.getUserId(), this, this);
+        categoryAdapter = new CategoryAdapter(new ArrayList<>(), getContext());
+
+        rvCategories.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        rvCategories.setAdapter(categoryAdapter);
 
         rvPopular.setLayoutManager(new GridLayoutManager(getContext(),2));
         rvPopular.setAdapter(popularAdapter);
@@ -133,7 +135,6 @@ public class HomeFragment extends Fragment
 
         rvMaybeYouLike.setAdapter(maybeYouLikeAdapter);
 
-        categoryAdapter = new CategoryAdapter(categoryList);
         apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
 
         rvForYou = view.findViewById(R.id.rvForYou);
@@ -152,6 +153,7 @@ public class HomeFragment extends Fragment
         getForYou();
         maybeYouLike();
         getPopular();
+        getCategories();
 
         return view;
     }
@@ -159,6 +161,8 @@ public class HomeFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
+
+        if (!isVisible()) return;
 
         HeaderFragment.HeaderListener listener = (HeaderFragment.HeaderListener) getActivity();
 
@@ -274,6 +278,23 @@ public class HomeFragment extends Fragment
         });
     }
 
+    private void getCategories() {
+        productManager.getAllCategories(new RepositoryCallback<List<Category>>() {
+
+            @Override
+            public void onSuccess(List<Category> result) {
+                categoryAdapter.updateCategories(result);
+
+                checkIfLoadingFinished();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("API_RESPONSE", "Erro ao buscar categorias", t);
+            }
+        });
+    }
+
     @SuppressLint("NotifyDataSetChanged")
     public void updateAllAdapters() {
         forYouAdapter.setSavedIds(favoriteIds);
@@ -292,7 +313,7 @@ public class HomeFragment extends Fragment
         loadingCount++;
         Log.d("DEBUG", "loadingCount: " + loadingCount);
 
-        if (loadingCount >= 4) {
+        if (loadingCount >= 5) {
             containerProductsHome.setVisibility(View.VISIBLE);
 
             shimmerForYouSkeleton.stopShimmer();
@@ -310,6 +331,7 @@ public class HomeFragment extends Fragment
         rvPopular = view.findViewById(R.id.rvPopular);
         rvContinueBuy = view.findViewById(R.id.rvContinueBuy);
         rvMaybeYouLike = view.findViewById(R.id.rvMaybeYouLike);
+        rvCategories = view.findViewById(R.id.rvCategories);
 
         popularContainer = view.findViewById(R.id.popularContainer);
         forYouContainer = view.findViewById(R.id.forYouContainer);
@@ -373,6 +395,7 @@ public class HomeFragment extends Fragment
             getForYou();
             maybeYouLike();
             getPopular();
+            getCategories();
         });
     }
 

@@ -98,8 +98,13 @@ public class UserAccountFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
+
+        if (!isVisible()) return;
+
         getActivity().findViewById(R.id.headerContainer).setVisibility(View.GONE);
     }
+
+    // TODO: O header reaparesce pq o fragment home é despausado abrindo o resume
 
     @SuppressLint("ClickableViewAccessibility")
     private void StartComponents(View view) {
