@@ -58,7 +58,6 @@
     <string name="sendEmail">Enviar email?</string>
     <string name="searchHistory">Histórico de Busca</string>
 
-
     <!-- Chat -->
     <string name="chat" translatable="false">Chat</string>
     <string name="compra">Comprando</string>

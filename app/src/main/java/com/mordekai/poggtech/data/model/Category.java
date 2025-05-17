@@ -11,6 +11,8 @@ public class Category {
 
     private String error;
 
+    private String icon;
+
     // Getters e Setters
     public int getCategoryId() {
         return categoryId;
@@ -39,6 +41,10 @@ public class Category {
     public void setError(String error) {
         this.error = error;
     }
+
+    public String getIcon() { return icon; }
+
+    public void setIcon(String icon) { this.icon = icon; }
 
     @Override
     public String toString() {

@@ -189,6 +189,9 @@ public class UserConfigFragment extends Fragment {
             if (btn_back.isHapticFeedbackEnabled()) {
                 v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
             }
+
+            ((BottomNavVisibilityController) requireActivity()).showBottomNav();
+
             requireActivity().getSupportFragmentManager().popBackStack();
         });
 

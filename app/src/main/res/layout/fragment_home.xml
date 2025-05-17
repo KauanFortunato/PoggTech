@@ -53,13 +53,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:visibility="gone">
+                            android:visibility="visible">
 
                             <HorizontalScrollView
                                 android:id="@+id/horizontalScrollViewCategories"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:overScrollMode="never"
+                                android:paddingBottom="10dp"
                                 android:scrollbars="none">
 
                                 <LinearLayout
@@ -69,130 +70,12 @@
                                     android:orientation="horizontal"
                                     android:paddingHorizontal="4dp">
 
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
+                                    <androidx.recyclerview.widget.RecyclerView
+                                        android:id="@+id/rvCategories"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:orientation="vertical">
-
-                                        <ImageView
-                                            style="@style/categoryHome"
-                                            android:layout_marginBottom="5dp"
-                                            android:padding="12dp"
-                                            android:src="@drawable/ic_all_categories" />
-
-                                        <TextView
-                                            android:layout_width="70dp"
-                                            android:layout_height="wrap_content"
-                                            android:text="Todas as Categorias"
-                                            android:textAlignment="center"
-                                            android:textColor="@color/textPrimary"
-                                            android:textSize="11sp" />
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginHorizontal="10dp"
-                                        android:orientation="vertical">
-
-                                        <ImageView
-                                            style="@style/categoryHome"
-                                            android:src="@drawable/ic_category_consoles" />
-
-                                        <TextView
-                                            android:layout_width="70dp"
-                                            android:layout_height="0dp"
-                                            android:layout_weight="1"
-                                            android:gravity="center"
-                                            android:text="Consoles"
-                                            android:textAlignment="center"
-                                            android:textColor="@color/textPrimary"
-                                            android:textSize="11sp" />
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:orientation="vertical">
-
-                                        <ImageView
-                                            style="@style/categoryHome"
-                                            android:src="@drawable/ic_category_games" />
-
-                                        <TextView
-                                            android:layout_width="70dp"
-                                            android:layout_height="0dp"
-                                            android:layout_weight="1"
-                                            android:gravity="center"
-                                            android:text="Jogos"
-                                            android:textAlignment="center"
-                                            android:textColor="@color/textPrimary"
-                                            android:textSize="11sp" />
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginHorizontal="10dp"
-                                        android:orientation="vertical">
-
-                                        <ImageView
-                                            style="@style/categoryHome"
-                                            android:src="@drawable/ic_headphones" />
-
-                                        <TextView
-                                            android:layout_width="70dp"
-                                            android:layout_height="0dp"
-                                            android:layout_weight="1"
-                                            android:gravity="center"
-                                            android:text="Acessórios"
-                                            android:textAlignment="center"
-                                            android:textColor="@color/textPrimary"
-                                            android:textSize="11sp" />
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginHorizontal="10dp"
-                                        android:orientation="vertical">
-
-                                        <ImageView
-                                            style="@style/categoryHome"
-                                            android:src="@drawable/ic_trophy" />
-
-                                        <TextView
-                                            android:layout_width="70dp"
-                                            android:layout_height="0dp"
-                                            android:layout_weight="1"
-                                            android:gravity="center"
-                                            android:text="Colecionáveis"
-                                            android:textAlignment="center"
-                                            android:textColor="@color/textPrimary"
-                                            android:textSize="11sp" />
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginHorizontal="10dp"
-                                        android:orientation="vertical">
-
-                                        <ImageView
-                                            style="@style/categoryHome"
-                                            android:src="@drawable/ic_category_retro" />
-
-                                        <TextView
-                                            android:layout_width="70dp"
-                                            android:layout_height="0dp"
-                                            android:layout_weight="1"
-                                            android:gravity="center"
-                                            android:text="Retro Games"
-                                            android:textAlignment="center"
-                                            android:textColor="@color/textPrimary"
-                                            android:textSize="11sp" />
-                                    </LinearLayout>
-
+                                        android:orientation="horizontal"
+                                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
                                 </LinearLayout>
 
                             </HorizontalScrollView>
