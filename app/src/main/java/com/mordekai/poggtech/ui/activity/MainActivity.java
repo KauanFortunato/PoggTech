@@ -3,6 +3,7 @@ package com.mordekai.poggtech.ui.activity;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
@@ -272,6 +273,7 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
     @Override
     public void showBottomNav() {
         findViewById(R.id.bottomNavigationView).setVisibility(View.VISIBLE);
+        Log.d("BottomNav", "BottomNav Shown");
     }
 
     @Override

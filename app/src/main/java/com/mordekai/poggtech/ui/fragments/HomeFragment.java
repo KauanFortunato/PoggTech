@@ -34,6 +34,7 @@ import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.InteractionManager;
 import com.mordekai.poggtech.domain.ProductManager;
+import com.mordekai.poggtech.utils.BottomNavVisibilityController;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
 import java.util.ArrayList;
@@ -82,6 +83,7 @@ public class HomeFragment extends Fragment
         }
 
         startComponentes(view);
+        ((BottomNavVisibilityController) requireActivity()).showBottomNav();
         hideContainers();
 
         setupSkeletonLoader();
@@ -136,6 +138,7 @@ public class HomeFragment extends Fragment
         if (!isVisible()) return;
 
         HeaderFragment.HeaderListener listener = (HeaderFragment.HeaderListener) getActivity();
+        ((BottomNavVisibilityController) requireActivity()).showBottomNav();
 
         if (listener != null) {
             listener.hideBackButton();
@@ -151,7 +154,6 @@ public class HomeFragment extends Fragment
                 }
             });
         }
-
     }
 
     private void getContinueBuy() {
@@ -431,7 +433,7 @@ public class HomeFragment extends Fragment
                         R.anim.enter_from_left,
                         R.anim.exit_to_right
                 )
-                .add(R.id.containerFrame, fragment)
+                .replace(R.id.containerFrame, fragment)
                 .addToBackStack("product_details")
                 .commit();
     }
