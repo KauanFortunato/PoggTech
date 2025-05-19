@@ -244,6 +244,10 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
         else if (tag.equals("CHAT")) bottomNavigationView.setSelectedItemId(R.id.chat);
     }
 
+    public void setCurrentFragment(Fragment fragment) {
+        this.currentFragment = fragment;
+    }
+
     @Override
     public void showBackButton() {
         if (headerFragment != null) {

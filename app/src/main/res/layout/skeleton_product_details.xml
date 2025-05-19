@@ -84,7 +84,7 @@
                         android:paddingBottom="15dp">
 
                         <View
-                            android:id="@+id/productImage"
+                            android:id="@+id/categoryIcon"
                             android:layout_width="match_parent"
                             android:layout_height="180dp"
                             android:scaleType="fitCenter"

@@ -159,7 +159,7 @@ public class ProductSearchedAdapter extends RecyclerView.Adapter<ProductSearched
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            productImage = itemView.findViewById(R.id.productImage);
+            productImage = itemView.findViewById(R.id.categoryIcon);
             favoriteButton = itemView.findViewById(R.id.saveButton);
             seller = itemView.findViewById(R.id.seller);
             sellerAdmin = itemView.findViewById(R.id.sellerAdmin);

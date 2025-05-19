@@ -57,6 +57,7 @@
     <string name="confirm">Confirmar</string>
     <string name="sendEmail">Enviar email?</string>
     <string name="searchHistory">Histórico de Busca</string>
+    <string name="categories">Categoria</string>
 
     <!-- Chat -->
     <string name="chat" translatable="false">Chat</string>

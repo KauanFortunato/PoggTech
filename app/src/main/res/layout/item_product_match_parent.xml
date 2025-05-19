@@ -26,7 +26,7 @@
 
             <!-- Imagem do Produto -->
             <ImageView
-                android:id="@+id/productImage"
+                android:id="@+id/categoryIcon"
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
                 android:scaleType="centerCrop"
