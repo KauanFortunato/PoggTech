@@ -76,7 +76,7 @@ public class SavedProductAdapter extends RecyclerView.Adapter<SavedProductAdapte
             super(itemView);
 
             // Inicializa os componentes do layout
-            productImage = itemView.findViewById(R.id.productImage);
+            productImage = itemView.findViewById(R.id.categoryIcon);
             productTitle = itemView.findViewById(R.id.productTitle);
             productType = itemView.findViewById(R.id.productType);
             productPrice = itemView.findViewById(R.id.productPrice);

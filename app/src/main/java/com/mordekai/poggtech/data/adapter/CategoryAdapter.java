@@ -20,15 +20,17 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     private List<Category> categories;
     private Context context;
     private OnCategoryClickListerner listener;
+    private final int layoutResId;
 
     public interface OnCategoryClickListerner {
         void onCategoryClick(Category category);
     }
 
-    public CategoryAdapter(List<Category> categories, Context context, OnCategoryClickListerner listener) {
+    public CategoryAdapter(List<Category> categories, Context context, OnCategoryClickListerner listener, int layoutResId) {
         this.categories = categories;
         this.context = context;
         this.listener = listener;
+        this.layoutResId = layoutResId;
     }
 
     public void updateCategories(List<Category> newCategories) {
@@ -41,7 +43,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     @Override
     public CategoryAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_category, parent, false);
+                .inflate(layoutResId, parent, false);
 
         return new ViewHolder(view);
     }

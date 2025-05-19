@@ -92,7 +92,8 @@ public class HomeFragment extends Fragment
         accessoryAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), R.layout.item_product_match_parent, this, this);
         maybeYouLikeAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), R.layout.item_product, this, this);
         productContinueAdapter = new ProductContinueAdapter(new ArrayList<>(), user.getUserId(), this, this);
-        categoryAdapter = new CategoryAdapter(new ArrayList<>(), getContext(), this);
+        apiProduct = RetrofitClient.getRetrofitInstance().create(ApiProduct.class);
+        categoryAdapter = new CategoryAdapter(new ArrayList<>(), getContext(), this, R.layout.item_category);
 
         rvCategories.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rvCategories.setAdapter(categoryAdapter);
@@ -449,7 +450,7 @@ public class HomeFragment extends Fragment
                         R.anim.enter_from_left,
                         R.anim.exit_to_right
                 )
-                .add(R.id.containerFrame, fragment)
+                .replace(R.id.containerFrame, fragment)
                 .addToBackStack(null)
                 .commit();
     }

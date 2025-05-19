@@ -17,7 +17,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.mordekai.poggtech.R;
@@ -103,8 +102,6 @@ public class UserAccountFragment extends Fragment
 
         getActivity().findViewById(R.id.headerContainer).setVisibility(View.GONE);
     }
-
-    // TODO: O header reaparesce pq o fragment home é despausado abrindo o resume
 
     @SuppressLint("ClickableViewAccessibility")
     private void StartComponents(View view) {

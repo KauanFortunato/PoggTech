@@ -14,7 +14,7 @@
 
         <!-- Imagem do Produto -->
         <ImageView
-            android:id="@+id/productImage"
+            android:id="@+id/categoryIcon"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:scaleType="centerCrop"
@@ -71,7 +71,7 @@
             android:layout_marginEnd="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            app:layout_constraintStart_toEndOf="@id/productImage"
+            app:layout_constraintStart_toEndOf="@id/categoryIcon"
             app:layout_constraintEnd_toStartOf="@id/actionLayout"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">

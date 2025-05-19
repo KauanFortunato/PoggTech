@@ -77,7 +77,7 @@ public class MyAdAdapter extends RecyclerView.Adapter<MyAdAdapter.ViewHolder> {
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            productImage = itemView.findViewById(R.id.productImage);
+            productImage = itemView.findViewById(R.id.categoryIcon);
             buttonEdit = itemView.findViewById(R.id.buttonEdit);
             removeButton = itemView.findViewById(R.id.removeButton);
             productTitle = itemView.findViewById(R.id.productTitle);

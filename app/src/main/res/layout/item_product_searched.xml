@@ -13,7 +13,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/productImage"
+            android:id="@+id/categoryIcon"
             android:layout_width="match_parent"
             android:layout_height="220dp"
             android:contentDescription="@string/productImg"
