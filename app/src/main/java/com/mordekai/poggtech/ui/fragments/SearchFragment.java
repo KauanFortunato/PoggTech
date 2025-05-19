@@ -107,6 +107,8 @@ public class SearchFragment extends Fragment implements CategoryAdapter.OnCatego
     public void onResume() {
         super.onResume();
 
+        if (!isVisible()) return;
+
         ((BottomNavVisibilityController) requireActivity()).hideBottomNav();
         historyAdapter.notifyDataSetChanged();
         ((MainActivity) requireActivity()).setForceBackToHome(true);
@@ -161,8 +163,6 @@ public class SearchFragment extends Fragment implements CategoryAdapter.OnCatego
         bundle.putParcelable("category", category);
         Fragment fragment = new CategoryFragment();
         fragment.setArguments(bundle);
-
-        ((MainActivity) requireActivity()).setCurrentFragment(fragment);
 
         getParentFragmentManager().beginTransaction()
                 .setCustomAnimations(

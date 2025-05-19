@@ -118,14 +118,7 @@ public class ProductDetailsFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
 
-        if (requireActivity() instanceof BottomNavVisibilityController) {
-            ((BottomNavVisibilityController) requireActivity()).showBottomNav();
-        }
-    }
 
     private void fetchProduct(int productId) {
         new android.os.Handler().postDelayed(() -> {

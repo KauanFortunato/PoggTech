@@ -73,7 +73,7 @@ public class CategoryFragment extends Fragment implements
         sharedPrefHelper = new SharedPrefHelper(requireContext());
         user = sharedPrefHelper.getUser();
 
-        ((BottomNavVisibilityController) requireActivity()).showBottomNav();
+        ((BottomNavVisibilityController) requireActivity()).hideBottomNav();
 
         startComponentes(view);
 
@@ -96,7 +96,7 @@ public class CategoryFragment extends Fragment implements
     public void onResume() {
         super.onResume();
 
-        ((BottomNavVisibilityController) requireActivity()).showBottomNav();
+        ((BottomNavVisibilityController) requireActivity()).hideBottomNav();
         showBackButton();
         buttonSelect(filterHigh);
         buttonSelect(filterLow);
@@ -256,7 +256,7 @@ public class CategoryFragment extends Fragment implements
                         R.anim.enter_from_left,
                         R.anim.exit_to_right
                 )
-                .add(R.id.containerFrame, fragment)
+                .replace(R.id.containerFrame, fragment)
                 .addToBackStack("product_details")
                 .commit();
     }
