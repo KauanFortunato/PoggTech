@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.FragmentManager;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.mordekai.poggtech.R;
@@ -56,6 +58,7 @@ public class ProductAddedBottomSheet extends BottomSheetDialogFragment {
     }
 
     private void goToCart() {
-        ((MainActivity) requireActivity()).switchToFragment("SAVE");
+        NavController navController = NavHostFragment.findNavController(this);
+        navController.navigate(R.id.save);
     }
 }

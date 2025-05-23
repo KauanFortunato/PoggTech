@@ -26,6 +26,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
@@ -93,24 +95,9 @@ public class HeaderFragment extends Fragment {
 
                 showButtonBack();
 
-                FragmentManager fragmentManager = getParentFragmentManager();
-                Fragment existingFragment = fragmentManager.findFragmentByTag("SEARCH_FRAGMENT");
-
-                if (existingFragment != null) {
-                    fragmentManager.beginTransaction().remove(existingFragment).commit();
-                }
-
                 searchProd.postDelayed(() -> {
-                    fragmentManager.beginTransaction()
-                            .setCustomAnimations(
-                                    R.anim.fade_in,
-                                    R.anim.fade_out,
-                                    R.anim.fade_in,
-                                    R.anim.fade_out
-                            )
-                            .replace(R.id.containerFrame, new SearchFragment(), "SEARCH_FRAGMENT")
-                            .addToBackStack("search_fragment")
-                            .commit();
+                    NavController navController = NavHostFragment.findNavController(this);
+                    navController.navigate(R.id.searchFragment);
                 }, 100);
             }
         });
@@ -153,24 +140,10 @@ public class HeaderFragment extends Fragment {
                     searchProd.clearFocus();
                 }
 
-                FragmentManager fragmentManager = getParentFragmentManager();
-
-                while (fragmentManager.getBackStackEntryCount() > 0) {
-                    fragmentManager.popBackStackImmediate();
-                }
-
                 sharedPrefHelper.addSearchHistory(query);
 
-                fragmentManager.beginTransaction()
-                        .setCustomAnimations(
-                                R.anim.fade_in,
-                                R.anim.fade_out,
-                                R.anim.fade_in,
-                                R.anim.fade_out
-                        )
-                        .replace(R.id.containerFrame, new SearchedProductsFragment())
-                        .addToBackStack("searched_products")
-                        .commit();
+                NavController navController = NavHostFragment.findNavController(this);
+                navController.navigate(R.id.searchFragment);
 
                 searchProd.postDelayed(() -> isUpdatingText = false, 100);
             }
@@ -214,24 +187,10 @@ public class HeaderFragment extends Fragment {
                 searchProd.clearFocus();
             }
 
-            FragmentManager fragmentManager = getParentFragmentManager();
-
-            while (fragmentManager.getBackStackEntryCount() > 0) {
-                fragmentManager.popBackStackImmediate();
-            }
-
             sharedPrefHelper.addSearchHistory(searchProd.getText().toString().trim());
 
-            fragmentManager.beginTransaction()
-                    .setCustomAnimations(
-                            R.anim.fade_in,
-                            R.anim.fade_out,
-                            R.anim.fade_in,
-                            R.anim.fade_out
-                    )
-                    .replace(R.id.containerFrame, new SearchedProductsFragment())
-                    .addToBackStack("searched_products")
-                    .commit();
+            NavController navController = NavHostFragment.findNavController(this);
+            navController.navigate(R.id.searchFragment);
 
             searchProd.postDelayed(() -> isUpdatingText = false, 100);
         });
@@ -240,32 +199,29 @@ public class HeaderFragment extends Fragment {
     }
 
     private void handleBackNavigation() {
-        FragmentManager fragmentManager = getParentFragmentManager();
+        NavController navController = NavHostFragment.findNavController(this);
         boolean forceBackHome = ((MainActivity) requireActivity()).shouldForceBackToHome();
 
         if (forceBackHome) {
             searchProd.setText("");
 
-            // Aqui limpo toda a backstack
-            while (fragmentManager.getBackStackEntryCount() > 0) {
-                fragmentManager.popBackStackImmediate();
-            }
-
-            // vai para a HomeFragment sendo froçado
-            ((MainActivity) requireActivity()).switchToFragment("HOME");
+            navController.popBackStack(R.id.home, false);
 
             ((MainActivity) requireActivity()).setForceBackToHome(false);
 
         } else {
-            if (fragmentManager.getBackStackEntryCount() > 0) {
-                fragmentManager.popBackStack();
-            } else {
-                ((MainActivity) requireActivity()).switchToFragment("HOME");
+            boolean popped = navController.popBackStack();
+
+            if (!popped) {
+                navController.navigate(R.id.home);
             }
         }
     }
 
     public void showButtonBack() {
+        View view = getView();
+        if (view == null) return;
+
         if (btnBackHeader.getVisibility() == View.VISIBLE) return;
 
         ConstraintSet constraintSet = new ConstraintSet();
@@ -300,6 +256,9 @@ public class HeaderFragment extends Fragment {
     }
 
     public void hideButtonBack() {
+        View view = getView();
+        if (view == null) return;
+
         if (btnBackHeader.getVisibility() == View.GONE) return;
 
         ConstraintSet constraintSet = new ConstraintSet();

@@ -15,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -73,9 +75,6 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
             Bundle bundle = new Bundle();
             bundle.putInt("productId", product.getProduct_id());
 
-            ProductDetailsFragment fragment = new ProductDetailsFragment();
-            fragment.setArguments(bundle);
-
             interactionManager.userInteraction(product.getProduct_id(), user.getUserId(), "view",new RepositoryCallback<String>() {
                 @Override
                 public void onSuccess(String result) {
@@ -88,16 +87,8 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
                 }
             });
 
-            getParentFragmentManager().beginTransaction()
-                    .setCustomAnimations(
-                            R.anim.enter_from_right,
-                            R.anim.exit_to_left,
-                            R.anim.enter_from_left,
-                            R.anim.exit_to_right
-                    )
-                    .replace(R.id.containerFrame, fragment)
-                    .addToBackStack(null)
-                    .commit();
+            NavController navController = NavHostFragment.findNavController(this);
+            navController.navigate(R.id.productDetailsFragment);
         });
 
         getFavoriteProducts();

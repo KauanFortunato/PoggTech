@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -112,18 +114,8 @@ public class MyAdsFragment extends Fragment {
                 v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
             }
 
-            NewAdFragment newAdFragment = new NewAdFragment();
-            requireActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .setCustomAnimations(
-                            R.anim.slide_in_right,
-                            R.anim.slide_out_left,
-                            R.anim.slide_in_left,
-                            R.anim.slide_out_right
-                    )
-                    .replace(R.id.containerFrame, newAdFragment)
-                    .addToBackStack(null)
-                    .commit();
+            NavController navController = NavHostFragment.findNavController(this);
+            navController.navigate(R.id.newAdFragment);
         });
     }
 }

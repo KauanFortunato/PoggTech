@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -167,9 +169,6 @@ public class CartFragment extends Fragment implements CartProductAdapter.OnProdu
         Bundle bundle = new Bundle();
         bundle.putInt("productId", product.getProduct_id());
 
-        ProductDetailsFragment fragment = new ProductDetailsFragment();
-        fragment.setArguments(bundle);
-
         interactionManager.userInteraction(product.getProduct_id(), user.getUserId(), "view",new RepositoryCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -182,15 +181,7 @@ public class CartFragment extends Fragment implements CartProductAdapter.OnProdu
             }
         });
 
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(
-                        R.anim.enter_from_right,
-                        R.anim.exit_to_left,
-                        R.anim.enter_from_left,
-                        R.anim.exit_to_right
-                )
-                .replace(getActivity().findViewById(R.id.containerFrame).getId(), fragment)
-                .addToBackStack("product_details")
-                .commit();
+        NavController navController = NavHostFragment.findNavController(this);
+        navController.navigate(R.id.action_save_to_productDetailsFragment, bundle);
     }
 }

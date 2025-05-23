@@ -14,6 +14,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -155,33 +157,13 @@ public class UserAccountFragment extends Fragment
         });
 
         buttonConfig.setOnClickListener(v -> {
-            UserConfigFragment userConfigFragment = new UserConfigFragment();
-            requireActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .setCustomAnimations(
-                            R.anim.slide_in_right,
-                            R.anim.slide_out_left,
-                            R.anim.slide_in_left,
-                            R.anim.slide_out_right
-                    )
-                    .replace(R.id.containerFrame, userConfigFragment)
-                    .addToBackStack(null) // Permite voltar com o botão de voltar do sistema
-                    .commit();
+            NavController navController = NavHostFragment.findNavController(this);
+            navController.navigate(R.id.action_accountFragment_to_userConfigFragment);
         });
 
         buttonMyAds.setOnClickListener(v -> {
-            MyAdsFragment myAdsFragment = new MyAdsFragment();
-            requireActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .setCustomAnimations(
-                            R.anim.slide_in_right,
-                            R.anim.slide_out_left,
-                            R.anim.slide_in_left,
-                            R.anim.slide_out_right
-                    )
-                    .replace(R.id.containerFrame, myAdsFragment)
-                    .addToBackStack(null)
-                    .commit();
+            NavController navController = NavHostFragment.findNavController(this);
+            navController.navigate(R.id.action_accountFragment_to_myAdsFragment);
         });
     }
 
@@ -231,9 +213,6 @@ public class UserAccountFragment extends Fragment
         Bundle bundle = new Bundle();
         bundle.putInt("productId", product.getProduct_id());
 
-        ProductDetailsFragment fragment = new ProductDetailsFragment();
-        fragment.setArguments(bundle);
-
         interactionManager.userInteraction(product.getProduct_id(), user.getUserId(), "view",new RepositoryCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -246,15 +225,7 @@ public class UserAccountFragment extends Fragment
             }
         });
 
-        getParentFragmentManager().beginTransaction()
-                .setCustomAnimations(
-                        R.anim.enter_from_right,
-                        R.anim.exit_to_left,
-                        R.anim.enter_from_left,
-                        R.anim.exit_to_right
-                )
-                .replace(R.id.containerFrame, fragment)
-                .addToBackStack(null)
-                .commit();
+        NavController navController = NavHostFragment.findNavController(this);
+        navController.navigate(R.id.action_accountFragment_to_productDetailsFragment, bundle);
     }
 }

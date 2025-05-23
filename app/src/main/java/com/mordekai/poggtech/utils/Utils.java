@@ -20,6 +20,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.model.GlideUrl;
@@ -45,8 +47,8 @@ public class Utils {
         }
     }
 
-    public static void goToChat(FragmentActivity activity, Chat chat) {
-        if (activity == null || chat == null) return;
+    public static void goToChat(Fragment fragment, Chat chat) {
+        if (fragment == null || chat == null) return;
 
         Bundle bundle = new Bundle();
         bundle.putInt("chat_with_id", chat.getChat_with());
@@ -58,22 +60,8 @@ public class Utils {
         bundle.putString("product_price", String.valueOf(chat.getProduct_price()));
         bundle.putString("image_product", chat.getCover_product());
 
-        ChatDetailsFragment chatDetailsFragment = new ChatDetailsFragment();
-        chatDetailsFragment.setArguments(bundle);
-
-
-        FragmentManager fragmentManager = activity.getSupportFragmentManager();
-
-        fragmentManager.beginTransaction()
-                .setCustomAnimations(
-                        R.anim.slide_in_bottom,
-                        R.anim.fade_out,
-                        R.anim.fade_in,
-                        R.anim.slide_out_bottom
-                )
-                .replace(R.id.containerFrame, chatDetailsFragment)
-                .addToBackStack(null)
-                .commit();
+        NavController navController = NavHostFragment.findNavController(fragment);
+        navController.navigate(R.id.action_chatFragment_to_chatDetailsFragment, bundle);
     }
 
     public static File getFileFromUri(Context context, Uri uri) {
