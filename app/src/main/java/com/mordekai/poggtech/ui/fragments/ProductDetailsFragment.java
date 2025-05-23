@@ -7,6 +7,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.adapter.GalleryAdapter;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
+import com.mordekai.poggtech.data.model.ApiResponse;
 import com.mordekai.poggtech.data.model.Chat;
 import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.model.User;
@@ -119,7 +120,6 @@ public class ProductDetailsFragment extends Fragment {
     }
 
 
-
     private void fetchProduct(int productId) {
         new android.os.Handler().postDelayed(() -> {
             productManager.fetchProductById(productId, new RepositoryCallback<Product>() {
@@ -144,7 +144,8 @@ public class ProductDetailsFragment extends Fragment {
 
                                 galleryAdapter.updateImages(imageUrls);
 
-                                new TabLayoutMediator(tabLayoutDots, viewPagerGallery, (tab, position) -> {}).attach();
+                                new TabLayoutMediator(tabLayoutDots, viewPagerGallery, (tab, position) -> {
+                                }).attach();
 
                                 for (int i = 0; i < tabLayoutDots.getTabCount(); i++) {
                                     TabLayout.Tab tab = tabLayoutDots.getTabAt(i);
@@ -291,8 +292,8 @@ public class ProductDetailsFragment extends Fragment {
         priceDecimal.setText(String.format("%02d€", cents));
         Log.d("ProductDetailsFragment", "Logs: " + product.getDiscountPercentage());
 
-        if(product.getUser_id() != user.getUserId()) {
-            if(product.getSeller_type().equals("admin")){
+        if (product.getUser_id() != user.getUserId()) {
+            if (product.getSeller_type().equals("admin")) {
                 actionButton.setVisibility(View.VISIBLE);
                 contactSellerContainer.setVisibility(View.GONE);
                 actionButton.setBackgroundResource(R.drawable.rounded_button);
@@ -318,13 +319,13 @@ public class ProductDetailsFragment extends Fragment {
 
 
         btnSend.setOnClickListener(v -> {
-            if(!inputText.getText().toString().isEmpty()) {
-                if(btnSend.isHapticFeedbackEnabled()) {
+            if (!inputText.getText().toString().isEmpty()) {
+                if (btnSend.isHapticFeedbackEnabled()) {
                     btnSend.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
                 }
                 sendMessage();
             } else {
-                if(btnSend.isHapticFeedbackEnabled()) {
+                if (btnSend.isHapticFeedbackEnabled()) {
                     btnSend.performHapticFeedback(HapticFeedbackConstants.REJECT);
                 }
                 inputText.setError("Escreva uma mensagem");
@@ -341,11 +342,15 @@ public class ProductDetailsFragment extends Fragment {
     }
 
     private void addToSaved(int productId) {
-        cartManager.addToCart(productId, user.getUserId(), 1, new RepositoryCallback<ResponseBody>() {
+        cartManager.addToCart(productId, user.getUserId(), 1, new RepositoryCallback<ApiResponse<Void>>() {
             @Override
-            public void onSuccess(ResponseBody result) {
-                isSaved = true;
-                updateSaveButton(true);
+            public void onSuccess(ApiResponse<Void> result) {
+                if(result.isSuccess()) {
+                    isSaved = true;
+                    updateSaveButton(true);
+                } else {
+                    SnackbarUtil.showErrorSnackbar(getView(), result.getMessage(), getContext());
+                }
             }
 
             @Override
@@ -371,12 +376,14 @@ public class ProductDetailsFragment extends Fragment {
     }
 
     private void addToCart(int productId) {
-        cartManager.addToCart(productId, user.getUserId(), 0, new RepositoryCallback<ResponseBody>() {
+        cartManager.addToCart(productId, user.getUserId(), 0, new RepositoryCallback<ApiResponse<Void>>() {
             @Override
-            public void onSuccess(ResponseBody result) {
-                isSaved = true;
-                updateSaveButton(true);
-                showBottomSheet();
+            public void onSuccess(ApiResponse<Void> result) {
+                if(result.isSuccess()) {
+                    showBottomSheet();
+                } else {
+                    SnackbarUtil.showErrorSnackbar(getView(), result.getMessage(), getContext());
+                }
             }
 
             @Override
@@ -387,11 +394,11 @@ public class ProductDetailsFragment extends Fragment {
     }
 
     private void verifyProductIsSaved(int productId, int userId, int tipo) {
-        Log.d("ProductDetailsFragment", "Logs: " + productId + " " + userId + " " + tipo + "");
         cartManager.verifyProductOnCart(productId, userId, tipo, new RepositoryCallback<Boolean>() {
             @Override
             public void onSuccess(Boolean result) {
                 isSaved = result;
+                Log.d("ProductDetailsFragment", "Logs: " + result);
                 updateSaveButton(result);
             }
 
@@ -422,11 +429,11 @@ public class ProductDetailsFragment extends Fragment {
         shimmerLayout.startShimmer();
 
         saveButton.setOnClickListener(v -> {
-            if(saveButton.isHapticFeedbackEnabled()) {
+            if (saveButton.isHapticFeedbackEnabled()) {
                 saveButton.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
             }
 
-            if(isSaved) {
+            if (isSaved) {
                 removeFromSaved(productId);
             } else {
                 addToSaved(productId);
@@ -434,7 +441,7 @@ public class ProductDetailsFragment extends Fragment {
         });
 
         actionButton.setOnClickListener(v -> {
-            if(actionButton.isHapticFeedbackEnabled()) {
+            if (actionButton.isHapticFeedbackEnabled()) {
                 actionButton.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
             }
 
@@ -447,6 +454,8 @@ public class ProductDetailsFragment extends Fragment {
     }
 
     private void showBottomSheet() {
+        ((MainActivity) requireActivity()).setCurrentFragment(this);
+
         Bundle bundle = new Bundle();
         bundle.putString("image_product", product.getCover());
 

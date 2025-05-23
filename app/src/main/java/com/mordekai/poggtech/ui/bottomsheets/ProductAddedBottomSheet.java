@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.mordekai.poggtech.R;
+import com.mordekai.poggtech.ui.activity.MainActivity;
 import com.mordekai.poggtech.ui.fragments.CartFragment;
 import com.mordekai.poggtech.ui.fragments.ProductManageFragment;
 import com.mordekai.poggtech.utils.Utils;
@@ -55,18 +56,6 @@ public class ProductAddedBottomSheet extends BottomSheetDialogFragment {
     }
 
     private void goToCart() {
-        ProductManageFragment productManageFragment = new ProductManageFragment();
-
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .setCustomAnimations(
-                        R.anim.slide_in_bottom,
-                        R.anim.fade_out,
-                        R.anim.fade_in,
-                        R.anim.slide_out_bottom
-                )
-                .replace(R.id.containerFrame, productManageFragment)
-                .addToBackStack(null)
-                .commit();
+        ((MainActivity) requireActivity()).switchToFragment("SAVE");
     }
 }

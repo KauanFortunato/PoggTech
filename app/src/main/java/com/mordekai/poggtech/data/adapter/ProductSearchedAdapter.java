@@ -16,11 +16,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
+import com.mordekai.poggtech.data.model.ApiResponse;
 import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.model.User;
 import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.CartManager;
+import com.mordekai.poggtech.utils.SnackbarUtil;
 import com.mordekai.poggtech.utils.Utils;
 
 import java.util.ArrayList;
@@ -181,11 +183,15 @@ public class ProductSearchedAdapter extends RecyclerView.Adapter<ProductSearched
 
     private void addToFavorites(int productId, View view, int position) {
         CartManager cartManager = new CartManager(RetrofitClient.getRetrofitInstance().create(ApiProduct.class));
-        cartManager.addToCart(productId, user.getUserId(), 1, new RepositoryCallback<ResponseBody>() {
+        cartManager.addToCart(productId, user.getUserId(), 1, new RepositoryCallback<ApiResponse<Void>>() {
             @Override
-            public void onSuccess(ResponseBody result) {
-                notifyItemChanged(position);
-                Toast.makeText(view.getContext(), "Adicionado aos favoritos", Toast.LENGTH_SHORT).show();
+            public void onSuccess(ApiResponse<Void> result) {
+                if (result.isSuccess()) {
+                    notifyItemChanged(position);
+                    Toast.makeText(view.getContext(), "Adicionado aos favoritos", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(view.getContext(), "Erro ao adicionar aos favoritos", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

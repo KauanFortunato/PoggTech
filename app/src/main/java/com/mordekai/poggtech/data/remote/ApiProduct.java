@@ -35,7 +35,15 @@ public interface ApiProduct {
 
     @FormUrlEncoded
     @POST("Product/AddProductOnCartOrFav.php")
-    Call<ResponseBody> addToCart(
+    Call<ApiResponse<Void>> addToCart(
+            @Field("product_id") int product_id,
+            @Field("user_id") int user_id,
+            @Field("tipo") int tipo
+    );
+
+    @FormUrlEncoded
+    @POST("Product/RemoveOneFromCart.php")
+    Call<ApiResponse<Void>> removeOneFromCart(
             @Field("product_id") int product_id,
             @Field("user_id") int user_id,
             @Field("tipo") int tipo

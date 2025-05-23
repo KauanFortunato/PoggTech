@@ -39,6 +39,11 @@ dependencies {
     // Google Places
     implementation libs.places
 
+    // Navigation Component
+    implementation libs.navigation.fragment
+    implementation libs.navigation.ui
+
+
     // Google Auth
     implementation libs.play.services.auth
 

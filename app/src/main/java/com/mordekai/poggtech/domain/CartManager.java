@@ -20,12 +20,13 @@ public class CartManager {
         this.apiProduct = apiProduct;
     }
 
-    public void addToCart(int product_id, int user_id, int tipo, RepositoryCallback<ResponseBody> callback) {
-        Call<ResponseBody> call = apiProduct.addToCart(product_id, user_id, tipo);
-        call.enqueue(new Callback<ResponseBody>() {
+    public void addToCart(int product_id, int user_id, int tipo, RepositoryCallback<ApiResponse<Void>> callback) {
+        Call<ApiResponse<Void>> call = apiProduct.addToCart(product_id, user_id, tipo);
+        call.enqueue(new Callback<ApiResponse<Void>>() {
+
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful() && response.body() != null) {
+            public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
+                if (response.body() != null) {
                     callback.onSuccess(response.body());
                 } else {
                     callback.onFailure(new Exception("Erro ao adicionar aos favoritos/carrinho: " + response.message()));
@@ -33,7 +34,27 @@ public class CartManager {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
+                callback.onFailure(new Exception("Falha na conexão: " + t.getMessage()));
+            }
+        });
+    }
+
+    public void removeOneFromCart(int product_id, int user_id, int tipo, RepositoryCallback<ApiResponse<Void>> callback) {
+        Call<ApiResponse<Void>> call = apiProduct.removeOneFromCart(product_id, user_id, tipo);
+        call.enqueue(new Callback<ApiResponse<Void>>() {
+
+            @Override
+            public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
+                if (response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onFailure(new Exception("Erro ao remover 1 produto: " + response.message()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
                 callback.onFailure(new Exception("Falha na conexão: " + t.getMessage()));
             }
         });
