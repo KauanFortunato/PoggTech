@@ -69,4 +69,5 @@
     <string name="sendEmail">Send email?</string>
     <string name="searchHistory">Search History</string>
     <string name="categories">Categories</string>
+    <string name="buy">Buy</string>
 </resources>

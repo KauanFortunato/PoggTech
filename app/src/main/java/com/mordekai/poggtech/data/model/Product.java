@@ -12,6 +12,7 @@ public class Product {
     private Float price_before;
     private Float discount_percentage;
     private String category;
+    private int quantity;
     private String cover;
     private List<String> images;
     private String location;
@@ -89,4 +90,8 @@ public class Product {
     public int getViews() { return views; }
 
     public int getSaved_count() { return favorites_count; }
+
+    public int getQuantity() { return quantity; }
+
+    public void setQuantity(int quantity) { this.quantity = quantity; }
 }

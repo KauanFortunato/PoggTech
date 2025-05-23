@@ -100,27 +100,30 @@
                 android:background="@drawable/bg_manage_stock"
                 android:orientation="horizontal">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/minusProduct"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:padding="2dp"
                     android:src="@drawable/ic_minus"
-                    app:tint="@color/backgroundColor"/>
+                    app:tint="@color/tint_selector"/>
 
                 <TextView
+                    android:id="@+id/quantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="5dp"
                     android:fontFamily="@font/roboto_medium"
-                    android:textColor="@color/textSecondary"
+                    android:textColor="@color/colorSurface"
                     android:text="1"/>
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/plusProduct"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:padding="2dp"
                     android:src="@drawable/ic_add"
-                    app:tint="@color/backgroundColor"/>
+                    app:tint="@color/tint_selector"/>
 
             </LinearLayout>
 

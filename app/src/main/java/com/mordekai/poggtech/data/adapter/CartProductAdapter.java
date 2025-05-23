@@ -1,5 +1,6 @@
 package com.mordekai.poggtech.data.adapter;
 
+import android.content.res.ColorStateList;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,14 +10,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
+import com.mordekai.poggtech.data.model.ApiResponse;
 import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.CartManager;
+import com.mordekai.poggtech.utils.SnackbarUtil;
 import com.mordekai.poggtech.utils.Utils;
 
 import java.util.List;
@@ -26,10 +30,22 @@ import okhttp3.ResponseBody;
 public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.ViewHolder> {
     private final List<Product> products;
     private final int userId;
+    private final OnProductClickListener productClickListener;
+    private final OnProductChangeQuantityListener productChangeQuantityListener;
 
-    public CartProductAdapter(List<Product> products, int userId) {
+    public CartProductAdapter(List<Product> products, int userId, OnProductClickListener productClickListener, OnProductChangeQuantityListener productChangeQuantityListener) {
         this.products = products;
         this.userId = userId;
+        this.productClickListener = productClickListener;
+        this.productChangeQuantityListener = productChangeQuantityListener;
+    }
+
+    public interface OnProductClickListener {
+        void onProductClick(Product product);
+    }
+
+    public interface OnProductChangeQuantityListener {
+        void onProductChangeQuantity(Product product);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -37,7 +53,10 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
         TextView productTitle;
         TextView productType;
         TextView productPrice;
+        TextView quantity;
         ImageView buttonRemove;
+        AppCompatImageView minusProduct;
+        AppCompatImageView plusProduct;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -48,6 +67,9 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
             productType = itemView.findViewById(R.id.productType);
             productPrice = itemView.findViewById(R.id.productPrice);
             buttonRemove = itemView.findViewById(R.id.buttonRemove);
+            quantity = itemView.findViewById(R.id.quantity);
+            minusProduct = itemView.findViewById(R.id.minusProduct);
+            plusProduct = itemView.findViewById(R.id.plusProduct);
         }
     }
 
@@ -65,12 +87,30 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
         Product product = products.get(position);
 
         holder.productTitle.setText(product.getTitle());
-        holder.productPrice.setText("€ " + product.getPrice());
+        holder.productPrice.setText(String.format("%.2f€", product.getPrice()));
         holder.productType.setText(product.getCategory());
+
+        holder.minusProduct.setOnClickListener(v -> {
+            if (holder.minusProduct.isHapticFeedbackEnabled()) {
+                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
+            }
+
+            decreaseProduct(product.getProduct_id(), v, holder.getAdapterPosition());
+        });
+
+        holder.plusProduct.setOnClickListener(v -> {
+            if (holder.plusProduct.isHapticFeedbackEnabled()) {
+                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
+            }
+
+            addMore(product.getProduct_id(), v, holder.getAdapterPosition());
+        });
+
+        holder.quantity.setText(String.valueOf(product.getQuantity()));
 
         holder.buttonRemove.setOnClickListener(v -> {
 
-            if(holder.buttonRemove.isHapticFeedbackEnabled()) {
+            if (holder.buttonRemove.isHapticFeedbackEnabled()) {
                 v.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
             }
 
@@ -78,6 +118,12 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
         });
 
         Utils.loadImageBasicAuth(holder.productImage, product.getCover());
+
+        holder.itemView.setOnClickListener(view -> {
+            if (productClickListener != null) {
+                productClickListener.onProductClick(product);
+            }
+        });
     }
 
     @Override
@@ -85,14 +131,74 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
         return products.size();
     }
 
+    private void addMore(int productId, View view, int position) {
+        CartManager cartManager = new CartManager(RetrofitClient.getRetrofitInstance().create(ApiProduct.class));
+        cartManager.addToCart(productId, userId, 0, new RepositoryCallback<ApiResponse<Void>>() {
+
+            @Override
+            public void onSuccess(ApiResponse<Void> result) {
+                if (result.isSuccess()) {
+                    Product product = products.get(position);
+                    product.setQuantity(product.getQuantity() + 1);
+
+                    productChangeQuantityListener.onProductChangeQuantity(product);
+                    notifyItemChanged(position);
+                } else {
+                    SnackbarUtil.showErrorSnackbar(view, result.getMessage(), view.getContext());
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Toast.makeText(view.getContext(), "Erro ao adicionar ao carrinho", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void decreaseProduct(int productId, View view, int position) {
+        CartManager cartManager = new CartManager(RetrofitClient.getRetrofitInstance().create(ApiProduct.class));
+        cartManager.removeOneFromCart(productId, userId, 0, new RepositoryCallback<ApiResponse<Void>>() {
+
+            @Override
+            public void onSuccess(ApiResponse<Void> result) {
+                if (result.isSuccess()) {
+                    Product product = products.get(position);
+                    int currentQty = product.getQuantity();
+
+                    if (currentQty > 1) {
+                        product.setQuantity(currentQty - 1);
+                        notifyItemChanged(position);
+                    } else {
+                        products.remove(position);
+                        notifyItemRemoved(position);
+                        notifyItemRangeChanged(position, products.size());
+                    }
+
+                    productChangeQuantityListener.onProductChangeQuantity(product);
+                } else {
+                    SnackbarUtil.showErrorSnackbar(view, result.getMessage(), view.getContext());
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Toast.makeText(view.getContext(), "Erro ao adicionar ao carrinho", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void removeFromCart(int productId, View view, int position) {
         CartManager cartManager = new CartManager(RetrofitClient.getRetrofitInstance().create(ApiProduct.class));
         cartManager.removeFromCart(productId, userId, 0, new RepositoryCallback<ResponseBody>() {
             @Override
             public void onSuccess(ResponseBody result) {
+                Product product = products.get(position);
+
                 products.remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, products.size());
+
+                productChangeQuantityListener.onProductChangeQuantity(product);
                 Toast.makeText(view.getContext(), "Removido dos salvos", Toast.LENGTH_SHORT).show();
             }
 

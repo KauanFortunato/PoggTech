@@ -21,16 +21,18 @@ import com.mordekai.poggtech.data.adapter.CartProductAdapter;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.model.User;
+import com.mordekai.poggtech.data.remote.ApiInteraction;
 import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.CartManager;
+import com.mordekai.poggtech.domain.InteractionManager;
 import com.mordekai.poggtech.domain.ProductManager;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CartFragment extends Fragment {
+public class CartFragment extends Fragment implements CartProductAdapter.OnProductClickListener, CartProductAdapter.OnProductChangeQuantityListener {
 
     private SharedPrefHelper sharedPrefHelper;
     private User user;
@@ -40,11 +42,13 @@ public class CartFragment extends Fragment {
     private ProductManager productManager;
     private CartManager cartManager;
     private List<Product> productList;
-    private TextView textNoCartProducts;
+    private TextView textNoCartProducts, totalPrice, subtotal;
     private boolean isLoading = true;
     private boolean isEmpty = false;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ShimmerFrameLayout shimmerLayout;
+    private InteractionManager interactionManager;
+
 
     @Nullable
     @Override
@@ -58,7 +62,7 @@ public class CartFragment extends Fragment {
 
         // Recycler View
         productList = new ArrayList<>();
-        cartProductAdapter = new CartProductAdapter(productList, user.getUserId());
+        cartProductAdapter = new CartProductAdapter(productList, user.getUserId(), this, this);
         rvItemsCart.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         rvItemsCart.setNestedScrollingEnabled(false);
         rvItemsCart.setAdapter(cartProductAdapter);
@@ -69,6 +73,7 @@ public class CartFragment extends Fragment {
         cartManager = new CartManager(apiProduct);
 
         swipeRefreshLayout.setOnRefreshListener(this::fetchCartProducts);
+        interactionManager = new InteractionManager(RetrofitClient.getRetrofitInstance().create(ApiInteraction.class));
 
         // Carregar produtos
         fetchCartProducts();
@@ -104,6 +109,8 @@ public class CartFragment extends Fragment {
                         textNoCartProducts.setVisibility(View.GONE);
                         Log.d("API_RESPONSE", "Item 0: " + productList.get(0).getTitle());
                     }
+
+                    updatePrice();
                 }, 600);
             }
 
@@ -124,14 +131,66 @@ public class CartFragment extends Fragment {
         });
     }
 
+    private void updatePrice() {
+        double total = 0.00;
+        int quantityCart = 0;
+
+        for (Product product : productList) {
+            total += product.getPrice() * product.getQuantity();
+            quantityCart += product.getQuantity();
+        }
+
+        totalPrice.setText(String.format("€%.2f", total));
+        subtotal.setText(String.format("SUBTOTAL(%d ARTIGO(S))", quantityCart));
+    }
+
     private void initComponents(View view) {
         // Componentes
         shimmerLayout = view.findViewById(R.id.shimmerLayout);
         rvItemsCart = view.findViewById(R.id.rvItemsCart);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
         textNoCartProducts = view.findViewById(R.id.textNoCartProducts);
+        totalPrice = view.findViewById(R.id.totalPrice);
+        subtotal = view.findViewById(R.id.subtotal);
 
         shimmerLayout.setVisibility(View.VISIBLE);
         shimmerLayout.startShimmer();
+    }
+
+    @Override
+    public void onProductChangeQuantity(Product product) {
+        updatePrice();
+    }
+
+    @Override
+    public void onProductClick(Product product) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("productId", product.getProduct_id());
+
+        ProductDetailsFragment fragment = new ProductDetailsFragment();
+        fragment.setArguments(bundle);
+
+        interactionManager.userInteraction(product.getProduct_id(), user.getUserId(), "view",new RepositoryCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("API_RESPONSE", "Interaction result: " + result);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("API_RESPONSE", "Error in userInteraction", t);
+            }
+        });
+
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(
+                        R.anim.enter_from_right,
+                        R.anim.exit_to_left,
+                        R.anim.enter_from_left,
+                        R.anim.exit_to_right
+                )
+                .replace(getActivity().findViewById(R.id.containerFrame).getId(), fragment)
+                .addToBackStack("product_details")
+                .commit();
     }
 }

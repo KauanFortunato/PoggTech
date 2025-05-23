@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
+import com.mordekai.poggtech.data.model.ApiResponse;
 import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
@@ -146,16 +147,20 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     private void addToSaved(int productId, View view, int position) {
         CartManager cartManager = new CartManager(RetrofitClient.getRetrofitInstance().create(ApiProduct.class));
-        cartManager.addToCart(productId, userId, 1, new RepositoryCallback<ResponseBody>() {
+        cartManager.addToCart(productId, userId, 1, new RepositoryCallback<ApiResponse<Void>>() {
             @Override
-            public void onSuccess(ResponseBody result) {
-                notifyItemChanged(position);
-                Toast.makeText(view.getContext(), "Adicionado aos favoritos", Toast.LENGTH_SHORT).show();
+            public void onSuccess(ApiResponse<Void> result) {
+                if (result.isSuccess()) {
+                    notifyItemChanged(position);
+                    Toast.makeText(view.getContext(), "Adicionado ao salvar", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(view.getContext(), "Erro ao adicionar ao salvar", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
             public void onFailure(Throwable t) {
-                Toast.makeText(view.getContext(), "Erro ao adicionar aos favoritos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), "Erro ao adicionar ao salvar", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -58,6 +58,7 @@
     <string name="sendEmail">Enviar email?</string>
     <string name="searchHistory">Histórico de Busca</string>
     <string name="categories">Categoria</string>
+    <string name="buy">Comprar</string>
 
     <!-- Chat -->
     <string name="chat" translatable="false">Chat</string>
