@@ -258,7 +258,7 @@ public class ProductDetailsFragment extends Fragment {
                             verifyIfChatExist(new RepositoryCallback<Chat>() {
                                 @Override
                                 public void onSuccess(Chat result) {
-                                    Utils.goToChat(requireActivity(), result);
+                                    Utils.goToChat(getParentFragment(), result);
                                 }
 
                                 @Override
@@ -454,8 +454,6 @@ public class ProductDetailsFragment extends Fragment {
     }
 
     private void showBottomSheet() {
-        ((MainActivity) requireActivity()).setCurrentFragment(this);
-
         Bundle bundle = new Bundle();
         bundle.putString("image_product", product.getCover());
 

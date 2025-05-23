@@ -3,24 +3,21 @@ package com.mordekai.poggtech.ui.activity;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mordekai.poggtech.R;
-import com.mordekai.poggtech.ui.fragments.ProductManageFragment;
-import com.mordekai.poggtech.ui.fragments.ChatFragment;
 import com.mordekai.poggtech.ui.fragments.HeaderFragment;
-import com.mordekai.poggtech.ui.fragments.HomeFragment;
-import com.mordekai.poggtech.ui.fragments.OfflineFragment;
-import com.mordekai.poggtech.ui.fragments.UserAccountFragment;
 import com.mordekai.poggtech.utils.AppConfig;
 import com.mordekai.poggtech.utils.BottomNavVisibilityController;
 import com.mordekai.poggtech.utils.MessageNotifier;
@@ -30,20 +27,9 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
 
     private HeaderFragment headerFragment;
     private BottomNavigationView bottomNavigationView;
-    private String notificationDestination = null;
-    private final HomeFragment homeFragment = new HomeFragment();
-    private final UserAccountFragment accountFragment = new UserAccountFragment();
-    private final ProductManageFragment saveFragment = new ProductManageFragment();
-    private final ChatFragment chatFragment = new ChatFragment();
-    private final OfflineFragment offlineFragment = new OfflineFragment();
-
-
-    private Fragment currentFragment;
-
+    private NavController navController;
     private boolean forceBackToHome = false;
 
-    // Uso essa funcao para setar a varivel e no HeaderFragment vejo se é true para voltar
-    // diretamente para o Home
     public void setForceBackToHome(boolean force) {
         this.forceBackToHome = force;
     }
@@ -60,7 +46,6 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
         findViewById(R.id.headerContainer).setVisibility(View.GONE);
     }
 
-
     @RequiresApi(api = Build.VERSION_CODES.O_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,105 +53,59 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
+        AppConfig.initialize(this);
+
+        // Setup Header
         headerFragment = new HeaderFragment();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.headerContainer, headerFragment)
                 .commit();
 
+        // Setup Navigation
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        AppConfig.initialize(this);
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.nav_host_fragment);
+        navController = navHostFragment.getNavController();
 
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.containerFrame, homeFragment, "HOME")
-                .hide(homeFragment)
-                .commit();
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.home, R.id.account, R.id.save, R.id.chat
+        ).build();
 
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.containerFrame, accountFragment, "ACCOUNT")
-                .hide(accountFragment)
-                .commit();
+        NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.containerFrame, saveFragment, "SAVE")
-                .hide(saveFragment)
-                .commit();
-
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.containerFrame, chatFragment, "CHAT")
-                .hide(chatFragment)
-                .commit();
-
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.containerFrame, offlineFragment, "OFFLINE")
-                .hide(offlineFragment)
-                .commit();
-
-        // Define listener de navegação
         bottomNavigationView.setOnItemSelectedListener(item -> {
-            Fragment targetFragment = null;
             int itemId = item.getItemId();
 
-            if (itemId == R.id.home) {
-                targetFragment = homeFragment;
-                findViewById(R.id.headerContainer).setVisibility(View.VISIBLE);
-            } else if (itemId == R.id.account) {
-                targetFragment = accountFragment;
-                findViewById(R.id.headerContainer).setVisibility(View.GONE);
-            } else if (itemId == R.id.save) {
-                targetFragment = saveFragment;
-                findViewById(R.id.headerContainer).setVisibility(View.GONE);
-            } else if (itemId == R.id.chat) {
-                targetFragment = chatFragment;
-                findViewById(R.id.headerContainer).setVisibility(View.GONE);
-
+            if (itemId == R.id.chat) {
                 SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
                 prefs.edit().putBoolean("has_new_message", false).apply();
                 clearChatBadge();
             }
 
-            for (Fragment fragment : getSupportFragmentManager().getFragments()) {
-                if (fragment != homeFragment &&
-                        fragment != accountFragment &&
-                        fragment != saveFragment &&
-                        fragment != chatFragment &&
-                        fragment != offlineFragment &&
-                        fragment != headerFragment) {
-                    getSupportFragmentManager().beginTransaction().remove(fragment).commitNow();
-                }
+            boolean handled = NavigationUI.onNavDestinationSelected(item, navController);
+
+            // Controla a visibilidade do header manualmente
+            if (itemId == R.id.home) {
+                showHeader();
+            } else {
+                hideHeader();
             }
 
-            if (targetFragment != null && targetFragment != currentFragment) {
-                getSupportFragmentManager().beginTransaction()
-                        .hide(currentFragment)
-                        .show(targetFragment)
-                        .commit();
-                currentFragment = targetFragment;
-            }
-
-            return true;
+            return handled;
         });
 
+        // Verifica conexão com XAMPP
         NetworkUtil.isConnectedXampp(isConnected -> {
             boolean isOffline = !isConnected || !NetworkUtil.isConnected(getApplicationContext());
-            Fragment initialFragment = isOffline ? offlineFragment : homeFragment;
-
-            getSupportFragmentManager().beginTransaction()
-                    .show(initialFragment)
-                    .commit();
-
-            currentFragment = initialFragment;
-
-            findViewById(R.id.headerContainer).setVisibility(
-                    isOffline ? View.GONE : View.VISIBLE
-            );
-
-            if (!isOffline) {
-                bottomNavigationView.setSelectedItemId(R.id.home);
+            if (isOffline) {
+                navController.navigate(R.id.offlineFragment);
+                hideHeader();
+                hideBottomNav();
+            } else {
+                showBottomNav();
+                showHeader();
             }
-
         });
-
-        notificationDestination = getIntent().getStringExtra("navigate_to");
     }
 
     @Override
@@ -180,11 +119,10 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
             showChatBadge();
         }
 
-        MessageNotifier.setListener(() -> showChatBadge());
+        MessageNotifier.setListener(this::showChatBadge);
     }
 
     private void showChatBadge() {
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         BadgeDrawable badge = bottomNavigationView.getOrCreateBadge(R.id.chat);
         badge.setVisible(true);
         badge.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryVariant));
@@ -192,61 +130,6 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
 
     private void clearChatBadge() {
         bottomNavigationView.removeBadge(R.id.chat);
-    }
-
-    public void switchToFragment(String tag) {
-        Fragment targetFragment = null;
-        boolean shouldShowBottomNav = false;
-
-        switch (tag) {
-            case "HOME":
-                targetFragment = homeFragment;
-                findViewById(R.id.headerContainer).setVisibility(View.VISIBLE);
-                shouldShowBottomNav = true;
-                break;
-            case "ACCOUNT":
-                targetFragment = accountFragment;
-                findViewById(R.id.headerContainer).setVisibility(View.GONE);
-                shouldShowBottomNav = true;
-                break;
-            case "SAVE":
-                targetFragment = saveFragment;
-                findViewById(R.id.headerContainer).setVisibility(View.GONE);
-                shouldShowBottomNav = true;
-                break;
-            case "CHAT":
-                targetFragment = chatFragment;
-                findViewById(R.id.headerContainer).setVisibility(View.GONE);
-                shouldShowBottomNav = true;
-                break;
-            case "OFFLINE":
-                targetFragment = offlineFragment;
-                findViewById(R.id.headerContainer).setVisibility(View.GONE);
-                break;
-        }
-
-        if (targetFragment != null && targetFragment != currentFragment) {
-            getSupportFragmentManager().beginTransaction()
-                    .hide(currentFragment)
-                    .show(targetFragment)
-                    .commit();
-            currentFragment = targetFragment;
-        }
-
-        if (shouldShowBottomNav) {
-            findViewById(R.id.bottomNavigationView).setVisibility(View.VISIBLE);
-        } else {
-            findViewById(R.id.bottomNavigationView).setVisibility(View.GONE);
-        }
-
-        if (tag.equals("HOME")) bottomNavigationView.setSelectedItemId(R.id.home);
-        else if (tag.equals("ACCOUNT")) bottomNavigationView.setSelectedItemId(R.id.account);
-        else if (tag.equals("SAVE")) bottomNavigationView.setSelectedItemId(R.id.save);
-        else if (tag.equals("CHAT")) bottomNavigationView.setSelectedItemId(R.id.chat);
-    }
-
-    public void setCurrentFragment(Fragment fragment) {
-        this.currentFragment = fragment;
     }
 
     @Override
@@ -273,7 +156,6 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
     @Override
     public void showBottomNav() {
         findViewById(R.id.bottomNavigationView).setVisibility(View.VISIBLE);
-        Log.d("BottomNav", "BottomNav Shown");
     }
 
     @Override

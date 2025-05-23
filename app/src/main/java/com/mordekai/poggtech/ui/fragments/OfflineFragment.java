@@ -1,6 +1,5 @@
 package com.mordekai.poggtech.ui.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
@@ -14,12 +13,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.mordekai.poggtech.R;
-import com.mordekai.poggtech.ui.activity.LoginActivity;
-import com.mordekai.poggtech.ui.activity.MainActivity;
 import com.mordekai.poggtech.utils.NetworkUtil;
 import com.mordekai.poggtech.utils.SnackbarUtil;
 
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 public class OfflineFragment extends Fragment {
     private AppCompatButton tryAgainButton;
@@ -43,10 +42,8 @@ public class OfflineFragment extends Fragment {
             NetworkUtil.isConnectedXampp(isConnected -> {
                 if(isConnected) {
                     if (NetworkUtil.isConnected(requireContext())) {
-                        requireActivity().getSupportFragmentManager()
-                                .beginTransaction()
-                                .replace(R.id.containerFrame, new HomeFragment())
-                                .commit();
+                        NavController navController = NavHostFragment.findNavController(this);
+                        navController.navigate(R.id.home);
                     } else {
                         if(tryAgainButton.isHapticFeedbackEnabled()) {
                             v.performHapticFeedback(HapticFeedbackConstants.REJECT);

@@ -53,7 +53,7 @@ public class ChatSellFragment extends Fragment {
         // Recycler View
         chatList = new ArrayList<>();
         chatAdapter = new ChatAdapter(chatList, user.getUserId(), chat -> {
-            Utils.goToChat(requireActivity(), chat);
+            Utils.goToChat(this, chat);
         });
 
         rvChats.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));

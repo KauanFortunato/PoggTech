@@ -15,6 +15,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -161,19 +163,9 @@ public class SearchFragment extends Fragment implements CategoryAdapter.OnCatego
 
         Bundle bundle = new Bundle();
         bundle.putParcelable("category", category);
-        Fragment fragment = new CategoryFragment();
-        fragment.setArguments(bundle);
 
-        getParentFragmentManager().beginTransaction()
-                .setCustomAnimations(
-                        R.anim.enter_from_right,
-                        R.anim.exit_to_left,
-                        R.anim.enter_from_left,
-                        R.anim.exit_to_right
-                )
-                .replace(R.id.containerFrame, fragment)
-                .addToBackStack(null)
-                .commit();
+        NavController navController = NavHostFragment.findNavController(this);
+        navController.navigate(R.id.categoryFragment, bundle);
     }
 
     @Override

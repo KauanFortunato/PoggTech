@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -20,16 +22,18 @@ import com.mordekai.poggtech.data.adapter.SavedProductAdapter;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.model.User;
+import com.mordekai.poggtech.data.remote.ApiInteraction;
 import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.CartManager;
+import com.mordekai.poggtech.domain.InteractionManager;
 import com.mordekai.poggtech.domain.ProductManager;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SavedFragment extends Fragment {
+public class SavedFragment extends Fragment implements SavedProductAdapter.OnProductClickListener {
     private SharedPrefHelper sharedPrefHelper;
     private User user;
     private SavedProductAdapter savedProductAdapter;
@@ -43,6 +47,7 @@ public class SavedFragment extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean isLoading = true;
     private boolean isEmpty = true;
+    private InteractionManager interactionManager;
 
 
     @Nullable
@@ -57,7 +62,7 @@ public class SavedFragment extends Fragment {
 
         // Recycler View
         productList = new ArrayList<>();
-        savedProductAdapter = new SavedProductAdapter(productList, user.getUserId());
+        savedProductAdapter = new SavedProductAdapter(productList, user.getUserId(), this);
         rvItemsSaved.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         rvItemsSaved.setNestedScrollingEnabled(false);
         rvItemsSaved.setAdapter(savedProductAdapter);
@@ -68,6 +73,7 @@ public class SavedFragment extends Fragment {
         cartManager = new CartManager(apiProduct);
 
         swipeRefreshLayout.setOnRefreshListener(this::fetchFavProducts);
+        interactionManager = new InteractionManager(RetrofitClient.getRetrofitInstance().create(ApiInteraction.class));
 
         // Carregar produtos
         fetchFavProducts();
@@ -130,5 +136,26 @@ public class SavedFragment extends Fragment {
 
         shimmerLayout.setVisibility(View.VISIBLE);
         shimmerLayout.startShimmer();
+    }
+
+    @Override
+    public void onProductClick(Product product) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("productId", product.getProduct_id());
+
+        interactionManager.userInteraction(product.getProduct_id(), user.getUserId(), "view",new RepositoryCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("API_RESPONSE", "Interaction result: " + result);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("API_RESPONSE", "Error in userInteraction", t);
+            }
+        });
+
+        NavController navController = NavHostFragment.findNavController(this);
+        navController.navigate(R.id.action_save_to_productDetailsFragment, bundle);
     }
 }

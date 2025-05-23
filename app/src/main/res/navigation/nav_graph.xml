@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/home">
+
+    <fragment
+        android:id="@+id/home"
+        android:name="com.mordekai.poggtech.ui.fragments.HomeFragment"
+        android:label="Home" >
+        <action
+            android:id="@+id/action_homeFragment_to_productDetailsFragment3"
+            app:destination="@id/productDetailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_homeFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/save"
+        android:name="com.mordekai.poggtech.ui.fragments.ProductManageFragment"
+        android:label="Carrinho" >
+        <action
+            android:id="@+id/action_save_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/chat"
+        android:name="com.mordekai.poggtech.ui.fragments.ChatFragment"
+        android:label="Chat" >
+        <action
+            android:id="@+id/action_chatFragment_to_chatDetailsFragment"
+            app:destination="@id/chatDetailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/chatDetailsFragment"
+        android:name="com.mordekai.poggtech.ui.fragments.ChatDetailsFragment"
+        android:label="Detalhes do Chat" />
+
+
+    <fragment
+        android:id="@+id/offlineFragment"
+        android:name="com.mordekai.poggtech.ui.fragments.OfflineFragment"
+        android:label="Offline" >
+        <action
+            android:id="@+id/action_offlineFragment_to_homeFragment"
+            app:destination="@id/home" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/account"
+        android:name="com.mordekai.poggtech.ui.fragments.UserAccountFragment"
+        android:label="Conta" >
+        <action
+            android:id="@+id/action_accountFragment_to_userConfigFragment"
+            app:destination="@id/userConfigFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_accountFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_accountFragment_to_myAdsFragment"
+            app:destination="@id/myAdsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/userConfigFragment"
+        android:name="com.mordekai.poggtech.ui.fragments.UserConfigFragment"
+        android:label="Configurações" />
+
+    <fragment
+        android:id="@+id/myAdsFragment"
+        android:name="com.mordekai.poggtech.ui.fragments.MyAdsFragment"
+        android:label="Meus Anúncios" >
+        <action
+            android:id="@+id/action_myAdsFragment_to_newAdFragment"
+            app:destination="@id/newAdFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/newAdFragment"
+        android:name="com.mordekai.poggtech.ui.fragments.NewAdFragment"
+        android:label="Novo Anúncio" />
+
+    <fragment
+        android:id="@+id/productDetailsFragment"
+        android:name="com.mordekai.poggtech.ui.fragments.ProductDetailsFragment"
+        android:label="Detalhes" >
+        <action
+            android:id="@+id/action_productDetailsFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
+        <action
+            android:id="@+id/action_productDetailsFragment_to_chatDetailsFragment"
+            app:destination="@id/chatDetailsFragment" />
+        <action
+            android:id="@+id/action_productDetailsFragment_to_save"
+            app:destination="@id/save" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.mordekai.poggtech.ui.fragments.CartFragment"
+        android:label="Carrinho" />
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.mordekai.poggtech.ui.fragments.SearchFragment"
+        android:label="Pesquisa" >
+        <action
+            android:id="@+id/action_searchFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="com.mordekai.poggtech.ui.fragments.CategoryFragment"
+        android:label="Categorias" >
+        <action
+            android:id="@+id/action_categoryFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
+    </fragment>
+</navigation>
