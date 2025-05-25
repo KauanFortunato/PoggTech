@@ -40,6 +40,7 @@
 
     <!--  Opacity Colors  -->
     <color name="opacityColor">#CC000000</color>
+    <color name="opacityColorVariant">#CCFFFFFF</color>
 
     <color name="skeletonStartColor">#DCDCDC</color>
     <color name="skeletonCenterColor">#C4C4C4</color>

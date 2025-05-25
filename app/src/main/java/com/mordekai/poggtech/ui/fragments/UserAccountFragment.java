@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -43,6 +44,7 @@ public class UserAccountFragment extends Fragment
         ProductAdapter.OnSavedChangedListener {
     private TextView helloUser, numberAccount;
     private ImageButton buttonConfig, buttonMyPurchases, buttonMyAds;
+    private AppCompatImageView walletButton;
     private FirebaseUser currentUser;
     private SharedPrefHelper sharedPrefHelper;
     private InteractionManager interactionManager;
@@ -110,6 +112,8 @@ public class UserAccountFragment extends Fragment
         helloUser = view.findViewById(R.id.helloUser);
         numberAccount = view.findViewById(R.id.numberAccount);
         rvForYou = view.findViewById(R.id.rvForYou);
+        buttonConfig = view.findViewById(R.id.buttonConfig);
+        walletButton = view.findViewById(R.id.walletButton);
 
         buttonConfig = view.findViewById(R.id.buttonConfig);
         buttonMyPurchases = view.findViewById(R.id.buttonMyPurchases);
@@ -165,6 +169,11 @@ public class UserAccountFragment extends Fragment
             NavController navController = NavHostFragment.findNavController(this);
             navController.navigate(R.id.action_accountFragment_to_myAdsFragment);
         });
+
+        walletButton.setOnClickListener(v -> {
+            NavController navController = NavHostFragment.findNavController(this);
+            navController.navigate(R.id.action_account_to_WalletFragment);
+        });
     }
 
     private void getForYou() {
@@ -200,7 +209,8 @@ public class UserAccountFragment extends Fragment
 
     }
 
-    private void setLayout() {}
+    private void setLayout() {
+    }
 
     @Override
     public void onSaveChanged() {
@@ -213,7 +223,7 @@ public class UserAccountFragment extends Fragment
         Bundle bundle = new Bundle();
         bundle.putInt("productId", product.getProduct_id());
 
-        interactionManager.userInteraction(product.getProduct_id(), user.getUserId(), "view",new RepositoryCallback<String>() {
+        interactionManager.userInteraction(product.getProduct_id(), user.getUserId(), "view", new RepositoryCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 Log.d("API_RESPONSE", "Interaction result: " + result);

@@ -59,6 +59,8 @@
     <string name="searchHistory">Histórico de Busca</string>
     <string name="categories">Categoria</string>
     <string name="buy">Comprar</string>
+    <string name="eur" translatable="false">EUR</string>
+
 
     <!-- Chat -->
     <string name="chat" translatable="false">Chat</string>
