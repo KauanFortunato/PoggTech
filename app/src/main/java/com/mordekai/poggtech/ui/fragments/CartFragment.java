@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -21,13 +22,17 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.adapter.CartProductAdapter;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
+import com.mordekai.poggtech.data.model.ApiResponse;
+import com.mordekai.poggtech.data.model.OrderRequest;
 import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.model.User;
 import com.mordekai.poggtech.data.remote.ApiInteraction;
+import com.mordekai.poggtech.data.remote.ApiOrder;
 import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.CartManager;
 import com.mordekai.poggtech.domain.InteractionManager;
+import com.mordekai.poggtech.domain.OrderManager;
 import com.mordekai.poggtech.domain.ProductManager;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
@@ -50,6 +55,7 @@ public class CartFragment extends Fragment implements CartProductAdapter.OnProdu
     private SwipeRefreshLayout swipeRefreshLayout;
     private ShimmerFrameLayout shimmerLayout;
     private InteractionManager interactionManager;
+    private AppCompatButton buy;
 
 
     @Nullable
@@ -64,7 +70,7 @@ public class CartFragment extends Fragment implements CartProductAdapter.OnProdu
 
         // Recycler View
         productList = new ArrayList<>();
-        cartProductAdapter = new CartProductAdapter(productList, user.getUserId(), this, this);
+        cartProductAdapter = new CartProductAdapter(productList, user.getUserId(), this, this, getChildFragmentManager());
         rvItemsCart.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         rvItemsCart.setNestedScrollingEnabled(false);
         rvItemsCart.setAdapter(cartProductAdapter);
@@ -154,10 +160,50 @@ public class CartFragment extends Fragment implements CartProductAdapter.OnProdu
         textNoCartProducts = view.findViewById(R.id.textNoCartProducts);
         totalPrice = view.findViewById(R.id.totalPrice);
         subtotal = view.findViewById(R.id.subtotal);
+        buy = view.findViewById(R.id.buy);
 
         shimmerLayout.setVisibility(View.VISIBLE);
         shimmerLayout.startShimmer();
+
+        buy.setOnClickListener(v -> {
+            OrderRequest request = buildOrderRequest();
+
+            ApiOrder apiOrder = RetrofitClient.getRetrofitInstance().create(ApiOrder.class);
+            OrderManager orderManager = new OrderManager(apiOrder);
+
+            orderManager.RegisterOrder(request, new RepositoryCallback<ApiResponse<Integer>>() {
+
+                @Override
+                public void onSuccess(ApiResponse<Integer> result) {
+                    if (result.isSuccess()) {
+                        Log.d("API_RESPONSE", result.getMessage());
+                    } else {
+                        Log.e("API_RESPONSE", result.getMessage());
+                    }
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    Log.e("API_RESPONSE", "Erro ao registrar compra", t);
+                }
+            });
+        });
     }
+
+    private OrderRequest buildOrderRequest() {
+        List<OrderRequest.OrderItem> orderItems = new ArrayList<>();
+
+        for (Product p : productList) {
+            orderItems.add(new OrderRequest.OrderItem(
+                    p.getProduct_id(),
+                    p.getQuantity(),
+                    p.getPrice()
+            ));
+        }
+
+        return new OrderRequest(user.getUserId(), orderItems);
+    }
+
 
     @Override
     public void onProductChangeQuantity(Product product) {

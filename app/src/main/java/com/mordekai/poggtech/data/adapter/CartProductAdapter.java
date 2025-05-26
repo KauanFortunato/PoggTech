@@ -1,6 +1,7 @@
 package com.mordekai.poggtech.data.adapter;
 
 import android.content.res.ColorStateList;
+import android.os.Bundle;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mordekai.poggtech.R;
@@ -20,6 +22,7 @@ import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.CartManager;
+import com.mordekai.poggtech.ui.bottomsheets.DeleteProductBottomSheet;
 import com.mordekai.poggtech.utils.SnackbarUtil;
 import com.mordekai.poggtech.utils.Utils;
 
@@ -32,12 +35,16 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
     private final int userId;
     private final OnProductClickListener productClickListener;
     private final OnProductChangeQuantityListener productChangeQuantityListener;
+    FragmentManager fragmentManager;
 
-    public CartProductAdapter(List<Product> products, int userId, OnProductClickListener productClickListener, OnProductChangeQuantityListener productChangeQuantityListener) {
+
+    public CartProductAdapter(List<Product> products, int userId, OnProductClickListener productClickListener,
+                              OnProductChangeQuantityListener productChangeQuantityListener, FragmentManager fragmentManager) {
         this.products = products;
         this.userId = userId;
         this.productClickListener = productClickListener;
         this.productChangeQuantityListener = productChangeQuantityListener;
+        this.fragmentManager = fragmentManager;
     }
 
     public interface OnProductClickListener {
@@ -114,7 +121,7 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
                 v.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
             }
 
-            removeFromCart(product.getProduct_id(), v, holder.getAdapterPosition());
+            showRemoveConfirmation(product.getProduct_id(), v, holder.getAdapterPosition());
         });
 
         Utils.loadImageBasicAuth(holder.productImage, product.getCover());
@@ -207,5 +214,20 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
                 Toast.makeText(view.getContext(), "Erro ao remover dos salvos", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void showRemoveConfirmation(int productId, View view, int position) {
+        Bundle bundle = new Bundle();
+        bundle.putString("title", view.getContext().getString(R.string.removeProduct));
+        bundle.putString("button_confirm", view.getContext().getString(R.string.remove));
+
+        DeleteProductBottomSheet bottomSheet = new DeleteProductBottomSheet(new DeleteProductBottomSheet.OnDeleteConfirmedListener() {
+            @Override
+            public void onDeleteConfirmed() {
+                removeFromCart(productId, view, position);
+            }
+        });
+        bottomSheet.setArguments(bundle);
+        bottomSheet.show(fragmentManager, bottomSheet.getTag());
     }
 }

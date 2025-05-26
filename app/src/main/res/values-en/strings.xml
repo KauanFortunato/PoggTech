@@ -70,4 +70,9 @@
     <string name="searchHistory">Search History</string>
     <string name="categories">Categories</string>
     <string name="buy">Buy</string>
+    <string name="deleteProduct">Do you want to delete this product?</string>
+    <string name="removeProduct">Do you want to remove this product?</string>
+    <string name="delete">Delete</string>
+    <string name="numPedido">Order number</string>
+    <string name="stats">Stats</string>
 </resources>

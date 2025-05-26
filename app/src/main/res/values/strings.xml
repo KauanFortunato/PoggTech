@@ -60,7 +60,11 @@
     <string name="categories">Categoria</string>
     <string name="buy">Comprar</string>
     <string name="eur" translatable="false">EUR</string>
-
+    <string name="deleteProduct">Deseja excluir este produto?</string>
+    <string name="removeProduct">Deseja remover este produto?</string>
+    <string name="delete">Excluir</string>
+    <string name="numPedido">N° do pedido</string>
+    <string name="stats">Status</string>
 
     <!-- Chat -->
     <string name="chat" translatable="false">Chat</string>

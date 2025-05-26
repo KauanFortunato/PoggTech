@@ -34,7 +34,7 @@ public class PaymentsAdapter extends RecyclerView.Adapter<PaymentsAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull PaymentsAdapter.ViewHolder holder, int position) {
         Payments payment = payments.get(position);
-        holder.bind(payment);
+        holder.bind(payment, holder.itemView);
     }
 
     @Override
@@ -59,10 +59,23 @@ public class PaymentsAdapter extends RecyclerView.Adapter<PaymentsAdapter.ViewHo
             status = itemView.findViewById(R.id.status);
         }
 
-        public void bind(Payments payment) {
-            paymentDate.setText(payment.getCreatedAt());
-            numberPayment.setText(String.valueOf(payment.getId()));
-            amount.setText(String.valueOf(payment.getAmount()));
+        public void bind(Payments payment, View view) {
+            paymentDate.setText(payment.getCreatedAtFormatted());
+            numberPayment.setText(view.getContext().getString(R.string.numPedido) + ": " + String.valueOf(payment.getOrderId()));
+            amount.setText(String.format("-EUR %.2f€", payment.getAmount()));
+
+            switch (payment.getStatus()) {
+                case "pendente":
+                    status.setTextColor(view.getContext().getResources().getColor(R.color.colorAccent));
+                    break;
+                case "concluido":
+                    status.setTextColor(view.getContext().getResources().getColor(R.color.colorSuccess));
+                    break;
+                case "falhou":
+                    status.setTextColor(view.getContext().getResources().getColor(R.color.colorError));
+                    break;
+            }
+
             status.setText(payment.getStatus());
         }
     }

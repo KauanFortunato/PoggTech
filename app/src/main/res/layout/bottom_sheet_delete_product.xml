@@ -7,6 +7,7 @@
     android:paddingHorizontal="24dp"
     android:paddingBottom="24dp"
     android:paddingTop="10dp"
+    android:background="@drawable/bg_bottom_sheet"
     android:gravity="center_horizontal">
 
     <ImageView
