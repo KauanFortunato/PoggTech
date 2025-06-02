@@ -2,27 +2,42 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="110dp"
+    android:layout_width="120dp"
     android:layout_height="wrap_content"
+    app:cardBackgroundColor="@android:color/transparent"
     android:layout_margin="5dp"
-    app:cardCornerRadius="15dp"
-    app:cardElevation="2dp">
+    app:cardCornerRadius="@dimen/border_radius_1"
+    app:cardElevation="0dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:adjustViewBounds="true"
         android:background="@drawable/bg_card_product">
 
         <!-- Imagem do Produto -->
-        <ImageView
-            android:id="@+id/categoryIcon"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/containerImg"
             android:layout_width="match_parent"
-            android:layout_height="95dp"
-            android:scaleType="centerCrop"
+            android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:src="@drawable/bg_skeleton"
-            android:background="@drawable/bg_image_product" />
+            app:cardBackgroundColor="@android:color/transparent"
+            app:cardElevation="0dp"
+            android:layout_margin="5dp"
+            android:orientation="horizontal"
+            app:cardCornerRadius="@dimen/border_radius_2">
+
+            <ImageView
+                android:id="@+id/categoryIcon"
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:src="@drawable/bg_skeleton"
+                android:background="@drawable/bg_image_product" />
+
+        </androidx.cardview.widget.CardView>
 
         <!-- Título do Produto -->
         <TextView
@@ -38,6 +53,6 @@
             android:ellipsize="end"
             android:padding="8dp"
             android:scrollHorizontally="false"
-            android:layout_below="@id/categoryIcon"/>
+            android:layout_below="@id/containerImg"/>
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

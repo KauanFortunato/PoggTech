@@ -6,7 +6,7 @@
     android:paddingVertical="10dp"
     android:paddingHorizontal="5dp"
     android:orientation="horizontal"
-    android:background="@color/colorSecondaryVariant">
+    android:background="@color/backgroundColor">
 
     <FrameLayout
         android:layout_width="60dp"

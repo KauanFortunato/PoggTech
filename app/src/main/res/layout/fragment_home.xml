@@ -36,7 +36,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/backgroundColor"
                         android:orientation="vertical"
-                        android:paddingHorizontal="10dp"
+                        android:paddingHorizontal="5dp"
                         android:paddingVertical="8dp">
 
                         <TextView
@@ -161,6 +161,28 @@
                         </com.facebook.shimmer.ShimmerFrameLayout>
                     </LinearLayout>
 
+                    <View style="@style/division"
+                        android:layout_height="3dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="10dp">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/banner_2" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
                     <!-- Skeleton Loader para "Continuar a Comprar" -->
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -207,6 +229,8 @@
                             tools:listitem="@layout/item_continue_buy" />
                     </LinearLayout>
 
+                    <View style="@style/division" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -231,16 +255,6 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:text="@string/paraVoce" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginHorizontal="10dp"
-                                    android:fontFamily="@font/roboto_medium"
-                                    android:text="Ver mais"
-                                    android:textColor="@color/colorPrimaryVariant"
-                                    android:textSize="15sp" />
-
                             </LinearLayout>
 
                             <LinearLayout
@@ -302,6 +316,8 @@
 
                         </LinearLayout>
 
+                        <View style="@style/division" />
+
                         <!-- Talvez Você goste -->
                         <LinearLayout
                             android:id="@+id/maybeYouLikeContainer"
@@ -316,8 +332,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
-                                android:orientation="horizontal"
-                                android:paddingHorizontal="10dp">
+                                android:orientation="horizontal">
 
                                 <TextView
                                     style="@style/productSectionSubTitle"
@@ -330,7 +345,6 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
                                 android:orientation="horizontal"
                                 android:paddingBottom="10dp">
 
@@ -343,6 +357,9 @@
 
                             </LinearLayout>
                         </LinearLayout>
+
+                        <View style="@style/division"
+                            android:layout_height="3dp" />
 
                         <!-- Container "Popular" -->
                         <LinearLayout
@@ -394,6 +411,5 @@
             </androidx.core.widget.NestedScrollView>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </FrameLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

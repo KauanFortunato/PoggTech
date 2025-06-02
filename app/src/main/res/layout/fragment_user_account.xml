@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorSecondaryVariant">
+    android:orientation="vertical"
+    android:background="@color/backgroundColor">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/header"
         style="@style/Header"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_width="match_parent">
 
         <TextView
             android:id="@+id/headerText"
             style="@style/TextHeader"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
             android:text="@string/conta"
+            android:layout_marginVertical="5dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:layout_gravity="bottom"
             android:textAlignment="center" />
-    </RelativeLayout>
+    </LinearLayout>
 
 
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/section_divisor"
+        android:background="@color/backgroundColor"
         android:orientation="vertical"
         android:paddingHorizontal="30dp"
         android:paddingVertical="25dp"
@@ -59,7 +59,7 @@
                 android:background="@drawable/bg_image_view_wallet"
                 android:padding="5dp"
                 android:src="@drawable/ic_wallet"
-                app:tint="@color/colorPrimaryVariant" />
+                app:tint="@color/colorOnPrimary" />
         </LinearLayout>
 
         <TextView
@@ -182,12 +182,14 @@
         </LinearLayout>
     </LinearLayout>
 
+    <View style="@style/division" />
+
     <LinearLayout
         android:id="@+id/forYouContainer"
         style="@style/productContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorSecondaryVariant"
+        android:background="@color/backgroundColor"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
         <LinearLayout
@@ -225,9 +227,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layoutAnimation="@anim/layout_animation_fade_slide_up"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_product" />
         </LinearLayout>
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

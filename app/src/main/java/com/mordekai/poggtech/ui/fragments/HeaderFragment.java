@@ -143,7 +143,7 @@ public class HeaderFragment extends Fragment {
                 sharedPrefHelper.addSearchHistory(query);
 
                 NavController navController = NavHostFragment.findNavController(this);
-                navController.navigate(R.id.searchFragment);
+                navController.navigate(R.id.action_searchFragment_to_searchedProductsFragment);
 
                 searchProd.postDelayed(() -> isUpdatingText = false, 100);
             }
@@ -190,7 +190,7 @@ public class HeaderFragment extends Fragment {
             sharedPrefHelper.addSearchHistory(searchProd.getText().toString().trim());
 
             NavController navController = NavHostFragment.findNavController(this);
-            navController.navigate(R.id.searchFragment);
+            navController.navigate(R.id.action_searchFragment_to_searchedProductsFragment);
 
             searchProd.postDelayed(() -> isUpdatingText = false, 100);
         });

@@ -30,6 +30,7 @@ import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.InteractionManager;
 import com.mordekai.poggtech.domain.ProductManager;
 import com.mordekai.poggtech.ui.activity.MainActivity;
+import com.mordekai.poggtech.utils.BottomNavVisibilityController;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
 import java.util.ArrayList;
@@ -59,7 +60,10 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_searched_products, container, false);
+
         ((MainActivity) requireActivity()).setForceBackToHome(true);
+        ((BottomNavVisibilityController) requireActivity()).showBottomNav();
+
         headerFragment = (HeaderFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.headerContainer);
 
         sharedPrefHelper = new SharedPrefHelper(requireContext());
@@ -75,7 +79,7 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
             Bundle bundle = new Bundle();
             bundle.putInt("productId", product.getProduct_id());
 
-            interactionManager.userInteraction(product.getProduct_id(), user.getUserId(), "view",new RepositoryCallback<String>() {
+            interactionManager.userInteraction(product.getProduct_id(), user.getUserId(), "view", new RepositoryCallback<String>() {
                 @Override
                 public void onSuccess(String result) {
                     Log.d("API_RESPONSE", "Interaction result: " + result);
@@ -107,6 +111,7 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
             headerFragment.closeSearchProd();
         }
         ((MainActivity) requireActivity()).setForceBackToHome(true);
+        ((BottomNavVisibilityController) requireActivity()).showBottomNav();
         showBackButton();
 
         buttonSelect(filterHigh);
@@ -140,7 +145,8 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
             }
 
             @Override
-            public void onFailure(Throwable t) {}
+            public void onFailure(Throwable t) {
+            }
         });
     }
 
@@ -150,19 +156,19 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
         boolean onlyPoggers = poggersFilter.isChecked();
 
         for (Product product : allProducts) {
-            if(onlyPoggers) {
-                if(product.isPoggers()){
+            if (onlyPoggers) {
+                if (product.isPoggers()) {
                     filtered.add(product);
                 }
-            }else{
+            } else {
                 filtered.add(product);
             }
         }
 
-        if(highPrice){
+        if (highPrice) {
             Collections.sort(filtered, (p1, p2) -> Float.compare(p2.getPrice(), p1.getPrice()));
         } else {
-            if(lowPrice) {
+            if (lowPrice) {
                 Collections.sort(filtered, (p1, p2) -> Float.compare(p1.getPrice(), p2.getPrice()));
             }
         }
@@ -188,7 +194,7 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
         });
 
         filterHigh.setOnClickListener(v -> {
-            if(filterHigh.isHapticFeedbackEnabled()) {
+            if (filterHigh.isHapticFeedbackEnabled()) {
                 filterHigh.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
             }
 
@@ -201,7 +207,7 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
         });
 
         filterLow.setOnClickListener(v -> {
-            if(filterLow.isHapticFeedbackEnabled()) {
+            if (filterLow.isHapticFeedbackEnabled()) {
                 filterLow.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
             }
 
@@ -218,8 +224,8 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
 
     private void buttonSelect(AppCompatButton button) {
 
-        if(button == filterHigh) {
-            if(highPrice) {
+        if (button == filterHigh) {
+            if (highPrice) {
                 button.setBackgroundResource(R.drawable.bg_item_filter_selected);
                 button.setTextColor(getResources().getColor(R.color.colorPrimary));
             } else {
@@ -227,7 +233,7 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
                 button.setTextColor(getResources().getColor(R.color.textSecondary));
             }
         } else {
-            if(lowPrice) {
+            if (lowPrice) {
                 button.setBackgroundResource(R.drawable.bg_item_filter_selected);
                 button.setTextColor(getResources().getColor(R.color.colorPrimary));
             } else {

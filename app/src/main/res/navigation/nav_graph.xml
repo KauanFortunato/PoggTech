@@ -152,6 +152,9 @@
         <action
             android:id="@+id/action_searchFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_searchedProductsFragment"
+            app:destination="@id/searchedProductsFragment" />
     </fragment>
 
     <fragment
@@ -160,6 +163,15 @@
         android:label="Categorias" >
         <action
             android:id="@+id/action_categoryFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchedProductsFragment"
+        android:name="com.mordekai.poggtech.ui.fragments.SearchedProductsFragment"
+        android:label="SearchedProductsFragment" >
+        <action
+            android:id="@+id/action_searchedProductsFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
     </fragment>
 </navigation>

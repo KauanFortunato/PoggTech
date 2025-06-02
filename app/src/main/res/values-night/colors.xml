@@ -9,11 +9,13 @@
     <color name="colorSecondaryVariant">#1D1D1D</color>
     <color name="colorOnSecondary">#FFFFFF</color>
 
-    <color name="colorSurface">#202020</color>
+    <color name="colorSurface">#1E1E1E</color>
     <color name="colorOnSurface">#FFFFFF</color>
     <color name="colorOnSurfaceVariant">#464646</color>
 
-    <color name="backgroundColor">#181818</color>
+    <color name="elevatedSurface">#2A2A2A</color>
+
+    <color name="backgroundColor">#121212</color>
     <color name="colorOnBackground">#FFFFFF</color>
 
     <!-- Cores de Feedback -->
@@ -29,8 +31,8 @@
     <!-- Cores para Divisões e Bordas -->
     <color name="colorDivider">#424242</color>
     <color name="colorOnDivider">#757575</color>
-    <color name="colorBorder">#616161</color>
-    <color name="colorBorderVariant">#303030</color>
+    <color name="colorBorder">#292929</color>
+    <color name="colorBorderVariant">#2A2A2A</color>
 
 
     <!-- Cores de Texto -->

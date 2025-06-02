@@ -65,7 +65,8 @@
     <string name="delete">Excluir</string>
     <string name="numPedido">N° do pedido</string>
     <string name="stats">Status</string>
-
+    <string name="ads">Anúncios</string>
+    <string name="clearAll">Limpar tudo</string>
     <!-- Chat -->
     <string name="chat" translatable="false">Chat</string>
     <string name="compra">Comprando</string>

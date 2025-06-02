@@ -1,46 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/colorSecondaryVariant">
+    android:background="@color/backgroundColor"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/bg_divisor_bottom"
         android:orientation="horizontal"
-        android:background="@drawable/rounded_bottom_med">
+        android:paddingVertical="3dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:paddingHorizontal="10dp"
-            android:gravity="center_vertical|center_horizontal"
             android:background="@drawable/bg_divisor_right"
-            android:orientation="horizontal">
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/roboto_bold"
+                android:text="@string/poggers"
                 android:textColor="@color/colorSuccess"
-                android:textSize="12sp"
-                android:text="@string/poggers"/>
+                android:textSize="12sp" />
 
             <Switch
                 android:id="@+id/poggersFilter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingHorizontal="10dp"
+                android:scaleX="1.5"
+                android:scaleY="1.5"
+                android:showText="false"
                 android:thumb="@drawable/bg_switch_thumb"
                 android:track="@drawable/bg_switch"
-                android:showText="false"
-                android:paddingHorizontal="10dp"
-                android:scaleY="1.5"
-                android:scaleX="1.5"
                 tools:ignore="UseSwitchCompatOrMaterialXml" />
 
         </LinearLayout>
@@ -48,8 +49,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/backgroundColor"
             android:orientation="horizontal">
 
             <HorizontalScrollView
@@ -61,14 +63,14 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="10dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="10dp">
 
                     <androidx.appcompat.widget.AppCompatButton
                         style="@style/itemFilterButton"
                         android:fontFamily="@font/roboto_bold"
-                        android:textColor="@color/colorPrimaryVariant"
-                        android:text="Filtros" />
+                        android:text="Filtros"
+                        android:textColor="@color/colorPrimaryVariant" />
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/filterHigh"
@@ -99,13 +101,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingVertical="2dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/searchedProducts"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_product_searched" />
     </LinearLayout>

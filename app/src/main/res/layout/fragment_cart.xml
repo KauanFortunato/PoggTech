@@ -1,63 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorSecondaryVariant"
+    android:background="@color/backgroundColor"
     android:orientation="vertical">
 
-    <LinearLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:elevation="1dp"
-        android:orientation="vertical"
-        android:paddingBottom="5dp">
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
 
-        <TextView
-            android:id="@+id/textNoCartProducts"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/roboto_medium"
-            android:text="@string/noCartProducts"
-            android:textAlignment="center"
-            android:textColor="@color/textTertiary"
-            android:textSize="16sp"
-            android:visibility="gone" />
-
-        <com.facebook.shimmer.ShimmerFrameLayout
-            android:id="@+id/shimmerLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:shimmer_auto_start="true"
-            app:shimmer_duration="1000">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layoutAnimation="@anim/layout_animation_fade_slide_up"
-                android:orientation="vertical">
-
-                <include layout="@layout/skeleton_item_product_cart" />
-
-                <include layout="@layout/skeleton_item_product_cart" />
-
-                <include layout="@layout/skeleton_item_product_cart" />
-
-                <include layout="@layout/skeleton_item_product_cart" />
-            </LinearLayout>
-
-        </com.facebook.shimmer.ShimmerFrameLayout>
-
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipeRefreshLayout"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.core.widget.NestedScrollView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:elevation="1dp"
+                android:orientation="vertical"
+                android:paddingBottom="5dp">
+
+                <FrameLayout
+                    android:id="@+id/emptyCart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:paddingVertical="80dp"
+                    android:visibility="gone">
+
+                    <include layout="@layout/empty_cart" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/finishOrder"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:paddingVertical="80dp"
+                    android:visibility="gone">
+
+                    <include layout="@layout/finish_order" />
+
+                </FrameLayout>
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmerLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:shimmer_auto_start="true"
+                    app:shimmer_duration="1000">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layoutAnimation="@anim/layout_animation_fade_slide_up"
+                        android:orientation="vertical">
+
+                        <include layout="@layout/skeleton_item_product_cart" />
+
+                        <include layout="@layout/skeleton_item_product_cart" />
+
+                        <include layout="@layout/skeleton_item_product_cart" />
+
+                        <include layout="@layout/skeleton_item_product_cart" />
+                    </LinearLayout>
+
+                </com.facebook.shimmer.ShimmerFrameLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvItemsCart"
@@ -67,64 +81,132 @@
                     android:nestedScrollingEnabled="false"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-            </androidx.core.widget.NestedScrollView>
+                <LinearLayout
+                    android:id="@+id/forYouContainer"
+                    style="@style/productContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/backgroundColor"
+                    android:paddingHorizontal="0dp"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-    </LinearLayout>
+                    <View style="@style/division"
+                        android:layout_height="9dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/productSectionTitle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Talvez você goste" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingBottom="10dp">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvForYou"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layoutAnimation="@anim/layout_animation_fade_slide_up"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            tools:listitem="@layout/item_product" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <LinearLayout
+        android:id="@+id/containerBuy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_bottom_sheet"
         android:elevation="12dp"
+        android:orientation="vertical"
         android:paddingHorizontal="20dp"
-        android:orientation="vertical">
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="20dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingVertical="20dp">
 
             <TextView
                 android:id="@+id/subtotal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textSize="16sp"
                 android:fontFamily="@font/roboto"
+                android:text="SUBTOTAL(0 ARTIGO(S))"
                 android:textColor="@color/textPrimary"
-                android:text="SUBTOTAL(0 ARTIGO(S))" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/totalPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_bold"
-                android:textSize="19sp"
+                android:text="€0,00"
                 android:textColor="@color/textPrimary"
-                android:text="€0,00" />
+                android:textSize="19sp" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@drawable/bg_divisor_bottom"/>
+            android:background="@drawable/bg_divisor_bottom" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="20dp"
+            android:orientation="horizontal"
             android:paddingHorizontal="10dp"
-            android:orientation="horizontal">
+            android:layoutAnimation="@anim/layout_animation_fade_slide_up"
+            android:paddingVertical="20dp">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/buy"
+            <FrameLayout
+                android:id="@+id/loginButtonContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_button_confirm"
-                android:textColor="@color/colorOnPrimary"
-                android:text="@string/buy"/>
+                android:layout_marginTop="20dp">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_button_confirm"
+                    android:text="@string/buy"
+                    android:textColor="@color/colorOnPrimary" />
+
+                <ProgressBar
+                    android:id="@+id/buttonProgress"
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:visibility="gone" />
+
+            </FrameLayout>
 
         </LinearLayout>
     </LinearLayout>

@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:paddingVertical="10dp"
             android:paddingHorizontal="10dp"
-            android:background="@color/backgroundColor"
+            android:background="@color/colorSurface"
             android:orientation="vertical">
 
             <LinearLayout
@@ -73,7 +73,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_bold_italic"
+                    android:fontFamily="@font/roboto_medium_italic"
                     android:text="@string/stats"
                     android:textColor="@color/textPrimary"
                     android:textSize="16sp" />
@@ -90,7 +90,7 @@
                     android:id="@+id/status"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_bold_italic"
+                    android:fontFamily="@font/roboto_medium_italic"
                     android:textColor="@color/textPrimary"
                     android:textSize="16sp" />
             </LinearLayout>

@@ -9,9 +9,11 @@
     <color name="colorSecondaryVariant">#F5F5F5</color>
     <color name="colorOnSecondary">#000000</color>
 
-    <color name="colorSurface">#FFFFFF</color>
+    <color name="colorSurface">#F5F5F5</color>
     <color name="colorOnSurface">#000000</color>
     <color name="colorOnSurfaceVariant">#E1E1E1</color>
+
+    <color name="elevatedSurface">#EEEEEE</color>
 
     <color name="backgroundColor">#FFFFFF</color>
     <color name="colorOnBackground">#000000</color>
@@ -32,8 +34,8 @@
     <color name="colorBorderVariant">#D8D6D6</color>
 
     <!-- Cores de Texto -->
-    <color name="textPrimary">#000000</color>
-    <color name="textSecondary">#616161</color>
+    <color name="textPrimary">#212121</color>
+    <color name="textSecondary">#666666</color>
     <color name="textTertiary">#848484</color>
 
     <!--  Opacity Colors  -->

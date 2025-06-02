@@ -21,66 +21,79 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/containerHistory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:orientation="vertical"
+                android:background="@drawable/bg_card_product"
+                android:padding="10dp">
 
-                <TextView
-                    android:id="@+id/searchTitle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/roboto_medium"
-                    android:textSize="15sp"
-                    android:textColor="@color/textPrimary"
-                    android:text="@string/searchHistory"/>
-
-                <ImageView
-                    android:id="@+id/delHistory"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center_vertical|end"
-                    android:background="@android:color/transparent"
-                    android:layout_marginStart="8dp"
-                    app:tint="@color/textPrimary"
-                    android:src="@drawable/ic_trash_outline" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="15dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvHistory"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layoutAnimation="@anim/layout_animation_fade_slide_up"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    tools:listitem="@layout/item_recently_searched"
-                    android:orientation="horizontal"/>
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/searchTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_medium"
+                        android:textSize="15sp"
+                        android:textColor="@color/textPrimary"
+                        android:text="@string/searchHistory"/>
+
+                    <TextView
+                        android:id="@+id/delHistory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|end"
+                        android:fontFamily="@font/roboto_bold"
+                        android:textColor="@color/colorPrimaryVariant"
+                        android:textSize="12sp"
+                        android:text="Limpar tudo"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.flexbox.FlexboxLayout
+                        android:id="@+id/flexHistory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        app:flexWrap="wrap"
+                        app:justifyContent="flex_start"
+                        app:alignItems="center" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_card_product">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_medium"
                     android:textSize="15sp"
+                    android:layout_margin="10dp"
                     android:textColor="@color/textPrimary"
                     android:text="@string/categories"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingVertical="10dp">
+                    android:paddingVertical="5dp">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvCategories"

@@ -108,7 +108,7 @@ public class ChatSellFragment extends Fragment {
                         Log.d("API_RESPONSE", "Item 0: " + chats.get(0).getLast_message());
                     }
 
-                }, 600);
+                }, 300);
 
             }
 
@@ -121,7 +121,7 @@ public class ChatSellFragment extends Fragment {
                     textNoChats.setVisibility(View.VISIBLE);
 
                     rvChats.setVisibility(View.GONE);
-                    }, 600);
+                    }, 300);
 
             }
         });

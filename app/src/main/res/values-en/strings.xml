@@ -75,4 +75,6 @@
     <string name="delete">Delete</string>
     <string name="numPedido">Order number</string>
     <string name="stats">Stats</string>
+    <string name="ads">Announcement</string>
+    <string name="clearAll">Clear all</string>
 </resources>

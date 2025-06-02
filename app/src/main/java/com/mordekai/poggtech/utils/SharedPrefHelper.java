@@ -64,12 +64,11 @@ public class SharedPrefHelper {
     }
 
     public void removeItemFromHistory(String query) {
-        List<String> historyList = getRawSearchHistory(); // <- usar raw
-
+        List<String> historyList = getRawSearchHistory();
         historyList.removeIf(item -> item.equals(query));
-
         saveSearchHistoryList(historyList);
     }
+
 
     public void clearSearchHistory() {
         editor.remove("searchHistory");

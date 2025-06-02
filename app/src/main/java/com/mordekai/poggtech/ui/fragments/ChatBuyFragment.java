@@ -103,7 +103,7 @@ public class ChatBuyFragment extends Fragment {
                         chatAdapter.notifyDataSetChanged();
                         Log.d("API_RESPONSE", "Item 0: " + chats.get(0).getLast_message());
                     }
-                }, 600);
+                }, 300);
             }
 
             @Override
@@ -115,7 +115,7 @@ public class ChatBuyFragment extends Fragment {
                     textNoChats.setVisibility(View.VISIBLE);
 
                     rvChats.setVisibility(View.GONE);
-                }, 600);
+                }, 300);
             }
         });
     }

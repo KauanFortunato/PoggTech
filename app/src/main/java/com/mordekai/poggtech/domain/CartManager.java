@@ -79,7 +79,6 @@ public class CartManager {
         });
     }
 
-
     public void fetchCartProducts(int userId, int tipo, RepositoryCallback<List<Product>> callback) {
         apiProduct.getCartProducts(userId, tipo).enqueue(new Callback<ApiResponse<List<Product>>>() {
             @Override

@@ -69,7 +69,6 @@ public class ProductDetailsFragment extends Fragment {
     private int productId;
     private ShimmerFrameLayout shimmerLayout;
 
-    private BottomNavigationView bottomNavigationView;
 
     @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -345,7 +344,7 @@ public class ProductDetailsFragment extends Fragment {
         cartManager.addToCart(productId, user.getUserId(), 1, new RepositoryCallback<ApiResponse<Void>>() {
             @Override
             public void onSuccess(ApiResponse<Void> result) {
-                if(result.isSuccess()) {
+                if (result.isSuccess()) {
                     isSaved = true;
                     updateSaveButton(true);
                 } else {
@@ -379,7 +378,7 @@ public class ProductDetailsFragment extends Fragment {
         cartManager.addToCart(productId, user.getUserId(), 0, new RepositoryCallback<ApiResponse<Void>>() {
             @Override
             public void onSuccess(ApiResponse<Void> result) {
-                if(result.isSuccess()) {
+                if (result.isSuccess()) {
                     showBottomSheet();
                 } else {
                     SnackbarUtil.showErrorSnackbar(getView(), result.getMessage(), getContext());

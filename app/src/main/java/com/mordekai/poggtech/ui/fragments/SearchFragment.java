@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.flexbox.FlexboxLayout;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.adapter.CategoryAdapter;
 import com.mordekai.poggtech.data.adapter.HistoryAdapter;
@@ -41,12 +42,15 @@ public class SearchFragment extends Fragment implements CategoryAdapter.OnCatego
 
     private SharedPrefHelper sharedPrefHelper;
     private HistoryAdapter historyAdapter;
-    private RecyclerView rvHistory, rvCategories;
+    private RecyclerView rvCategories;
     private TextView searchTitle;
     private EditText searchProd;
-    private ImageView delHistory;
+    private TextView delHistory;
     private ProductManager productManager;
     private CategoryAdapter categoryAdapter;
+    private FlexboxLayout flexHistory;
+    private LinearLayout containerHistory;
+
 
     private HeaderFragment headerFragment;
 
@@ -65,13 +69,7 @@ public class SearchFragment extends Fragment implements CategoryAdapter.OnCatego
 
         startComponents(view);
 
-        historyAdapter = new HistoryAdapter(history, sharedPrefHelper, historyItem -> {
-            searchProd.setText(historyItem);
-            searchProd.setSelection(historyItem.length());
-        });
-
-        rvHistory.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        rvHistory.setAdapter(historyAdapter);
+        refreshSearchHistory();
 
         HeaderFragment.HeaderListener listener = (HeaderFragment.HeaderListener) getActivity();
 
@@ -93,7 +91,7 @@ public class SearchFragment extends Fragment implements CategoryAdapter.OnCatego
 
         categoryAdapter = new CategoryAdapter(new ArrayList<>(), getContext(), this, R.layout.item_category);
 
-        rvCategories.setLayoutManager(new GridLayoutManager(getContext(),4));
+        rvCategories.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rvCategories.setNestedScrollingEnabled(false);
         rvCategories.setOverScrollMode(View.OVER_SCROLL_NEVER);
         rvCategories.setAdapter(categoryAdapter);
@@ -112,7 +110,9 @@ public class SearchFragment extends Fragment implements CategoryAdapter.OnCatego
         if (!isVisible()) return;
 
         ((BottomNavVisibilityController) requireActivity()).hideBottomNav();
-        historyAdapter.notifyDataSetChanged();
+
+        refreshSearchHistory();
+
         ((MainActivity) requireActivity()).setForceBackToHome(true);
         showBackButton();
 
@@ -135,7 +135,8 @@ public class SearchFragment extends Fragment implements CategoryAdapter.OnCatego
     }
 
     private void startComponents(View view) {
-        rvHistory = view.findViewById(R.id.rvHistory);
+        containerHistory = view.findViewById(R.id.containerHistory);
+        flexHistory = view.findViewById(R.id.flexHistory); // novo ID do layout
         delHistory = view.findViewById(R.id.delHistory);
         searchProd = getActivity().findViewById(R.id.searchProd);
         searchTitle = view.findViewById(R.id.searchTitle);
@@ -149,9 +150,45 @@ public class SearchFragment extends Fragment implements CategoryAdapter.OnCatego
             }
 
             sharedPrefHelper.clearSearchHistory();
-            historyAdapter.notifyDataSetChanged();
+            refreshSearchHistory();
         });
     }
+
+    private void refreshSearchHistory() {
+        List<String> updatedHistory = sharedPrefHelper.getSearchHistory();
+        flexHistory.removeAllViews();
+
+        if (updatedHistory.isEmpty()) {
+            containerHistory.setVisibility(View.GONE);
+            return;
+        } else {
+            containerHistory.setVisibility(View.VISIBLE);
+        }
+
+        LayoutInflater inflater = LayoutInflater.from(getContext());
+
+        for (String item : updatedHistory) {
+            View chipView = inflater.inflate(R.layout.item_recently_searched, flexHistory, false);
+            TextView chipText = chipView.findViewById(R.id.historyText);
+            ImageButton delBtn = chipView.findViewById(R.id.dellSearch);
+
+            chipText.setText(item);
+
+            chipText.setOnClickListener(v -> {
+                searchProd.setText(item);
+                searchProd.setSelection(item.length());
+            });
+
+            delBtn.setOnClickListener(v -> {
+                v.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
+                sharedPrefHelper.removeItemFromHistory(item);
+                refreshSearchHistory();
+            });
+
+            flexHistory.addView(chipView);
+        }
+    }
+
 
     @Override
     public void onCategoryClick(Category category) {
