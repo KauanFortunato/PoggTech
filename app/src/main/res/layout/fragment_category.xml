@@ -9,13 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:background="@color/colorSurface"
+        android:background="@color/backgroundColor"
         app:elevation="4dp">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorSurface"
+            android:background="@color/backgroundColor"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:scrimVisibleHeightTrigger="0dp">
 
@@ -27,11 +27,11 @@
 
                 <TextView
                     android:id="@+id/categoryTitle"
-                    android:layout_width="match_parent"
+                    android:layout_width="386dp"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_bold"
                     android:letterSpacing="0.02"
                     android:text="Explore Consolas"
-                    android:fontFamily="@font/roboto_bold"
                     android:textColor="@color/textPrimary"
                     android:textSize="@dimen/text_extra_large"
                     app:layout_collapseMode="parallax" />
@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:paddingVertical="3dp"
-                    android:background="@drawable/rounded_bottom_med">
+                    android:background="@drawable/bg_divisor_bottom">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
