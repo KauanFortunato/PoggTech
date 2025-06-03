@@ -4,11 +4,13 @@ import android.util.Log;
 
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.ApiResponse;
+import com.mordekai.poggtech.data.model.Order;
 import com.mordekai.poggtech.data.model.OrderRequest;
 import com.mordekai.poggtech.data.model.Wallet;
 import com.mordekai.poggtech.data.remote.ApiOrder;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -56,5 +58,23 @@ public class OrderManager {
         });
     }
 
+    public void GetOrders(int user_id, RepositoryCallback<List<Order>> callback) {
+        apiOrder.getOrders(user_id).enqueue(new Callback<ApiResponse<List<Order>>>() {
 
+            @Override
+            public void onResponse(Call<ApiResponse<List<Order>>> call, Response<ApiResponse<List<Order>>> response) {
+                if(response.isSuccessful() && response.body() != null) {
+                    List<Order> orders = response.body().getData();
+                    callback.onSuccess(orders);
+                } else {
+                    callback.onFailure(new Exception("Erro ao buscar pedidos"));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<List<Order>>> call, Throwable t) {
+                callback.onFailure(new Exception("Erro ao buscar pedidos"));
+            }
+        });
+    }
 }

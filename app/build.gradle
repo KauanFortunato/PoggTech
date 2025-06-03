@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace 'com.mordekai.poggtech'
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId 'com.mordekai.poggtech'

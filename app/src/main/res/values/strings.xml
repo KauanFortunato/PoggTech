@@ -2,8 +2,9 @@
     <string name="app_name">PoggTech</string>
     <string name="poggers" translatable="false">poggers</string>
     <string name="login">Login</string>
-    <string name="cadastrar">Cadastrar</string>
-    <string name="conta">Conta</string>
+    <string name="signUp">Cadastrar</string>
+    <string name="account">Conta</string>
+    <string name="yourOrders">Suas compras</string>
     <string name="enviar">Enviar</string>
     <string name="enderecoEmail">Endereço de email</string>
     <string name="digiteEmail">Digite seu e-mail</string>
@@ -67,6 +68,13 @@
     <string name="stats">Status</string>
     <string name="ads">Anúncios</string>
     <string name="clearAll">Limpar tudo</string>
+    <string name="orderIn">Pedido em</string>
+    <string name="continueShopping">Continuar comprando...</string>
+    <string name="track">Seguir</string>
+    <string name="leaveReview">Fazer review</string>
+
+
+
     <!-- Chat -->
     <string name="chat" translatable="false">Chat</string>
     <string name="compra">Comprando</string>

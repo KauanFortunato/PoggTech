@@ -2,8 +2,9 @@
 <resources>
     <string name="app_name">PoggTech</string>
     <string name="login">Login</string>
-    <string name="cadastrar">Register</string>
-    <string name="conta">Account</string>
+    <string name="signUp">Register</string>
+    <string name="account">Account</string>
+    <string name="yourOrders">Your orders</string>
     <string name="enviar">Send</string>
     <string name="enderecoEmail">Email Address</string>
     <string name="digiteEmail">Enter your email</string>
@@ -77,4 +78,8 @@
     <string name="stats">Stats</string>
     <string name="ads">Announcement</string>
     <string name="clearAll">Clear all</string>
+    <string name="orderIn">Ordered in</string>
+    <string name="continueShopping">Continue shopping...</string>
+    <string name="track">Track</string>
+    <string name="leaveReview">Leave a review</string>
 </resources>

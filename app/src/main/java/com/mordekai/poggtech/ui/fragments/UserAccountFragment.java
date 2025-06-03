@@ -165,6 +165,11 @@ public class UserAccountFragment extends Fragment
             navController.navigate(R.id.action_accountFragment_to_userConfigFragment);
         });
 
+        buttonMyPurchases.setOnClickListener(v -> {
+            NavController navController = NavHostFragment.findNavController(this);
+            navController.navigate(R.id.action_account_to_ordersFragment);
+        });
+
         buttonMyAds.setOnClickListener(v -> {
             NavController navController = NavHostFragment.findNavController(this);
             navController.navigate(R.id.action_accountFragment_to_myAdsFragment);

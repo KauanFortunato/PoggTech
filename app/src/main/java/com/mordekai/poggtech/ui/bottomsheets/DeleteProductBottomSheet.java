@@ -62,7 +62,7 @@ public class DeleteProductBottomSheet extends BottomSheetDialogFragment {
             buttonCancel.setText(cancelText);
         } else {
             Log.w("ProductAddedBottomSheet", "Argumentos não encontrados");
-            textViewTitle.setText(getString(R.string.remove));
+            textViewTitle.setText(getString(R.string.removeProduct));
             buttonConfirm.setText(getString(R.string.delete));
             buttonCancel.setText(getString(R.string.cancelar));
         }

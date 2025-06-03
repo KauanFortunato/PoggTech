@@ -145,7 +145,7 @@
             style="@style/Button"
             android:layout_marginTop="28dp"
             android:layout_marginBottom="10dp"
-            android:text="@string/cadastrar"
+            android:text="@string/signUp"
             android:textAllCaps="false"
             android:textColor="?attr/colorOnPrimary"
             android:layout_width="match_parent"

@@ -76,6 +76,7 @@ public class SearchFragment extends Fragment implements CategoryAdapter.OnCatego
         if (listener != null) {
             listener.showBackButton();
         }
+
         ((MainActivity) requireActivity()).setForceBackToHome(true);
 
         view.setOnClickListener(v -> {

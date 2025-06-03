@@ -22,6 +22,6 @@
     <item
         android:id="@+id/account"
         android:icon="@drawable/nav_icon_persona"
-        android:title="@string/conta"
-        android:titleCondensed="@string/conta" />
+        android:title="@string/account"
+        android:titleCondensed="@string/account" />
 </menu>
