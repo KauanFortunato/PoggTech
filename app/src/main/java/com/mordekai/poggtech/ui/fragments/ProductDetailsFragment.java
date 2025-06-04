@@ -6,17 +6,21 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.adapter.GalleryAdapter;
+import com.mordekai.poggtech.data.adapter.ReviewAdapter;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.ApiResponse;
 import com.mordekai.poggtech.data.model.Chat;
 import com.mordekai.poggtech.data.model.Product;
+import com.mordekai.poggtech.data.model.Review;
 import com.mordekai.poggtech.data.model.User;
 import com.mordekai.poggtech.data.remote.ApiMessage;
 import com.mordekai.poggtech.data.remote.ApiProduct;
+import com.mordekai.poggtech.data.remote.ApiReview;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.CartManager;
 import com.mordekai.poggtech.domain.MessageManager;
 import com.mordekai.poggtech.domain.ProductManager;
+import com.mordekai.poggtech.domain.ReviewManager;
 import com.mordekai.poggtech.ui.activity.MainActivity;
 import com.mordekai.poggtech.ui.bottomsheets.ProductAddedBottomSheet;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
@@ -37,7 +41,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import java.util.ArrayList;
@@ -47,11 +54,15 @@ import okhttp3.ResponseBody;
 
 public class ProductDetailsFragment extends Fragment {
 
-    private TextView titleProduct, category, price, priceDecimal, discount, priceBefore, productPoggers;
+    private TextView titleProduct, category, price, priceDecimal, discount, priceBefore,
+            productPoggers, productRating1, productRating2, reviewCount, noReviews;
     private EditText inputText;
-    private LinearLayout contactSellerContainer;
+    private LinearLayout contactSellerContainer, containerReviews, containerBuy;
+    private LinearLayout starsContainer, starsContainer2;
+    private RecyclerView rvReviews;
     private AppCompatButton actionButton;
-    private ImageButton saveButton, btnSend;
+    private ImageButton btnSend;
+    private AppCompatImageView saveButton;
     private View contentView;
     private ViewPager2 viewPagerGallery;
     private GalleryAdapter galleryAdapter;
@@ -60,8 +71,8 @@ public class ProductDetailsFragment extends Fragment {
     private CartManager cartManager;
     private ProductManager productManager;
     private MessageManager messageManager;
-    private ApiProduct apiProduct;
-    private SharedPrefHelper sharedPrefHelper;
+    private ReviewManager reviewManager;
+    private ReviewAdapter reviewAdapter;
     private Boolean isSaved;
     private Chat chatProduct;
     private User user;
@@ -76,10 +87,7 @@ public class ProductDetailsFragment extends Fragment {
 
         ((MainActivity) requireActivity()).setForceBackToHome(false);
 
-        contentView = view.findViewById(R.id.contentView);
-        shimmerLayout = view.findViewById(R.id.shimmerLayout);
-
-        sharedPrefHelper = new SharedPrefHelper(requireContext());
+        SharedPrefHelper sharedPrefHelper = new SharedPrefHelper(requireContext());
         user = sharedPrefHelper.getUser();
         cartManager = new CartManager(RetrofitClient.getRetrofitInstance().create(ApiProduct.class));
         messageManager = new MessageManager(RetrofitClient.getRetrofitInstance().create(ApiMessage.class));
@@ -89,11 +97,16 @@ public class ProductDetailsFragment extends Fragment {
             productId = getArguments().getInt("productId");
         }
 
-        startComponents(contentView);
+        startComponents(view);
         verifyProductIsSaved(productId, user.getUserId(), 1);
 
-        apiProduct = RetrofitClient.getRetrofitInstance().create(ApiProduct.class);
+        ApiProduct apiProduct = RetrofitClient.getRetrofitInstance().create(ApiProduct.class);
         productManager = new ProductManager(apiProduct);
+        reviewManager = new ReviewManager(RetrofitClient.getRetrofitInstance().create(ApiReview.class));
+
+        reviewAdapter = new ReviewAdapter(new ArrayList<>());
+        rvReviews.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        rvReviews.setAdapter(reviewAdapter);
 
         galleryAdapter = new GalleryAdapter(requireActivity(), imageUrls);
         viewPagerGallery.setAdapter(galleryAdapter);
@@ -114,10 +127,25 @@ public class ProductDetailsFragment extends Fragment {
 
         // Buscar os detalhes do produto
         fetchProduct(productId);
+        getReviews(productId);
 
         return view;
     }
 
+    private void getReviews(int productId) {
+        reviewManager.getReviews(productId, new RepositoryCallback<List<Review>>() {
+
+            @Override
+            public void onSuccess(List<Review> result) {
+                reviewAdapter.updateReviews(result);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("ProductDetailsFragment", "Erro ao buscar reviews", t);
+            }
+        });
+    }
 
     private void fetchProduct(int productId) {
         new android.os.Handler().postDelayed(() -> {
@@ -141,6 +169,7 @@ public class ProductDetailsFragment extends Fragment {
                                     }
                                 }
 
+                                // Galeria de imagens
                                 galleryAdapter.updateImages(imageUrls);
 
                                 new TabLayoutMediator(tabLayoutDots, viewPagerGallery, (tab, position) -> {
@@ -157,6 +186,7 @@ public class ProductDetailsFragment extends Fragment {
                                         tab.setCustomView(tabView);
                                     }
                                 }
+
 
                                 shimmerLayout.setVisibility(View.GONE);
                                 shimmerLayout.stopShimmer();
@@ -276,6 +306,61 @@ public class ProductDetailsFragment extends Fragment {
         }
     }
 
+    private void startComponents(View view) {
+        titleProduct = view.findViewById(R.id.titleProduct);
+        category = view.findViewById(R.id.category);
+        saveButton = view.findViewById(R.id.saveButton);
+        price = view.findViewById(R.id.price);
+        priceDecimal = view.findViewById(R.id.priceDecimal);
+        discount = view.findViewById(R.id.discount);
+        priceBefore = view.findViewById(R.id.priceBefore);
+        productPoggers = view.findViewById(R.id.productPoggers);
+        actionButton = view.findViewById(R.id.actionPrimaryProduct);
+        inputText = view.findViewById(R.id.inputText);
+        contactSellerContainer = view.findViewById(R.id.contactSellerContainer);
+        btnSend = view.findViewById(R.id.btnSend);
+        viewPagerGallery = view.findViewById(R.id.viewPagerGallery);
+        tabLayoutDots = view.findViewById(R.id.tabLayoutDots);
+        productRating1 = view.findViewById(R.id.productRating1);
+        productRating2 = view.findViewById(R.id.productRating2);
+        reviewCount = view.findViewById(R.id.reviewCount);
+        noReviews = view.findViewById(R.id.noReviews);
+        containerReviews = view.findViewById(R.id.containerReviews);
+        containerBuy = view.findViewById(R.id.containerBuy);
+        starsContainer = view.findViewById(R.id.starsContainer);
+        starsContainer2 = view.findViewById(R.id.starsContainer2);
+        rvReviews = view.findViewById(R.id.rvReviews);
+        contentView = view.findViewById(R.id.contentView);
+        shimmerLayout = view.findViewById(R.id.shimmerLayout);
+
+        shimmerLayout.setVisibility(View.VISIBLE);
+        shimmerLayout.startShimmer();
+
+        saveButton.setOnClickListener(v -> {
+            if (saveButton.isHapticFeedbackEnabled()) {
+                saveButton.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
+            }
+
+            if (isSaved) {
+                removeFromSaved(productId);
+            } else {
+                addToSaved(productId);
+            }
+        });
+
+        actionButton.setOnClickListener(v -> {
+            if (actionButton.isHapticFeedbackEnabled()) {
+                actionButton.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
+            }
+
+            addToCart(productId);
+        });
+
+        ((BottomNavVisibilityController) requireActivity()).hideBottomNav();
+        getActivity().findViewById(R.id.btnBackHeader).setVisibility(View.VISIBLE);
+        getActivity().findViewById(R.id.headerContainer).setVisibility(View.VISIBLE);
+    }
+
     @SuppressLint("DefaultLocale")
     private void updateUIWithProduct() {
         Log.d("ProductDetailsFragment", "Logs: " + product.getUser_id() + " " + productId);
@@ -289,20 +374,39 @@ public class ProductDetailsFragment extends Fragment {
 
         price.setText(String.valueOf(integerPart));
         priceDecimal.setText(String.format("%02d€", cents));
-        Log.d("ProductDetailsFragment", "Logs: " + product.getDiscountPercentage());
+        productRating1.setText(String.valueOf(product.getRating()));
+        productRating2.setText(String.valueOf(product.getRating()));
 
+        setRatingStars(starsContainer, product.getRating());
+        setRatingStars(starsContainer2, product.getRating());
+
+        if (product.getReviewCount() == 0) {
+            reviewCount.setVisibility(View.GONE);
+            containerReviews.setVisibility(View.GONE);
+            noReviews.setVisibility(View.VISIBLE);
+        } else {
+            reviewCount.setVisibility(View.VISIBLE);
+            containerReviews.setVisibility(View.VISIBLE);
+            noReviews.setVisibility(View.GONE);
+            reviewCount.setText(String.valueOf(product.getReviewCount()));
+        }
+
+
+        // Verifica o dono do produto, para não deixar o próprio vendedor comprar o produto dele
         if (product.getUser_id() != user.getUserId()) {
             if (product.getSeller_type().equals("admin")) {
                 actionButton.setVisibility(View.VISIBLE);
                 contactSellerContainer.setVisibility(View.GONE);
+                actionButton.setEnabled(true);
                 actionButton.setBackgroundResource(R.drawable.rounded_button);
             } else {
-                actionButton.setVisibility(View.GONE);
+                containerBuy.setVisibility(View.GONE);
                 contactSellerContainer.setVisibility(View.VISIBLE);
             }
         } else {
             actionButton.setBackgroundResource(R.drawable.bg_button_unable);
             actionButton.setVisibility(View.VISIBLE);
+            actionButton.setEnabled(false);
             contactSellerContainer.setVisibility(View.GONE);
         }
 
@@ -315,7 +419,6 @@ public class ProductDetailsFragment extends Fragment {
             priceBefore.setVisibility(View.GONE);
             discount.setVisibility(View.GONE);
         }
-
 
         btnSend.setOnClickListener(v -> {
             if (!inputText.getText().toString().isEmpty()) {
@@ -408,49 +511,35 @@ public class ProductDetailsFragment extends Fragment {
         });
     }
 
-    private void startComponents(View view) {
-        titleProduct = view.findViewById(R.id.titleProduct);
-        category = view.findViewById(R.id.category);
-        saveButton = view.findViewById(R.id.saveButton);
-        price = view.findViewById(R.id.price);
-        priceDecimal = view.findViewById(R.id.priceDecimal);
-        discount = view.findViewById(R.id.discount);
-        priceBefore = view.findViewById(R.id.priceBefore);
-        productPoggers = view.findViewById(R.id.productPoggers);
-        actionButton = view.findViewById(R.id.actionPrimaryProduct);
-        inputText = view.findViewById(R.id.inputText);
-        contactSellerContainer = view.findViewById(R.id.contactSellerContainer);
-        btnSend = view.findViewById(R.id.btnSend);
-        viewPagerGallery = view.findViewById(R.id.viewPagerGallery);
-        tabLayoutDots = view.findViewById(R.id.tabLayoutDots);
+    private void setRatingStars(LinearLayout container, float rating) {
+        container.removeAllViews();
 
-        shimmerLayout.setVisibility(View.VISIBLE);
-        shimmerLayout.startShimmer();
+        int filledStars = (int) rating;
+        boolean hasHalfStar = (rating - filledStars) >= 0.25f && (rating - filledStars) < 0.75f;
+        int totalStars = 5;
 
-        saveButton.setOnClickListener(v -> {
-            if (saveButton.isHapticFeedbackEnabled()) {
-                saveButton.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
-            }
+        for (int i = 0; i < totalStars; i++) {
+            AppCompatImageView star = new AppCompatImageView(container.getContext());
 
-            if (isSaved) {
-                removeFromSaved(productId);
+            if (i < filledStars) {
+                star.setImageResource(R.drawable.ic_star_filled);
+            } else if (i == filledStars && hasHalfStar) {
+                star.setImageResource(R.drawable.ic_star_half);
             } else {
-                addToSaved(productId);
-            }
-        });
-
-        actionButton.setOnClickListener(v -> {
-            if (actionButton.isHapticFeedbackEnabled()) {
-                actionButton.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
+                star.setImageResource(R.drawable.ic_star);
             }
 
-            addToCart(productId);
-        });
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    (int) getResources().getDisplayMetrics().density * 24,
+                    (int) getResources().getDisplayMetrics().density * 24
+            );
+            params.setMargins(2, 0, 2, 0);
+            star.setLayoutParams(params);
 
-        ((BottomNavVisibilityController) requireActivity()).hideBottomNav();
-        getActivity().findViewById(R.id.btnBackHeader).setVisibility(View.VISIBLE);
-        getActivity().findViewById(R.id.headerContainer).setVisibility(View.VISIBLE);
+            container.addView(star);
+        }
     }
+
 
     private void showBottomSheet() {
         Bundle bundle = new Bundle();

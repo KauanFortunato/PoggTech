@@ -91,7 +91,7 @@
                     android:layout_marginBottom="8dp"
                     android:autofillHints="produtopesquisa"
                     android:background="@drawable/rounded_menu_stroke"
-                    android:drawableStart="@drawable/ic_lupa"
+                    android:drawableStart="@drawable/ic_search"
                     android:drawablePadding="10dp"
                     android:elevation="1dp"
                     android:hint="@string/pesquisaHint"

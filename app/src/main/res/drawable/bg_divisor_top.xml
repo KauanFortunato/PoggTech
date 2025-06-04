@@ -11,7 +11,7 @@
     <item android:top="1dp">
         <shape android:shape="rectangle">
             <size android:height="1dp"/>
-            <solid android:color="@color/colorSurface"/>
+            <solid android:color="@color/backgroundColor"/>
         </shape>
     </item>
 

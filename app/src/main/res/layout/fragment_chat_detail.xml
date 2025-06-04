@@ -176,7 +176,7 @@
                 android:layout_marginHorizontal="8dp"
                 android:hint="Mensagem"
                 android:inputType="textCapSentences"
-                android:background="@drawable/rounded_edittext_background"
+                android:background="@drawable/bg_edit_text"
                 android:textSize="16sp"
                 android:padding="10dp"/>
 

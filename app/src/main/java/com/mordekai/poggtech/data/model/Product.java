@@ -14,6 +14,8 @@ public class Product {
     private String category;
     private int quantity;
     private String cover;
+    private Float rating;
+    private int review_count;
     private List<String> images;
     private String location;
     private String created_at;
@@ -63,6 +65,13 @@ public class Product {
 
     public List<String> getImages() {
         return images;
+    }
+
+    public Float getRating() {
+        return rating;
+    }
+    public int getReviewCount() {
+        return review_count;
     }
 
     public void setImages(List<String> images) {

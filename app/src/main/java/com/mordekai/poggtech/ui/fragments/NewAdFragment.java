@@ -548,7 +548,7 @@ public class NewAdFragment extends Fragment {
             classSelectorSpinner.setBackgroundResource(R.drawable.spinner_error_background);
             isValid = false;
         } else {
-            classSelectorSpinner.setBackgroundResource(R.drawable.rounded_edittext_background);
+            classSelectorSpinner.setBackgroundResource(R.drawable.bg_edit_text);
         }
 
         // Imagens

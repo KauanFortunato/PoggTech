@@ -6,7 +6,6 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -35,7 +34,6 @@
                         android:orientation="horizontal" >
 
                         <View
-                            android:id="@+id/titleProduct"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -44,7 +42,6 @@
 
                         <!-- Avaliação do vendedor -->
                         <View
-                            android:id="@+id/productRatingContainer"
                             android:layout_width="140dp"
                             android:layout_height="match_parent"
                             android:background="@drawable/bg_skeleton">
@@ -58,7 +55,6 @@
                         android:layout_marginTop="3dp"
                         android:orientation="horizontal">
                         <View
-                            android:id="@+id/category"
                             android:layout_width="80dp"
                             android:layout_height="23dp"
                             android:background="@drawable/bg_skeleton"/>
@@ -69,7 +65,6 @@
                             android:layout_weight="1"/>
 
                         <View
-                            android:id="@+id/saveButton"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_marginTop="5dp"
@@ -84,7 +79,6 @@
                         android:paddingBottom="15dp">
 
                         <View
-                            android:id="@+id/categoryIcon"
                             android:layout_width="match_parent"
                             android:layout_height="180dp"
                             android:scaleType="fitCenter"
@@ -117,14 +111,12 @@
                         android:orientation="horizontal">
 
                         <View
-                            android:id="@+id/price"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:background="@drawable/bg_skeleton" />
 
                         <View
-                            android:id="@+id/priceDecimal"
                             android:layout_width="35dp"
                             android:layout_height="35dp"
                             android:layout_marginStart="1dp"
@@ -132,21 +124,18 @@
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/discount"
                         android:layout_width="73dp"
                         android:layout_height="46dp"
                         android:background="@drawable/bg_skeleton" />
                 </LinearLayout>
 
                 <View
-                    android:id="@+id/priceBefore"
                     android:layout_width="90dp"
                     android:layout_height="15dp"
                     android:layout_marginVertical="5dp"
                     android:background="@drawable/bg_skeleton" />
 
                 <View
-                    android:id="@+id/productPoggers"
                     android:layout_width="55dp"
                     android:layout_height="20dp"
                     android:layout_marginTop="15dp"
@@ -168,7 +157,6 @@
                 android:orientation="vertical">
 
                 <View
-                    android:id="@+id/actionPrimaryProduct"
                     style="@style/Button"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -222,7 +210,6 @@
                         android:background="@drawable/bg_skeleton"/>
 
                     <View
-                        android:id="@+id/sellerRating"
                         android:layout_width="160dp"
                         android:layout_height="30dp"
                         android:layout_marginHorizontal="10dp"

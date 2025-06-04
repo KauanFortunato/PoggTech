@@ -114,9 +114,9 @@ public class HeaderFragment extends Fragment {
 
                 if (s.length() > 0) {
                     getSuggestions(s.toString());
-                    searchProd.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_lupa, 0, R.drawable.ic_close_small, 0);
+                    searchProd.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_close_small, 0);
                 } else {
-                    searchProd.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_lupa, 0, 0, 0);
+                    searchProd.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_search, 0);
                     overlayContainer.setVisibility(View.GONE);
                     listSuggestions.setVisibility(View.GONE);
                 }
@@ -163,7 +163,7 @@ public class HeaderFragment extends Fragment {
                             v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
                         }
                         searchProd.setText("");
-                        searchProd.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_lupa, 0, 0, 0);
+                        searchProd.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_search, 0);
                         return true;
                     }
                 }

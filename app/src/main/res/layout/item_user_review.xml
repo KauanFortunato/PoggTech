@@ -3,12 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:paddingVertical="5dp"
+    android:paddingVertical="20dp"
     android:paddingHorizontal="15dp"
     android:gravity="center_vertical"
     android:orientation="vertical"
-    android:background="@drawable/bg_card_product">
+    android:background="@drawable/bg_header">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,69 +15,81 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <FrameLayout
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:clipToOutline="true"
-            android:background="@drawable/rounded_full">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1">
 
-            <ImageView
-                android:id="@+id/imageProduct"
-                android:layout_width="match_parent"
+            <FrameLayout
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:clipToOutline="true"
+                android:background="@drawable/rounded_full">
+
+                <ImageView
+                    android:id="@+id/imageProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:padding="4dp"
+                    android:src="@drawable/xbox_series_x"/>
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                android:padding="4dp"
-                android:src="@drawable/xbox_series_x"/>
-        </FrameLayout>
+                android:layout_marginHorizontal="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="@dimen/text_large"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="Kauan Fortunato"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_normal"
+                    android:textColor="@color/textTertiary"
+                    android:fontFamily="@font/roboto"
+                    android:text="3m atras"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/productRatingContainer"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginHorizontal="10dp"
-            android:gravity="center_vertical"
+            android:layout_gravity="top"
             android:orientation="horizontal">
 
-            <TextView
+            <LinearLayout
+                android:id="@+id/starsContainer"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:textSize="16sp"
-                android:layout_marginHorizontal="4dp"
-                android:fontFamily="@font/roboto_medium"
-                android:textColor="@color/textTertiary"
-                android:text="4.3"/>
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_star_filled" />
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_star_filled" />
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_star_filled" />
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_star_filled" />
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_star" />
+                android:layout_height="match_parent"
+                android:layout_gravity="top"
+                android:orientation="horizontal" />
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="5dp"
+        android:paddingVertical="10dp"
         android:orientation="vertical">
+
         <TextView
+            android:id="@+id/comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"

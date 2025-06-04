@@ -11,7 +11,7 @@
 
     <color name="colorSurface">#F5F5F5</color>
     <color name="colorOnSurface">#000000</color>
-    <color name="colorOnSurfaceVariant">#E1E1E1</color>
+    <color name="colorOnSurfaceVariant">#F3F3F3</color>
 
     <color name="elevatedSurface">#EEEEEE</color>
 

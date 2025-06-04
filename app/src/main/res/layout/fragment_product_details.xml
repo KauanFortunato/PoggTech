@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorSecondaryVariant"
+    android:background="@color/backgroundColor"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.facebook.shimmer.ShimmerFrameLayout
@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:shimmer_auto_start="true"
+        android:visibility="gone"
         app:shimmer_duration="1000">
 
         <include layout="@layout/skeleton_product_details" />
@@ -22,7 +23,8 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/contentView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:visibility="visible">
 
         <LinearLayout
@@ -31,168 +33,158 @@
             android:fitsSystemWindows="true"
             android:orientation="vertical">
 
-            <LinearLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="10dp"
+                android:layout_marginHorizontal="10dp"
                 android:paddingBottom="20dp"
-                android:background="@drawable/section_divisor"
-                android:orientation="vertical">
+                app:cardElevation="0dp"
+                android:background="@color/colorSurface"
+                app:cardBackgroundColor="@color/colorSurface"
+                app:cardCornerRadius="20dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:background="@color/colorSurface"
                     android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="top"
-                        android:orientation="horizontal" >
+                        android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/titleProduct"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginEnd="15dp"
-                            android:maxLines="2"
-                            android:ellipsize="end"
-                            android:textSize="19sp"
-                            android:textColor="@color/textPrimary"
-                            android:fontFamily="@font/roboto_medium"
-                            android:text="God of War, Jogo de Playstation 2"/>
-
-                        <!-- Avaliação do vendedor -->
                         <LinearLayout
-                            android:id="@+id/productRatingContainer"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="top"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:id="@+id/titleProduct"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginEnd="15dp"
+                                android:maxLines="2"
+                                android:ellipsize="end"
+                                android:textSize="19sp"
+                                android:textColor="@color/textPrimary"
+                                android:fontFamily="@font/roboto_medium"
+                                android:text="God of War, Jogo de Playstation 2"/>
+
+                            <!-- Avaliação do vendedor -->
+                            <LinearLayout
+                                android:id="@+id/productRatingContainer"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/productRating1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:textSize="13sp"
+                                    android:layout_marginEnd="2dp"
+                                    android:fontFamily="@font/roboto_medium"
+                                    android:textColor="@color/textTertiary"
+                                    android:text="4.3"/>
+
+                                <LinearLayout
+                                    android:id="@+id/starsContainer"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="10dp"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:id="@+id/category"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:textSize="13sp"
+                                android:layout_weight="1"
+                                android:textSize="16sp"
+                                android:textColor="@color/textSecondary"
                                 android:fontFamily="@font/roboto_medium"
-                                android:textColor="@color/textTertiary"
-                                android:text="4.3"/>
+                                android:text="Jogos"/>
 
-                            <ImageView
-                                android:layout_width="18dp"
-                                android:layout_height="18dp"
-                                android:src="@drawable/ic_star_filled" />
-                            <ImageView
-                                android:layout_width="18dp"
-                                android:layout_height="18dp"
-                                android:src="@drawable/ic_star_filled" />
-                            <ImageView
-                                android:layout_width="18dp"
-                                android:layout_height="18dp"
-                                android:src="@drawable/ic_star_filled" />
-                            <ImageView
-                                android:layout_width="18dp"
-                                android:layout_height="18dp"
-                                android:src="@drawable/ic_star_filled" />
-                            <ImageView
-                                android:layout_width="18dp"
-                                android:layout_height="18dp"
-                                android:src="@drawable/ic_star" />
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/saveButton"
+                                android:layout_width="29dp"
+                                android:layout_height="29dp"
+                                android:layout_marginHorizontal="10dp"
+                                android:src="@drawable/ic_bookmark"
+                                android:contentDescription="@string/add_saved" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:textSize="13sp"
-                                android:fontFamily="@font/roboto_medium"
-                                android:textColor="@color/textTertiary"
-                                android:text="(1,524)"/>
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="29dp"
+                                android:layout_height="29dp"
+                                android:src="@drawable/ic_share"
+                                android:layout_marginEnd="10dp"
+                                app:tint="@color/textPrimary" />
                         </LinearLayout>
 
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/category"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textSize="16sp"
-                            android:textColor="@color/textSecondary"
-                            android:fontFamily="@font/roboto_medium"
-                            android:text="Jogos"/>
-
-                        <ImageButton
-                            android:id="@+id/saveButton"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_marginTop="5dp"
-                            android:background="@android:color/transparent"
-                            android:src="@drawable/ic_bookmark"
-                            android:contentDescription="@string/add_saved" />
-                    </LinearLayout>
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingHorizontal="10dp" >
-
-                        <androidx.viewpager2.widget.ViewPager2
-                            android:id="@+id/viewPagerGallery"
+                        <FrameLayout
                             android:layout_width="match_parent"
-                            android:layout_height="200dp" />
-                    </FrameLayout>
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="10dp" >
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                            <androidx.viewpager2.widget.ViewPager2
+                                android:id="@+id/viewPagerGallery"
+                                android:layout_width="match_parent"
+                                android:layout_height="280dp" />
+                        </FrameLayout>
 
-                        <com.google.android.material.tabs.TabLayout
-                            android:id="@+id/tabLayoutDots"
-                            android:layout_width="wrap_content"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:minWidth="0dp"
-                            android:padding="0dp"
-                            android:background="@color/colorSecondaryVariant"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:tabIndicatorColor="@android:color/white"
-                            app:tabIndicatorGravity="center"
-                            app:tabIndicatorHeight="0dp"
-                            app:tabMode="fixed"
-                            app:tabPadding="5dp"
-                            app:tabPaddingBottom="5dp"
-                            app:tabPaddingEnd="5dp"
-                            app:tabPaddingStart="5dp"
-                            app:tabRippleColor="#00FFFFFF"
-                            app:tabSelectedTextColor="@android:color/white"
-                            app:tabTextColor="@android:color/darker_gray"
-                            app:tabUnboundedRipple="false" />
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/ic_share"
-                            android:layout_marginEnd="10dp"
-                            app:tint="@color/textPrimary"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            <com.google.android.material.tabs.TabLayout
+                                android:id="@+id/tabLayoutDots"
+                                android:layout_width="wrap_content"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:minWidth="0dp"
+                                android:padding="0dp"
+                                android:background="@color/colorSecondaryVariant"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:tabIndicatorColor="@android:color/white"
+                                app:tabIndicatorGravity="center"
+                                app:tabIndicatorHeight="0dp"
+                                app:tabMode="fixed"
+                                app:tabPadding="5dp"
+                                app:tabPaddingBottom="5dp"
+                                app:tabPaddingEnd="5dp"
+                                app:tabPaddingStart="5dp"
+                                app:tabRippleColor="#00FFFFFF"
+                                app:tabSelectedTextColor="@android:color/white"
+                                app:tabTextColor="@android:color/darker_gray"
+                                app:tabUnboundedRipple="false" />
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -280,21 +272,13 @@
                 android:background="@color/backgroundColor"
                 android:orientation="vertical">
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/actionPrimaryProduct"
-                    style="@style/Button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/add_cart"
-                    android:textAllCaps="false"
-                    android:textColor="@color/colorOnPrimary" />
-
                 <LinearLayout
                     android:id="@+id/contactSellerContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
                     android:orientation="vertical"
+                    android:layout_marginBottom="20dp"
                     android:background="@drawable/bg_card_product">
 
                     <LinearLayout
@@ -354,8 +338,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="30dp"
-                android:paddingHorizontal="15dp"
+                android:paddingTop="0dp"
                 android:background="@color/backgroundColor"
                 android:orientation="vertical">
 
@@ -364,13 +347,13 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:paddingVertical="5dp"
-                    android:paddingHorizontal="2dp"
+                    android:paddingHorizontal="15dp"
                     android:background="@drawable/bg_divisor_bottom"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="Avaliações"
                         android:textSize="28sp"
@@ -380,7 +363,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Ver todas (65) >"
+                        android:text="Ver todas >"
                         android:textSize="14sp"
                         android:padding="10dp"
                         android:textColor="@color/textSecondary"
@@ -391,10 +374,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingVertical="5dp"
+                    android:paddingHorizontal="15dp"
+
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/productRating2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="4.2"
@@ -403,35 +389,15 @@
                         android:fontFamily="@font/roboto_bold"/>
 
                     <LinearLayout
-                        android:id="@+id/sellerRating"
+                        android:id="@+id/starsContainer2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_star_filled" />
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_star_filled" />
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_star_filled" />
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_star_filled" />
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_star" />
-
                         <TextView
+                            android:id="@+id/reviewCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="1,524"
@@ -442,7 +408,19 @@
                     </LinearLayout>
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/noReviews"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/text_normal"
+                    android:textColor="@color/textSecondary"
+                    android:layout_marginVertical="10dp"
+                    android:visibility="visible"
+                    android:text="Não tem nenhuma review feita para esse produto."/>
+
                 <LinearLayout
+                    android:id="@+id/containerReviews"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingVertical="5dp"
@@ -450,7 +428,7 @@
                     android:orientation="horizontal">
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvMessage"
+                        android:id="@+id/rvReviews"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:overScrollMode="never"
@@ -458,7 +436,88 @@
                         tools:listitem="@layout/item_user_review"/>
 
                 </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/containerBuy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_divisor_top"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="20dp"
+        android:orientation="horizontal">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="140dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/backgroundColor">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorDivider"
+                    android:gravity="center"
+                    android:layout_weight="1">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        app:tint="@color/textPrimary"
+                        android:src="@drawable/ic_minus"/>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/textPrimary"
+                    android:background="@color/colorSurface"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:text="1"/>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary"
+                    android:gravity="center"
+                    android:layout_weight="1">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        app:tint="@color/colorOnPrimary"
+                        android:src="@drawable/ic_add"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/actionPrimaryProduct"
+            style="@style/Button"
+            android:layout_width="0dp"
+            android:layout_marginStart="10dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/add_cart"
+            android:textAllCaps="false"
+            android:textColor="@color/colorOnPrimary" />
+
+    </LinearLayout>
+
 </LinearLayout>

@@ -23,7 +23,7 @@
     <string name="edit">Edit</string>
     <string name="voltar">Back</string>
     <string name="redefinir">Reset Password</string>
-    <string name="pesquisaHint">Search here</string>
+    <string name="pesquisaHint">What are you looking for?</string>
     <string name="salvar">Save</string>
     <string name="cancelar">Cancel</string>
     <string name="logout">Log Out</string>

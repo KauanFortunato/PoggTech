@@ -23,7 +23,7 @@
     <string name="edit">Editar</string>
     <string name="voltar">Voltar</string>
     <string name="redefinir">Redefinir Passe</string>
-    <string name="pesquisaHint">Pesquise aqui</string>
+    <string name="pesquisaHint">Do que estás a procura?</string>
     <string name="salvar">Salvar</string>
     <string name="cancelar">Cancelar</string>
     <string name="logout">Sair da Conta</string>

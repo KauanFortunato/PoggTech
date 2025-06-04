@@ -38,7 +38,7 @@
         <item name="android:textColor">@color/textPrimary</item>
         <item name="android:textColorHint">@color/textTertiary</item>
         <item name="android:layout_marginTop">8dp</item>
-        <item name="android:background">@drawable/rounded_edittext_background</item>
+        <item name="android:background">@drawable/bg_edit_text</item>
         <item name="android:paddingStart">16dp</item>
         <item name="android:paddingEnd">16dp</item>
         <item name="android:paddingTop">16dp</item>
@@ -162,7 +162,7 @@
         <item name="android:layout_marginTop">0dp</item>
         <item name="android:paddingTop">10dp</item>
         <item name="android:paddingBottom">10dp</item>
-        <item name="android:paddingHorizontal">0dp</item>
+        <item name="android:paddingHorizontal">10dp</item>
         <!--        <item name="android:background">@color/backgroundColor</item>-->
         <item name="android:background">@color/backgroundColor</item>
     </style>
@@ -171,8 +171,8 @@
         <item name="android:textSize">@dimen/text_large</item>
         <item name="android:fontFamily">@font/roboto_bold</item>
         <item name="android:textColor">@color/textPrimary</item>
-        <item name="android:paddingVertical">0dp</item>
-        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingVertical">10dp</item>
+        <item name="android:paddingHorizontal">10dp</item>
     </style>
 
     <style name="division">
@@ -189,15 +189,6 @@
         <item name="android:background">@drawable/bg_category</item>
         <item name="android:padding">10dp</item>
         <item name="android:tint">@color/textPrimary</item>
-    </style>
-
-    <style name="productSectionSubTitle">
-        <item name="android:textSize">@dimen/text_large</item>
-        <item name="android:fontFamily">@font/roboto_bold</item>
-        <item name="android:textColor">@color/textPrimary</item>
-        <item name="android:paddingVertical">10dp</item>
-        <item name="android:paddingHorizontal">10dp</item>
-        <!--        <item name="android:paddingStart">13dp</item>-->
     </style>
 
     <style name="TabTextStyle" parent="TextAppearance.Design.Tab">

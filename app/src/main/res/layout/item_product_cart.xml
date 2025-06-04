@@ -100,7 +100,7 @@
                     android:padding="7dp"
                     android:layout_gravity="end"
                     android:src="@drawable/ic_trash_outline"
-                    android:background="@drawable/bg_oval_icons"
+                    android:background="@drawable/bg_oval_icons_on_card"
                     app:tint="@color/backgroundColor"/>
 
                 <View
