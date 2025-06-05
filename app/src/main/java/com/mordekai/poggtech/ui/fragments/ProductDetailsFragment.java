@@ -133,7 +133,7 @@ public class ProductDetailsFragment extends Fragment {
     }
 
     private void getReviews(int productId) {
-        reviewManager.getReviews(productId, new RepositoryCallback<List<Review>>() {
+        reviewManager.getReviews(productId, 6, new RepositoryCallback<List<Review>>() {
 
             @Override
             public void onSuccess(List<Review> result) {
@@ -391,7 +391,6 @@ public class ProductDetailsFragment extends Fragment {
             reviewCount.setText(String.valueOf(product.getReviewCount()));
         }
 
-
         // Verifica o dono do produto, para não deixar o próprio vendedor comprar o produto dele
         if (product.getUser_id() != user.getUserId()) {
             if (product.getSeller_type().equals("admin")) {
@@ -539,7 +538,6 @@ public class ProductDetailsFragment extends Fragment {
             container.addView(star);
         }
     }
-
 
     private void showBottomSheet() {
         Bundle bundle = new Bundle();

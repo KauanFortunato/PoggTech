@@ -23,8 +23,8 @@ public class ReviewManager {
         this.apiReview = apiReview;
     }
 
-    public void getReviews(int product_id, RepositoryCallback<List<Review>> callback) {
-        apiReview.getReviews(product_id).enqueue(new Callback<ApiResponse<List<Review>>>() {
+    public void getReviews(int product_id, int quantity, RepositoryCallback<List<Review>> callback) {
+        apiReview.getReviews(product_id, quantity).enqueue(new Callback<ApiResponse<List<Review>>>() {
 
             @Override
             public void onResponse(Call<ApiResponse<List<Review>>> call, Response<ApiResponse<List<Review>>> response) {

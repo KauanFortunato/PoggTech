@@ -14,6 +14,7 @@ public interface ApiReview {
 
     @GET("Review/GetReviews.php")
     Call<ApiResponse<List<Review>>> getReviews(
-            @Query("product_id") int product_id
+            @Query("product_id") int product_id,
+            @Query("quantity") int quantity
     );
 }

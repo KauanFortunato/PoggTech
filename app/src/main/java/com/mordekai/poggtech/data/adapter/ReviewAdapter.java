@@ -86,8 +86,8 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
                 }
 
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        (int) view.getContext().getResources().getDisplayMetrics().density * 24,
-                        (int) view.getContext().getResources().getDisplayMetrics().density * 24
+                        (int) view.getContext().getResources().getDisplayMetrics().density * 15,
+                        (int) view.getContext().getResources().getDisplayMetrics().density * 15
                 );
                 params.setMargins(0, 0, 0, 0);
                 star.setLayoutParams(params);
