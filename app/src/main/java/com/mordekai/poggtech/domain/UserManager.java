@@ -24,7 +24,7 @@ public class UserManager {
                 getUser(result, new RepositoryCallback<User>() {
                     @Override
                     public void onSuccess(User user) {
-                        Log.d("Sucesso", "Usuário encontrado: " + user.GetFireUid());
+                        Log.d("Sucesso", "Usuário encontrado: " + user.getFireUid());
                         callback.onSuccess(user);
                     }
 
@@ -47,7 +47,7 @@ public class UserManager {
             @Override
             public void onSuccess(String uid) {
                 Log.d("UserManager", "Usuário criado com sucesso no Firebase: " + uid);
-                user.SetFireUid(uid);
+                user.setFireUid(uid);
 
                 mysqlRepo.registerUser(user, password, new RepositoryCallback<String>() {
                     @Override
@@ -86,11 +86,11 @@ public class UserManager {
             @Override
             public void onSuccess(User user) {
                 // Verifica se o usuário já existe no XAMPP
-                mysqlRepo.getUser(user.GetFireUid(), new RepositoryCallback<User>() {
+                mysqlRepo.getUser(user.getFireUid(), new RepositoryCallback<User>() {
                     @Override
                     public void onSuccess(User existingUser) {
                         // Se o usuário já existe no XAMPP, retorna os dados armazenados
-                        Log.d("Sucesso", "Usuário encontrado no XAMPP: " + existingUser.GetFireUid());
+                        Log.d("Sucesso", "Usuário encontrado no XAMPP: " + existingUser.getFireUid());
                         callback.onSuccess(existingUser);
                     }
 

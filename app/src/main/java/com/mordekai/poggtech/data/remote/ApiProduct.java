@@ -38,6 +38,15 @@ public interface ApiProduct {
     Call<ApiResponse<Void>> addToCart(
             @Field("product_id") int product_id,
             @Field("user_id") int user_id,
+            @Field("tipo") int tipo,
+            @Field("quantity") int quantity
+    );
+
+    @FormUrlEncoded
+    @POST("Product/AddProductOnCartOrFav.php")
+    Call<ApiResponse<Void>> saveProduct(
+            @Field("product_id") int product_id,
+            @Field("user_id") int user_id,
             @Field("tipo") int tipo
     );
 

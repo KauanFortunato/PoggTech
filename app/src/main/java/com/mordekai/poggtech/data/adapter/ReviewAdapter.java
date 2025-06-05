@@ -11,9 +11,11 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.model.Review;
+import com.mordekai.poggtech.utils.Utils;
 
 import java.util.List;
 
@@ -53,18 +55,26 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView comment;
+        private TextView comment, userName, commentDate;
         private LinearLayout starsContainer;
+        private AppCompatImageView userAvatar;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             comment = itemView.findViewById(R.id.comment);
             starsContainer = itemView.findViewById(R.id.starsContainer);
+            userName = itemView.findViewById(R.id.userName);
+            commentDate = itemView.findViewById(R.id.commentDate);
+            userAvatar = itemView.findViewById(R.id.userAvatar);
         }
 
         public void bind(Review review, View view) {
             comment.setText(review.getComment());
             setRatingStars(starsContainer, review.getRating(), view);
+            userName.setText(String.format("%s %s", review.getUser_name(), review.getUser_last_name()));
+            commentDate.setText(review.getTimeAgo());
+
+            Utils.loadImageBasicAuth(userAvatar, review.getUser_avatar());
         }
 
         private void setRatingStars(LinearLayout container, float rating, View view) {

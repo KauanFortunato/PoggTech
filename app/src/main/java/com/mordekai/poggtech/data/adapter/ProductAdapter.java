@@ -147,7 +147,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     private void addToSaved(int productId, View view, int position) {
         CartManager cartManager = new CartManager(RetrofitClient.getRetrofitInstance().create(ApiProduct.class));
-        cartManager.addToCart(productId, userId, 1, new RepositoryCallback<ApiResponse<Void>>() {
+        cartManager.saveProduct(productId, userId, new RepositoryCallback<ApiResponse<Void>>() {
             @Override
             public void onSuccess(ApiResponse<Void> result) {
                 if (result.isSuccess()) {

@@ -39,6 +39,7 @@ import com.mordekai.poggtech.domain.CartManager;
 import com.mordekai.poggtech.domain.InteractionManager;
 import com.mordekai.poggtech.domain.OrderManager;
 import com.mordekai.poggtech.domain.ProductManager;
+import com.mordekai.poggtech.utils.ProductLoader;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
 import java.util.ArrayList;
@@ -64,7 +65,6 @@ public class CartFragment extends Fragment implements CartProductAdapter.OnProdu
     private ProductAdapter forYouAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ShimmerFrameLayout shimmerLayout;
-    private InteractionManager interactionManager;
     private AppCompatButton buy;
     private ProgressBar buttonProgress;
     private boolean buying = false;
@@ -95,7 +95,6 @@ public class CartFragment extends Fragment implements CartProductAdapter.OnProdu
         cartManager = new CartManager(apiProduct);
 
         swipeRefreshLayout.setOnRefreshListener(this::fetchCartProducts);
-        interactionManager = new InteractionManager(RetrofitClient.getRetrofitInstance().create(ApiInteraction.class));
 
 
         // Adapter de produtos recomendados
@@ -110,7 +109,16 @@ public class CartFragment extends Fragment implements CartProductAdapter.OnProdu
 
         // Carregar produtos
         fetchCartProducts();
-        getForYou();
+        ProductLoader.loadForYouProducts(
+                productManager,
+                user.getUserId(),
+                forYouAdapter,
+                productListForY,
+                favoriteIds,
+                4,
+                1,
+                () -> {}
+        );
 
         return view;
     }
@@ -169,39 +177,6 @@ public class CartFragment extends Fragment implements CartProductAdapter.OnProdu
                 }, 600);
             }
         });
-    }
-
-    private void getForYou() {
-        productManager.getProductsFavCategories(user.getUserId(), 4, new RepositoryCallback<List<Product>>() {
-            @Override
-            public void onSuccess(List<Product> result) {
-                productListForY.clear();
-                productListForY.addAll(result);
-                forYouAdapter.updateProducts(result);
-                Log.d("DEBUG_PRODUCTS", "Produtos recebidos: " + result.size());
-
-                productManager.fetchUserFavOrCart(user.getUserId(), 1, new RepositoryCallback<List<Integer>>() {
-                    @Override
-                    public void onSuccess(List<Integer> favorites) {
-                        favoriteIds.clear();
-                        favoriteIds.addAll(favorites);
-                        forYouAdapter.setSavedIds(favoriteIds);
-                        forYouAdapter.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onFailure(Throwable t) {
-                        Log.e("API_RESPONSE", "Erro ao buscar produtos favoritos", t);
-                    }
-                });
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                Log.e("API_RESPONSE", "Erro ao buscar produtos", t);
-            }
-        });
-
     }
 
     private void updatePrice() {
@@ -304,6 +279,7 @@ public class CartFragment extends Fragment implements CartProductAdapter.OnProdu
         Bundle bundle = new Bundle();
         bundle.putInt("productId", product.getProduct_id());
 
+        InteractionManager interactionManager = new InteractionManager(RetrofitClient.getRetrofitInstance().create(ApiInteraction.class));
         interactionManager.userInteraction(product.getProduct_id(), user.getUserId(), "view", new RepositoryCallback<String>() {
             @Override
             public void onSuccess(String result) {

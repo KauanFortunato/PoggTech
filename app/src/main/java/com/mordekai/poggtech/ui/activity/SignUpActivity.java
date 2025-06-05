@@ -140,7 +140,8 @@ public class SignUpActivity extends AppCompatActivity  {
 
             @Override
             public void onFailure(Throwable t) {
-
+                Log.e("Erro", "Falha ao criar usuário", t);
+                Toast.makeText(SignUpActivity.this, "Falha ao criar usuário", Toast.LENGTH_SHORT).show();
             }
         });
     }

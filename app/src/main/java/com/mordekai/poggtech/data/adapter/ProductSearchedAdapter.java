@@ -183,7 +183,7 @@ public class ProductSearchedAdapter extends RecyclerView.Adapter<ProductSearched
 
     private void addToFavorites(int productId, View view, int position) {
         CartManager cartManager = new CartManager(RetrofitClient.getRetrofitInstance().create(ApiProduct.class));
-        cartManager.addToCart(productId, user.getUserId(), 1, new RepositoryCallback<ApiResponse<Void>>() {
+        cartManager.saveProduct(productId, user.getUserId(), new RepositoryCallback<ApiResponse<Void>>() {
             @Override
             public void onSuccess(ApiResponse<Void> result) {
                 if (result.isSuccess()) {

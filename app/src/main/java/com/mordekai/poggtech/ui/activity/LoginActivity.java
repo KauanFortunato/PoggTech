@@ -91,7 +91,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
 
-
         AppConfig.initialize(this);
         showIpInputDialog();
 

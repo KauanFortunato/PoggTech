@@ -42,22 +42,30 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <!-- Botão "Remover" -->
-            <TextView
-                android:id="@+id/removeButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="6dp"
-                android:paddingVertical="3dp"
-                android:text="Remover"
-                android:textSize="12sp"
-                android:fontFamily="@font/roboto"
-                android:textColor="@color/backgroundColor"
-                android:background="@drawable/bg_manage_stock" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/buttonRemove"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="7dp"
+                android:layout_gravity="end"
+                android:src="@drawable/ic_trash_outline"
+                android:background="@drawable/bg_oval_icons_on_card"
+                app:tint="@color/backgroundColor"/>
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="7dp"
+                android:layout_gravity="end"
+                android:src="@drawable/ic_trash_outline"
+                android:background="@drawable/bg_oval_icons_on_card"
+                app:tint="@color/backgroundColor"/>
         </LinearLayout>
 
 

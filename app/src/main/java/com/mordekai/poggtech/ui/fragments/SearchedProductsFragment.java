@@ -79,6 +79,8 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
             Bundle bundle = new Bundle();
             bundle.putInt("productId", product.getProduct_id());
 
+            Log.d("ProductDetailsFragment", "productId 1: " + product.getProduct_id());
+
             interactionManager.userInteraction(product.getProduct_id(), user.getUserId(), "view", new RepositoryCallback<String>() {
                 @Override
                 public void onSuccess(String result) {
@@ -92,7 +94,7 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
             });
 
             NavController navController = NavHostFragment.findNavController(this);
-            navController.navigate(R.id.productDetailsFragment);
+            navController.navigate(R.id.productDetailsFragment, bundle);
         });
 
         getFavoriteProducts();

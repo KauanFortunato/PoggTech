@@ -34,8 +34,9 @@
     <string name="carrinho">Carrinho</string>
     <string name="salvos">Salvos</string>
     <string name="inicio">Início</string>
-    <string name="minhasCompras">As Minhas Compras</string>
-    <string name="meusAnuncios">Os Meus Anúncios</string>
+    <string name="minhasCompras">Compras</string>
+    <string name="wallet">Carteira</string>
+    <string name="meusAnuncios">Anúncios</string>
     <string name="linkDeRecuperacao">Um link para redefinir sua senha será enviado para o e-mail cadastrado em sua conta</string>
     <string name="remove">Remover</string>
     <string name="noSavedProducts">Você não tem produtos salvos</string>

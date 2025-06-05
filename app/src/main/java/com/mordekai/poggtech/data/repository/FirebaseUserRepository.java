@@ -3,7 +3,6 @@ package com.mordekai.poggtech.data.repository;
 import android.util.Log;
 
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -22,8 +21,8 @@ public class FirebaseUserRepository implements UserRepository {
                     if (task.isSuccessful()) {
                         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                         if (firebaseUser != null) {
-                            user.SetFireUid(firebaseUser.getUid());
-                            callback.onSuccess(user.GetFireUid());
+                            user.setFireUid(firebaseUser.getUid());
+                            callback.onSuccess(user.getFireUid());
                         } else {
                             callback.onFailure(new Exception("Erro: FirebaseUser é nulo"));
                         }
@@ -66,7 +65,7 @@ public class FirebaseUserRepository implements UserRepository {
                                 if (updatedUser != null) {
                                     // Criar um objeto User com os dados do Firebase
                                     User user = new User();
-                                    user.SetFireUid(updatedUser.getUid());
+                                    user.setFireUid(updatedUser.getUid());
                                     user.setEmail(updatedUser.getEmail());
                                     user.setName(updatedUser.getDisplayName());
 

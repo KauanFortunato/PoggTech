@@ -140,7 +140,7 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
 
     private void addMore(int productId, View view, int position) {
         CartManager cartManager = new CartManager(RetrofitClient.getRetrofitInstance().create(ApiProduct.class));
-        cartManager.addToCart(productId, userId, 0, new RepositoryCallback<ApiResponse<Void>>() {
+        cartManager.addToCart(productId, userId, 1, new RepositoryCallback<ApiResponse<Void>>() {
 
             @Override
             public void onSuccess(ApiResponse<Void> result) {

@@ -24,10 +24,7 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("User/RegisterUser.php")
     Call<ResponseBody> insertUser(
-            @Field("firebase_uid") String firebase_uid,
-            @Field("name") String name,
-            @Field("last_name") String last_name,
-            @Field("email") String email
+            @Field("user") User user
     );
 
     @FormUrlEncoded

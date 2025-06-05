@@ -39,7 +39,7 @@ import com.mordekai.poggtech.data.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserAccountFragment extends Fragment
+public class AccountFragment extends Fragment
         implements ProductAdapter.OnProductClickListener,
         ProductAdapter.OnSavedChangedListener {
     private TextView helloUser, numberAccount;

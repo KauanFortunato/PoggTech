@@ -36,6 +36,7 @@ import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.InteractionManager;
 import com.mordekai.poggtech.domain.ProductManager;
 import com.mordekai.poggtech.utils.BottomNavVisibilityController;
+import com.mordekai.poggtech.utils.ProductLoader;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
 import java.util.ArrayList;
@@ -124,7 +125,18 @@ public class HomeFragment extends Fragment
         interactionManager = new InteractionManager(apiInteraction);
 
         getContinueBuy();
-        getForYou();
+
+        ProductLoader.loadForYouProducts(
+                productManager,
+                user.getUserId(),
+                forYouAdapter,
+                productForYouList,
+                favoriteIds,
+                4,
+                1,
+                this::checkIfLoadingFinished
+        );
+
         maybeYouLike();
         getPopular();
         getCategories();

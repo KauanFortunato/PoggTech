@@ -20,8 +20,28 @@ public class CartManager {
         this.apiProduct = apiProduct;
     }
 
-    public void addToCart(int product_id, int user_id, int tipo, RepositoryCallback<ApiResponse<Void>> callback) {
-        Call<ApiResponse<Void>> call = apiProduct.addToCart(product_id, user_id, tipo);
+    public void addToCart(int product_id, int user_id, int quantity, RepositoryCallback<ApiResponse<Void>> callback) {
+        Call<ApiResponse<Void>> call = apiProduct.addToCart(product_id, user_id, 0, quantity);
+        call.enqueue(new Callback<ApiResponse<Void>>() {
+
+            @Override
+            public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
+                if (response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onFailure(new Exception("Erro ao adicionar aos favoritos/carrinho: " + response.message()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
+                callback.onFailure(new Exception("Falha na conexão: " + t.getMessage()));
+            }
+        });
+    }
+
+    public void saveProduct(int product_id, int user_id, RepositoryCallback<ApiResponse<Void>> callback) {
+        Call<ApiResponse<Void>> call = apiProduct.saveProduct(product_id, user_id, 0);
         call.enqueue(new Callback<ApiResponse<Void>>() {
 
             @Override

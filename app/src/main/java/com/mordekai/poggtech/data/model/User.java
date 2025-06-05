@@ -6,6 +6,7 @@ public class User {
     private String name;
     private String last_name;
     private String email;
+    private String avatar;
     private String phone;
     private String created_at;
     private String error;
@@ -30,11 +31,11 @@ public class User {
         this.user_id = user_id;
     }
 
-    public String GetFireUid() {
+    public String getFireUid() {
         return firebase_uid;
     }
 
-    public void SetFireUid(String firebase_uid) {
+    public void setFireUid(String firebase_uid) {
         this.firebase_uid = firebase_uid;
     }
 
@@ -60,6 +61,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getPhone() {

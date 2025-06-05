@@ -2,12 +2,14 @@ package com.mordekai.poggtech.ui.fragments;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -49,6 +51,7 @@ public class OrdersFragment extends Fragment implements ProductAdapter.OnProduct
     private List<Integer> favoriteIds = new ArrayList<>();
     private ProductAdapter forYouAdapter;
     private InteractionManager interactionManager;
+    private AppCompatImageView btnBack;
 
 
     @Nullable
@@ -134,6 +137,16 @@ public class OrdersFragment extends Fragment implements ProductAdapter.OnProduct
 
     private void startComponents(View view) {
         rvForYou = view.findViewById(R.id.rvForYou);
+        btnBack = view.findViewById(R.id.btn_back);
+
+        btnBack.setOnClickListener(v -> {
+            if (btnBack.isHapticFeedbackEnabled()) {
+                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
+            }
+
+            NavController navController = NavHostFragment.findNavController(this);
+            navController.popBackStack();
+        });
     }
 
     @Override

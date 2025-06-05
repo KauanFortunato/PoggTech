@@ -9,11 +9,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
-import com.mordekai.poggtech.data.model.ApiResponse;
 import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
@@ -56,13 +56,13 @@ public class SavedProductAdapter extends RecyclerView.Adapter<SavedProductAdapte
         holder.productPrice.setText("€ " + product.getPrice());
         holder.productType.setText(product.getCategory());
 
-        holder.removeButton.setOnClickListener(v -> {
-           if(holder.removeButton.isHapticFeedbackEnabled()) {
-               v.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
-           }
+        holder.buttonRemove.setOnClickListener(v -> {
+            if (holder.buttonRemove.isHapticFeedbackEnabled()) {
+                v.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
+            }
 
-           removeFromFavorites(product.getProduct_id(), v, holder.getAdapterPosition());
-       });
+            removeFromFavorites(product.getProduct_id(), v, holder.getAdapterPosition());
+        });
 
         Utils.loadImageBasicAuth(holder.productImage, product.getCover());
 
@@ -83,7 +83,7 @@ public class SavedProductAdapter extends RecyclerView.Adapter<SavedProductAdapte
         TextView productTitle;
         TextView productType;
         TextView productPrice;
-        TextView removeButton;
+        AppCompatImageView buttonRemove;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -93,7 +93,7 @@ public class SavedProductAdapter extends RecyclerView.Adapter<SavedProductAdapte
             productTitle = itemView.findViewById(R.id.productTitle);
             productType = itemView.findViewById(R.id.productType);
             productPrice = itemView.findViewById(R.id.productPrice);
-            removeButton = itemView.findViewById(R.id.removeButton);
+            buttonRemove = itemView.findViewById(R.id.buttonRemove);
         }
     }
 

@@ -6,6 +6,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.adapter.GalleryAdapter;
+import com.mordekai.poggtech.data.adapter.ProductAdapter;
 import com.mordekai.poggtech.data.adapter.ReviewAdapter;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.ApiResponse;
@@ -13,16 +14,19 @@ import com.mordekai.poggtech.data.model.Chat;
 import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.model.Review;
 import com.mordekai.poggtech.data.model.User;
+import com.mordekai.poggtech.data.remote.ApiInteraction;
 import com.mordekai.poggtech.data.remote.ApiMessage;
 import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.ApiReview;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.CartManager;
+import com.mordekai.poggtech.domain.InteractionManager;
 import com.mordekai.poggtech.domain.MessageManager;
 import com.mordekai.poggtech.domain.ProductManager;
 import com.mordekai.poggtech.domain.ReviewManager;
 import com.mordekai.poggtech.ui.activity.MainActivity;
 import com.mordekai.poggtech.ui.bottomsheets.ProductAddedBottomSheet;
+import com.mordekai.poggtech.utils.ProductLoader;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 import com.mordekai.poggtech.utils.SnackbarUtil;
 import com.mordekai.poggtech.utils.BottomNavVisibilityController;
@@ -43,6 +47,9 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
@@ -52,17 +59,22 @@ import java.util.List;
 
 import okhttp3.ResponseBody;
 
-public class ProductDetailsFragment extends Fragment {
+public class ProductDetailsFragment extends Fragment implements ProductAdapter.OnProductClickListener,
+        ProductAdapter.OnSavedChangedListener {
 
     private TextView titleProduct, category, price, priceDecimal, discount, priceBefore,
             productPoggers, productRating1, productRating2, reviewCount, noReviews;
     private EditText inputText;
     private LinearLayout contactSellerContainer, containerReviews, containerBuy;
     private LinearLayout starsContainer, starsContainer2;
-    private RecyclerView rvReviews;
+    private ProductAdapter forYouAdapter;
+    private RecyclerView rvReviews, rvForYou;
     private AppCompatButton actionButton;
+    private List<Product> productList = new ArrayList<>();
+    private List<Integer> favoriteIds = new ArrayList<>();
     private ImageButton btnSend;
-    private AppCompatImageView saveButton;
+    private AppCompatImageView saveButton, minusProduct, plusProduct;
+    private TextView quantityProduct;
     private View contentView;
     private ViewPager2 viewPagerGallery;
     private GalleryAdapter galleryAdapter;
@@ -78,6 +90,7 @@ public class ProductDetailsFragment extends Fragment {
     private User user;
     private Product product;
     private int productId;
+    private int quantityAdd = 1;
     private ShimmerFrameLayout shimmerLayout;
 
 
@@ -96,6 +109,8 @@ public class ProductDetailsFragment extends Fragment {
         if (getArguments() != null) {
             productId = getArguments().getInt("productId");
         }
+
+        Log.d("ProductDetailsFragment", "productId 2: " + productId);
 
         startComponents(view);
         verifyProductIsSaved(productId, user.getUserId(), 1);
@@ -125,15 +140,33 @@ public class ProductDetailsFragment extends Fragment {
             }
         });
 
+        rvForYou.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        rvForYou.setNestedScrollingEnabled(false);
+
+        forYouAdapter = new ProductAdapter(productList, user.getUserId(), R.layout.item_product, this, this);
+        rvForYou.setAdapter(forYouAdapter);
+
         // Buscar os detalhes do produto
         fetchProduct(productId);
         getReviews(productId);
 
+        // ToDo: Carregar os produtos da mesma categoria que o produto atual
+        ProductLoader.loadForYouProducts(
+                productManager,
+                user.getUserId(),
+                forYouAdapter,
+                productList,
+                favoriteIds,
+                4,
+                1,
+                () -> {
+                }
+        );
         return view;
     }
 
     private void getReviews(int productId) {
-        reviewManager.getReviews(productId, 6, new RepositoryCallback<List<Review>>() {
+        reviewManager.getReviews(productId, 4, new RepositoryCallback<List<Review>>() {
 
             @Override
             public void onSuccess(List<Review> result) {
@@ -332,6 +365,29 @@ public class ProductDetailsFragment extends Fragment {
         rvReviews = view.findViewById(R.id.rvReviews);
         contentView = view.findViewById(R.id.contentView);
         shimmerLayout = view.findViewById(R.id.shimmerLayout);
+        rvForYou = view.findViewById(R.id.rvForYou);
+
+        quantityProduct = view.findViewById(R.id.quantityProduct);
+        minusProduct = view.findViewById(R.id.minusProduct);
+        plusProduct = view.findViewById(R.id.plusProduct);
+
+        quantityProduct.setText(String.valueOf(quantityAdd));
+
+        minusProduct.setOnClickListener(v -> {
+            if (quantityAdd > 1) {
+                quantityAdd--;
+                quantityProduct.setText(String.valueOf(quantityAdd));
+            }
+        });
+
+        plusProduct.setOnClickListener(v -> {
+            if (quantityAdd < product.getQuantity()) {
+                quantityAdd++;
+                quantityProduct.setText(String.valueOf(quantityAdd));
+            } else {
+                SnackbarUtil.showErrorSnackbar(getView(), "Quantidade máxima atingida", getContext());
+            }
+        });
 
         shimmerLayout.setVisibility(View.VISIBLE);
         shimmerLayout.startShimmer();
@@ -443,7 +499,7 @@ public class ProductDetailsFragment extends Fragment {
     }
 
     private void addToSaved(int productId) {
-        cartManager.addToCart(productId, user.getUserId(), 1, new RepositoryCallback<ApiResponse<Void>>() {
+        cartManager.saveProduct(productId, user.getUserId(), new RepositoryCallback<ApiResponse<Void>>() {
             @Override
             public void onSuccess(ApiResponse<Void> result) {
                 if (result.isSuccess()) {
@@ -477,7 +533,7 @@ public class ProductDetailsFragment extends Fragment {
     }
 
     private void addToCart(int productId) {
-        cartManager.addToCart(productId, user.getUserId(), 0, new RepositoryCallback<ApiResponse<Void>>() {
+        cartManager.addToCart(productId, user.getUserId(), quantityAdd, new RepositoryCallback<ApiResponse<Void>>() {
             @Override
             public void onSuccess(ApiResponse<Void> result) {
                 if (result.isSuccess()) {
@@ -546,5 +602,33 @@ public class ProductDetailsFragment extends Fragment {
         ProductAddedBottomSheet bottomSheet = new ProductAddedBottomSheet();
         bottomSheet.setArguments(bundle);
         bottomSheet.show(getChildFragmentManager(), bottomSheet.getTag());
+    }
+
+    @Override
+    public void onSaveChanged() {
+        forYouAdapter.setSavedIds(favoriteIds);
+        forYouAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onProductClick(Product product) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("productId", product.getProduct_id());
+
+        InteractionManager interactionManager = new InteractionManager(RetrofitClient.getRetrofitInstance().create(ApiInteraction.class));
+        interactionManager.userInteraction(product.getProduct_id(), user.getUserId(), "view", new RepositoryCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("API_RESPONSE", "Interaction result: " + result);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("API_RESPONSE", "Error in userInteraction", t);
+            }
+        });
+
+        NavController navController = NavHostFragment.findNavController(this);
+        navController.navigate(R.id.action_save_to_productDetailsFragment, bundle);
     }
 }

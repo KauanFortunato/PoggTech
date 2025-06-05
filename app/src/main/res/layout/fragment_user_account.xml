@@ -32,34 +32,45 @@
         android:layout_height="wrap_content"
         android:background="@color/backgroundColor"
         android:orientation="vertical"
-        android:paddingHorizontal="30dp"
+        android:paddingHorizontal="25dp"
         android:paddingVertical="25dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header">
 
+
+        <FrameLayout
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:clipToOutline="true"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_avatar_user">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/userAvatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:padding="6dp"
+                android:src="@drawable/xbox_series_x"/>
+        </FrameLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="top"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/helloUser"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:fontFamily="@font/roboto_bold"
                 android:text="Olá, KAUAN"
+                android:layout_gravity="center"
+                android:textAlignment="center"
                 android:textColor="@color/textPrimary"
                 android:textSize="24sp" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/walletButton"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:background="@drawable/bg_image_view_wallet"
-                android:padding="5dp"
-                android:src="@drawable/ic_wallet"
-                app:tint="@color/colorOnPrimary" />
         </LinearLayout>
 
         <TextView
@@ -69,6 +80,7 @@
             android:fontFamily="@font/roboto_bold"
             android:text="Número Da Conta: 1A2B3C"
             android:textColor="@color/textSecondary"
+            android:visibility="gone"
             android:textSize="14sp" />
 
         <LinearLayout
@@ -76,39 +88,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingHorizontal="10dp">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageButton
-                    android:id="@+id/buttonConfig"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="28dp"
-                    android:background="@drawable/rounded_button_small"
-                    android:contentDescription="@string/configuracoes"
-                    android:src="@drawable/ic_settings_filled" />
-
-                <TextView
-                    android:id="@+id/textConfig"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:breakStrategy="balanced"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/roboto_bold"
-                    android:hyphenationFrequency="full"
-
-                    android:lineSpacingExtra="4dp"
-                    android:maxLines="2"
-                    android:text="@string/configuracoes"
-                    android:textAlignment="center"
-                    android:textColor="@color/textPrimary"
-                    android:textSize="12sp" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -136,7 +115,7 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/roboto_bold"
                     android:hyphenationFrequency="full"
-
+                    android:layout_marginTop="10dp"
                     android:lineSpacingExtra="4dp"
                     android:maxLines="2"
                     android:text="@string/minhasCompras"
@@ -171,10 +150,81 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/roboto_bold"
                     android:hyphenationFrequency="full"
+                    android:layout_marginTop="10dp"
 
                     android:lineSpacingExtra="4dp"
                     android:maxLines="2"
                     android:text="@string/meusAnuncios"
+                    android:textAlignment="center"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/walletButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="28dp"
+                    android:padding="9dp"
+                    android:background="@drawable/rounded_button_small"
+                    android:contentDescription="Os Meus Anúncios"
+                    android:src="@drawable/ic_wallet"
+                    android:textAllCaps="false"
+                    app:tint="@color/colorOnPrimary"/>
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:breakStrategy="balanced"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/roboto_bold"
+                    android:hyphenationFrequency="full"
+                    android:layout_marginTop="10dp"
+
+                    android:lineSpacingExtra="4dp"
+                    android:maxLines="2"
+                    android:text="@string/wallet"
+                    android:textAlignment="center"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/buttonConfig"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="28dp"
+                    android:background="@drawable/rounded_button_small"
+                    android:contentDescription="@string/configuracoes"
+                    android:src="@drawable/ic_settings_filled" />
+
+                <TextView
+                    android:id="@+id/textConfig"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:breakStrategy="balanced"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/roboto_bold"
+                    android:hyphenationFrequency="full"
+                    android:layout_marginTop="10dp"
+
+                    android:lineSpacingExtra="4dp"
+                    android:maxLines="2"
+                    android:text="@string/configuracoes"
                     android:textAlignment="center"
                     android:textColor="@color/textPrimary"
                     android:textSize="12sp" />
