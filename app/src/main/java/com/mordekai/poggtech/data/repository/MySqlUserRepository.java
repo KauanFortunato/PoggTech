@@ -20,7 +20,7 @@ public class MySqlUserRepository implements UserRepository {
 
     @Override
     public void registerUser(User user, String password, RepositoryCallback<String> callback) {
-        apiService.insertUser(user)
+        apiService.insertUser(user.getFireUid(), user.getName(), user.getLastName(), user.getEmail(), user.getAvatar())
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

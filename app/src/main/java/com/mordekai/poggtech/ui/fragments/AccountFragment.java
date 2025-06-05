@@ -35,6 +35,7 @@ import com.mordekai.poggtech.ui.activity.LoginActivity;
 import com.mordekai.poggtech.utils.BottomNavVisibilityController;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 import com.mordekai.poggtech.data.model.User;
+import com.mordekai.poggtech.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,7 @@ public class AccountFragment extends Fragment
     private ImageButton buttonConfig, buttonMyPurchases, buttonMyAds;
     private AppCompatImageView walletButton;
     private FirebaseUser currentUser;
+    private AppCompatImageView userAvatar;
     private SharedPrefHelper sharedPrefHelper;
     private InteractionManager interactionManager;
     private User user;
@@ -77,8 +79,6 @@ public class AccountFragment extends Fragment
 
         helloUser.setText("Olá, " + user.getName());
         numberAccount.setText("Número Da Conta: " + user.getUserId());
-
-        setLayout();
 
         rvForYou.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rvForYou.setNestedScrollingEnabled(false);
@@ -114,12 +114,15 @@ public class AccountFragment extends Fragment
         rvForYou = view.findViewById(R.id.rvForYou);
         buttonConfig = view.findViewById(R.id.buttonConfig);
         walletButton = view.findViewById(R.id.walletButton);
+        userAvatar = view.findViewById(R.id.userAvatar);
 
         buttonConfig = view.findViewById(R.id.buttonConfig);
         buttonMyPurchases = view.findViewById(R.id.buttonMyPurchases);
         buttonMyAds = view.findViewById(R.id.buttonMyAds);
 
         ((BottomNavVisibilityController) requireActivity()).showBottomNav();
+
+        Utils.loadImageBasicAuth(userAvatar, user.getAvatar());
 
         buttonConfig.setOnTouchListener((v, event) -> {
             switch (event.getAction()) {
@@ -212,9 +215,6 @@ public class AccountFragment extends Fragment
             }
         });
 
-    }
-
-    private void setLayout() {
     }
 
     @Override

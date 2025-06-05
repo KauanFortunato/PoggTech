@@ -2,8 +2,11 @@ package com.mordekai.poggtech.domain;
 
 import android.util.Log;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.User;
+import com.mordekai.poggtech.data.repository.FirebaseUserRepository;
 import com.mordekai.poggtech.data.repository.UserRepository;
 
 
@@ -98,7 +101,10 @@ public class UserManager {
                     public void onFailure(Throwable t) {
                         // Se o usuário não existe no XAMPP, cria um novo registro
                         Log.d("Info", "Usuário não encontrado no XAMPP. Criando novo...");
-
+                        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                        if (firebaseUser != null) {
+                            user.setAvatar(firebaseUser.getPhotoUrl() != null ? firebaseUser.getPhotoUrl().toString() : null);
+                        }
                         mysqlRepo.registerUser(user, "senha_padrao", new RepositoryCallback<String>() {
                             @Override
                             public void onSuccess(String result) {

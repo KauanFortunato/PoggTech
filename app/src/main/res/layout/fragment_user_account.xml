@@ -51,7 +51,7 @@
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
-                android:padding="6dp"
+                android:padding="10dp"
                 android:src="@drawable/xbox_series_x"/>
         </FrameLayout>
 
