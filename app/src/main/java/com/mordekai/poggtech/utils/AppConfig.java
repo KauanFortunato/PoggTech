@@ -11,7 +11,7 @@ public class AppConfig {
     public static void initialize(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         String ip = prefs.getString(KEY_IP, "poggers.ddns.net"); // IP padrão
-        baseUrl = "http://" + ip + "/PoggTech-APIs/routes/";
+        baseUrl = "http://" + ip + "/PoggTech-APIs/public/";
     }
 
     public static String getBaseUrl() {
@@ -25,6 +25,6 @@ public class AppConfig {
         editor.apply();
 
         // Atualiza a baseUrl globalmente
-        baseUrl = "http://" + ip + "/PoggTech-APIs/routes/";
+        baseUrl = "http://" + ip + "/PoggTech-APIs/public/";
     }
 }

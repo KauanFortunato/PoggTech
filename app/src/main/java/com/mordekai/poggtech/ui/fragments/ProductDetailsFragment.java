@@ -63,7 +63,7 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
         ProductAdapter.OnSavedChangedListener {
 
     private TextView titleProduct, category, price, priceDecimal, discount, priceBefore,
-            productPoggers, productRating1, productRating2, reviewCount, noReviews;
+            productPoggers, productRating1, productRating2, reviewCount, noReviews, seeAllReviews;
     private EditText inputText;
     private LinearLayout contactSellerContainer, containerReviews, containerBuy;
     private LinearLayout starsContainer, starsContainer2;
@@ -110,8 +110,6 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
             productId = getArguments().getInt("productId");
         }
 
-        Log.d("ProductDetailsFragment", "productId 2: " + productId);
-
         startComponents(view);
         verifyProductIsSaved(productId, user.getUserId(), 1);
 
@@ -147,6 +145,7 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
         rvForYou.setAdapter(forYouAdapter);
 
         // Buscar os detalhes do produto
+        Log.d("ProductDetailsFragment", "productId: " + productId);
         fetchProduct(productId);
         getReviews(productId);
 
@@ -313,6 +312,7 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
                     product.getUser_id(),
                     chatProduct.getChat_id(),
                     inputText.getText().toString(),
+
                     new RepositoryCallback<String>() {
                         @Override
                         public void onSuccess(String result) {
@@ -366,6 +366,7 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
         contentView = view.findViewById(R.id.contentView);
         shimmerLayout = view.findViewById(R.id.shimmerLayout);
         rvForYou = view.findViewById(R.id.rvForYou);
+        seeAllReviews = view.findViewById(R.id.seeAllReviews);
 
         quantityProduct = view.findViewById(R.id.quantityProduct);
         minusProduct = view.findViewById(R.id.minusProduct);

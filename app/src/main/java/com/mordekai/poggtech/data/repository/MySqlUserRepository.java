@@ -20,10 +20,10 @@ public class MySqlUserRepository implements UserRepository {
 
     @Override
     public void registerUser(User user, String password, RepositoryCallback<String> callback) {
-        apiService.insertUser(user.getFireUid(), user.getName(), user.getLastName(), user.getEmail(), user.getAvatar())
-                .enqueue(new Callback<ResponseBody>() {
+        apiService.registerUser(user)
+                .enqueue(new Callback<ApiResponse<Void>>() {
                     @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
                         if (response.isSuccessful()) {
                             callback.onSuccess("Usuário criado");
                         } else {
@@ -32,7 +32,7 @@ public class MySqlUserRepository implements UserRepository {
                     }
 
                     @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
                         callback.onFailure(t);
                     }
                 });

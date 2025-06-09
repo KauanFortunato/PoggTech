@@ -10,115 +10,24 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiProduct {
-    @GET("Product/GetAllProducts.php")
-    Call<List<Product>> getAllProducts();
 
-    @GET("Product/GetProductsByCategory.php")
-    Call<List<Product>> getProductsByCategory(
-            @Query("category") String category,
-            @Query("all") Boolean all
-    );
-
-    @GET("Product/GetProduct.php")
-    Call<Product> getProductById(
-            @Query("product_id") int product_id
-    );
-
-    @FormUrlEncoded
-    @POST("Product/AddProductOnCartOrFav.php")
-    Call<ApiResponse<Void>> addToCart(
-            @Field("product_id") int product_id,
-            @Field("user_id") int user_id,
-            @Field("tipo") int tipo,
-            @Field("quantity") int quantity
-    );
-
-    @FormUrlEncoded
-    @POST("Product/AddProductOnCartOrFav.php")
-    Call<ApiResponse<Void>> saveProduct(
-            @Field("product_id") int product_id,
-            @Field("user_id") int user_id,
-            @Field("tipo") int tipo
-    );
-
-    @FormUrlEncoded
-    @POST("Product/RemoveOneFromCart.php")
-    Call<ApiResponse<Void>> removeOneFromCart(
-            @Field("product_id") int product_id,
-            @Field("user_id") int user_id,
-            @Field("tipo") int tipo
-    );
-
-    @FormUrlEncoded
-    @POST("Product/RemoveProductOnCartOrFav.php")
-    Call<ResponseBody> removeFromCart(
-            @Field("product_id") int product_id,
-            @Field("user_id") int user_id,
-            @Field("tipo") int tipo
-    );
-
-    @GET("Product/GetProductsFromCart.php")
-    Call<ApiResponse<List<Product>>> getCartProducts(
-            @Query("user_id") int user_id,
-            @Query("tipo") int tipo
-    );
-
-    @GET("Product/GetUserFavOrCart.php")
-    Call<ApiResponse<List<Integer>>> getUserFavOrCart(
-            @Query("user_id") int userId,
-            @Query("tipo") int tipo
-    );
-
-    @GET("Product/VerifyProductOnCart.php")
-    Call<ApiResponse> verifyProductOnCart(
-            @Query("product_id") int productId,
-            @Query("user_id") int userId,
-            @Query("tipo") int tipo
-    );
-
-    @GET("Product/GetPopularProducts.php")
-    Call<ApiResponse<List<Product>>> getPopularProducts();
-
-    @GET("Product/GetRecommendedProducts.php")
-    Call<ApiResponse<List<Product>>> getRecommendedProducts(
-            @Query("user_id") int userId
-    );
-
-    @GET("Product/GetProductsFavCategories.php")
-    Call<ApiResponse<List<Product>>> getProductsFavCategories(
-            @Query("user_id") int userId,
-            @Query("quantity") int quantity
-    );
-
-    @GET("Product/GetProductsFromFavCategory.php")
-    Call<ApiResponse<List<Product>>> getProductsFromFavCategory(
-            @Query("user_id") int userId
-    );
-
-    @GET("Product/SearchProducts.php")
-    Call<ApiResponse<List<Product>>> searchProducts (
-            @Query("search") String search
-    );
-
-    @GET("Product/GetSuggestions.php")
-    Call<ApiResponse<List<String>>> getSuggestions (
-            @Query("query") String query
-    );
-
-    @GET("Category/GetAllCategories.php")
-    Call<ApiResponse<List<Category>>> getAllCategories();
+    /*
+     *   Product
+     * */
 
     @Multipart
-    @POST("Product/UploadProduct.php")
+    @POST("products")
     Call<ResponseBody> uploadProduct(
             @Part("title") RequestBody title,
             @Part("description") RequestBody description,
@@ -129,18 +38,115 @@ public interface ApiProduct {
             @Part List<MultipartBody.Part> images
     );
 
-    @GET("Product/DeleteProduct.php")
-    Call<ApiResponse<Void>> deleteProduct(
-            @Query("product_id") int product_id
+    @DELETE("products/{product_id}")
+    Call<ApiResponse<Void>> deleteProduct(@Path("product_id") int product_id);
+
+    @GET("products/{product_id}")
+    Call<ApiResponse<Product>> getProductById(@Path("product_id") int product_id);
+
+    @GET("products")
+    Call<List<Product>> getAllProducts();
+
+    @GET("products/category/{category}/{all}")
+    Call<List<Product>> getProductsByCategory(@Path("category") String category, @Path("all") Boolean all);
+
+    @GET("products/popular/{all}/{quantity}")
+    Call<ApiResponse<List<Product>>> getPopularProducts(@Path("all") Boolean all, @Path("quantity") int quantity);
+
+    @GET("products/recommended/{user_id}")
+    Call<ApiResponse<List<Product>>> getRecommendedProducts(@Path("user_id") int userId);
+
+    @GET("products/search/{query}")
+    Call<ApiResponse<List<Product>>> searchProducts(@Path("query") String search);
+
+    // sugestões para autocomplete
+    @GET("products/suggestions/{query}")
+    Call<ApiResponse<List<String>>> getSuggestions(@Path("query") String query);
+
+    // Produtos do usuário
+    @GET("products/my/{user_id}")
+    Call<ApiResponse<List<Product>>> getMyProducts(@Path("user_id") int user_id);
+
+    // Pega os produtos baseado em apenas uma categoria
+    @GET("products/fav/{user_id}")
+    Call<ApiResponse<List<Product>>> getProductsFromFavCategory(@Path("user_id") int userId);
+
+    // Pega os produtos baseado em varias categorias
+    @GET("products/favCategories/{user_id}/{quantity}")
+    Call<ApiResponse<List<Product>>> getProductsFavCategories(
+            @Path("user_id") int user_id,
+            @Path("quantity") int quantity
     );
 
-    @GET("Gallery/GetProductImages.php")
-    Call<ApiResponse<List<String>>> getProductImages(
-            @Query("product_id") int product_id
+    /*
+     *   Cart
+     * */
+
+    // Adiciona ao carrinho
+    @FormUrlEncoded
+    @POST("cart/add")
+    Call<ApiResponse<Void>> addToCart(
+            @Field("product_id") int product_id,
+            @Field("user_id") int user_id,
+            @Field("quantity") int quantity
     );
 
-    @GET("Product/GetMyProducts.php")
-    Call<ApiResponse<List<Product>>> getMyProducts(
-            @Query("user_id") int user_id
+    // Salva o produto
+    @FormUrlEncoded
+    @POST("product/save")
+    Call<ApiResponse<Void>> saveProduct(
+            @Field("product_id") int product_id,
+            @Field("user_id") int user_id
     );
+
+    // Remove apenas uma unidade do produto do carrinho
+    @FormUrlEncoded
+    @POST("cart/removeOne")
+    Call<ApiResponse<Void>> removeOneFromCart(
+            @Field("product_id") int product_id,
+            @Field("user_id") int user_id,
+            @Field("tipo") int tipo
+    );
+
+    // Remove o produto do carrinho
+    @FormUrlEncoded
+    @POST("cart/removeProduct")
+    Call<ResponseBody> removeFromCart(
+            @Field("product_id") int product_id,
+            @Field("user_id") int user_id,
+            @Field("tipo") int tipo
+    );
+
+    // pegar todos produtos do carrinho ou favoritos (tipo = '0' ou '1')
+    @GET("cart/{user_id}/{tipo}")
+    Call<ApiResponse<List<Product>>> getCartProducts(
+            @Path("user_id") int user_id,
+            @Path("tipo") int tipo
+    );
+
+    // Verifica se produto está no carrinho ou favoritos
+    @GET("cart/verify/{product_id}/{user_id}/{tipo}")
+    Call<ApiResponse> verifyProductOnCart(
+            @Path("product_id") int productId,
+            @Path("user_id") int userId,
+            @Path("tipo") int tipo
+    );
+
+    @GET("cart/favOrCart/{user_id}/{tipo}")
+    Call<ApiResponse<List<Integer>>> getUserFavOrCart(@Path("user_id") int userId, @Path("tipo") int tipo);
+
+
+    /*
+     *   Gallery
+     * */
+
+    @GET("gallery/product/{product_id}")
+    Call<ApiResponse<List<String>>> getProductImages(@Path("product_id") int product_id);
+
+    /*
+     *   Category
+     * */
+
+    @GET("category")
+    Call<ApiResponse<List<Category>>> getAllCategories();
 }

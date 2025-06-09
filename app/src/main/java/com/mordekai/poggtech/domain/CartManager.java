@@ -21,7 +21,7 @@ public class CartManager {
     }
 
     public void addToCart(int product_id, int user_id, int quantity, RepositoryCallback<ApiResponse<Void>> callback) {
-        Call<ApiResponse<Void>> call = apiProduct.addToCart(product_id, user_id, 0, quantity);
+        Call<ApiResponse<Void>> call = apiProduct.addToCart(product_id, user_id, quantity);
         call.enqueue(new Callback<ApiResponse<Void>>() {
 
             @Override
@@ -41,7 +41,7 @@ public class CartManager {
     }
 
     public void saveProduct(int product_id, int user_id, RepositoryCallback<ApiResponse<Void>> callback) {
-        Call<ApiResponse<Void>> call = apiProduct.saveProduct(product_id, user_id, 0);
+        Call<ApiResponse<Void>> call = apiProduct.saveProduct(product_id, user_id);
         call.enqueue(new Callback<ApiResponse<Void>>() {
 
             @Override

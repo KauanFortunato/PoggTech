@@ -8,17 +8,17 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.Query;
+import retrofit2.http.Path;
 
 public interface ApiWallet {
 
-    @GET("Wallet/GetWallet.php")
+    @GET("wallet/{user_id}")
     Call<ApiResponse<Wallet>> getWallet(
-            @Query("user_id") int user_id
+            @Path("user_id") int user_id
     );
 
-    @GET("Wallet/GetPayments.php")
+    @GET("wallet/{user_id}/payments")
     Call<ApiResponse<List<Payments>>> getPayments(
-            @Query("user_id") int user_id
+            @Path("user_id") int user_id
     );
 }

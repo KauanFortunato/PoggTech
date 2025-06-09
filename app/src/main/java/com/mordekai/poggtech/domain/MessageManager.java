@@ -67,12 +67,12 @@ public class MessageManager {
     }
 
     public void fetchUserChatsBuy(int user_id, RepositoryCallback<List<Chat>> callback) {
-        apiMessage.getUserChatsBuy(user_id).enqueue(new Callback<List<Chat>>(){
+        apiMessage.getUserChatsBuy(user_id).enqueue(new Callback<ApiResponse<List<Chat>>>(){
 
             @Override
-            public void onResponse(Call<List<Chat>> call, Response<List<Chat>> response) {
+            public void onResponse(Call<ApiResponse<List<Chat>>> call, Response<ApiResponse<List<Chat>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Chat> chats = response.body();
+                    List<Chat> chats = response.body().getData();
                     callback.onSuccess(chats);
                 } else {
                     callback.onFailure(new Exception("Erro ao buscar chats: Código " + response.code()));
@@ -80,7 +80,7 @@ public class MessageManager {
             }
 
             @Override
-            public void onFailure(Call<List<Chat>> call, Throwable t) {
+            public void onFailure(Call<ApiResponse<List<Chat>>> call, Throwable t) {
                 callback.onFailure(new Exception("Erro ao buscar chats: " + t.getMessage()));
             }
         });
@@ -88,12 +88,12 @@ public class MessageManager {
     }
 
     public void fetchUserChatsSell(int user_id, RepositoryCallback<List<Chat>> callback) {
-        apiMessage.getUserChatsSell(user_id).enqueue(new Callback<List<Chat>>(){
+        apiMessage.getUserChatsSell(user_id).enqueue(new Callback<ApiResponse<List<Chat>>>(){
 
             @Override
-            public void onResponse(Call<List<Chat>> call, Response<List<Chat>> response) {
+            public void onResponse(Call<ApiResponse<List<Chat>>> call, Response<ApiResponse<List<Chat>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Chat> chats = response.body();
+                    List<Chat> chats = response.body().getData();
                     callback.onSuccess(chats);
                 } else {
                     callback.onFailure(new Exception("Erro ao buscar chats: Código " + response.code()));
@@ -101,7 +101,7 @@ public class MessageManager {
             }
 
             @Override
-            public void onFailure(Call<List<Chat>> call, Throwable t) {
+            public void onFailure(Call<ApiResponse<List<Chat>>> call, Throwable t) {
                 callback.onFailure(new Exception("Erro ao buscar chats: " + t.getMessage()));
             }
         });
@@ -119,15 +119,16 @@ public class MessageManager {
 
                         callback.onSuccess(chat);
                     } else {
-                        Log.d("ProductDetailsFragment", "Chat encontrado");
                         callback.onSuccess(null);
                     }
+                } else {
+                    callback.onSuccess(null);
                 }
             }
 
             @Override
             public void onFailure(Call<ApiResponse<Chat>> call, Throwable t) {
-
+                callback.onFailure(new Exception("Erro ao buscar chat: " + t.getMessage()));
             }
         });
     }

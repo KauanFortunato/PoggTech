@@ -28,11 +28,11 @@ public class ProductManager {
 
     public void fetchProductById(int product_id, RepositoryCallback<Product> callback) {
         apiProduct.getProductById(product_id)
-                .enqueue(new Callback<Product>() {
+                .enqueue(new Callback<ApiResponse<Product>>() {
                     @Override
-                    public void onResponse(Call<Product> call, Response<Product> response) {
+                    public void onResponse(Call<ApiResponse<Product>> call, Response<ApiResponse<Product>> response) {
                         if(response.isSuccessful() && response.body() != null) {
-                            Product product = response.body();
+                            Product product = response.body().getData();
                             callback.onSuccess(product);
                         } else {
                             Log.e("API_ERROR", "Código: " + response.code() + ", Erro: " + response.errorBody());
@@ -41,7 +41,7 @@ public class ProductManager {
                     }
 
                     @Override
-                    public void onFailure(Call<Product> call, Throwable t) {
+                    public void onFailure(Call<ApiResponse<Product>> call, Throwable t) {
                         Log.e("API_ERROR", "Erro na requisição: " + t.getMessage(), t);
                         callback.onFailure(new Exception("Erro ao buscar produto: " + t.getMessage()));
                     }
@@ -114,8 +114,8 @@ public class ProductManager {
                 });
     }
 
-    public void getPopularProducts(RepositoryCallback<List<Product>> callback) {
-        apiProduct.getPopularProducts()
+    public void getPopularProducts(Boolean all, int quantity, RepositoryCallback<List<Product>> callback) {
+        apiProduct.getPopularProducts(all, quantity)
                 .enqueue(new Callback<ApiResponse<List<Product>>>() {
                     @Override
                     public void onResponse(Call<ApiResponse<List<Product>>> call, Response<ApiResponse<List<Product>>> response) {

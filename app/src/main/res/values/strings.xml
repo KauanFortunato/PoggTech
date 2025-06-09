@@ -73,7 +73,10 @@
     <string name="continueShopping">Continuar comprando...</string>
     <string name="track">Seguir</string>
     <string name="leaveReview">Fazer review</string>
-
+    <string name="seeAll">Ver todas ></string>
+    <string name="reviews">Avaliações</string>
+    <string name="sendAMessage">Envie uma mensagem ao vendedor</string>
+    <string name="defaultMessageEx">Oi, esse item está disponível?</string>
 
 
     <!-- Chat -->

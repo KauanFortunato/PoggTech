@@ -83,4 +83,8 @@
     <string name="continueShopping">Continue shopping...</string>
     <string name="track">Track</string>
     <string name="leaveReview">Leave a review</string>
+    <string name="seeAll">See all ></string>
+    <string name="reviews">Reviews</string>
+    <string name="sendAMessage">Send a message to the seller</string>
+    <string name="defaultMessageEx">Hi, is this item available?</string>
 </resources>

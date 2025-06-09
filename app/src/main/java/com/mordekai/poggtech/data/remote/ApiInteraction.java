@@ -11,7 +11,7 @@ import retrofit2.http.POST;
 public interface ApiInteraction {
 
     @FormUrlEncoded
-    @POST("Recommendations/UserInteraction.php")
+    @POST("recommendation/interaction")
     Call<ApiResponse<Void>> userInteraction(
             @Field("product_id") int product_id,
             @Field("user_id") int user_id,
@@ -19,7 +19,7 @@ public interface ApiInteraction {
     );
 
     @FormUrlEncoded
-    @POST("Recommendations/AddUserHistory.php")
+    @POST("interaction")
     Call<ApiResponse<Void>> addUserHistory(
             @Field("product_id") int product_id,
             @Field("user_id") int user_id,

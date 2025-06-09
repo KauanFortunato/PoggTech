@@ -11,12 +11,12 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
+import retrofit2.http.Path;
 
 public interface ApiMessage {
 
     @FormUrlEncoded
-    @POST("Message/SendMessage.php")
+    @POST("messages/send")
     Call<ApiResponse<Void>> sendMessage(
             @Field("sender_id") int sender_id,
             @Field("receiver_id") int receiver_id,
@@ -24,42 +24,42 @@ public interface ApiMessage {
             @Field("message") String message
     );
 
-    @GET("Message/GetMessages.php")
+    @GET("messages/{product_id}/{chat_id}")
     Call<ApiResponse<List<Message>>> getMessages(
-            @Query("product_id") int product_id,
-            @Query("chat_id") int chat_id
+            @Path("product_id") int product_id,
+            @Path("chat_id") int chat_id
     );
 
-    @GET("Chat/GetUserChatsBuy.php")
-    Call<List<Chat>> getUserChatsBuy(
-            @Query("user_id") int user_id
-    );
-
-    @GET("Chat/GetUserChatsSell.php")
-    Call<List<Chat>> getUserChatsSell(
-            @Query("user_id") int user_id
-    );
-
-    @GET("Chat/GetChat.php")
+    @GET("chat/{user_id}/{product_id}")
     Call<ApiResponse<Chat>> getChat(
-            @Query("user_id") int user_id,
-            @Query("product_id") int product_id
+            @Path("user_id") int user_id,
+            @Path("product_id") int product_id
     );
 
     @FormUrlEncoded
-    @POST("Chat/CreateChat.php")
+    @POST("chat/create")
     Call<ApiResponse<Integer>> createChat(
             @Field("product_id") int product_id
     );
 
-    @GET("Chat/GetUnread.php")
+    @GET("chat/buying/{user_id}")
+    Call<ApiResponse<List<Chat>>> getUserChatsBuy(
+            @Path("user_id") int user_id
+    );
+
+    @GET("chat/selling/{user_id}")
+    Call<ApiResponse<List<Chat>>> getUserChatsSell(
+            @Path("user_id") int user_id
+    );
+
+    @GET("chat/unread/{chat_id}/{receiver_id}")
     Call<ApiResponse<Integer>> getUnread(
-            @Query("chat_id") int chat_id,
-            @Query("user_id") int receiver_id
+            @Path("chat_id") int chat_id,
+            @Path("user_id") int receiver_id
     );
 
     @FormUrlEncoded
-    @POST("Chat/MarkIsRead.php")
+    @POST("chat/read")
     Call<ApiResponse<Void>> markIsRead(
             @Field("chat_id") int chat_id,
             @Field("receiver_id") int receiver_id

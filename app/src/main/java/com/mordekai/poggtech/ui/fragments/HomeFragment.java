@@ -233,7 +233,7 @@ public class HomeFragment extends Fragment
     }
 
     private void getPopular() {
-        productManager.getPopularProducts(new RepositoryCallback<List<Product>>() {
+        productManager.getPopularProducts(false, 6, new RepositoryCallback<List<Product>>() {
             @Override
             public void onSuccess(List<Product> result) {
                 popularAdapter.updateProducts(result);
