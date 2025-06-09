@@ -89,8 +89,8 @@ public class ProductManager {
                 });
     }
 
-    public void fetchUserFavOrCart(int userId, int tipo, RepositoryCallback<List<Integer>> callback) {
-        apiProduct.getUserFavOrCart(userId, tipo)
+    public void verifProductsSaved(int userId, int tipo, RepositoryCallback<List<Integer>> callback) {
+        apiProduct.verifProductsSaved(userId, tipo)
                 .enqueue(new Callback<ApiResponse<List<Integer>>>() {
                     @Override
                     public void onResponse(Call<ApiResponse<List<Integer>>> call, Response<ApiResponse<List<Integer>>> response) {
@@ -255,27 +255,6 @@ public class ProductManager {
         });
     }
 
-    public void getAllCategories(RepositoryCallback<List<Category>> callback) {
-        apiProduct.getAllCategories().enqueue(new Callback<ApiResponse<List<Category>>>() {
-            @Override
-            public void onResponse(Call<ApiResponse<List<Category>>> call, Response<ApiResponse<List<Category>>> response) {
-                if(response.isSuccessful() && response.body() != null) {
-                    ApiResponse<List<Category>> apiResponse = response.body();
-
-                    if(apiResponse.isSuccess()) {
-                        callback.onSuccess(apiResponse.getData());
-                    } else {
-                        callback.onFailure(new Exception("Erro ao buscar categorias"));
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse<List<Category>>> call, Throwable t) {
-                callback.onFailure(new Exception("Erro ao buscar categorias"));
-            }
-        });
-    }
 
     public void uploadProduct(RequestBody title, RequestBody description, RequestBody location,
                               RequestBody price, RequestBody userId, RequestBody category,
@@ -367,4 +346,33 @@ public class ProductManager {
             }
         });
     }
+
+    /*
+    *  ||||||||||||
+    *    CATEGORY
+    *  ||||||||||||
+    * */
+
+    public void getAllCategories(RepositoryCallback<List<Category>> callback) {
+        apiProduct.getAllCategories().enqueue(new Callback<ApiResponse<List<Category>>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<List<Category>>> call, Response<ApiResponse<List<Category>>> response) {
+                if(response.isSuccessful() && response.body() != null) {
+                    ApiResponse<List<Category>> apiResponse = response.body();
+
+                    if(apiResponse.isSuccess()) {
+                        callback.onSuccess(apiResponse.getData());
+                    } else {
+                        callback.onFailure(new Exception("Erro ao buscar categorias"));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<List<Category>>> call, Throwable t) {
+                callback.onFailure(new Exception("Erro ao buscar categorias"));
+            }
+        });
+    }
+
 }

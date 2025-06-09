@@ -17,7 +17,7 @@ import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.ProductManager;
-import com.mordekai.poggtech.ui.bottomsheets.DeleteProductBottomSheet;
+import com.mordekai.poggtech.presentation.ui.bottomsheets.DeleteProductBottomSheet;
 import com.mordekai.poggtech.utils.SnackbarUtil;
 import com.mordekai.poggtech.utils.Utils;
 

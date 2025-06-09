@@ -32,7 +32,7 @@ public class ProductLoader {
                 productList.clear();
                 productList.addAll(result);
 
-                productManager.fetchUserFavOrCart(userId, type, new RepositoryCallback<List<Integer>>() {
+                productManager.verifProductsSaved(userId, type, new RepositoryCallback<List<Integer>>() {
                     @Override
                     public void onSuccess(List<Integer> favorites) {
                         favoriteIds.clear();

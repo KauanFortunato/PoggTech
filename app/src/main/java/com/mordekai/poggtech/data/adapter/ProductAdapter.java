@@ -120,7 +120,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             if (savedChangedListener != null) {
                 savedChangedListener.onSaveChanged();
             }
-
         });
 
 

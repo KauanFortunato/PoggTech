@@ -4,8 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.mordekai.poggtech.ui.fragments.ChatSellFragment;
-import com.mordekai.poggtech.ui.fragments.ChatBuyFragment;
+import com.mordekai.poggtech.presentation.ui.fragments.ChatSellFragment;
+import com.mordekai.poggtech.presentation.ui.fragments.ChatBuyFragment;
 
 public class TabChatAdapter extends FragmentStateAdapter {
 

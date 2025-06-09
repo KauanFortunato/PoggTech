@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.model.Product;
-import com.mordekai.poggtech.ui.fragments.HomeFragment;
+import com.mordekai.poggtech.presentation.ui.fragments.HomeFragment;
 import com.mordekai.poggtech.utils.Utils;
 
 import java.util.List;

@@ -18,7 +18,6 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 public interface ApiProduct {
 
@@ -125,15 +124,16 @@ public interface ApiProduct {
     );
 
     // Verifica se produto está no carrinho ou favoritos
-    @GET("cart/verify/{product_id}/{user_id}/{tipo}")
-    Call<ApiResponse> verifyProductOnCart(
-            @Path("product_id") int productId,
+    @GET("cart/verify/{user_id}/{product_id}/{tipo}")
+    Call<ApiResponse<Integer>> verifyProductOnCart(
             @Path("user_id") int userId,
+            @Path("product_id") int productId,
             @Path("tipo") int tipo
     );
 
+    // Retorna os produtos do carrinho ou favoritos
     @GET("cart/favOrCart/{user_id}/{tipo}")
-    Call<ApiResponse<List<Integer>>> getUserFavOrCart(@Path("user_id") int userId, @Path("tipo") int tipo);
+    Call<ApiResponse<List<Integer>>> verifProductsSaved(@Path("user_id") int userId, @Path("tipo") int tipo);
 
 
     /*

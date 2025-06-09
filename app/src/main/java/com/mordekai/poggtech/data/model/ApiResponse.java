@@ -1,8 +1,11 @@
 package com.mordekai.poggtech.data.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class ApiResponse<T> {
     private Boolean success;
     private String message;
+    @SerializedName("data")
     private T data;
 
     // Getter e Setter
