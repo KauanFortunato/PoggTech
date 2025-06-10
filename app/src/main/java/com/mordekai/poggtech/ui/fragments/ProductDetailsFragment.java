@@ -180,77 +180,75 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
     }
 
     private void fetchProduct(int productId) {
-        new android.os.Handler().postDelayed(() -> {
-            productManager.fetchProductById(productId, new RepositoryCallback<Product>() {
-                @Override
-                public void onSuccess(Product productDetails) {
-                    if (productDetails != null) {
-                        product = productDetails;
-                        updateUIWithProduct();
+        productManager.fetchProductById(productId, new RepositoryCallback<Product>() {
+            @Override
+            public void onSuccess(Product productDetails) {
+                if (productDetails != null) {
+                    product = productDetails;
+                    updateUIWithProduct();
 
-                        productManager.getProductImages(productId, new RepositoryCallback<List<String>>() {
-                            @Override
-                            public void onSuccess(List<String> result) {
-                                if (result != null && !result.isEmpty()) {
-                                    product.setImages(result);
-                                    imageUrls.clear();
-                                    imageUrls.addAll(result);
-                                } else {
-                                    if (product.getCover() != null) {
-                                        imageUrls.add(product.getCover());
-                                    }
+                    productManager.getProductImages(productId, new RepositoryCallback<List<String>>() {
+                        @Override
+                        public void onSuccess(List<String> result) {
+                            if (result != null && !result.isEmpty()) {
+                                product.setImages(result);
+                                imageUrls.clear();
+                                imageUrls.addAll(result);
+                            } else {
+                                if (product.getCover() != null) {
+                                    imageUrls.add(product.getCover());
                                 }
-
-                                // Galeria de imagens
-                                galleryAdapter.updateImages(imageUrls);
-
-                                new TabLayoutMediator(tabLayoutDots, viewPagerGallery, (tab, position) -> {
-                                }).attach();
-
-                                for (int i = 0; i < tabLayoutDots.getTabCount(); i++) {
-                                    TabLayout.Tab tab = tabLayoutDots.getTabAt(i);
-                                    if (tab != null) {
-                                        View tabView = new View(requireContext());
-                                        int size = (int) (getResources().getDisplayMetrics().density * 8); // corrigir: multiplicar
-                                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(size, size);
-                                        tabView.setLayoutParams(params);
-                                        tabView.setBackgroundResource(i == 0 ? R.drawable.tab_indicator_selected : R.drawable.tab_indicator_default);
-                                        tab.setCustomView(tabView);
-                                    }
-                                }
-
-
-                                shimmerLayout.setVisibility(View.GONE);
-                                shimmerLayout.stopShimmer();
-
-                                contentView.setVisibility(View.VISIBLE);
                             }
 
-                            @Override
-                            public void onFailure(Throwable t) {
-                                Log.e("ProductDetailsFragment", "Erro ao buscar imagens do produto", t);
-                                imageUrls.add(product.getCover());
-                                galleryAdapter.updateImages(imageUrls);
+                            // Galeria de imagens
+                            galleryAdapter.updateImages(imageUrls);
 
-                                shimmerLayout.setVisibility(View.GONE);
-                                shimmerLayout.stopShimmer();
+                            new TabLayoutMediator(tabLayoutDots, viewPagerGallery, (tab, position) -> {
+                            }).attach();
 
-                                contentView.setVisibility(View.VISIBLE);
+                            for (int i = 0; i < tabLayoutDots.getTabCount(); i++) {
+                                TabLayout.Tab tab = tabLayoutDots.getTabAt(i);
+                                if (tab != null) {
+                                    View tabView = new View(requireContext());
+                                    int size = (int) (getResources().getDisplayMetrics().density * 8); // corrigir: multiplicar
+                                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(size, size);
+                                    tabView.setLayoutParams(params);
+                                    tabView.setBackgroundResource(i == 0 ? R.drawable.tab_indicator_selected : R.drawable.tab_indicator_default);
+                                    tab.setCustomView(tabView);
+                                }
                             }
-                        });
-                    }
-                }
 
-                @Override
-                public void onFailure(Throwable t) {
-                    Log.e("ProductDetailsFragment", "Erro ao buscar detalhes do produto", t);
-                    shimmerLayout.setVisibility(View.GONE);
-                    shimmerLayout.stopShimmer();
 
-                    contentView.setVisibility(View.VISIBLE);
+                            shimmerLayout.setVisibility(View.GONE);
+                            shimmerLayout.stopShimmer();
+
+                            contentView.setVisibility(View.VISIBLE);
+                        }
+
+                        @Override
+                        public void onFailure(Throwable t) {
+                            Log.e("ProductDetailsFragment", "Erro ao buscar imagens do produto", t);
+                            imageUrls.add(product.getCover());
+                            galleryAdapter.updateImages(imageUrls);
+
+                            shimmerLayout.setVisibility(View.GONE);
+                            shimmerLayout.stopShimmer();
+
+                            contentView.setVisibility(View.VISIBLE);
+                        }
+                    });
                 }
-            });
-        }, 400);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("ProductDetailsFragment", "Erro ao buscar detalhes do produto", t);
+                shimmerLayout.setVisibility(View.GONE);
+                shimmerLayout.stopShimmer();
+
+                contentView.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void sendMessage() {

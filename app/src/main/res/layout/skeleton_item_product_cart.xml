@@ -85,19 +85,16 @@
                 <View
                     android:layout_width="22dp"
                     android:layout_height="22dp"
-                    android:background="@drawable/bg_skeleton_oval"
                     android:layout_marginHorizontal="5dp"/>
 
                 <View
                     android:layout_width="15dp"
                     android:layout_height="18dp"
-                    android:background="@drawable/bg_skeleton"
                     android:layout_marginHorizontal="0dp"/>
 
                 <View
                     android:layout_width="22dp"
                     android:layout_height="22dp"
-                    android:background="@drawable/bg_skeleton_oval"
                     android:layout_marginHorizontal="5dp"/>
             </LinearLayout>
 

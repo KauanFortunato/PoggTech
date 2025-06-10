@@ -69,13 +69,6 @@
         android:name="com.mordekai.poggtech.ui.fragments.AccountFragment"
         android:label="Conta" >
         <action
-            android:id="@+id/action_accountFragment_to_userConfigFragment"
-            app:destination="@id/userConfigFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
-        <action
             android:id="@+id/action_accountFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment"
             app:enterAnim="@anim/slide_in_right"
@@ -99,6 +92,13 @@
         <action
             android:id="@+id/action_account_to_ordersFragment"
             app:destination="@id/ordersFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_account_to_configFragment"
+            app:destination="@id/configFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
@@ -185,4 +185,27 @@
         android:id="@+id/ordersFragment"
         android:name="com.mordekai.poggtech.ui.fragments.OrdersFragment"
         android:label="OrdersFragment" />
+    <fragment
+        android:id="@+id/configFragment"
+        android:name="com.mordekai.poggtech.ui.fragments.ConfigFragment"
+        android:label="ConfigFragment" >
+        <action
+            android:id="@+id/action_configFragment_to_userConfigFragment"
+            app:destination="@id/userConfigFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_configFragment_to_settingsAppearanceFragment"
+            app:destination="@id/settingsAppearanceFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsAppearanceFragment"
+        android:name="com.mordekai.poggtech.ui.fragments.SettingsAppearanceFragment"
+        android:label="SettingsAppearanceFragment" />
 </navigation>

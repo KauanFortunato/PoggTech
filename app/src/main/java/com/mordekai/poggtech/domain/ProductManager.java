@@ -71,11 +71,11 @@ public class ProductManager {
 
     public void getProductsByCategory(String category, Boolean all, RepositoryCallback<List<Product>> callback) {
         apiProduct.getProductsByCategory(category, all)
-                .enqueue(new Callback<List<Product>>() {
+                .enqueue(new Callback<ApiResponse<List<Product>>>() {
                     @Override
-                    public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                    public void onResponse(Call<ApiResponse<List<Product>>> call, Response<ApiResponse<List<Product>>> response) {
                         if(response.isSuccessful() && response.body() != null) {
-                            List<Product> products = response.body();
+                            List<Product> products = response.body().getData();
                             callback.onSuccess(products);
                         } else {
                             callback.onFailure(new Exception("Erro ao buscar produtos"));
@@ -83,7 +83,7 @@ public class ProductManager {
                     }
 
                     @Override
-                    public void onFailure(Call<List<Product>> call, Throwable t) {
+                    public void onFailure(Call<ApiResponse<List<Product>>> call, Throwable t) {
                         callback.onFailure(new Exception("Erro ao buscar produtos da categoria " + category + ": " + t.getMessage()));
                     }
                 });

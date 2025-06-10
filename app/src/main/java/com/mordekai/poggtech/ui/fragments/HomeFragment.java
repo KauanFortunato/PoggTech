@@ -124,6 +124,7 @@ public class HomeFragment extends Fragment
         apiInteraction = RetrofitClient.getRetrofitInstance().create(ApiInteraction.class);
         interactionManager = new InteractionManager(apiInteraction);
 
+        getForYou();
         getContinueBuy();
 
         ProductLoader.loadForYouProducts(
@@ -377,8 +378,8 @@ public class HomeFragment extends Fragment
             showSkeletons();
 
             loadingCount = 0;
-            getContinueBuy();
             getForYou();
+            getContinueBuy();
             maybeYouLike();
             getPopular();
             getCategories();

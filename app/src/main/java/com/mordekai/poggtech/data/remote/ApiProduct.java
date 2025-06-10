@@ -48,7 +48,7 @@ public interface ApiProduct {
     Call<List<Product>> getAllProducts();
 
     @GET("products/category/{category}/{all}")
-    Call<List<Product>> getProductsByCategory(@Path("category") String category, @Path("all") Boolean all);
+    Call<ApiResponse<List<Product>>> getProductsByCategory(@Path("category") String category, @Path("all") Boolean all);
 
     @GET("products/popular/{all}/{quantity}")
     Call<ApiResponse<List<Product>>> getPopularProducts(@Path("all") Boolean all, @Path("quantity") int quantity);
@@ -125,10 +125,10 @@ public interface ApiProduct {
     );
 
     // Verifica se produto está no carrinho ou favoritos
-    @GET("cart/verify/{product_id}/{user_id}/{tipo}")
-    Call<ApiResponse> verifyProductOnCart(
-            @Path("product_id") int productId,
+    @GET("cart/verify/{user_id}/{product_id}/{tipo}")
+    Call<ApiResponse<Integer>> verifyProductOnCart(
             @Path("user_id") int userId,
+            @Path("product_id") int productId,
             @Path("tipo") int tipo
     );
 

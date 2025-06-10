@@ -52,12 +52,13 @@ public class UserConfigFragment extends Fragment {
     private EditText editName, editSurname, editContact;
     private ImageView providerLogin;
     private ImageButton btn_back;
-    private AppCompatButton buttonEditPersonInfo, buttonCancelPersonInfo, buttonLogout, buttonEditEmail, buttonResetPass;
+    private AppCompatButton buttonEditPersonInfo, buttonCancelPersonInfo, buttonEditEmail;
 
     private SharedPrefHelper sharedPrefHelper;
+    private User user;
+
     private UserManager userManager;
     private FCMManager fcmManager;
-    private User user;
     private boolean isEditing = false;
 
     @Nullable
@@ -159,31 +160,8 @@ public class UserConfigFragment extends Fragment {
         btn_back = view.findViewById(R.id.btn_back);
         buttonEditPersonInfo = view.findViewById(R.id.buttonEditPersonInfo);
         buttonCancelPersonInfo = view.findViewById(R.id.buttonCancelPersonInfo);
-        buttonResetPass = view.findViewById(R.id.buttonResetPass);
 
         ((BottomNavVisibilityController) requireActivity()).hideBottomNav();
-
-
-        buttonLogout = view.findViewById(R.id.buttonLogout);
-
-        buttonLogout.setOnClickListener(v -> {
-            if (buttonLogout.isHapticFeedbackEnabled()) {
-                v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
-            }
-
-            Bundle bundle = new Bundle();
-            bundle.putString("title", getString(R.string.logoutInfo));
-
-            ConfirmBottomSheet confirmBottomSheet = new ConfirmBottomSheet(new ConfirmBottomSheet.OnClickConfirmed() {
-                @Override
-                public void onConfirmed() {
-                    logOutUser();
-                }
-            });
-            confirmBottomSheet.setArguments(bundle);
-            confirmBottomSheet.show(requireActivity().getSupportFragmentManager(), confirmBottomSheet.getTag());
-
-        });
 
         btn_back.setOnClickListener(v -> {
             if (btn_back.isHapticFeedbackEnabled()) {
@@ -203,24 +181,7 @@ public class UserConfigFragment extends Fragment {
             providerLogin.setVisibility(View.VISIBLE);
         }
 
-        buttonResetPass.setOnClickListener(v -> {
-            if(buttonResetPass.isHapticFeedbackEnabled()) {
-                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
-            }
 
-            Bundle bundle = new Bundle();
-            bundle.putString("title", getString(R.string.sendEmail));
-
-            ConfirmBottomSheet confirmBottomSheet = new ConfirmBottomSheet(new ConfirmBottomSheet.OnClickConfirmed() {
-                @Override
-                public void onConfirmed() {
-                    Utils utils = new Utils();
-                    utils.resetUserPassword(user.getEmail(), getContext());
-                }
-            });
-            confirmBottomSheet.setArguments(bundle);
-            confirmBottomSheet.show(requireActivity().getSupportFragmentManager(), confirmBottomSheet.getTag());
-        });
     }
 
     private void logOutUser() {

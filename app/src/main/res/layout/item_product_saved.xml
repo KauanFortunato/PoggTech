@@ -59,12 +59,13 @@
                 android:layout_weight="1"/>
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="30dp"
+                android:id="@+id/addToCart"
+                android:layout_width="80dp"
                 android:layout_height="30dp"
                 android:padding="7dp"
                 android:layout_gravity="end"
-                android:src="@drawable/ic_trash_outline"
-                android:background="@drawable/bg_oval_icons_on_card"
+                android:src="@drawable/ic_cart_add"
+                android:background="@drawable/bg_button_background"
                 app:tint="@color/backgroundColor"/>
         </LinearLayout>
 

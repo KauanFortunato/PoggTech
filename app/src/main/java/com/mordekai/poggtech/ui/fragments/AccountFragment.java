@@ -165,7 +165,7 @@ public class AccountFragment extends Fragment
 
         buttonConfig.setOnClickListener(v -> {
             NavController navController = NavHostFragment.findNavController(this);
-            navController.navigate(R.id.action_accountFragment_to_userConfigFragment);
+            navController.navigate(R.id.action_account_to_configFragment);
         });
 
         buttonMyPurchases.setOnClickListener(v -> {

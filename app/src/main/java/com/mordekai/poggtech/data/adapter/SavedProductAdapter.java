@@ -83,7 +83,7 @@ public class SavedProductAdapter extends RecyclerView.Adapter<SavedProductAdapte
         TextView productTitle;
         TextView productType;
         TextView productPrice;
-        AppCompatImageView buttonRemove;
+        AppCompatImageView buttonRemove, addToCart;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -94,6 +94,7 @@ public class SavedProductAdapter extends RecyclerView.Adapter<SavedProductAdapte
             productType = itemView.findViewById(R.id.productType);
             productPrice = itemView.findViewById(R.id.productPrice);
             buttonRemove = itemView.findViewById(R.id.buttonRemove);
+            addToCart = itemView.findViewById(R.id.addToCart);
         }
     }
 

@@ -124,14 +124,14 @@ public class CartManager {
     }
 
     public void verifyProductOnCart(int productId, int userId, int tipo, RepositoryCallback<Boolean> callback) {
-        apiProduct.verifyProductOnCart(productId, userId, tipo).enqueue(new Callback<ApiResponse>() {
+        apiProduct.verifyProductOnCart(userId, productId, tipo).enqueue(new Callback<ApiResponse<Integer>>() {
             @Override
-            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+            public void onResponse(Call<ApiResponse<Integer>> call, Response<ApiResponse<Integer>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    ApiResponse apiResponse = response.body();
+                    ApiResponse<Integer> apiResponse = response.body();
 
                     if(apiResponse.getData() != null) {
-                        int tipoProdutoApi = (int) Float.parseFloat(String.format("%f", apiResponse.getData()));
+                        int tipoProdutoApi = (int) Float.parseFloat(String.format("%d", apiResponse.getData()));
 
                         if (tipo == tipoProdutoApi) {
                             callback.onSuccess(true);
@@ -141,11 +141,13 @@ public class CartManager {
                     } else {
                         callback.onSuccess(false);
                     }
+                } else {
+                    callback.onSuccess(false);
                 }
             }
 
             @Override
-            public void onFailure(Call<ApiResponse> call, Throwable t) {
+            public void onFailure(Call<ApiResponse<Integer>> call, Throwable t) {
                 callback.onFailure(new Exception("Erro ao verificar se o produto está nos favoritos: " + t.getMessage()));
             }
         });
