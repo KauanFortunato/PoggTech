@@ -129,7 +129,6 @@ public class UserManager {
         });
     }
 
-
     public void logoutUser() {
         firebaseRepo.logoutUser();
     }

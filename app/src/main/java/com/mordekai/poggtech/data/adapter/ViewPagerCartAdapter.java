@@ -4,8 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.mordekai.poggtech.ui.fragments.SavedFragment;
-import com.mordekai.poggtech.ui.fragments.CartFragment;
+import com.mordekai.poggtech.presentation.ui.fragments.SavedFragment;
+import com.mordekai.poggtech.presentation.ui.fragments.CartFragment;
 
 public class ViewPagerCartAdapter extends FragmentStateAdapter {
     public ViewPagerCartAdapter(@NonNull Fragment fragment) {

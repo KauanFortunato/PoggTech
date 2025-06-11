@@ -18,8 +18,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -30,7 +28,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.model.Chat;
-import com.mordekai.poggtech.ui.fragments.ChatDetailsFragment;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -54,7 +51,6 @@ public class Utils {
         bundle.putInt("chat_with_id", chat.getChat_with());
         bundle.putInt("chat_id", chat.getChat_id());
         bundle.putString("chat_with_name", chat.getChat_with_name());
-        bundle.putString("chat_with_last_name", chat.getChat_with_last_name());
         bundle.putInt("product_id", chat.getProduct_id());
         bundle.putString("product_title", chat.getProduct_title());
         bundle.putString("product_price", String.valueOf(chat.getProduct_price()));

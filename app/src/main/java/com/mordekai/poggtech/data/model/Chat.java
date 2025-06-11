@@ -7,7 +7,6 @@ public class Chat {
     private int user_id;
     private int chat_with;
     private String chat_with_name;
-    private String chat_with_last_name;
     private int product_id;
     private String product_title;
     private Float product_price;
@@ -27,14 +26,13 @@ public class Chat {
         this.product_id = product_id;
     }
 
-    public Chat(int id_message, int user_id, int chat_with, String chat_with_name, String chat_with_last_name,
+    public Chat(int id_message, int user_id, int chat_with, String chat_with_name,
                 int product_id, String product_title, String last_message, String last_message_time,
                 String last_message_time_format) {
         this.id_message = id_message;
         this.user_id = user_id;
         this.chat_with = chat_with;
         this.chat_with_name = chat_with_name;
-        this.chat_with_last_name = chat_with_last_name;
         this.product_id = product_id;
         this.product_title = product_title;
         this.last_message = last_message;
@@ -90,14 +88,6 @@ public class Chat {
 
     public void setChat_with_name(String chat_with_name) {
         this.chat_with_name = chat_with_name;
-    }
-
-    public String getChat_with_last_name() {
-        return chat_with_last_name;
-    }
-
-    public void setChat_with_last_name(String chat_with_last_name) {
-        this.chat_with_last_name = chat_with_last_name;
     }
 
     public int getProduct_id() {
@@ -166,7 +156,6 @@ public class Chat {
                 ", userId=" + user_id +
                 ", chatWith=" + chat_with +
                 ", chatWithName='" + chat_with_name + '\'' +
-                ", chatWithLastName='" + chat_with_last_name + '\'' +
                 ", productId=" + product_id +
                 ", productTitle='" + product_title + '\'' +
                 ", lastMessage='" + last_message + '\'' +

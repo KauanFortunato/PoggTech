@@ -3,63 +3,59 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="10dp"
     android:background="@color/backgroundColor">
 
-    <LinearLayout
-        android:id="@+id/header_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/backgroundColor"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:padding="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginStart="10dp"
-        app:layout_constraintTop_toTopOf="parent"
+    <RelativeLayout
+        android:id="@+id/header"
+        style="@style/Header"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/arrow_back"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginBottom="10dp"
             android:background="@android:color/transparent"
+            android:contentDescription="@string/voltar"
             android:src="@drawable/ic_back" />
 
         <TextView
-            android:id="@+id/title_settings"
+            android:id="@+id/headerText"
+            style="@style/TextHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="Aparência"
-            android:textColor="@color/textPrimary"
-            android:textSize="@dimen/text_large"
-            android:fontFamily="@font/roboto" />
-    </LinearLayout>
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginVertical="15dp"
+            android:text="Perfil"
+            android:textAlignment="center" />
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/settings_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
         android:layout_marginStart="5dp"
-        app:layout_constraintTop_toBottomOf="@id/header_container"
+        android:layout_marginEnd="5dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
+        app:layout_constraintTop_toBottomOf="@+id/header">
 
         <LinearLayout
             android:id="@+id/button_theme_light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:clickable="true"
-            android:background="?attr/selectableItemBackground">
+            android:padding="10dp">
 
             <TextView
                 android:layout_width="0dp"
@@ -75,17 +71,17 @@
                 android:layout_height="24dp"
                 android:src="@drawable/ic_radio_unselected" />
         </LinearLayout>
-        
+
 
         <LinearLayout
             android:id="@+id/button_theme_dark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:clickable="true"
-            android:background="?attr/selectableItemBackground">
+            android:padding="10dp">
 
             <TextView
                 android:layout_width="0dp"
@@ -107,17 +103,17 @@
             android:id="@+id/button_theme_system"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
             android:gravity="center_vertical"
             android:orientation="vertical"
-            android:clickable="true"
-            android:background="?attr/selectableItemBackground">
+            android:padding="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="0dp"
@@ -140,7 +136,7 @@
                 android:text="Corresponder às definições do dispositivo"
                 android:textSize="@dimen/text_small" />
         </LinearLayout>
-        
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

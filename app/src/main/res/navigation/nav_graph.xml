@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/home"
-        android:name="com.mordekai.poggtech.ui.fragments.HomeFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.HomeFragment"
         android:label="Home" >
         <action
             android:id="@+id/action_homeFragment_to_productDetailsFragment3"
@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/save"
-        android:name="com.mordekai.poggtech.ui.fragments.ProductManageFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.ProductManageFragment"
         android:label="Carrinho" >
         <action
             android:id="@+id/action_save_to_productDetailsFragment"
@@ -38,7 +38,7 @@
 
     <fragment
         android:id="@+id/chat"
-        android:name="com.mordekai.poggtech.ui.fragments.ChatFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.ChatFragment"
         android:label="Chat" >
         <action
             android:id="@+id/action_chatFragment_to_chatDetailsFragment"
@@ -51,13 +51,13 @@
 
     <fragment
         android:id="@+id/chatDetailsFragment"
-        android:name="com.mordekai.poggtech.ui.fragments.ChatDetailsFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.ChatDetailsFragment"
         android:label="Detalhes do Chat" />
 
 
     <fragment
         android:id="@+id/offlineFragment"
-        android:name="com.mordekai.poggtech.ui.fragments.OfflineFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.OfflineFragment"
         android:label="Offline" >
         <action
             android:id="@+id/action_offlineFragment_to_homeFragment"
@@ -66,7 +66,7 @@
 
     <fragment
         android:id="@+id/account"
-        android:name="com.mordekai.poggtech.ui.fragments.AccountFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.AccountFragment"
         android:label="Conta" >
         <action
             android:id="@+id/action_accountFragment_to_productDetailsFragment"
@@ -107,17 +107,17 @@
 
     <fragment
         android:id="@+id/WalletFragment"
-        android:name="com.mordekai.poggtech.ui.fragments.WalletFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.WalletFragment"
         android:label="Conta" />
 
     <fragment
         android:id="@+id/userConfigFragment"
-        android:name="com.mordekai.poggtech.ui.fragments.UserConfigFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.UserConfigFragment"
         android:label="Configurações" />
 
     <fragment
         android:id="@+id/myAdsFragment"
-        android:name="com.mordekai.poggtech.ui.fragments.MyAdsFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.MyAdsFragment"
         android:label="Meus Anúncios" >
         <action
             android:id="@+id/action_myAdsFragment_to_newAdFragment"
@@ -126,12 +126,12 @@
 
     <fragment
         android:id="@+id/newAdFragment"
-        android:name="com.mordekai.poggtech.ui.fragments.NewAdFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.NewAdFragment"
         android:label="Novo Anúncio" />
 
     <fragment
         android:id="@+id/productDetailsFragment"
-        android:name="com.mordekai.poggtech.ui.fragments.ProductDetailsFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.ProductDetailsFragment"
         android:label="Detalhes" >
         <action
             android:id="@+id/action_productDetailsFragment_to_cartFragment"
@@ -146,12 +146,12 @@
 
     <fragment
         android:id="@+id/cartFragment"
-        android:name="com.mordekai.poggtech.ui.fragments.CartFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.CartFragment"
         android:label="Carrinho" />
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.mordekai.poggtech.ui.fragments.SearchFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.SearchFragment"
         android:label="Pesquisa" >
         <action
             android:id="@+id/action_searchFragment_to_categoryFragment"
@@ -166,7 +166,7 @@
 
     <fragment
         android:id="@+id/categoryFragment"
-        android:name="com.mordekai.poggtech.ui.fragments.CategoryFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.CategoryFragment"
         android:label="Categorias" >
         <action
             android:id="@+id/action_categoryFragment_to_productDetailsFragment"
@@ -175,7 +175,7 @@
 
     <fragment
         android:id="@+id/searchedProductsFragment"
-        android:name="com.mordekai.poggtech.ui.fragments.SearchedProductsFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.SearchedProductsFragment"
         android:label="SearchedProductsFragment" >
         <action
             android:id="@+id/action_searchedProductsFragment_to_productDetailsFragment"
@@ -183,11 +183,11 @@
     </fragment>
     <fragment
         android:id="@+id/ordersFragment"
-        android:name="com.mordekai.poggtech.ui.fragments.OrdersFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.OrdersFragment"
         android:label="OrdersFragment" />
     <fragment
         android:id="@+id/configFragment"
-        android:name="com.mordekai.poggtech.ui.fragments.ConfigFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.SettingsFragment"
         android:label="ConfigFragment" >
         <action
             android:id="@+id/action_configFragment_to_userConfigFragment"
@@ -206,6 +206,6 @@
     </fragment>
     <fragment
         android:id="@+id/settingsAppearanceFragment"
-        android:name="com.mordekai.poggtech.ui.fragments.SettingsAppearanceFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.SettingsAppearanceFragment"
         android:label="SettingsAppearanceFragment" />
 </navigation>

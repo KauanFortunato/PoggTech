@@ -6,7 +6,6 @@ public class Review {
     private int review_id;
     private int user_id;
     private String user_name;
-    private String user_last_name;
     private String user_avatar;
     private int product_id;
     private int rating;
@@ -32,10 +31,6 @@ public class Review {
 
     public String getUser_name() {
         return user_name;
-    }
-
-    public String getUser_last_name() {
-        return user_last_name;
     }
 
     public String getUser_avatar() {

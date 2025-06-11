@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorSurface"
-    tools:context=".ui.activity.SignUpActivity">
+    tools:context=".presentation.ui.activity.SignUpActivity">
 
     <RelativeLayout
         android:id="@+id/header"
@@ -23,7 +23,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="12dp"
             android:layout_marginBottom="6dp"
-            android:background="@drawable/rounded_menu"
+            android:background="@android:color/transparent"
             android:contentDescription="@string/voltar"
             android:src="@drawable/ic_back"
             android:tint="@color/colorOnBackground"
@@ -32,6 +32,7 @@
         <TextView
             android:id="@+id/headerText"
             style="@style/TextHeader"
+            android:layout_marginBottom="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

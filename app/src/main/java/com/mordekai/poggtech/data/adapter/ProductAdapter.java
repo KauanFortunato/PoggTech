@@ -77,7 +77,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.ViewHolder holder, int position) {
         Product product = products.get(position);
-        Log.d("ADAPTER_DEBUG", "Bind product: " + product.getTitle());
 
         holder.productTitle.setText(product.getTitle());
         holder.productPrice.setText(String.format("%.2f€", product.getPrice()));
@@ -89,6 +88,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         } else {
             holder.seller.setVisibility(View.VISIBLE);
             holder.sellerAdmin.setVisibility(View.GONE);
+            holder.seller.setText(String.format("%s %s", holder.seller.getContext().getString(R.string.soldBy), product.getUser_name()));
         }
 
         if (savedIds.contains(product.getProduct_id())) {

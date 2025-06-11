@@ -217,7 +217,7 @@
                             android:layout_height="48dp"
                             android:layout_marginTop="28dp"
                             android:background="@drawable/rounded_button_small"
-                            android:contentDescription="@string/configuracoes"
+                            android:contentDescription="@string/settings"
                             android:src="@drawable/ic_settings_filled" />
 
                         <TextView
@@ -232,7 +232,7 @@
 
                             android:lineSpacingExtra="4dp"
                             android:maxLines="2"
-                            android:text="@string/configuracoes"
+                            android:text="@string/settings"
                             android:textAlignment="center"
                             android:textColor="@color/textPrimary"
                             android:textSize="12sp" />

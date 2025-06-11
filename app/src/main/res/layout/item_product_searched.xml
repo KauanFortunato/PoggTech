@@ -44,19 +44,6 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/seller"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
-                    android:textSize="@dimen/text_small"
-                    android:textColor="@color/textSecondary"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:layout_marginBottom="5dp"
-                    android:text="Produto vendido por DioguinhoPJL"
-                    android:visibility="gone"/>
-
-                <TextView
                     android:id="@+id/sellerAdmin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

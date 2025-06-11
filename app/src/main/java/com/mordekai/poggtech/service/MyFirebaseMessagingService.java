@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -15,7 +14,7 @@ import androidx.core.app.NotificationCompat;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.mordekai.poggtech.R;
-import com.mordekai.poggtech.ui.activity.MainActivity;
+import com.mordekai.poggtech.presentation.ui.activity.MainActivity;
 import com.mordekai.poggtech.utils.MessageNotifier;
 import com.mordekai.poggtech.utils.NotificationFlagHelper;
 

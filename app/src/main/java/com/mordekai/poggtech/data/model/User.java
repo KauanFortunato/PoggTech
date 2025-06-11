@@ -4,7 +4,6 @@ public class User {
     private int user_id;
     private String firebase_uid;
     private String name;
-    private String last_name;
     private String email;
     private String avatar;
     private String phone;
@@ -18,7 +17,6 @@ public class User {
 
     public User(String name, String lastName, String email) {
         this.name = name;
-        this.last_name = lastName;
         this.email = email;
     }
 
@@ -45,14 +43,6 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getLastName() {
-        return last_name;
-    }
-
-    public void setLastName(String last_name) {
-        this.last_name = last_name;
     }
 
     public String getEmail() {

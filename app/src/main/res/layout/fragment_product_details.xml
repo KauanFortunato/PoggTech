@@ -31,7 +31,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
-            android:layoutAnimation="@anim/layout_animation_fade_slide_up"
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
@@ -245,23 +244,34 @@
                     android:textColor="@color/textSecondary"
                     android:textSize="15sp" />
 
-                <TextView
-                    android:id="@+id/productPoggers"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_black"
-                    android:layout_marginTop="15dp"
-                    android:text="@string/poggers"
-                    android:textColor="@color/colorSuccess"
-                    android:textSize="15sp" />
 
-                <TextView
-                    android:layout_width="270dp"
+                <LinearLayout
+                    android:id="@+id/containerSeller"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
-                    android:text="@string/infoPoggersProduct"
-                    android:textColor="@color/textPrimary"
-                    android:textSize="15sp" />
+                    android:layout_marginTop="15dp"
+                    android:visibility="gone"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/productPoggers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_black"
+                        android:text="@string/poggers"
+                        android:textColor="@color/colorSuccess"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="270dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="@string/infoPoggersProduct"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout

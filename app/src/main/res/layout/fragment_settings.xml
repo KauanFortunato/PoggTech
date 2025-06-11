@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/header"
+        style="@style/Header"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginBottom="9dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/voltar"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:id="@+id/headerText"
+            style="@style/TextHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginVertical="15dp"
+            android:text="@string/settings"
+            android:textAlignment="center" />
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingHorizontal="15dp">
+
+            <TextView
+                style="@style/sectionConfigTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Conta" />
+
+            <LinearLayout
+                style="@style/sectionConfig"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnEditPerfil"
+                    style="@style/sectionConfigItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Editar perfil" />
+
+                <View style="@style/division" android:layout_height="1dp"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    style="@style/sectionConfigItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Alterar email" />
+
+                <View style="@style/division" android:layout_height="1dp"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    style="@style/sectionConfigItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Excluir conta" />
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/sectionConfigTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Segurança" />
+
+            <LinearLayout
+                style="@style/sectionConfig"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnChangePass"
+                    style="@style/sectionConfigItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Alterar senha" />
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/sectionConfigTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Notificações" />
+
+            <LinearLayout
+                style="@style/sectionConfig"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    style="@style/sectionConfigItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Notificações push" />
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/sectionConfigTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Idioma e Região"
+                android:textSize="@dimen/text_title" />
+
+            <LinearLayout
+                style="@style/sectionConfig"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    style="@style/sectionConfigItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Escolher idioma" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/sectionConfigTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Aparência" />
+
+            <LinearLayout
+                style="@style/sectionConfig"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnChangeTheme"
+                    style="@style/sectionConfigItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tema" />
+
+            </LinearLayout>
+
+
+            <TextView
+                style="@style/sectionConfigTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Sobre" />
+
+            <LinearLayout
+                style="@style/sectionConfig"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    style="@style/sectionConfigItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Política de privacidade" />
+
+                <View style="@style/division" android:layout_height="1dp"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    style="@style/sectionConfigItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Termos de uso" />
+
+                <View style="@style/division" android:layout_height="1dp"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    style="@style/sectionConfigItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Versão do app" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="20dp"
+                android:paddingHorizontal="0dp"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonLogout"
+                    style="@style/sectionConfigItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_logout"
+                    android:drawableTint="@color/colorError"
+                    android:textColor="@color/colorError"
+                    android:text="@string/logout" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>
+

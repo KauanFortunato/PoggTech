@@ -17,7 +17,7 @@
     <string name="nome">Nome</string>
     <string name="sobrenome">Sobrenome</string>
     <string name="confirmarPalavraPasse">Confirmar Palavra passe</string>
-    <string name="configuracoes">Configurações</string>
+    <string name="settings">Configurações</string>
     <string name="infoPessoais">Informações pessoais</string>
     <string name="contacto">Contacto</string>
     <string name="edit">Editar</string>
@@ -50,7 +50,6 @@
     <string name="infoPoggersProduct">Os preços dos produtos vendidos pela PoggTech, que são “poggers” já incluem IVA.</string>
     <string name="iniciarChat">Iniciar chat</string>
     <string name="productImg">Imagem do produto</string>
-    <string name="soldeBy">Vendido por</string>
     <string name="discount">de desconto</string>
     <string name="choose">Escolha</string>
     <string name="ok" translatable="false">Ok</string>
@@ -77,6 +76,7 @@
     <string name="reviews">Avaliações</string>
     <string name="sendAMessage">Envie uma mensagem ao vendedor</string>
     <string name="defaultMessageEx">Oi, esse item está disponível?</string>
+    <string name="soldBy">Vendido por</string>
 
 
     <!-- Chat -->

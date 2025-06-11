@@ -72,7 +72,6 @@ public class ProductSearchedAdapter extends RecyclerView.Adapter<ProductSearched
 
         holder.productTitle.setText(product.getTitle());
         holder.productType.setText(product.getCategory());
-        holder.seller.setText(product.getSeller_type());
 
         if(product.getDiscountPercentage() != null && product.getDiscountPercentage() > 0) {
             holder.priceBefore.setVisibility(View.VISIBLE);
@@ -95,12 +94,8 @@ public class ProductSearchedAdapter extends RecyclerView.Adapter<ProductSearched
 
         if(product.getSeller_type().equals("admin")) {
             holder.sellerAdmin.setVisibility(View.VISIBLE);
-            holder.seller.setVisibility(View.GONE);
             holder.deliveryType.setVisibility(View.GONE);
         } else {
-            holder.seller.setVisibility(View.VISIBLE);
-            holder.seller.setText(holder.itemView.getContext().getString(R.string.soldeBy) + " " + user.getName());
-
             holder.sellerAdmin.setVisibility(View.GONE);
             holder.deliveryType.setVisibility(View.VISIBLE);
         }
@@ -148,7 +143,6 @@ public class ProductSearchedAdapter extends RecyclerView.Adapter<ProductSearched
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView productImage;
         ImageButton favoriteButton;
-        TextView seller;
         TextView productTitle;
         TextView productType;
         TextView productPrice;
@@ -163,7 +157,6 @@ public class ProductSearchedAdapter extends RecyclerView.Adapter<ProductSearched
 
             productImage = itemView.findViewById(R.id.categoryIcon);
             favoriteButton = itemView.findViewById(R.id.saveButton);
-            seller = itemView.findViewById(R.id.seller);
             sellerAdmin = itemView.findViewById(R.id.sellerAdmin);
             productTitle = itemView.findViewById(R.id.productTitle);
             productType = itemView.findViewById(R.id.productType);

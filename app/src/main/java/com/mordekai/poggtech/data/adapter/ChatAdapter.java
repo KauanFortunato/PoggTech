@@ -82,11 +82,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         }
 
         void bind(Chat chat) {
-            chatWith.setText(chat.getChat_with_name() + " " + chat.getChat_with_last_name());
+            chatWith.setText(chat.getChat_with_name());
             lastMessage.setText(chat.getLast_message());
             productTitle.setText(chat.getProduct_title());
             productTitle.setText(chat.getProduct_title());
-            chatWith.setText(chat.getChat_with_name() + " " + chat.getChat_with_last_name());
+            chatWith.setText(chat.getChat_with_name());
             lastMessage.setText(chat.getLast_message());
             messageTime.setText(chat.getLast_message_time_format());
 

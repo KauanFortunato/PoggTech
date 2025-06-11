@@ -71,7 +71,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         public void bind(Review review, View view) {
             comment.setText(review.getComment());
             setRatingStars(starsContainer, review.getRating(), view);
-            userName.setText(String.format("%s %s", review.getUser_name(), review.getUser_last_name()));
+            userName.setText(String.format("%s", review.getUser_name()));
             commentDate.setText(review.getTimeAgo());
 
             Utils.loadImageBasicAuth(userAvatar, review.getUser_avatar());

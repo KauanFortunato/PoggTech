@@ -6,6 +6,7 @@ import java.util.Objects;
 public class Product {
     private int product_id;
     private int user_id;
+    private String user_name;
     private String title;
     private String description;
     private Float price;
@@ -32,6 +33,10 @@ public class Product {
 
     public int getUser_id() {
         return user_id;
+    }
+
+    public String getUser_name() {
+        return user_name;
     }
 
     public String getTitle() {

@@ -17,7 +17,7 @@
     <string name="nome">Name</string>
     <string name="sobrenome">Surname</string>
     <string name="confirmarPalavraPasse">Confirm Password</string>
-    <string name="configuracoes">Settings</string>
+    <string name="settings">Settings</string>
     <string name="infoPessoais">Personal information</string>
     <string name="contacto">Contact</string>
     <string name="edit">Edit</string>
@@ -87,4 +87,5 @@
     <string name="reviews">Reviews</string>
     <string name="sendAMessage">Send a message to the seller</string>
     <string name="defaultMessageEx">Hi, is this item available?</string>
+    <string name="soldBy">Sold by</string>
 </resources>

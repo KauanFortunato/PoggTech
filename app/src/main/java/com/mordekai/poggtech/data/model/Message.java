@@ -7,10 +7,8 @@ public class Message {
     private int owner_id;
     private int sender_id;
     private String sender_name;
-    private String sender_last_name;
     private int receiver_id;
     private String receiver_name;
-    private String receiver_last_name;
     private int product_id;
     private String product_title;
     private String message;
@@ -19,20 +17,19 @@ public class Message {
     private int is_read;
 
     // Construtor vazio
-    public Message() {}
+    public Message() {
+    }
 
     // Construtor com parâmetros
-    public Message(int id_message, int owner_id, int sender_id, String sender_name, String sender_last_name,
-                   int receiver_id, String receiver_name, String receiver_last_name, int product_id,
+    public Message(int id_message, int owner_id, int sender_id, String sender_name,
+                   int receiver_id, String receiver_name, int product_id,
                    String product_title, String message, String timestamp, String timestamp_format) {
         this.id_message = id_message;
         this.owner_id = owner_id;
         this.sender_id = sender_id;
         this.sender_name = sender_name;
-        this.sender_last_name = sender_last_name;
         this.receiver_id = receiver_id;
         this.receiver_name = receiver_name;
-        this.receiver_last_name = receiver_last_name;
         this.product_id = product_id;
         this.product_title = product_title;
         this.message = message;
@@ -82,14 +79,6 @@ public class Message {
         this.sender_name = sender_name;
     }
 
-    public String getSender_last_name() {
-        return sender_last_name;
-    }
-
-    public void setSender_last_name(String sender_last_name) {
-        this.sender_last_name = sender_last_name;
-    }
-
     public int getReceiver_id() {
         return receiver_id;
     }
@@ -104,14 +93,6 @@ public class Message {
 
     public void setReceiver_name(String receiver_name) {
         this.receiver_name = receiver_name;
-    }
-
-    public String getReceiver_last_name() {
-        return receiver_last_name;
-    }
-
-    public void setReceiver_last_name(String receiver_last_name) {
-        this.receiver_last_name = receiver_last_name;
     }
 
     public int getProduct_id() {
@@ -154,9 +135,13 @@ public class Message {
         this.timestamp_format = timestamp_format;
     }
 
-    public int getIs_read() { return is_read; }
+    public int getIs_read() {
+        return is_read;
+    }
 
-    public void setIs_read(int is_read) { this.is_read = is_read; }
+    public void setIs_read(int is_read) {
+        this.is_read = is_read;
+    }
 
     // Método toString() para facilitar o debug
     @Override
@@ -166,10 +151,8 @@ public class Message {
                 ", owner_id=" + owner_id +
                 ", sender_id=" + sender_id +
                 ", sender_name='" + sender_name + '\'' +
-                ", sender_last_name='" + sender_last_name + '\'' +
                 ", receiver_id=" + receiver_id +
                 ", receiver_name='" + receiver_name + '\'' +
-                ", receiver_last_name='" + receiver_last_name + '\'' +
                 ", product_id=" + product_id +
                 ", product_title='" + product_title + '\'' +
                 ", message='" + message + '\'' +
