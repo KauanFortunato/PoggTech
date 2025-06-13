@@ -1,4 +1,5 @@
 package com.mordekai.poggtech.presentation.ui.fragments;
+
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.adapter.ChatAdapter;
@@ -18,13 +19,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +37,6 @@ public class ChatSellFragment extends Fragment {
     private ApiMessage apiMessage;
     private List<Chat> chatList;
     private TextView textNoChats;
-    private ShimmerFrameLayout shimmerLayout;
 
 
     @Override
@@ -74,7 +72,7 @@ public class ChatSellFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        if(NotificationFlagHelper.hasNewMessage(requireContext())) {
+        if (NotificationFlagHelper.hasNewMessage(requireContext())) {
             fetchUserChats();
             NotificationFlagHelper.clearNewMessageFlag(requireContext());
         }
@@ -89,40 +87,30 @@ public class ChatSellFragment extends Fragment {
     }
 
     private void fetchUserChats() {
-        messageManager.fetchUserChatsSell(user.getUserId(), new RepositoryCallback<List<Chat>>() {
+        messageManager.getUserChatsSell(user.getUserId(), new RepositoryCallback<List<Chat>>() {
             @Override
             public void onSuccess(List<Chat> chats) {
-                rvChats.postDelayed(() -> {
 
-                    shimmerLayout.setVisibility(View.GONE);
-                    chatList.clear();
+                chatList.clear();
 
-                    if (chats.isEmpty()) {
-                        rvChats.setVisibility(View.GONE);
-                        textNoChats.setVisibility(View.VISIBLE);
-                    } else {
-                        chatList.addAll(chats);
-                        chatAdapter.notifyDataSetChanged();
-                        textNoChats.setVisibility(View.GONE);
-                        rvChats.setVisibility(View.VISIBLE);
-                        Log.d("API_RESPONSE", "Item 0: " + chats.get(0).getLast_message());
-                    }
-
-                }, 300);
-
+                if (chats.isEmpty()) {
+                    rvChats.setVisibility(View.GONE);
+                    textNoChats.setVisibility(View.VISIBLE);
+                } else {
+                    chatList.addAll(chats);
+                    chatAdapter.notifyDataSetChanged();
+                    textNoChats.setVisibility(View.GONE);
+                    rvChats.setVisibility(View.VISIBLE);
+                    Log.d("API_RESPONSE", "Item 0: " + chats.get(0).getLastMessage());
+                }
             }
 
             @Override
             public void onFailure(Throwable t) {
                 Log.e("API_RESPONSE", "Erro ao buscar chats", t);
+                textNoChats.setVisibility(View.VISIBLE);
 
-                rvChats.postDelayed(() -> {
-                    shimmerLayout.setVisibility(View.GONE);
-                    textNoChats.setVisibility(View.VISIBLE);
-
-                    rvChats.setVisibility(View.GONE);
-                    }, 300);
-
+                rvChats.setVisibility(View.GONE);
             }
         });
     }
@@ -130,8 +118,5 @@ public class ChatSellFragment extends Fragment {
     private void initComponents(View view) {
         rvChats = view.findViewById(R.id.rvChats);
         textNoChats = view.findViewById(R.id.textNoChats);
-        shimmerLayout = view.findViewById(R.id.shimmerLayout);
-
-        shimmerLayout.setVisibility(View.VISIBLE);
     }
 }

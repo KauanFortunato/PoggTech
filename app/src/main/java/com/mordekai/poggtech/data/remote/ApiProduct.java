@@ -18,7 +18,6 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 public interface ApiProduct {
 
@@ -38,6 +37,21 @@ public interface ApiProduct {
             @Part List<MultipartBody.Part> images
     );
 
+    // POST /products/{id} → atualizar produto
+    @Multipart
+    @POST("products/{product_id}")
+    Call<ResponseBody> updateProduct(
+            @Path("product_id") int productId,
+            @Part("title") RequestBody title,
+            @Part("description") RequestBody description,
+            @Part("location") RequestBody location,
+            @Part("price") RequestBody price,
+            @Part("category") RequestBody category,
+            @Part("existing_images[]") List<RequestBody> existingImages,
+            @Part List<MultipartBody.Part> images
+    );
+
+
     @DELETE("products/{product_id}")
     Call<ApiResponse<Void>> deleteProduct(@Path("product_id") int product_id);
 
@@ -54,7 +68,7 @@ public interface ApiProduct {
     Call<ApiResponse<List<Product>>> getPopularProducts(@Path("all") Boolean all, @Path("quantity") int quantity);
 
     @GET("products/recommended/{user_id}")
-    Call<ApiResponse<List<Product>>> getRecommendedProducts(@Path("user_id") int userId);
+    Call<ApiResponse<List<Product>>> getContinueBuy(@Path("user_id") int userId);
 
     @GET("products/search/{query}")
     Call<ApiResponse<List<Product>>> searchProducts(@Path("query") String search);
@@ -135,6 +149,13 @@ public interface ApiProduct {
     @GET("cart/favOrCart/{user_id}/{tipo}")
     Call<ApiResponse<List<Integer>>> getUserFavOrCart(@Path("user_id") int userId, @Path("tipo") int tipo);
 
+    // Salva o produto
+    @FormUrlEncoded
+    @POST("product/quantity")
+    Call<ApiResponse<Void>> reduceQuantity(
+            @Field("product_id") int product_id,
+            @Field("quantity") int quantity
+    );
 
     /*
      *   Gallery

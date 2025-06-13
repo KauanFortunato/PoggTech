@@ -3,14 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="13dp"
     app:cardBackgroundColor="@color/colorSurface">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_card_product">
+        android:background="@color/elevatedSurface">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,8 +27,8 @@
                 <!-- Imagem do Produto -->
                 <ImageView
                     android:id="@+id/categoryIcon"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
                     android:layout_marginStart="10dp"
                     android:adjustViewBounds="true"
                     android:clipToOutline="true"
@@ -42,7 +40,7 @@
                 <LinearLayout
                     android:id="@+id/productInfoContainer"
                     android:layout_width="0dp"
-                    android:layout_height="100dp"
+                    android:layout_height="130dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginHorizontal="8dp"
                     android:layout_marginBottom="10dp"
@@ -59,7 +57,7 @@
                         android:maxLines="2"
                         android:text="Xbox Series X"
                         android:textColor="@color/textPrimary"
-                        android:textSize="16sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <!-- Tipo do Produto -->
@@ -70,7 +68,7 @@
                         android:layout_weight="1"
                         android:text="Consolas"
                         android:textColor="@color/textTertiary"
-                        android:textSize="14sp" />
+                        android:textSize="15sp" />
 
                     <!-- Contador e Botão de Remover -->
                     <LinearLayout
@@ -87,7 +85,7 @@
                             android:layout_weight="1"
                             android:text="€332,99"
                             android:textColor="@color/textPrimary"
-                            android:textSize="18sp"
+                            android:textSize="24sp"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>
@@ -95,7 +93,7 @@
                 <LinearLayout
                     android:id="@+id/actionLayout"
                     android:layout_width="0dp"
-                    android:layout_height="100dp"
+                    android:layout_height="130dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_weight="1"
@@ -103,29 +101,13 @@
                     android:orientation="vertical"
                     android:layout_marginEnd="10dp">
 
-                    <!-- Botão "Remover" -->
-                    <TextView
-                        android:id="@+id/removeButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_medium"
-                        android:text="Remover"
-                        android:textColor="@color/colorError"
-                        android:textSize="15sp" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
-
-                    <!-- Botão de Carrinho -->
+                    <!-- Botão de more actions -->
                     <ImageView
-                        android:id="@+id/buttonEdit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="6dp"
+                        android:id="@+id/moreBtn"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/ic_pencil_square" />
+                        android:src="@drawable/ic_more_horiz" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -139,7 +121,7 @@
                 android:orientation="horizontal"
                 android:paddingHorizontal="15dp"
                 android:paddingVertical="10dp"
-                android:background="@drawable/bg_divisor_top"
+                android:background="@drawable/bg_divisor_top_card"
                 android:visibility="visible">
 
                 <LinearLayout
@@ -160,7 +142,7 @@
                             android:layout_width="22dp"
                             android:layout_height="22dp"
                             android:src="@drawable/ic_eye"
-                            app:tint="@color/colorPrimary" />
+                            app:tint="@color/colorSuccess" />
 
                         <TextView
                             android:id="@+id/productViews"
@@ -183,7 +165,7 @@
                         <ImageView
                             android:layout_width="22dp"
                             android:layout_height="22dp"
-                            android:src="@drawable/ic_heart"
+                            android:src="@drawable/ic_bookmark_fill"
                             app:tint="@color/colorPrimary" />
 
                         <TextView
@@ -192,7 +174,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
                             android:fontFamily="@font/roboto_medium"
-                            android:text="123 favoritos"
+                            android:text="123 salvos"
                             android:textColor="@color/textSecondary"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -205,19 +187,43 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
+                    <!-- Rating -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:gravity="center_vertical|end"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:src="@drawable/ic_star_filled" />
+
+                        <TextView
+                            android:id="@+id/productRating"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:fontFamily="@font/roboto_medium"
+                            android:text="08/12/25 17:21"
+                            android:textColor="@color/textSecondary"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+
                     <!-- Data de Lançamento -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical|end"
-                        android:layout_marginBottom="15dp"
                         android:orientation="horizontal">
 
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:src="@drawable/ic_calendar"
-                            app:tint="@color/colorPrimary" />
+                            app:tint="@color/textPrimary" />
 
                         <TextView
                             android:id="@+id/productReleaseDate"
@@ -226,30 +232,6 @@
                             android:layout_marginStart="6dp"
                             android:fontFamily="@font/roboto_medium"
                             android:text="05/12/25 23:44"
-                            android:textColor="@color/textSecondary"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-
-                    <!-- Update -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical|end"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="22dp"
-                            android:layout_height="22dp"
-                            android:src="@drawable/ic_sync"
-                            app:tint="@color/colorPrimary" />
-
-                        <TextView
-                            android:id="@+id/productLastUpdate"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="6dp"
-                            android:fontFamily="@font/roboto_medium"
-                            android:text="08/12/25 17:21"
                             android:textColor="@color/textSecondary"
                             android:textSize="14sp" />
                     </LinearLayout>

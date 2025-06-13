@@ -88,4 +88,5 @@
     <string name="sendAMessage">Send a message to the seller</string>
     <string name="defaultMessageEx">Hi, is this item available?</string>
     <string name="soldBy">Sold by</string>
+    <string name="updateAd">Update Ad</string>
 </resources>

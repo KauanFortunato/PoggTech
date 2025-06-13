@@ -31,7 +31,7 @@ public class ProductManager {
                 .enqueue(new Callback<ApiResponse<Product>>() {
                     @Override
                     public void onResponse(Call<ApiResponse<Product>> call, Response<ApiResponse<Product>> response) {
-                        if(response.isSuccessful() && response.body() != null) {
+                        if (response.isSuccessful() && response.body() != null) {
                             Product product = response.body().getData();
                             callback.onSuccess(product);
                         } else {
@@ -74,7 +74,7 @@ public class ProductManager {
                 .enqueue(new Callback<ApiResponse<List<Product>>>() {
                     @Override
                     public void onResponse(Call<ApiResponse<List<Product>>> call, Response<ApiResponse<List<Product>>> response) {
-                        if(response.isSuccessful() && response.body() != null) {
+                        if (response.isSuccessful() && response.body() != null) {
                             List<Product> products = response.body().getData();
                             callback.onSuccess(products);
                         } else {
@@ -94,9 +94,9 @@ public class ProductManager {
                 .enqueue(new Callback<ApiResponse<List<Integer>>>() {
                     @Override
                     public void onResponse(Call<ApiResponse<List<Integer>>> call, Response<ApiResponse<List<Integer>>> response) {
-                        if(response.isSuccessful() && response.body() != null) {
+                        if (response.isSuccessful() && response.body() != null) {
                             ApiResponse<List<Integer>> apiResponse = response.body();
-                            if(apiResponse.getData() != null) {
+                            if (apiResponse.getData() != null) {
                                 List<Integer> products = apiResponse.getData();
                                 callback.onSuccess(products);
                             } else {
@@ -134,13 +134,13 @@ public class ProductManager {
                 });
     }
 
-    public void getRecommendedProducts(int userId, RepositoryCallback<List<Product>> callback) {
-        apiProduct.getRecommendedProducts(userId).enqueue(new Callback<ApiResponse<List<Product>>>() {
+    public void getContinueBuy(int userId, RepositoryCallback<List<Product>> callback) {
+        apiProduct.getContinueBuy(userId).enqueue(new Callback<ApiResponse<List<Product>>>() {
             @Override
             public void onResponse(Call<ApiResponse<List<Product>>> call, Response<ApiResponse<List<Product>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     ApiResponse<List<Product>> apiResponse = response.body();
-                    if(apiResponse.isSuccess()) {
+                    if (apiResponse.isSuccess()) {
                         List<Product> products = response.body().getData();
                         callback.onSuccess(products);
                     } else {
@@ -164,7 +164,7 @@ public class ProductManager {
             public void onResponse(Call<ApiResponse<List<Product>>> call, Response<ApiResponse<List<Product>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     ApiResponse<List<Product>> apiResponse = response.body();
-                    if(apiResponse.isSuccess()) {
+                    if (apiResponse.isSuccess()) {
                         List<Product> products = apiResponse.getData();
                         callback.onSuccess(products);
                     } else {
@@ -189,7 +189,7 @@ public class ProductManager {
             public void onResponse(Call<ApiResponse<List<Product>>> call, Response<ApiResponse<List<Product>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     ApiResponse<List<Product>> apiResponse = response.body();
-                    if(apiResponse.isSuccess()) {
+                    if (apiResponse.isSuccess()) {
                         List<Product> products = apiResponse.getData();
                         callback.onSuccess(products);
                     } else {
@@ -211,9 +211,9 @@ public class ProductManager {
         apiProduct.searchProducts(search).enqueue(new Callback<ApiResponse<List<Product>>>() {
             @Override
             public void onResponse(Call<ApiResponse<List<Product>>> call, Response<ApiResponse<List<Product>>> response) {
-                if(response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null) {
                     ApiResponse<List<Product>> apiResponse = response.body();
-                    if(apiResponse.isSuccess()) {
+                    if (apiResponse.isSuccess()) {
                         callback.onSuccess(apiResponse.getData());
                     } else {
                         callback.onFailure(new Exception("Erro ao buscar produtos"));
@@ -235,10 +235,10 @@ public class ProductManager {
         call.enqueue(new Callback<ApiResponse<List<String>>>() {
             @Override
             public void onResponse(Call<ApiResponse<List<String>>> call, Response<ApiResponse<List<String>>> response) {
-                if(response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null) {
                     ApiResponse<List<String>> apiResponse = response.body();
 
-                    if(apiResponse.isSuccess()) {
+                    if (apiResponse.isSuccess()) {
                         callback.onSuccess(apiResponse.getData());
                     } else {
                         callback.onFailure(new Exception("Erro ao buscar sugestões"));
@@ -259,10 +259,10 @@ public class ProductManager {
         apiProduct.getAllCategories().enqueue(new Callback<ApiResponse<List<Category>>>() {
             @Override
             public void onResponse(Call<ApiResponse<List<Category>>> call, Response<ApiResponse<List<Category>>> response) {
-                if(response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null) {
                     ApiResponse<List<Category>> apiResponse = response.body();
 
-                    if(apiResponse.isSuccess()) {
+                    if (apiResponse.isSuccess()) {
                         callback.onSuccess(apiResponse.getData());
                     } else {
                         callback.onFailure(new Exception("Erro ao buscar categorias"));
@@ -299,15 +299,57 @@ public class ProductManager {
                 });
     }
 
+    public void updateProduct(int product_id,
+                              RequestBody title, RequestBody description, RequestBody location, RequestBody price, RequestBody category,
+                              List<RequestBody> existingImages,
+                              List<MultipartBody.Part> images, RepositoryCallback<Void> callback) {
+
+        apiProduct.updateProduct(product_id, title, description, location, price, category, existingImages, images)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.isSuccessful()) {
+                            callback.onSuccess(null);
+                        } else {
+                            callback.onFailure(new Exception("Erro no servidor"));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        callback.onFailure(t);
+                    }
+                });
+    }
+
+    public void reduceQuantity(int product_id, int quantity, RepositoryCallback<String> callback) {
+        apiProduct.reduceQuantity(product_id, quantity).enqueue(new Callback<ApiResponse<Void>>() {
+
+            @Override
+            public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
+                if(response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body().getMessage());
+                } else {
+                    callback.onFailure(new Exception("Erro ao reduzir a quantidade"));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
+                callback.onFailure(new Exception("Erro ao reduzir a quantidade"));
+            }
+        });
+    }
+
     public void getProductImages(int product_id, RepositoryCallback<List<String>> callback) {
         apiProduct.getProductImages(product_id).enqueue(new Callback<ApiResponse<List<String>>>() {
 
             @Override
             public void onResponse(Call<ApiResponse<List<String>>> call, Response<ApiResponse<List<String>>> response) {
-                if(response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null) {
                     ApiResponse<List<String>> apiResponse = response.body();
 
-                    if(apiResponse.isSuccess()) {
+                    if (apiResponse.isSuccess()) {
                         callback.onSuccess(apiResponse.getData());
                     } else {
                         callback.onFailure(new Exception("Erro ao buscar imagens do produto"));
@@ -327,10 +369,10 @@ public class ProductManager {
 
             @Override
             public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
-                if(response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null) {
                     ApiResponse<Void> apiResponse = response.body();
 
-                    if(apiResponse.isSuccess()) {
+                    if (apiResponse.isSuccess()) {
                         callback.onSuccess("Produto deletado com sucesso");
                     } else {
                         callback.onFailure(new Exception("Erro ao deletar produto"));
@@ -350,10 +392,10 @@ public class ProductManager {
 
             @Override
             public void onResponse(Call<ApiResponse<List<Product>>> call, Response<ApiResponse<List<Product>>> response) {
-                if(response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null) {
                     ApiResponse<List<Product>> apiResponse = response.body();
 
-                    if(apiResponse.isSuccess()) {
+                    if (apiResponse.isSuccess()) {
                         callback.onSuccess(apiResponse.getData());
                     } else {
                         callback.onFailure(new Exception("Erro ao buscar produtos"));

@@ -1,9 +1,10 @@
 package com.mordekai.poggtech.data.model;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-public class Product {
+public class Product implements Serializable {
     private int product_id;
     private int user_id;
     private String user_name;

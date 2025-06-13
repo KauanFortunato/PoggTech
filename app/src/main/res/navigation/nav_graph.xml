@@ -15,9 +15,15 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
+
         <action
             android:id="@+id/action_homeFragment_to_categoryFragment"
-            app:destination="@id/categoryFragment" />
+            app:destination="@id/categoryFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+
         <action
             android:id="@+id/action_homeFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
@@ -119,15 +125,27 @@
         android:id="@+id/myAdsFragment"
         android:name="com.mordekai.poggtech.presentation.ui.fragments.MyAdsFragment"
         android:label="Meus Anúncios" >
+
         <action
             android:id="@+id/action_myAdsFragment_to_newAdFragment"
-            app:destination="@id/newAdFragment" />
+            app:destination="@id/newAdFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
         android:id="@+id/newAdFragment"
         android:name="com.mordekai.poggtech.presentation.ui.fragments.NewAdFragment"
-        android:label="Novo Anúncio" />
+        android:label="Novo Anúncio" >
+
+        <argument
+            android:name="product"
+            app:argType="com.mordekai.poggtech.data.model.Product"
+            app:nullable="true" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/productDetailsFragment"
@@ -168,6 +186,7 @@
         android:id="@+id/categoryFragment"
         android:name="com.mordekai.poggtech.presentation.ui.fragments.CategoryFragment"
         android:label="Categorias" >
+
         <action
             android:id="@+id/action_categoryFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />

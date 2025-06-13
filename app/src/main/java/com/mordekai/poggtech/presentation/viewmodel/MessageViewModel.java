@@ -98,7 +98,7 @@ public class MessageViewModel extends ViewModel {
     }
 
     public void loadUserChatsBuy(int userId) {
-        messageManager.fetchUserChatsBuy(userId, new RepositoryCallback<List<Chat>>() {
+        messageManager.getUserChatsBuy(userId, new RepositoryCallback<List<Chat>>() {
             @Override
             public void onSuccess(List<Chat> result) {
                 chatsBuy.postValue(result);
@@ -112,7 +112,7 @@ public class MessageViewModel extends ViewModel {
     }
 
     public void loadUserChatsSell(int userId) {
-        messageManager.fetchUserChatsSell(userId, new RepositoryCallback<List<Chat>>() {
+        messageManager.getUserChatsSell(userId, new RepositoryCallback<List<Chat>>() {
             @Override
             public void onSuccess(List<Chat> result) {
                 chatsSell.postValue(result);
@@ -167,8 +167,8 @@ public class MessageViewModel extends ViewModel {
         });
     }
 
-    public void createChat(int productId) {
-        messageManager.createChat(productId, new RepositoryCallback<Integer>() {
+    public void createChat(int productId, int sellerId, int buyerId) {
+        messageManager.createChat(productId, sellerId, buyerId, new RepositoryCallback<Integer>() {
             @Override
             public void onSuccess(Integer chatId) {
                 createdChatId.postValue(chatId);

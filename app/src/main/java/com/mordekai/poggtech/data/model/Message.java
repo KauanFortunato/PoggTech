@@ -15,6 +15,7 @@ public class Message {
     private String timestamp;
     private String timestamp_format;
     private int is_read;
+    private boolean isPending;
 
     // Construtor vazio
     public Message() {
@@ -38,6 +39,10 @@ public class Message {
     }
 
     // Getters e Setters
+
+
+    public boolean isPending() { return isPending; }
+    public void setPending(boolean pending) { isPending = pending; }
 
     public int getChat_id() {
         return chat_id;

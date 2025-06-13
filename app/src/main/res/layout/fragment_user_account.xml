@@ -58,9 +58,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:adjustViewBounds="true"
-                        android:scaleType="fitCenter"
-                        android:padding="10dp"
-                        android:src="@drawable/xbox_series_x"/>
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/img_xbox_series_x_text"/>
                 </FrameLayout>
 
                 <LinearLayout

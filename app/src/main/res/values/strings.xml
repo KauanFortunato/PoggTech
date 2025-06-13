@@ -106,7 +106,5 @@
 
     <!-- Erros -->
     <string name="erroGoogleAuth">Erro ao autenticar com Google</string>
-
-    <!-- API KEYS -->
-    <string name="google_maps_key" translatable="false">AIzaSyA9knWgp3HxglBy-Gkim0nv86IV9jqTu4c</string>
+    <string name="updateAd">Atualizar anúncio</string>
 </resources>

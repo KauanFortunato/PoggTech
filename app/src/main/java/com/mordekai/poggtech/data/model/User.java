@@ -1,11 +1,19 @@
 package com.mordekai.poggtech.data.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class User {
+    @SerializedName("user_id")
     private int user_id;
+    @SerializedName("firebase_uid")
     private String firebase_uid;
+    @SerializedName("name")
     private String name;
+    @SerializedName("email")
     private String email;
+    @SerializedName("avatar")
     private String avatar;
+    @SerializedName("phone")
     private String phone;
     private String created_at;
     private String error;

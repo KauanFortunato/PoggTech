@@ -56,6 +56,7 @@ public class ChatDetailsFragment extends Fragment {
     private User currentUser;
     private boolean isScrolled = false;
 
+
     private MessageViewModel viewModel;
 
     @Override
@@ -181,9 +182,24 @@ public class ChatDetailsFragment extends Fragment {
     private void sendMessage() {
         String messageText = etMessage.getText().toString().trim();
         if (!messageText.isEmpty()) {
+            // Cria a mensagem localmente
+            Message pendingMessage = new Message();
+            pendingMessage.setSender_id(currentUser.getUserId());
+            pendingMessage.setReceiver_id(chatWithId);
+            pendingMessage.setMessage(messageText);
+            pendingMessage.setPending(true);
+
+            messageList.add(pendingMessage);
+            messageAdapter.notifyItemInserted(messageList.size() - 1);
+            scrollToBottom();
+            etMessage.setText("");
+            playSound(R.raw.send_message);
+
+            // Envia ao servidor (sem esperar resposta para atualizar a UI)
             viewModel.sendMessage(currentUser.getUserId(), chatWithId, chatChatId, messageText);
         }
     }
+
 
     private void animateButtonAppear(View button) {
         if (button.getVisibility() != View.VISIBLE) {

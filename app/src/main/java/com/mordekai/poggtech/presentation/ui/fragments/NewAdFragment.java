@@ -23,7 +23,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+
 import androidx.annotation.NonNull;
+
 import static android.app.Activity.RESULT_OK;
 
 import androidx.appcompat.widget.AppCompatButton;
@@ -32,6 +34,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.common.api.Status;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
@@ -40,6 +43,7 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import android.Manifest;
 import android.widget.TextView;
 
@@ -48,6 +52,7 @@ import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.adapter.PlaceSuggestionAdapter;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.Category;
+import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.model.User;
 import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
@@ -63,6 +68,7 @@ import java.util.List;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.internal.Util;
 
 public class NewAdFragment extends Fragment {
 
@@ -80,22 +86,33 @@ public class NewAdFragment extends Fragment {
 
     private Button addImagesButton, addImagesButtonAgain;
     private ArrayList<Uri> selectedImageUris = new ArrayList<>();
+    private List<String> imageUrls = new ArrayList<>();
     private LinearLayout layoutImageExamples, layoutUserImages, imagePreviewContainer;
+
+    private Product productBeingEdited = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_new_ad, container, false);
-        SharedPrefHelper sharedPrefHelper = new SharedPrefHelper(requireContext());
 
+        SharedPrefHelper sharedPrefHelper = new SharedPrefHelper(requireContext());
         user = sharedPrefHelper.getUser();
 
         if (!Places.isInitialized()) {
-            Places.initialize(requireContext(), getString(R.string.google_maps_key));
+            Places.initialize(requireContext(), getString(R.string.google_api_key));
         }
 
         productManager = new ProductManager(RetrofitClient.getRetrofitInstance().create(ApiProduct.class));
 
         startComponents(view);
+
+        Product product = (Product) getArguments().getSerializable("product");
+
+        if (product != null) {
+            productBeingEdited = product;
+            Log.d("NewAdFragment", "Product received: " + product.getTitle());
+            setUpdateProcuct(product);
+        }
 
         getClassList();
 
@@ -196,6 +213,35 @@ public class NewAdFragment extends Fragment {
         }
     }
 
+    private void setUpdateProcuct(Product product) {
+        titleProduct.setText(product.getTitle());
+        priceProduct.setText(String.valueOf(product.getPrice()));
+        descriptionProduct.setText(product.getDescription());
+        localProductEditText.setText(product.getLocation());
+        nomeUser.setText(user.getName());
+        buttonAddAd.setText(R.string.updateAd);
+
+        productManager.getProductImages(product.getProduct_id(), new RepositoryCallback<List<String>>() {
+            @Override
+            public void onSuccess(List<String> result) {
+                Log.d("NewAdFragment", "Images received: " + result.size());
+                if(!result.isEmpty()) {
+                    layoutImageExamples.setVisibility(View.GONE);
+                    layoutUserImages.setVisibility(View.VISIBLE);
+
+                    for (String imageUrl : result) {
+                        addRemoteImageToLayout(imageUrl);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                SnackbarUtil.showErrorSnackbar(requireView(), "Erro ao carregar imagens", requireContext());
+            }
+        });
+    }
+
     private void pickImagesFromGallery() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
@@ -211,7 +257,7 @@ public class NewAdFragment extends Fragment {
         imageView.setImageURI(imageUri);
 
         removeButton.setOnClickListener(v -> {
-            if(v.isHapticFeedbackEnabled()) {
+            if (v.isHapticFeedbackEnabled()) {
                 v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
             }
 
@@ -221,21 +267,58 @@ public class NewAdFragment extends Fragment {
             fadeOut.setAnimationListener(new Animation.AnimationListener() {
 
                 @Override
-                public void onAnimationStart(Animation animation) {}
+                public void onAnimationStart(Animation animation) {
+                }
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     imagePreviewContainer.removeView(imageWrapper);
                     selectedImageUris.remove(imageUri);
 
-                    if(selectedImageUris.isEmpty()) {
+                    if (selectedImageUris.isEmpty() && imageUrls.isEmpty()) {
                         layoutImageExamples.setVisibility(View.VISIBLE);
                         layoutUserImages.setVisibility(View.GONE);
                     }
                 }
 
                 @Override
-                public void onAnimationRepeat(Animation animation) {}
+                public void onAnimationRepeat(Animation animation) {
+                }
+            });
+        });
+
+        imagePreviewContainer.addView(imageWrapper);
+    }
+
+    private void addRemoteImageToLayout(String imageUrl) {
+        imageUrls.add(imageUrl); // Adiciona à lista
+
+        View imageWrapper = LayoutInflater.from(requireContext()).inflate(R.layout.item_selected_image, imagePreviewContainer, false);
+        ShapeableImageView imageView = imageWrapper.findViewById(R.id.imageView);
+        ImageView removeButton = imageWrapper.findViewById(R.id.removeImageButton);
+
+        Utils.loadImageBasicAuth(imageView, imageUrl);
+
+        removeButton.setOnClickListener(v -> {
+            if (v.isHapticFeedbackEnabled()) {
+                v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+            }
+
+            Animation fadeOut = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_out);
+            imageWrapper.startAnimation(fadeOut);
+
+            fadeOut.setAnimationListener(new Animation.AnimationListener() {
+                @Override public void onAnimationStart(Animation animation) {}
+                @Override public void onAnimationEnd(Animation animation) {
+                    imagePreviewContainer.removeView(imageWrapper);
+                    imageUrls.remove(imageUrl); // Remove da lista
+
+                    if (selectedImageUris.isEmpty() && imageUrls.isEmpty()) {
+                        layoutImageExamples.setVisibility(View.VISIBLE);
+                        layoutUserImages.setVisibility(View.GONE);
+                    }
+                }
+                @Override public void onAnimationRepeat(Animation animation) {}
             });
         });
 
@@ -269,7 +352,8 @@ public class NewAdFragment extends Fragment {
         // Title Product
         titleProduct.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -283,12 +367,13 @@ public class NewAdFragment extends Fragment {
             }
 
             @Override
-            public void afterTextChanged(Editable s) { }
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         titleProduct.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
-                if(!TextUtils.isEmpty(titleProduct.getText().toString())) {
+                if (!TextUtils.isEmpty(titleProduct.getText().toString())) {
                     if (titleProduct.getText().toString().length() >= 14) {
                         titleProduct.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(getContext(), R.drawable.ic_check), null);
                     } else {
@@ -303,7 +388,7 @@ public class NewAdFragment extends Fragment {
         // Price Product
         priceProduct.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
-                if(TextUtils.isEmpty(priceProduct.getText().toString())) {
+                if (TextUtils.isEmpty(priceProduct.getText().toString())) {
                     priceProduct.setError("Campo obrigatório");
                 } else {
                     priceProduct.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(getContext(), R.drawable.ic_check), null);
@@ -314,7 +399,8 @@ public class NewAdFragment extends Fragment {
         // Description Product
         descriptionProduct.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -328,17 +414,18 @@ public class NewAdFragment extends Fragment {
             }
 
             @Override
-            public void afterTextChanged(Editable s) { }
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         descriptionProduct.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
                 int currentLength = descriptionProduct.getText().length();
 
-                if(TextUtils.isEmpty(descriptionProduct.getText().toString())) {
+                if (TextUtils.isEmpty(descriptionProduct.getText().toString())) {
                     descriptionProduct.setError("Campo obrigatório");
                 } else {
-                    if(currentLength < 40) {
+                    if (currentLength < 40) {
                         descriptionProduct.setError("No minímo 40 caracteres");
                     } else {
                         descriptionProduct.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(getContext(), R.drawable.ic_check), null);
@@ -349,7 +436,8 @@ public class NewAdFragment extends Fragment {
 
         emailUser.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -361,7 +449,8 @@ public class NewAdFragment extends Fragment {
             }
 
             @Override
-            public void afterTextChanged(Editable s) { }
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         emailUser.setText(user.getEmail());
@@ -370,7 +459,7 @@ public class NewAdFragment extends Fragment {
 
         nomeUser.setOnFocusChangeListener((v, hasfocus) -> {
             if (!hasfocus) {
-                if(!TextUtils.isEmpty(nomeUser.getText().toString())) {
+                if (!TextUtils.isEmpty(nomeUser.getText().toString())) {
                     nomeUser.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(getContext(), R.drawable.ic_check), null);
                 } else {
                     nomeUser.setError("Campo obrigatório");
@@ -380,7 +469,7 @@ public class NewAdFragment extends Fragment {
 
         emailUser.setOnFocusChangeListener((v, hasfocus) -> {
             if (!hasfocus) {
-                if(!TextUtils.isEmpty(emailUser.getText().toString())) {
+                if (!TextUtils.isEmpty(emailUser.getText().toString())) {
                     emailUser.setError("Campo obrigatório");
                 }
             }
@@ -413,7 +502,9 @@ public class NewAdFragment extends Fragment {
         locationRecycler.setAdapter(adapter);
 
         localProductEditText.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -441,14 +532,16 @@ public class NewAdFragment extends Fragment {
                         });
             }
 
-            @Override public void afterTextChanged(Editable s) {}
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         localProductEditText.setOnFocusChangeListener((v, hasFocus) -> {
-            if(!hasFocus) {
+            if (!hasFocus) {
                 locationRecycler.setVisibility(View.GONE);
 
-                if(TextUtils.isEmpty(localProductEditText.getText().toString())) {
+                if (TextUtils.isEmpty(localProductEditText.getText().toString())) {
                     localProductEditText.setError("Campo obrigatório");
                 } else {
                     localProductEditText.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(getContext(), R.drawable.ic_check), null);
@@ -470,7 +563,7 @@ public class NewAdFragment extends Fragment {
 
             @Override
             public void onSuccess(List<Category> result) {
-                List<String>  classNames = new ArrayList<>();
+                List<String> classNames = new ArrayList<>();
                 classNames.add(getString(R.string.choose));
 
                 for (Category category : result) {
@@ -546,20 +639,29 @@ public class NewAdFragment extends Fragment {
         // Categoria
         if (classSelectorSpinner.getSelectedItemPosition() == 0) {
             classSelectorSpinner.setBackgroundResource(R.drawable.spinner_error_background);
+            SnackbarUtil.showErrorSnackbar(requireView(), "Selecione uma categoria", requireContext());
+
+            if(classSelectorSpinner.isHapticFeedbackEnabled()) {
+                classSelectorSpinner.performHapticFeedback(HapticFeedbackConstants.REJECT);
+            }
             isValid = false;
         } else {
             classSelectorSpinner.setBackgroundResource(R.drawable.bg_edit_text);
         }
 
         // Imagens
-        if (selectedImageUris.isEmpty()) {
+        if (selectedImageUris.isEmpty() && imageUrls.isEmpty()) {
             SnackbarUtil.showErrorSnackbar(requireView(), "Adiciona pelo menos uma imagem", requireContext());
             isValid = false;
         }
 
         // Se tudo estiver válido, submeter
         if (isValid) {
-            submitAd();
+            if (productBeingEdited != null) {
+                submitUpdate();
+            } else {
+                submitAd();
+            }
         }
     }
 
@@ -597,5 +699,51 @@ public class NewAdFragment extends Fragment {
             }
         });
     }
+
+    private void submitUpdate() {
+        RequestBody title = RequestBody.create(MediaType.parse("text/plain"), titleProduct.getText().toString().trim());
+        RequestBody description = RequestBody.create(MediaType.parse("text/plain"), descriptionProduct.getText().toString().trim());
+        RequestBody location = RequestBody.create(MediaType.parse("text/plain"), localProductEditText.getText().toString().trim());
+        RequestBody price = RequestBody.create(MediaType.parse("text/plain"), priceProduct.getText().toString().trim());
+        RequestBody category = RequestBody.create(MediaType.parse("text/plain"), classSelectorSpinner.getSelectedItem().toString());
+
+        // Imagens já existentes (mantidas)
+        List<RequestBody> existingImagesParts = new ArrayList<>();
+        for (String url : imageUrls) {
+            existingImagesParts.add(RequestBody.create(MediaType.parse("text/plain"), url));
+        }
+
+        // Novas imagens
+        List<MultipartBody.Part> newImageParts = new ArrayList<>();
+        for (Uri uri : selectedImageUris) {
+            File file = Utils.getFileFromUri(requireContext(), uri);
+            if (file == null) continue;
+
+            RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
+            MultipartBody.Part part = MultipartBody.Part.createFormData("images[]", file.getName(), requestFile);
+            newImageParts.add(part);
+        }
+
+        // Chamada Retrofit para update
+        productManager.updateProduct(
+                productBeingEdited.getProduct_id(),
+                title, description, location, price, category,
+                existingImagesParts,
+                newImageParts,
+                new RepositoryCallback<Void>() {
+                    @Override
+                    public void onSuccess(Void result) {
+                        SnackbarUtil.showSuccessSnackbar(requireView(), "Produto atualizado com sucesso!", requireContext());
+                        requireActivity().getSupportFragmentManager().popBackStack();
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+                        SnackbarUtil.showErrorSnackbar(requireView(), "Erro ao atualizar produto", requireContext());
+                    }
+                }
+        );
+    }
+
 
 }

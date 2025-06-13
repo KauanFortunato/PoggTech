@@ -82,16 +82,13 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         }
 
         void bind(Chat chat) {
-            chatWith.setText(chat.getChat_with_name());
-            lastMessage.setText(chat.getLast_message());
-            productTitle.setText(chat.getProduct_title());
-            productTitle.setText(chat.getProduct_title());
-            chatWith.setText(chat.getChat_with_name());
-            lastMessage.setText(chat.getLast_message());
-            messageTime.setText(chat.getLast_message_time_format());
+            chatWith.setText(chat.getChatWithName());
+            lastMessage.setText(chat.getLastMessage());
+            productTitle.setText(chat.getProductTitle());
+            messageTime.setText(chat.getLastMessageTimeFormat());
 
-            if(chat.getUnread_count() > 0) {
-                notificationCount.setText(String.valueOf(chat.getUnread_count()));
+            if(chat.getUnreadCount() > 0) {
+                notificationCount.setText(String.valueOf(chat.getUnreadCount()));
                 messageTime.setTextColor(ContextCompat.getColor(messageTime.getContext(), R.color.colorPrimary));
                 notificationCount.setVisibility(View.VISIBLE);
                 notificationBadge.setVisibility(View.VISIBLE);
@@ -100,7 +97,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                 notificationBadge.setVisibility(View.GONE);
             }
 
-            Utils.loadImageBasicAuth(imageProduct, chat.getCover_product());
+            Utils.loadImageBasicAuth(imageProduct, chat.getCoverProduct());
         }
     }
 }

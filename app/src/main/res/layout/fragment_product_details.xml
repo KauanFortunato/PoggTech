@@ -345,7 +345,59 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <View style="@style/division"/>
+
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="10dp"
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/descriptionTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Descrição"
+                        android:textSize="28sp"
+                        android:textColor="@color/textPrimary"
+                        android:fontFamily="@font/roboto_bold"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/icUp"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
+                        app:tint="@color/textPrimary"
+                        android:src="@drawable/ic_up"/>
+                </LinearLayout>
+
+                <View style="@style/division" android:layout_height="1dp"/>
+
+                <TextView
+                    android:id="@+id/descriptionText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="10dp"
+                    android:text="Aqui vai o conteúdo completo da descrição..."
+                    android:lineSpacingExtra="2dp"
+                    android:textSize="16sp"
+                    android:visibility="gone"
+                    android:textColor="@color/textPrimary"
+                    android:paddingTop="8dp" />
+            </LinearLayout>
+
+            <View style="@style/division"/>
+
+            <LinearLayout
+                android:id="@+id/containerReviewsAll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/backgroundColor"

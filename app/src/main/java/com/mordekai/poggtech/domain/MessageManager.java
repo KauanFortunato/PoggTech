@@ -66,7 +66,7 @@ public class MessageManager {
         });
     }
 
-    public void fetchUserChatsBuy(int user_id, RepositoryCallback<List<Chat>> callback) {
+    public void getUserChatsBuy(int user_id, RepositoryCallback<List<Chat>> callback) {
         apiMessage.getUserChatsBuy(user_id).enqueue(new Callback<ApiResponse<List<Chat>>>(){
 
             @Override
@@ -87,7 +87,7 @@ public class MessageManager {
 
     }
 
-    public void fetchUserChatsSell(int user_id, RepositoryCallback<List<Chat>> callback) {
+    public void getUserChatsSell(int user_id, RepositoryCallback<List<Chat>> callback) {
         apiMessage.getUserChatsSell(user_id).enqueue(new Callback<ApiResponse<List<Chat>>>(){
 
             @Override
@@ -133,8 +133,8 @@ public class MessageManager {
         });
     }
 
-    public void createChat(int product_id, RepositoryCallback<Integer> callback) {
-        apiMessage.createChat(product_id).enqueue(new Callback<ApiResponse<Integer>>() {
+    public void createChat(int product_id, int seller_id, int buyer_id, RepositoryCallback<Integer> callback) {
+        apiMessage.createChat(product_id, seller_id, buyer_id).enqueue(new Callback<ApiResponse<Integer>>() {
             @Override
             public void onResponse(Call<ApiResponse<Integer>> call, Response<ApiResponse<Integer>> response) {
                 if (response.isSuccessful() && response.body() != null) {

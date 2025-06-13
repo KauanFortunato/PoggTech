@@ -39,7 +39,9 @@ public interface ApiMessage {
     @FormUrlEncoded
     @POST("chat/create")
     Call<ApiResponse<Integer>> createChat(
-            @Field("product_id") int product_id
+            @Field("product_id") int product_id,
+            @Field("seller_id") int seller_id,
+            @Field("buyer_id") int buyer_id
     );
 
     @GET("chat/buying/{user_id}")

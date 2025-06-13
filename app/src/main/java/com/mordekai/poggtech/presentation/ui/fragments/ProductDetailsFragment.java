@@ -29,7 +29,6 @@ import com.mordekai.poggtech.utils.ProductLoader;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 import com.mordekai.poggtech.utils.SnackbarUtil;
 import com.mordekai.poggtech.utils.BottomNavVisibilityController;
-import com.mordekai.poggtech.utils.Utils;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -55,6 +54,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.mordekai.poggtech.presentation.viewmodel.MessageViewModel;
+import com.mordekai.poggtech.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -267,22 +267,8 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
         messageViewModel.loadChat(user.getUserId(), productId);
     }
 
-    private void verifyIfChatExist(RepositoryCallback<Chat> callback) {
-        messageManager.fetchChat(user.getUserId(), productId, new RepositoryCallback<Chat>() {
-            @Override
-            public void onSuccess(Chat chat) {
-                callback.onSuccess(chat);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                callback.onFailure(t);
-            }
-        });
-    }
-
     private void createNewChat() {
-        messageViewModel.createChat(productId);
+        messageViewModel.createChat(productId, product.getUser_id(), user.getUserId());
     }
 
     private void sendMessageToChat() {
@@ -291,9 +277,11 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
             messageViewModel.sendMessage(
                     user.getUserId(),
                     product.getUser_id(),
-                    chatProduct.getChat_id(),
+                    chatProduct.getChatId(),
                     text
             );
+
+            Utils.goToChat(this, chatProduct);
         }
     }
 
@@ -397,6 +385,37 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
         setRatingStars(starsContainer, product.getRating());
         setRatingStars(starsContainer2, product.getRating());
 
+        TextView descriptionText = view.findViewById(R.id.descriptionText);
+        descriptionText.setText(product.getDescription());
+
+        AppCompatImageView icUp = view.findViewById(R.id.icUp);
+
+        LinearLayout descriptionTitle = view.findViewById(R.id.descriptionTitle);
+        descriptionTitle.setOnClickListener(v -> {
+            if(descriptionText.isHapticFeedbackEnabled()) {
+                descriptionText.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
+            }
+
+            if (descriptionText.getVisibility() == View.GONE) {
+                descriptionText.setVisibility(View.VISIBLE);
+                descriptionText.setAlpha(0f);
+                descriptionText.animate().alpha(1f).setDuration(300).start();
+                icUp.setImageResource(R.drawable.ic_down);
+            } else {
+                descriptionText.animate().alpha(0f).setDuration(300).withEndAction(() -> {
+                    descriptionText.setVisibility(View.GONE);
+                }).start();
+                icUp.setImageResource(R.drawable.ic_up);
+            }
+        });
+
+        if(product.getSeller_type().equals("admin")) {
+            view.findViewById(R.id.containerSeller).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.containerReviewsAll).setVisibility(View.VISIBLE);
+        } else {
+            view.findViewById(R.id.containerReviewsAll).setVisibility(View.GONE);
+        }
+
         if (product.getReviewCount() == 0) {
             reviewCount.setVisibility(View.GONE);
             containerReviews.setVisibility(View.GONE);
@@ -406,10 +425,6 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
             containerReviews.setVisibility(View.VISIBLE);
             noReviews.setVisibility(View.GONE);
             reviewCount.setText(String.valueOf(product.getReviewCount()));
-        }
-
-        if(product.getSeller_type().equals("admin")) {
-            view.findViewById(R.id.containerSeller).setVisibility(View.VISIBLE);
         }
 
             // Verifica o dono do produto, para não deixar o próprio vendedor comprar o produto dele
@@ -470,6 +485,7 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
                 chatProduct = chat;
                 sendMessageToChat();
             } else {
+                Log.d("ProductDetailsFragment", "Chat nulo");
                 createNewChat();
             }
         });
@@ -481,6 +497,19 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
         messageViewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
             SnackbarUtil.showErrorSnackbar(getView(), error, getContext());
         });
+
+        messageViewModel.getCreatedChatId().observe(getViewLifecycleOwner(), result -> {
+            Log.d("ProductDetailsFragment", "Chat criado: " + result);
+
+            if (chatProduct == null) {
+                chatProduct = new Chat();
+                chatProduct.setUserId(product.getUser_id());
+            }
+
+            chatProduct.setChatId(result);
+            sendMessageToChat();
+        });
+
     }
 
     private void addToSaved(int productId) {

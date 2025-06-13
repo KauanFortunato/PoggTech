@@ -48,14 +48,15 @@ public class Utils {
         if (fragment == null || chat == null) return;
 
         Bundle bundle = new Bundle();
-        bundle.putInt("chat_with_id", chat.getChat_with());
-        bundle.putInt("chat_id", chat.getChat_id());
-        bundle.putString("chat_with_name", chat.getChat_with_name());
-        bundle.putInt("product_id", chat.getProduct_id());
-        bundle.putString("product_title", chat.getProduct_title());
-        bundle.putString("product_price", String.valueOf(chat.getProduct_price()));
-        bundle.putString("image_product", chat.getCover_product());
+        bundle.putInt("chat_with_id", chat.getChatWith());
+        bundle.putInt("chat_id", chat.getChatId());
+        bundle.putString("chat_with_name", chat.getChatWithName());
+        bundle.putInt("product_id", chat.getProductId());
+        bundle.putString("product_title", chat.getProductTitle());
+        bundle.putString("product_price", String.valueOf(chat.getProductPrice()));
+        bundle.putString("image_product", chat.getCoverProduct());
 
+        // TODO: Fazer com que a funcione a transicao do chat para o chat details e product para product details
         NavController navController = NavHostFragment.findNavController(fragment);
         navController.navigate(R.id.action_chatFragment_to_chatDetailsFragment, bundle);
     }

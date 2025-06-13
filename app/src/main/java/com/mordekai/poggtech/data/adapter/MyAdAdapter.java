@@ -1,14 +1,19 @@
 package com.mordekai.poggtech.data.adapter;
 
+import android.os.Bundle;
+import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mordekai.poggtech.R;
@@ -18,6 +23,7 @@ import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.ProductManager;
 import com.mordekai.poggtech.presentation.ui.bottomsheets.DeleteProductBottomSheet;
+import com.mordekai.poggtech.presentation.ui.bottomsheets.MoreActionsMyProduct;
 import com.mordekai.poggtech.utils.SnackbarUtil;
 import com.mordekai.poggtech.utils.Utils;
 
@@ -69,8 +75,8 @@ public class MyAdAdapter extends RecyclerView.Adapter<MyAdAdapter.ViewHolder> {
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView productImage, buttonEdit;
-        private TextView removeButton, productTitle, productType, productPrice;
+        private ImageView productImage, moreBtn;
+        private TextView productTitle, productType, productPrice;
         private TextView productViews, productReleaseDate, productFav, productLastUpdate;
         private View expandableLayout;
 
@@ -78,8 +84,7 @@ public class MyAdAdapter extends RecyclerView.Adapter<MyAdAdapter.ViewHolder> {
             super(itemView);
 
             productImage = itemView.findViewById(R.id.categoryIcon);
-            buttonEdit = itemView.findViewById(R.id.buttonEdit);
-            removeButton = itemView.findViewById(R.id.removeButton);
+            moreBtn = itemView.findViewById(R.id.moreBtn);
             productTitle = itemView.findViewById(R.id.productTitle);
             productType = itemView.findViewById(R.id.productType);
             productPrice = itemView.findViewById(R.id.productPrice);
@@ -88,7 +93,7 @@ public class MyAdAdapter extends RecyclerView.Adapter<MyAdAdapter.ViewHolder> {
             productViews = itemView.findViewById(R.id.productViews);
             productReleaseDate = itemView.findViewById(R.id.productReleaseDate);
             productFav = itemView.findViewById(R.id.productFav);
-            productLastUpdate = itemView.findViewById(R.id.productLastUpdate);
+            productLastUpdate = itemView.findViewById(R.id.productRating);
         }
 
         public void bind(Product product, boolean isExpanded) {
@@ -101,16 +106,13 @@ public class MyAdAdapter extends RecyclerView.Adapter<MyAdAdapter.ViewHolder> {
             productFav.setText(String.format("%d salvos", product.getSaved_count()));
             productLastUpdate.setText(product.getUpdated_at());
 
-            removeButton.setOnClickListener(v -> {
-                if(removeButton.isHapticFeedbackEnabled()) {
+            moreBtn.setOnClickListener(v -> {
+                if(moreBtn.isHapticFeedbackEnabled()) {
                     v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
                 }
-
                 int position = getAdapterPosition();
 
-                if (position != RecyclerView.NO_POSITION) {
-                    showDeleteConfirmation(product, position, v);
-                }
+                showMoreActions(product, position, v);
             });
 
             Utils.loadImageBasicAuth(productImage, product.getCover());
@@ -152,4 +154,47 @@ public class MyAdAdapter extends RecyclerView.Adapter<MyAdAdapter.ViewHolder> {
         });
         bottomSheet.show(fragmentManager, bottomSheet.getTag());
     }
+
+    private void openEditScreen(Product product, View view) {
+        Bundle args = new Bundle();
+        args.putSerializable("product", product);
+
+        NavController navController = Navigation.findNavController(view);
+        navController.navigate(R.id.action_myAdsFragment_to_newAdFragment, args);
+    }
+
+    private void markProductAsSold(Product product, View view) {
+        ProductManager productManager = new ProductManager(RetrofitClient.getRetrofitInstance().create(ApiProduct.class));
+        productManager.reduceQuantity(product.getProduct_id(), 1, new RepositoryCallback<String>() {
+
+            @Override
+            public void onSuccess(String result) {
+                Toast.makeText(view.getContext(), "Produto marcado como vendido", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Toast.makeText(view.getContext(), "Erro ao marcar como vendido", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void showMoreActions(Product product, int position, View view) {
+        MoreActionsMyProduct bottomSheet = new MoreActionsMyProduct(
+                () -> {
+                    // ação para editar
+                    openEditScreen(product, view);
+                },
+                () -> {
+                    // ação para deletar
+                    deleteProduct(product, position, view);
+                },
+                () -> {
+                    // ação para marcar como vendido
+                    markProductAsSold(product, view);
+                }
+        );
+        bottomSheet.show(fragmentManager, bottomSheet.getTag());
+    }
+
 }

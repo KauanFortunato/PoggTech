@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mordekai.poggtech.R;
@@ -65,16 +66,30 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     // ViewHolder para mensagens enviadas
     static class SentMessageViewHolder extends RecyclerView.ViewHolder {
         TextView tvMessageSent, tvTimeSent;
+        AppCompatImageView ivCheck;
 
         SentMessageViewHolder(View itemView) {
             super(itemView);
             tvMessageSent = itemView.findViewById(R.id.tvMessageSent);
             tvTimeSent = itemView.findViewById(R.id.tvTimeSent);
+            ivCheck = itemView.findViewById(R.id.ivCheck);
         }
 
         void bind(Message message) {
             tvMessageSent.setText(message.getMessage());
             tvTimeSent.setText(message.getTimestamp_format());
+
+            if (message.isPending()) {
+                ivCheck.setImageResource(R.drawable.ic_check);
+            } else {
+                ivCheck.setImageResource(R.drawable.ic_check_all);
+            }
+
+            if (message.getIs_read() == 1) {
+                ivCheck.setColorFilter(ivCheck.getContext().getResources().getColor(R.color.colorPrimary));
+            } else {
+                ivCheck.setColorFilter(ivCheck.getContext().getResources().getColor(R.color.textPrimary));
+            }
         }
     }
 

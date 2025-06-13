@@ -172,7 +172,7 @@ public class HomeFragment extends Fragment
 
     private void getContinueBuy() {
         new android.os.Handler().postDelayed(() -> {
-            productManager.getRecommendedProducts(user.getUserId(), new RepositoryCallback<List<Product>>() {
+            productManager.getContinueBuy(user.getUserId(), new RepositoryCallback<List<Product>>() {
                 @Override
                 public void onSuccess(List<Product> result) {
                     rvContinueBuySkeleton.setVisibility(View.GONE);
@@ -195,7 +195,7 @@ public class HomeFragment extends Fragment
                     }
                 }
             });
-        }, 400);
+        }, 200);
     }
 
     private void getForYou() {
@@ -449,7 +449,7 @@ public class HomeFragment extends Fragment
         fragment.setArguments(bundle);
 
         NavController navController = NavHostFragment.findNavController(this);
-        navController.navigate(R.id.categoryFragment, bundle);
+        navController.navigate(R.id.action_homeFragment_to_categoryFragment, bundle);
     }
 
     @Override

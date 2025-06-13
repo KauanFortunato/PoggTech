@@ -1,5 +1,6 @@
 package com.mordekai.poggtech.data.adapter;
 
+import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
+import com.mordekai.poggtech.data.model.ApiResponse;
 import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.CartManager;
+import com.mordekai.poggtech.utils.SnackbarUtil;
 import com.mordekai.poggtech.utils.Utils;
 
 import java.util.List;
@@ -71,6 +74,14 @@ public class SavedProductAdapter extends RecyclerView.Adapter<SavedProductAdapte
                 productClickListener.onProductClick(product);
             }
         });
+
+        holder.addToCart.setOnClickListener(view -> {
+            if (holder.addToCart.isHapticFeedbackEnabled()) {
+                view.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
+            }
+
+            addToCart(product.getProduct_id(), view, holder.getAdapterPosition());
+        });
     }
 
     @Override
@@ -106,12 +117,31 @@ public class SavedProductAdapter extends RecyclerView.Adapter<SavedProductAdapte
                 products.remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, products.size());
-                Toast.makeText(view.getContext(), "Removido dos favoritos", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(Throwable t) {
-                Toast.makeText(view.getContext(), "Erro ao remover dos favoritos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), "Erro ao remover dos salvos", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void addToCart(int productId, View view, int position) {
+        CartManager cartManager = new CartManager(RetrofitClient.getRetrofitInstance().create(ApiProduct.class));
+        cartManager.addToCart(productId, userId, 1, new RepositoryCallback<ApiResponse<Void>>() {
+            @Override
+            public void onSuccess(ApiResponse<Void> result) {
+                if (result.isSuccess()) {
+                    removeFromFavorites(productId, view, position);
+                    Toast.makeText(view.getContext(), "Produto adicionado ao carrinho", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(view.getContext(), "Erro ao adicionar ao carrinho", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("ProductDetailsFragment", "Erro ao adicionar aos salvos", t);
             }
         });
     }

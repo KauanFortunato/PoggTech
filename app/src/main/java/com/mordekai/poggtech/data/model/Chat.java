@@ -1,166 +1,93 @@
 package com.mordekai.poggtech.data.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Chat {
-    private int owner_id;
-    private int chat_id;
-    private int id_message;
-    private int user_id;
-    private int chat_with;
-    private String chat_with_name;
-    private int product_id;
-    private String product_title;
-    private Float product_price;
-    private String last_message;
-    private String cover_product;
-    private String last_message_time;
-    private String last_message_time_format;
-    private int unread_count;
 
-    // Construtor vazio
-    public Chat() {}
+    @SerializedName("owner_id")
+    private int ownerId;
 
-    // Construtor com parâmetros
+    @SerializedName("chat_id")
+    private int chatId;
 
-    public Chat(int chat_id, int product_id) {
-        this.chat_id = chat_id;
-        this.product_id = product_id;
-    }
+    @SerializedName("id_message")
+    private int idMessage;
 
-    public Chat(int id_message, int user_id, int chat_with, String chat_with_name,
-                int product_id, String product_title, String last_message, String last_message_time,
-                String last_message_time_format) {
-        this.id_message = id_message;
-        this.user_id = user_id;
-        this.chat_with = chat_with;
-        this.chat_with_name = chat_with_name;
-        this.product_id = product_id;
-        this.product_title = product_title;
-        this.last_message = last_message;
-        this.last_message_time = last_message_time;
-        this.last_message_time_format = last_message_time_format;
-    }
+    @SerializedName("user_id")
+    private int userId;
 
-    // Getters e Setters
+    @SerializedName("chat_with")
+    private int chatWith;
 
-    public int getChat_id() {
-        return chat_id;
-    }
+    @SerializedName("chat_with_name")
+    private String chatWithName;
 
-    public void setChat_id(int chat_id) {
-        this.chat_id = chat_id;
-    }
+    @SerializedName("product_id")
+    private int productId;
 
-    public int getId_message() {
-        return id_message;
-    }
+    @SerializedName("product_title")
+    private String productTitle;
 
-    public void setId_message(int id_message) {
-        this.id_message = id_message;
-    }
+    @SerializedName("product_price")
+    private Float productPrice;
 
-    public int getowner_id() {
-        return owner_id;
-    }
+    @SerializedName("last_message")
+    private String lastMessage;
 
-    public void setowner_id(int owner_id) {
-        this.owner_id = owner_id;
-    }
+    @SerializedName("cover_product")
+    private String coverProduct;
 
-    public int getUser_id() {
-        return user_id;
-    }
+    @SerializedName("last_message_time")
+    private String lastMessageTime;
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
-    }
+    @SerializedName("last_message_time_format")
+    private String lastMessageTimeFormat;
 
-    public int getChat_with() {
-        return chat_with;
-    }
+    @SerializedName("unread_count")
+    private int unreadCount;
 
-    public void setChat_with(int chat_with) {
-        this.chat_with = chat_with;
-    }
+    // Getters and Setters
 
-    public String getChat_with_name() {
-        return chat_with_name;
-    }
+    public int getOwnerId() { return ownerId; }
+    public void setOwnerId(int ownerId) { this.ownerId = ownerId; }
 
-    public void setChat_with_name(String chat_with_name) {
-        this.chat_with_name = chat_with_name;
-    }
+    public int getChatId() { return chatId; }
+    public void setChatId(int chatId) { this.chatId = chatId; }
 
-    public int getProduct_id() {
-        return product_id;
-    }
+    public int getIdMessage() { return idMessage; }
+    public void setIdMessage(int idMessage) { this.idMessage = idMessage; }
 
-    public void setProduct_id(int product_id) {
-        this.product_id = product_id;
-    }
+    public int getUserId() { return userId; }
+    public void setUserId(int userId) { this.userId = userId; }
 
-    public String getProduct_title() {
-        return product_title;
-    }
+    public int getChatWith() { return chatWith; }
+    public void setChatWith(int chatWith) { this.chatWith = chatWith; }
 
-    public void setProduct_title(String product_title) {
-        this.product_title = product_title;
-    }
+    public String getChatWithName() { return chatWithName; }
+    public void setChatWithName(String chatWithName) { this.chatWithName = chatWithName; }
 
-    public Float getProduct_price() {
-        return product_price;
-    }
 
-    public void setProduct_price(Float product_price) {
-        this.product_price = product_price;
-    }
+    public int getProductId() { return productId; }
+    public void setProductId(int productId) { this.productId = productId; }
 
-    public String getLast_message() {
-        return last_message;
-    }
+    public String getProductTitle() { return productTitle; }
+    public void setProductTitle(String productTitle) { this.productTitle = productTitle; }
 
-    public void setLast_message(String last_message) {
-        this.last_message = last_message;
-    }
+    public Float getProductPrice() { return productPrice; }
+    public void setProductPrice(Float productPrice) { this.productPrice = productPrice; }
 
-    public String getCover_product() {
-        return cover_product;
-    }
+    public String getLastMessage() { return lastMessage; }
+    public void setLastMessage(String lastMessage) { this.lastMessage = lastMessage; }
 
-    public String getLast_message_time() {
-        return last_message_time;
-    }
+    public String getCoverProduct() { return coverProduct; }
+    public void setCoverProduct(String coverProduct) { this.coverProduct = coverProduct; }
 
-    public void setLast_message_time(String last_message_time) {
-        this.last_message_time = last_message_time;
-    }
+    public String getLastMessageTime() { return lastMessageTime; }
+    public void setLastMessageTime(String lastMessageTime) { this.lastMessageTime = lastMessageTime; }
 
-    public int getUnread_count() { return unread_count; }
+    public String getLastMessageTimeFormat() { return lastMessageTimeFormat; }
+    public void setLastMessageTimeFormat(String lastMessageTimeFormat) { this.lastMessageTimeFormat = lastMessageTimeFormat; }
 
-    public void setUnread_count(int unread_count) { this.unread_count = unread_count; }
-
-    public String getLast_message_time_format() {
-        return last_message_time_format;
-    }
-
-    public void setLast_message_time_format(String last_message_time_format) {
-        this.last_message_time_format = last_message_time_format;
-    }
-
-    // Método toString() para facilitar o debug
-    @Override
-    public String toString() {
-        return "Chat{" +
-                "idMessage=" + id_message +
-                ", ownerId=" + owner_id +
-                ", chatId=" + chat_id +
-                ", userId=" + user_id +
-                ", chatWith=" + chat_with +
-                ", chatWithName='" + chat_with_name + '\'' +
-                ", productId=" + product_id +
-                ", productTitle='" + product_title + '\'' +
-                ", lastMessage='" + last_message + '\'' +
-                ", lastMessageTime='" + last_message_time + '\'' +
-                ", lastMessageTimeFormat='" + last_message_time_format + '\'' +
-                '}';
-    }
+    public int getUnreadCount() { return unreadCount; }
+    public void setUnreadCount(int unreadCount) { this.unreadCount = unreadCount; }
 }
