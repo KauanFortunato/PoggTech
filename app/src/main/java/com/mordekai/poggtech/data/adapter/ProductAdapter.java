@@ -2,7 +2,6 @@ package com.mordekai.poggtech.data.adapter;
 
 import android.annotation.SuppressLint;
 import android.os.Build;
-import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -220,7 +219,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             super(itemView);
 
             // Inicializa os componentes do layout
-            productImage = itemView.findViewById(R.id.categoryIcon);
+            productImage = itemView.findViewById(R.id.productImage);
             saveButton = itemView.findViewById(R.id.saveButton);
             productTitle = itemView.findViewById(R.id.productTitle);
             productType = itemView.findViewById(R.id.productType);

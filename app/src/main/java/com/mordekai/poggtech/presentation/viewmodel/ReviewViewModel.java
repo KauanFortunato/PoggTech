@@ -1,6 +1,10 @@
 package com.mordekai.poggtech.presentation.viewmodel;
 
+import static androidx.lifecycle.AndroidViewModel_androidKt.getApplication;
+
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -46,11 +50,12 @@ public class ReviewViewModel extends ViewModel {
         });
     }
 
-    public void createReview(Review review) {
+    public void createReview(Review review, Context context) {
         _isLoading.setValue(true);
         reviewManager.createReview(review, new RepositoryCallback<String>() {
             @Override
             public void onSuccess(String data) {
+                Toast.makeText(context, "Review criada com sucesso", Toast.LENGTH_SHORT).show();
                 Log.d("API_RESPONSE", "Review created: " + data);
             }
 

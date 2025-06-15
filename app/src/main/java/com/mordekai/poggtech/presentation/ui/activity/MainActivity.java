@@ -139,8 +139,16 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
         // Verifica conexão com XAMPP
         NetworkUtil.isConnectedXampp(isConnected -> {
             boolean isOffline = !isConnected || !NetworkUtil.isConnected(getApplicationContext());
+
+            NavController currentNav = getCurrentNavController();
+            int currentDest = currentNav.getCurrentDestination() != null
+                    ? currentNav.getCurrentDestination().getId()
+                    : -1;
+
             if (isOffline) {
-                navController.navigate(R.id.offlineFragment);
+                if (currentDest != R.id.offlineFragment) {
+                    currentNav.navigate(R.id.offlineFragment);
+                }
                 hideHeader();
                 hideBottomNav();
             } else {
@@ -148,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
                 showHeader();
             }
         });
+
 
         MessageNotifier.setListener(this::showChatBadge);
     }

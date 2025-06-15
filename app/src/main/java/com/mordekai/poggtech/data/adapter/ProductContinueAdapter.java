@@ -76,7 +76,7 @@ public class ProductContinueAdapter extends RecyclerView.Adapter<ProductContinue
             super(itemView);
 
             // Inicializa os componentes do layout
-            productImage = itemView.findViewById(R.id.categoryIcon);
+            productImage = itemView.findViewById(R.id.productImage);
         }
     }
 }

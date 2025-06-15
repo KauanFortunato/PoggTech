@@ -35,7 +35,7 @@
 
             <!-- Imagem do Produto -->
             <ImageView
-                android:id="@+id/categoryIcon"
+                android:id="@+id/productImage"
                 android:layout_width="105dp"
                 android:layout_height="105dp"
                 android:scaleType="centerCrop"

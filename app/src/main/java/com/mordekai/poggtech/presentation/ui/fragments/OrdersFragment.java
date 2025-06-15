@@ -11,44 +11,31 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.adapter.OrdersAdapter;
-import com.mordekai.poggtech.data.adapter.ProductAdapter;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.Order;
-import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.model.User;
-import com.mordekai.poggtech.data.remote.ApiInteraction;
 import com.mordekai.poggtech.data.remote.ApiOrder;
-import com.mordekai.poggtech.data.remote.ApiReview;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
-import com.mordekai.poggtech.domain.InteractionManager;
 import com.mordekai.poggtech.domain.OrderManager;
-import com.mordekai.poggtech.domain.ReviewManager;
 import com.mordekai.poggtech.presentation.ui.activity.MainActivity;
-import com.mordekai.poggtech.presentation.viewmodel.ReviewViewModel;
 import com.mordekai.poggtech.utils.BottomNavVisibilityController;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrdersFragment extends Fragment implements ProductAdapter.OnProductClickListener,
-        ProductAdapter.OnSavedChangedListener {
+public class OrdersFragment extends Fragment {
 
     private List<Order> orders = new ArrayList<>();
     private OrdersAdapter ordersAdapter;
     private OrderManager orderManager;
     private User user;
-    private List<Integer> favoriteIds = new ArrayList<>();
-    private ProductAdapter forYouAdapter;
-    private InteractionManager interactionManager;
     private AppCompatImageView btnBack;
 
 
@@ -67,23 +54,12 @@ public class OrdersFragment extends Fragment implements ProductAdapter.OnProduct
 
         startComponents(view);
 
-        ordersAdapter = new OrdersAdapter(orders, getChildFragmentManager());
-        RecyclerView rvOrders = view.findViewById(R.id.rvOrders);
+        ordersAdapter = new OrdersAdapter(orders, this::orderClicked);
+
+        RecyclerView rvOrders = view.findViewById(R.id.rvOrdersDetails);
         rvOrders.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         rvOrders.setNestedScrollingEnabled(true);
         rvOrders.setAdapter(ordersAdapter);
-
-        interactionManager = new InteractionManager(RetrofitClient.getRetrofitInstance().create(ApiInteraction.class));
-
-
-        ReviewManager rvMgr = new ReviewManager(RetrofitClient.getRetrofitInstance().create(ApiReview.class));
-        ReviewViewModel reviewViewModel = new ViewModelProvider(this, new ViewModelProvider.Factory() {
-            @NonNull
-            @Override
-            public <T extends androidx.lifecycle.ViewModel> T create(@NonNull Class<T> modelClass) {
-                return (T) new ReviewViewModel(rvMgr);
-            }
-        }).get(ReviewViewModel.class);
 
         getOrders(view);
         return view;
@@ -128,30 +104,12 @@ public class OrdersFragment extends Fragment implements ProductAdapter.OnProduct
         });
     }
 
-    @Override
-    public void onProductClick(Product product) {
+    private void orderClicked(Order order) {
         Bundle bundle = new Bundle();
-        bundle.putInt("productId", product.getProduct_id());
-
-        interactionManager.userInteraction(product.getProduct_id(), user.getUserId(), "view", new RepositoryCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                Log.d("API_RESPONSE", "Interaction result: " + result);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                Log.e("API_RESPONSE", "Error in userInteraction", t);
-            }
-        });
+        bundle.putSerializable("order", order);
 
         NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
-        navController.navigate(R.id.productDetailsFragment, bundle);
+        navController.navigate(R.id.action_ordersFragment_to_orderDetailsFragment, bundle);
     }
 
-    @Override
-    public void onSaveChanged() {
-        forYouAdapter.setSavedIds(favoriteIds);
-        forYouAdapter.notifyDataSetChanged();
-    }
 }

@@ -143,15 +143,42 @@
             android:name="product"
             app:argType="com.mordekai.poggtech.data.model.Product"
             app:nullable="true" />
-        
+
     </fragment>
     <fragment
         android:id="@+id/ordersFragment"
         android:name="com.mordekai.poggtech.presentation.ui.fragments.OrdersFragment"
-        android:label="OrdersFragment" />
+        android:label="OrdersFragment" >
+        <action
+            android:id="@+id/action_ordersFragment_to_orderDetailsFragment"
+            app:destination="@id/orderDetailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
     <fragment
         android:id="@+id/productManageFragment"
         android:name="com.mordekai.poggtech.presentation.ui.fragments.ProductManageFragment"
         android:label="fragment_manage_product"
         tools:layout="@layout/fragment_manage_product" />
+    <fragment
+        android:id="@+id/orderDetailsFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.OrderDetailsFragment"
+        android:label="OrderDetailsFragment">
+
+        <argument
+            android:name="order"
+            app:argType="com.mordekai.poggtech.data.model.Order"
+            app:nullable="false" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/offlineFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.OfflineFragment"
+        android:label="OfflineFragment" >
+        <action
+            android:id="@+id/action_offlineFragment5_to_accountFragment"
+            app:destination="@id/accountFragment" />
+    </fragment>
 </navigation>

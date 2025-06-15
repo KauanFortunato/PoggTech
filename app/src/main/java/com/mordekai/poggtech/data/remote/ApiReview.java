@@ -20,7 +20,7 @@ public interface ApiReview {
     );
 
     @POST("review/")
-    Call<ApiResponse<Review>> createReview(
+    Call<ApiResponse<Void>> createReview(
             @Body Review review
     );
 }

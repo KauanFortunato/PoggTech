@@ -29,7 +29,7 @@
             app:cardCornerRadius="@dimen/border_radius_2">
 
             <ImageView
-                android:id="@+id/categoryIcon"
+                android:id="@+id/productImage"
                 android:layout_width="match_parent"
                 android:layout_height="110dp"
                 android:scaleType="centerCrop"

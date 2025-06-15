@@ -1,55 +1,35 @@
 package com.mordekai.poggtech.data.adapter;
 
-import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.flexbox.FlexboxLayout;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.model.Order;
-import com.mordekai.poggtech.data.model.Product;
-import com.mordekai.poggtech.data.model.Review;
-import com.mordekai.poggtech.data.remote.ApiReview;
-import com.mordekai.poggtech.data.remote.RetrofitClient;
-import com.mordekai.poggtech.domain.ReviewManager;
-import com.mordekai.poggtech.presentation.ui.bottomsheets.LeaveReviewBottomSheet;
-import com.mordekai.poggtech.presentation.viewmodel.ReviewViewModel;
 
-import java.security.PrivateKey;
 import java.util.List;
 
 public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder> {
     private List<Order> orders;
-    private FragmentManager fragmentManager;
 
-    public interface OnReviewSentListener {
-        void onReviewSent(int orderId, int rating, String reviewText);
+    private final OnOrderClicked onOrderClicked;
 
+    public interface OnOrderClicked {
+        void onProductClick(Order order);
     }
 
-    private OnReviewSentListener reviewSentListener;
-
-    public void setOnReviewSentListener(OnReviewSentListener listener) {
-        this.reviewSentListener = listener;
-    }
-
-
-    public OrdersAdapter(List<Order> orders, FragmentManager fragmentManager) {
+    public OrdersAdapter(List<Order> orders, OnOrderClicked onOrderClicked) {
         this.orders = orders;
-        this.fragmentManager = fragmentManager;
+        this.onOrderClicked = onOrderClicked;
     }
 
     @NonNull
@@ -124,6 +104,13 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 
                 flexImages.addView(chipView);
             }
+
+            // Quando o produto for clicado
+            itemView.setOnClickListener(v -> {
+                if (onOrderClicked != null) {
+                    onOrderClicked.onProductClick(order);
+                }
+            });
         }
     }
 
@@ -136,16 +123,6 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
     @Override
     public int getItemCount() {
         return orders.size();
-    }
-
-    private void showDialogLeaveReview(Order order) {
-        LeaveReviewBottomSheet leaveReviewBottomSheet = new LeaveReviewBottomSheet();
-        leaveReviewBottomSheet.setOnReviewSubmittedListener((rating, reviewText) -> {
-            if (reviewSentListener != null) {
-                reviewSentListener.onReviewSent(order.getId(), rating, reviewText);
-            }
-        });
-        leaveReviewBottomSheet.show(fragmentManager, "LeaveReviewBottomSheet");
     }
 
 }

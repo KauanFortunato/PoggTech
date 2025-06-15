@@ -18,4 +18,12 @@
         android:name="com.mordekai.poggtech.presentation.ui.fragments.ChatDetailsFragment"
         android:label="fragment_chat_detail"
         tools:layout="@layout/fragment_chat_detail" />
+    <fragment
+        android:id="@+id/offlineFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.OfflineFragment"
+        android:label="OfflineFragment" >
+        <action
+            android:id="@+id/action_offlineFragment4_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
 </navigation>

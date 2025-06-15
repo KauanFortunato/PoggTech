@@ -62,6 +62,14 @@
             android:id="@+id/action_categoryFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/offlineFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.OfflineFragment"
+        android:label="OfflineFragment" >
+        <action
+            android:id="@+id/action_offlineFragment_to_productManageFragment"
+            app:destination="@id/productManageFragment" />
+    </fragment>
 
 
 </navigation>

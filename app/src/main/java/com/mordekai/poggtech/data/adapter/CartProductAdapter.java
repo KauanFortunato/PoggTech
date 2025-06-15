@@ -68,7 +68,7 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
             super(itemView);
 
             // Inicializa os componentes do layout
-            productImage = itemView.findViewById(R.id.categoryIcon);
+            productImage = itemView.findViewById(R.id.productImage);
             productTitle = itemView.findViewById(R.id.productTitle);
             productType = itemView.findViewById(R.id.productType);
             productPrice = itemView.findViewById(R.id.productPrice);

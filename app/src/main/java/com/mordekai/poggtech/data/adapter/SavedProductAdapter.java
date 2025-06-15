@@ -20,7 +20,6 @@ import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.CartManager;
-import com.mordekai.poggtech.utils.SnackbarUtil;
 import com.mordekai.poggtech.utils.Utils;
 
 import java.util.List;
@@ -100,7 +99,7 @@ public class SavedProductAdapter extends RecyclerView.Adapter<SavedProductAdapte
             super(itemView);
 
             // Inicializa os componentes do layout
-            productImage = itemView.findViewById(R.id.categoryIcon);
+            productImage = itemView.findViewById(R.id.productImage);
             productTitle = itemView.findViewById(R.id.productTitle);
             productType = itemView.findViewById(R.id.productType);
             productPrice = itemView.findViewById(R.id.productPrice);

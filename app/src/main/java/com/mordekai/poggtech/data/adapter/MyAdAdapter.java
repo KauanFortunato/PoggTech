@@ -1,7 +1,6 @@
 package com.mordekai.poggtech.data.adapter;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +21,6 @@ import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.ProductManager;
-import com.mordekai.poggtech.presentation.ui.bottomsheets.DeleteProductBottomSheet;
 import com.mordekai.poggtech.presentation.ui.bottomsheets.MoreActionsMyProduct;
 import com.mordekai.poggtech.utils.SnackbarUtil;
 import com.mordekai.poggtech.utils.Utils;
@@ -83,7 +81,7 @@ public class MyAdAdapter extends RecyclerView.Adapter<MyAdAdapter.ViewHolder> {
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            productImage = itemView.findViewById(R.id.categoryIcon);
+            productImage = itemView.findViewById(R.id.productImage);
             moreBtn = itemView.findViewById(R.id.moreBtn);
             productTitle = itemView.findViewById(R.id.productTitle);
             productType = itemView.findViewById(R.id.productType);

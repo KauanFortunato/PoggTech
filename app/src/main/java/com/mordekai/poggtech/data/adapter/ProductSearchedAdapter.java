@@ -1,7 +1,6 @@
 package com.mordekai.poggtech.data.adapter;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +22,6 @@ import com.mordekai.poggtech.data.model.User;
 import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.CartManager;
-import com.mordekai.poggtech.utils.SnackbarUtil;
 import com.mordekai.poggtech.utils.Utils;
 
 import java.util.ArrayList;
@@ -156,7 +154,7 @@ public class ProductSearchedAdapter extends RecyclerView.Adapter<ProductSearched
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            productImage = itemView.findViewById(R.id.categoryIcon);
+            productImage = itemView.findViewById(R.id.productImage);
             favoriteButton = itemView.findViewById(R.id.saveButton);
             sellerAdmin = itemView.findViewById(R.id.sellerAdmin);
             productTitle = itemView.findViewById(R.id.productTitle);

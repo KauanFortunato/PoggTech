@@ -91,6 +91,14 @@
         android:id="@+id/productManageFragment"
         android:name="com.mordekai.poggtech.presentation.ui.fragments.ProductManageFragment"
         android:label="fragment_manage_product" />
+    <fragment
+        android:id="@+id/offlineFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.OfflineFragment"
+        android:label="OfflineFragment" >
+        <action
+            android:id="@+id/action_offlineFragment3_to_home"
+            app:destination="@id/home" />
+    </fragment>
 
 
 </navigation>

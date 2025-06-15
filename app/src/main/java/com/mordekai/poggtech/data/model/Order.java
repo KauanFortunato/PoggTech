@@ -1,8 +1,9 @@
 package com.mordekai.poggtech.data.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Order {
+public class Order implements Serializable {
     private int id;
     private double total_amount;
     private String status;
@@ -10,6 +11,9 @@ public class Order {
     private String created_at_format;
     private List<String> images;
     private int total_products;
+
+    public Order() {
+    }
 
     public Order(int id, double total_amount, String status, String created_at, List<String> images) {
         this.id = id;
@@ -22,6 +26,7 @@ public class Order {
 
     public int getId() { return id; }
 
+    public void setId(int id) { this.id = id; }
     public double getTotal_amount() { return total_amount; }
 
     public String getStatus() { return status; }

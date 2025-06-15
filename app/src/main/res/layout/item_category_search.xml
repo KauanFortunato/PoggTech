@@ -11,7 +11,7 @@
     android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/categoryIcon"
+        android:id="@+id/productImage"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:padding="5dp"
