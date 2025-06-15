@@ -8,6 +8,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/containerFilters"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_divisor_bottom"
@@ -67,12 +68,6 @@
                     android:paddingHorizontal="10dp">
 
                     <androidx.appcompat.widget.AppCompatButton
-                        style="@style/itemFilterButton"
-                        android:fontFamily="@font/roboto_bold"
-                        android:text="Filtros"
-                        android:textColor="@color/colorPrimaryVariant" />
-
-                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/filterHigh"
                         style="@style/itemFilterButton"
                         android:text="Mais Caro" />
@@ -82,13 +77,6 @@
                         style="@style/itemFilterButton"
                         android:text="Mais Barato" />
 
-                    <androidx.appcompat.widget.AppCompatButton
-                        style="@style/itemFilterButton"
-                        android:text="Mais de 200 EUR" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        style="@style/itemFilterButton"
-                        android:text="200 - 500 EUR" />
                 </LinearLayout>
 
             </HorizontalScrollView>
@@ -100,17 +88,62 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="vertical"
         android:paddingVertical="2dp">
+
+        <LinearLayout
+            android:id="@+id/notFoundContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:paddingHorizontal="10dp"
+            android:layout_marginVertical="@dimen/spacing_xhuge"
+            android:background="@color/backgroundColor"
+            android:gravity="center">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginBottom="40dp"
+                android:src="@drawable/ic_empty_search"/>
+
+            <TextView
+                android:id="@+id/textNotFound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/roboto_black"
+                android:textSize="@dimen/text_large"
+                android:letterSpacing="0.05"
+                android:textAlignment="center"
+                android:textColor="@color/textPrimary"
+                android:text="Não foi possivel encontrar '2DS Azul/Preto'"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="10dp"
+                android:textAlignment="center"
+                android:fontFamily="@font/roboto"
+                android:textSize="@dimen/text_normal"
+                android:textColor="@color/textTertiary"
+                android:text="Desculpe-nos tente procurar por outros produtos... Obrigado."/>
+
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/searchedProducts"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:layoutAnimation="@anim/layout_animation_fade_slide_up"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_product_searched" />
+
     </LinearLayout>
 
 </LinearLayout>

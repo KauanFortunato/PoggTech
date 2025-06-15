@@ -6,7 +6,9 @@ import com.mordekai.poggtech.data.model.Review;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface ApiReview {
@@ -15,5 +17,10 @@ public interface ApiReview {
     Call<ApiResponse<List<Review>>> getReviews(
             @Path("product_id") int product_id,
             @Path("quantity") int quantity
+    );
+
+    @POST("review/")
+    Call<ApiResponse<Review>> createReview(
+            @Body Review review
     );
 }

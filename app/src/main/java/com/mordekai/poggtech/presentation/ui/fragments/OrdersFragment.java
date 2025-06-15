@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -28,10 +29,13 @@ import com.mordekai.poggtech.data.model.User;
 import com.mordekai.poggtech.data.remote.ApiInteraction;
 import com.mordekai.poggtech.data.remote.ApiOrder;
 import com.mordekai.poggtech.data.remote.ApiProduct;
+import com.mordekai.poggtech.data.remote.ApiReview;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.InteractionManager;
 import com.mordekai.poggtech.domain.OrderManager;
 import com.mordekai.poggtech.domain.ProductManager;
+import com.mordekai.poggtech.domain.ReviewManager;
+import com.mordekai.poggtech.presentation.viewmodel.ReviewViewModel;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
 import java.util.ArrayList;
@@ -48,6 +52,7 @@ public class OrdersFragment extends Fragment implements ProductAdapter.OnProduct
     private SharedPrefHelper sharedPrefHelper;
     private RecyclerView rvOrders, rvForYou;
     private ProductManager productManager;
+    private ReviewViewModel reviewViewModel;
     private List<Integer> favoriteIds = new ArrayList<>();
     private ProductAdapter forYouAdapter;
     private InteractionManager interactionManager;
@@ -67,7 +72,7 @@ public class OrdersFragment extends Fragment implements ProductAdapter.OnProduct
 
         startComponents(view);
 
-        ordersAdapter = new OrdersAdapter(orders);
+        ordersAdapter = new OrdersAdapter(orders, getChildFragmentManager());
         rvOrders = view.findViewById(R.id.rvOrders);
         rvOrders.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         rvOrders.setNestedScrollingEnabled(true);
@@ -82,6 +87,19 @@ public class OrdersFragment extends Fragment implements ProductAdapter.OnProduct
 
         forYouAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), R.layout.item_product_match_parent, this, this);
         rvForYou.setAdapter(forYouAdapter);
+
+        ReviewManager rvMgr = new ReviewManager(RetrofitClient.getRetrofitInstance().create(ApiReview.class));
+        reviewViewModel = new ViewModelProvider(this, new ViewModelProvider.Factory() {
+            @NonNull
+            @Override
+            public <T extends androidx.lifecycle.ViewModel> T create(@NonNull Class<T> modelClass) {
+                return (T) new ReviewViewModel(rvMgr);
+            }
+        }).get(ReviewViewModel.class);
+
+//        ordersAdapter.setOnReviewSentListener((orderId, rating, reviewText) -> {
+//            reviewViewModel.createReview(orderId, rating, reviewText);
+//        });
 
         getOrders();
         getForYou();

@@ -2,7 +2,6 @@ package com.mordekai.poggtech.presentation.ui.fragments;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -51,13 +50,13 @@ public class SettingsAppearanceFragment extends Fragment {
     }
 
     private void setupViews(View view) {
-        btnThemeLight = view.findViewById(R.id.button_theme_light);
-        btnThemeDark = view.findViewById(R.id.button_theme_dark);
-        btnThemeSystem = view.findViewById(R.id.button_theme_system);
+        btnThemeLight = view.findViewById(R.id.button_portuguese);
+        btnThemeDark = view.findViewById(R.id.button_english);
+        btnThemeSystem = view.findViewById(R.id.button_system);
 
-        iconThemeLight = view.findViewById(R.id.icon_theme_light);
-        iconThemeDark = view.findViewById(R.id.icon_theme_dark);
-        iconThemeSystem = view.findViewById(R.id.icon_theme_system);
+        iconThemeLight = view.findViewById(R.id.icon_portuguese);
+        iconThemeDark = view.findViewById(R.id.icon_english);
+        iconThemeSystem = view.findViewById(R.id.icon_system);
 
         view.findViewById(R.id.btn_back).setOnClickListener(v -> {
             if (v.isHapticFeedbackEnabled()) {

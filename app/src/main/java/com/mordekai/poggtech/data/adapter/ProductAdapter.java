@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.ApiResponse;
@@ -123,8 +124,30 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
         });
 
+        if(product.getDiscountPercentage() != null && product.getDiscountPercentage() > 0) {
+            holder.discount.setVisibility(View.VISIBLE);
+            holder.discount.setText(String.format("-%d%%",
+                    product.getDiscountPercentage() != null ? product.getDiscountPercentage().intValue() : 0));
+        } else {
+            holder.discount.setVisibility(View.GONE);
+        }
 
-        Utils.loadImageBasicAuth(holder.productImage, product.getCover());
+        if(!product.getStatus().equals("available")) {
+            holder.discount.setVisibility(View.GONE);
+            holder.saveButton.setVisibility(View.GONE);
+            holder.itemView.setAlpha(0.5f);
+            holder.textUnavailable.setVisibility(View.VISIBLE);
+
+            Glide.with(holder.itemView.getContext())
+                    .load(R.drawable.placeholder_image_error)
+                    .placeholder(R.drawable.exemplo_ft3)
+                    .error(R.drawable.placeholder_image_error)
+                    .into(holder.productImage);
+        } else {
+            Utils.loadImageBasicAuth(holder.productImage, product.getCover());
+        }
+
+        holder.rating.setText(String.format("%.1f", product.getRating()));
 
         // Quando o produto for clicado
         holder.itemView.setOnClickListener(view -> {
@@ -189,6 +212,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         TextView productPrice;
         TextView sellerAdmin;
         TextView seller;
+        TextView discount;
+        TextView textUnavailable;
+        TextView rating;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -201,6 +227,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             productPrice = itemView.findViewById(R.id.productPrice);
             sellerAdmin = itemView.findViewById(R.id.sellerAdmin);
             seller = itemView.findViewById(R.id.seller);
+            discount = itemView.findViewById(R.id.discount);
+            textUnavailable = itemView.findViewById(R.id.textUnavailable);
+            rating = itemView.findViewById(R.id.rating);
         }
     }
 }

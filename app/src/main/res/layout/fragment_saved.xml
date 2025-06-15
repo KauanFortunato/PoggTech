@@ -21,18 +21,6 @@
             android:layout_gravity="center"
             android:visibility="gone"/>
 
-        <TextView
-            android:id="@+id/textNoSaveProducts"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/noSavedProducts"
-            android:textAlignment="center"
-            android:fontFamily="@font/roboto_medium"
-            android:textSize="16sp"
-            android:textColor="@color/textTertiary"
-            android:visibility="gone"/>
-
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/shimmerLayout"
             android:layout_width="match_parent"
@@ -57,20 +45,39 @@
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
-            android:layoutAnimation="@anim/layout_animation_fade_slide_up"
             android:layout_height="wrap_content" >
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvItemsSaved"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layoutAnimation="@anim/layout_animation_fade_slide_up"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:nestedScrollingEnabled="false" />
+                    android:orientation="vertical">
+
+                    <FrameLayout
+                        android:id="@+id/emptySaved"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:paddingVertical="80dp"
+                        android:visibility="gone">
+
+                        <include layout="@layout/empty_saved" />
+
+                    </FrameLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvItemsSaved"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layoutAnimation="@anim/layout_animation_fade_slide_up"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        android:nestedScrollingEnabled="false" />
+
+                </LinearLayout>
 
             </androidx.core.widget.NestedScrollView>
 

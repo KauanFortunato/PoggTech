@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -101,7 +102,7 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
         searchedProducts.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         searchedProducts.setAdapter(productSearchedAdapter);
 
-        getSearchedProducts(searchProd.getText().toString());
+        getSearchedProducts(searchProd.getText().toString(), view);
 
         return view;
     }
@@ -137,12 +138,22 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
         });
     }
 
-    private void getSearchedProducts(String search) {
+    private void getSearchedProducts(String search, View view) {
         productManager.searchProducts(search, new RepositoryCallback<List<Product>>() {
 
             @Override
             public void onSuccess(List<Product> result) {
                 allProducts = result;
+                if (result.isEmpty()) {
+                    Log.d("API_RESPONSE", "Nenhum produto encontrado: " + search);
+                    view.findViewById(R.id.notFoundContainer).setVisibility(View.VISIBLE);
+                    view.findViewById(R.id.containerFilters).setVisibility(View.GONE);
+                    searchedProducts.setVisibility(View.GONE);
+
+                    TextView textNotFound = view.findViewById(R.id.textNotFound);
+
+                    textNotFound.setText("Não foi possivel encontrar '" + search + "'");
+                }
                 applyCombinedFitlers();
             }
 

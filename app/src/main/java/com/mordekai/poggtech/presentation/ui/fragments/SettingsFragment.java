@@ -27,6 +27,7 @@ import com.mordekai.poggtech.data.repository.MySqlUserRepository;
 import com.mordekai.poggtech.domain.FCMManager;
 import com.mordekai.poggtech.domain.UserManager;
 import com.mordekai.poggtech.presentation.ui.activity.LoginActivity;
+import com.mordekai.poggtech.presentation.ui.bottomsheets.ChangeLanguageBottomSheet;
 import com.mordekai.poggtech.presentation.ui.bottomsheets.ConfirmBottomSheet;
 import com.mordekai.poggtech.utils.BottomNavVisibilityController;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
@@ -64,6 +65,7 @@ public class SettingsFragment extends Fragment {
         AppCompatButton btnEditPerfil = view.findViewById(R.id.btnEditPerfil);
         AppCompatButton btnChangePass = view.findViewById(R.id.btnChangePass);
         AppCompatButton btnChangeTheme = view.findViewById(R.id.btnChangeTheme);
+        AppCompatButton btnChangeLanguage = view.findViewById(R.id.btnChangeLanguage);
         ImageButton btn_back = view.findViewById(R.id.btn_back);
 
         btnEditPerfil.setOnClickListener(v -> {
@@ -129,6 +131,15 @@ public class SettingsFragment extends Fragment {
 
             NavController navController = NavHostFragment.findNavController(this);
             navController.popBackStack();
+        });
+
+        btnChangeLanguage.setOnClickListener(v -> {
+            if(btnChangeLanguage.isHapticFeedbackEnabled()) {
+                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
+            }
+
+            ChangeLanguageBottomSheet bottomSheet = new ChangeLanguageBottomSheet();
+            bottomSheet.show(requireActivity().getSupportFragmentManager(), bottomSheet.getTag());
         });
     }
 

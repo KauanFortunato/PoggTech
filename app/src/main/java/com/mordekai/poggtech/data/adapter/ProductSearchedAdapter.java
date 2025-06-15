@@ -1,6 +1,7 @@
 package com.mordekai.poggtech.data.adapter;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;

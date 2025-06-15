@@ -34,13 +34,15 @@ public class MoreActionsMyProduct extends BottomSheetDialogFragment {
     private OnEditConfirmedListener editListener;
     private OnDeleteConfirmedListener deleteListener;
     private OnMarkAsSoldConfirmedListener markAsSoldListener;
+    private boolean isAvailable;
 
-    public MoreActionsMyProduct(OnEditConfirmedListener editListener,
+    public MoreActionsMyProduct(boolean isAvailable, OnEditConfirmedListener editListener,
                                 OnDeleteConfirmedListener deleteListener,
                                 OnMarkAsSoldConfirmedListener markAsSoldListener) {
         this.editListener = editListener;
         this.deleteListener = deleteListener;
         this.markAsSoldListener = markAsSoldListener;
+        this.isAvailable = isAvailable;
     }
 
     @Nullable
@@ -52,6 +54,12 @@ public class MoreActionsMyProduct extends BottomSheetDialogFragment {
         AppCompatButton buttonEdit = view.findViewById(R.id.buttonEdit);
         AppCompatButton buttonCheck = view.findViewById(R.id.buttonCheck);
         AppCompatButton buttonDelete = view.findViewById(R.id.buttonDelete);
+
+        if (isAvailable) {
+            buttonCheck.setVisibility(View.VISIBLE);
+        } else {
+            buttonCheck.setVisibility(View.GONE);
+        }
 
         buttonEdit.setOnClickListener(v -> {
             if(buttonEdit.isHapticFeedbackEnabled()) {

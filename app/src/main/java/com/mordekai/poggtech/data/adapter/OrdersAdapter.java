@@ -10,7 +10,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -18,15 +21,35 @@ import com.google.android.flexbox.FlexboxLayout;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.model.Order;
 import com.mordekai.poggtech.data.model.Product;
+import com.mordekai.poggtech.data.model.Review;
+import com.mordekai.poggtech.data.remote.ApiReview;
+import com.mordekai.poggtech.data.remote.RetrofitClient;
+import com.mordekai.poggtech.domain.ReviewManager;
+import com.mordekai.poggtech.presentation.ui.bottomsheets.LeaveReviewBottomSheet;
+import com.mordekai.poggtech.presentation.viewmodel.ReviewViewModel;
 
 import java.security.PrivateKey;
 import java.util.List;
 
-public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder>{
+public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder> {
     private List<Order> orders;
+    private FragmentManager fragmentManager;
 
-    public OrdersAdapter(List<Order> orders) {
+    public interface OnReviewSentListener {
+        void onReviewSent(int orderId, int rating, String reviewText);
+
+    }
+
+    private OnReviewSentListener reviewSentListener;
+
+    public void setOnReviewSentListener(OnReviewSentListener listener) {
+        this.reviewSentListener = listener;
+    }
+
+
+    public OrdersAdapter(List<Order> orders, FragmentManager fragmentManager) {
         this.orders = orders;
+        this.fragmentManager = fragmentManager;
     }
 
     @NonNull
@@ -52,6 +75,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
         private LinearLayout containerImages;
         private CardView cardContainer;
         private TextView otherProducts;
+        private AppCompatButton leaveReviewBtn;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -63,6 +87,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
             containerImages = itemView.findViewById(R.id.containerImages);
             cardContainer = itemView.findViewById(R.id.cardContainer);
             otherProducts = itemView.findViewById(R.id.otherProducts);
+            leaveReviewBtn = itemView.findViewById(R.id.leaveReviewBtn);
         }
 
         public void bind(Order order, View view) {
@@ -71,7 +96,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
             totalItems.setText(String.format("%d items", order.getTotal_products()));
             orderId.setText(String.format("Order id: %d", order.getId()));
 
-            if(order.getTotal_products() > 3) {
+            if (order.getTotal_products() > 3) {
                 otherProducts.setText(String.format("+%d", order.getTotal_products() - 3));
                 cardContainer.setVisibility(View.VISIBLE);
             } else {
@@ -101,6 +126,14 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 
                 flexImages.addView(chipView);
             }
+
+            leaveReviewBtn.setOnClickListener(v -> {
+                if (v.isHapticFeedbackEnabled()) {
+                    v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                }
+
+                showDialogLeaveReview(order);
+            });
         }
     }
 
@@ -111,5 +144,18 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
     }
 
     @Override
-    public int getItemCount() { return orders.size(); }
+    public int getItemCount() {
+        return orders.size();
+    }
+
+    private void showDialogLeaveReview(Order order) {
+        LeaveReviewBottomSheet leaveReviewBottomSheet = new LeaveReviewBottomSheet();
+        leaveReviewBottomSheet.setOnReviewSubmittedListener((rating, reviewText) -> {
+            if (reviewSentListener != null) {
+                reviewSentListener.onReviewSent(order.getId(), rating, reviewText);
+            }
+        });
+        leaveReviewBottomSheet.show(fragmentManager, "LeaveReviewBottomSheet");
+    }
+
 }

@@ -43,4 +43,23 @@ public class ReviewManager {
             }
         });
     }
+
+    public void createReview(Review review, RepositoryCallback<String> callback) {
+        apiReview.createReview(review).enqueue(new Callback<ApiResponse<Review>>() {
+
+            @Override
+            public void onResponse(Call<ApiResponse<Review>> call, Response<ApiResponse<Review>> response) {
+                if(response.isSuccessful()) {
+                    callback.onSuccess(response.body().getData().toString());
+                } else {
+                    callback.onFailure(new Exception("Erro ao criar review"));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Review>> call, Throwable t) {
+                callback.onFailure(new Exception("Erro ao criar review"));
+            }
+        });
+    }
 }

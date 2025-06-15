@@ -7,41 +7,36 @@
     android:background="@color/backgroundColor"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_header"
-        android:elevation="5dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingHorizontal="15dp"
-        android:paddingTop="40dp"
-        android:paddingBottom="10dp">
+    <RelativeLayout
+        android:id="@+id/header"
+        style="@style/Header"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageButton
             android:id="@+id/btn_back"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginEnd="10dp"
-            android:src="@drawable/ic_back"
-            app:tint="@color/textPrimary" />
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginBottom="9dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/voltar"
+            android:src="@drawable/ic_back" />
 
         <TextView
-            android:layout_width="0dp"
+            android:id="@+id/headerText"
+            style="@style/TextHeader"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/roboto_black"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginVertical="15dp"
             android:text="Carteira"
-
-            android:textColor="@color/textPrimary"
-            android:textSize="25sp" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="26dp"
-            android:layout_height="26dp"
-            android:src="@drawable/ic_settings"
-            app:tint="@color/textPrimary" />
-    </LinearLayout>
+            android:textAlignment="center" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

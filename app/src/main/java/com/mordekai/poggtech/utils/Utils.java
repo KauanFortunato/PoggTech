@@ -134,6 +134,37 @@ public class Utils {
         dialog.show();
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
+    public void showDialog(Context context, String title, String info, String buttonText, View.OnClickListener listener) {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
+
+        LinearLayout layout = new LinearLayout(context);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setPadding(60, 10, 60, 10); // Ajustar as margens conforme necessário
+
+        TextView infoText = new TextView(context);
+        infoText.setText(info);
+        infoText.setTextSize(14); // Tamanho do texto
+        infoText.setTextColor(context.getResources().getColor(R.color.textTertiary));
+        infoText.setPadding(0, 25, 0, 0);
+        infoText.setGravity(Gravity.LEFT);
+        layout.addView(infoText);
+
+        builder.setTitle(title);
+        builder.setBackground(context.getResources().getDrawable(R.drawable.bg_card_product, null));
+        builder.setView(layout);
+
+        builder.setPositiveButton(buttonText, (dialog, which) -> {
+            if (listener != null) {
+                listener.onClick(null);
+            }
+        });
+        builder.setNegativeButton(R.string.cancelar, (dialog, which) -> dialog.cancel());
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
     public void resetUserPassword(String email, Context context) {
         if (!TextUtils.isEmpty(email)) {
             FirebaseAuth.getInstance().sendPasswordResetEmail(email)

@@ -43,7 +43,6 @@ public class SavedFragment extends Fragment implements SavedProductAdapter.OnPro
     private CartManager cartManager;
     private List<Product> productList;
     private ShimmerFrameLayout shimmerLayout;
-    private TextView textNoFavProducts;
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean isLoading = true;
     private boolean isEmpty = true;
@@ -72,16 +71,16 @@ public class SavedFragment extends Fragment implements SavedProductAdapter.OnPro
         productManager = new ProductManager(apiProduct);
         cartManager = new CartManager(apiProduct);
 
-        swipeRefreshLayout.setOnRefreshListener(this::fetchFavProducts);
+        swipeRefreshLayout.setOnRefreshListener(() -> fetchFavProducts(view));
         interactionManager = new InteractionManager(RetrofitClient.getRetrofitInstance().create(ApiInteraction.class));
 
         // Carregar produtos
-        fetchFavProducts();
+        fetchFavProducts(view);
 
         return view;
     }
 
-    private void fetchFavProducts() {
+    private void fetchFavProducts(View view) {
         cartManager.fetchCartProducts(user.getUserId(), 1, new RepositoryCallback<List<Product>>() {
             @Override
             public void onSuccess(List<Product> products) {
@@ -96,7 +95,7 @@ public class SavedFragment extends Fragment implements SavedProductAdapter.OnPro
                     if (products.isEmpty()) {
                         isEmpty = true;
                         rvItemsSaved.setVisibility(View.GONE);
-                        textNoFavProducts.setVisibility(View.VISIBLE);
+                        view.findViewById(R.id.emptySaved).setVisibility(View.VISIBLE);
                         Log.d("API_RESPONSE", "Nenhum produto encontrado");
                     } else {
                         isEmpty = false;
@@ -104,10 +103,10 @@ public class SavedFragment extends Fragment implements SavedProductAdapter.OnPro
                         savedProductAdapter.notifyDataSetChanged();
 
                         rvItemsSaved.setVisibility(View.VISIBLE);
-                        textNoFavProducts.setVisibility(View.GONE);
+                        view.findViewById(R.id.emptySaved).setVisibility(View.GONE);
                         Log.d("API_RESPONSE", "Item 0: " + productList.get(0).getTitle());
                     }
-                }, 600);
+                }, 300);
             }
 
             @Override
@@ -121,8 +120,8 @@ public class SavedFragment extends Fragment implements SavedProductAdapter.OnPro
                     isEmpty = true;
 
                     rvItemsSaved.setVisibility(View.GONE);
-                    textNoFavProducts.setVisibility(View.VISIBLE);
-                }, 600);
+                    view.findViewById(R.id.emptySaved).setVisibility(View.VISIBLE);
+                }, 300);
             }
         });
     }
@@ -132,7 +131,6 @@ public class SavedFragment extends Fragment implements SavedProductAdapter.OnPro
         shimmerLayout = view.findViewById(R.id.shimmerLayout);
         rvItemsSaved = view.findViewById(R.id.rvItemsSaved);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
-        textNoFavProducts = view.findViewById(R.id.textNoSaveProducts);
 
         shimmerLayout.setVisibility(View.VISIBLE);
         shimmerLayout.startShimmer();

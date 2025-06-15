@@ -1,6 +1,8 @@
 package com.mordekai.poggtech.presentation.ui.activity;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -23,6 +25,8 @@ import com.mordekai.poggtech.utils.AppConfig;
 import com.mordekai.poggtech.utils.BottomNavVisibilityController;
 import com.mordekai.poggtech.utils.MessageNotifier;
 import com.mordekai.poggtech.utils.NetworkUtil;
+
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements HeaderFragment.HeaderListener, BottomNavVisibilityController {
 
@@ -127,6 +131,18 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
         }
 
         MessageNotifier.setListener(this::showChatBadge);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        SharedPreferences prefs = newBase.getSharedPreferences("settings", Context.MODE_PRIVATE);
+        String language = prefs.getString("language", "pt");
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+        Configuration config = newBase.getResources().getConfiguration();
+        config.setLocale(locale);
+        Context context = newBase.createConfigurationContext(config);
+        super.attachBaseContext(context);
     }
 
     private void showChatBadge() {

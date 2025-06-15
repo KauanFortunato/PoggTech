@@ -208,7 +208,9 @@ public class ProductManager {
     }
 
     public void searchProducts(String search, RepositoryCallback<List<Product>> callback) {
-        apiProduct.searchProducts(search).enqueue(new Callback<ApiResponse<List<Product>>>() {
+        String sanitizedQuery = search.replace("/", " ");
+
+        apiProduct.searchProducts(sanitizedQuery).enqueue(new Callback<ApiResponse<List<Product>>>() {
             @Override
             public void onResponse(Call<ApiResponse<List<Product>>> call, Response<ApiResponse<List<Product>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -231,7 +233,11 @@ public class ProductManager {
     }
 
     public void getSuggestions(String query, RepositoryCallback<List<String>> callback) {
-        Call<ApiResponse<List<String>>> call = apiProduct.getSuggestions(query);
+        String sanitizedQuery = query.replace("/", " ");
+
+        Log.d("Suggestions", "Query: " + sanitizedQuery);
+
+        Call<ApiResponse<List<String>>> call = apiProduct.getSuggestions(sanitizedQuery);
         call.enqueue(new Callback<ApiResponse<List<String>>>() {
             @Override
             public void onResponse(Call<ApiResponse<List<String>>> call, Response<ApiResponse<List<String>>> response) {

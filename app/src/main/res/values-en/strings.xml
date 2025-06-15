@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PoggTech</string>
+    <string name="portuguese">Portuguese</string>
     <string name="login">Login</string>
     <string name="signUp">Register</string>
     <string name="account">Account</string>
@@ -89,4 +90,6 @@
     <string name="defaultMessageEx">Hi, is this item available?</string>
     <string name="soldBy">Sold by</string>
     <string name="updateAd">Update Ad</string>
+    <string name="inAppSince">Poggtech user since</string>
+    <string name="english">Inglês</string>
 </resources>

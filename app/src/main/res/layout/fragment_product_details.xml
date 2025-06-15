@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:id="@+id/fragment_product_details"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    android:id="@+id/fragment_product_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColor"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical">
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:shimmer_auto_start="true"
         android:visibility="gone"
+        app:shimmer_auto_start="true"
         app:shimmer_duration="1000">
 
         <include layout="@layout/skeleton_product_details" />
@@ -37,18 +37,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
-                android:paddingBottom="20dp"
-                app:cardElevation="0dp"
                 android:background="@color/colorSurface"
+                android:paddingBottom="20dp"
                 app:cardBackgroundColor="@color/colorSurface"
-                app:cardCornerRadius="20dp">
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="15dp"
                     android:background="@color/colorSurface"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="15dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -59,20 +59,20 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="top"
-                            android:orientation="horizontal" >
+                            android:orientation="horizontal">
 
                             <TextView
                                 android:id="@+id/titleProduct"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
                                 android:layout_marginEnd="15dp"
-                                android:maxLines="2"
+                                android:layout_weight="1"
                                 android:ellipsize="end"
-                                android:textSize="19sp"
-                                android:textColor="@color/textPrimary"
                                 android:fontFamily="@font/roboto_medium"
-                                android:text="God of War, Jogo de Playstation 2"/>
+                                android:maxLines="2"
+                                android:text="God of War, Jogo de Playstation 2"
+                                android:textColor="@color/textPrimary"
+                                android:textSize="19sp" />
 
                             <!-- Avaliação do vendedor -->
                             <LinearLayout
@@ -87,11 +87,11 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
-                                    android:textSize="13sp"
                                     android:layout_marginEnd="2dp"
                                     android:fontFamily="@font/roboto_medium"
+                                    android:text="4.3"
                                     android:textColor="@color/textTertiary"
-                                    android:text="4.3"/>
+                                    android:textSize="13sp" />
 
                                 <LinearLayout
                                     android:id="@+id/starsContainer"
@@ -116,31 +116,31 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:textSize="16sp"
-                                android:textColor="@color/textSecondary"
                                 android:fontFamily="@font/roboto_medium"
-                                android:text="Jogos"/>
+                                android:text="Jogos"
+                                android:textColor="@color/textSecondary"
+                                android:textSize="16sp" />
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/saveButton"
                                 android:layout_width="29dp"
                                 android:layout_height="29dp"
                                 android:layout_marginHorizontal="10dp"
-                                android:src="@drawable/ic_bookmark"
-                                android:contentDescription="@string/add_saved" />
+                                android:contentDescription="@string/add_saved"
+                                android:src="@drawable/ic_bookmark" />
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:layout_width="29dp"
                                 android:layout_height="29dp"
-                                android:src="@drawable/ic_share"
                                 android:layout_marginEnd="10dp"
+                                android:src="@drawable/ic_share"
                                 app:tint="@color/textPrimary" />
                         </LinearLayout>
 
                         <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingHorizontal="10dp" >
+                            android:paddingHorizontal="10dp">
 
                             <androidx.viewpager2.widget.ViewPager2
                                 android:id="@+id/viewPagerGallery"
@@ -157,9 +157,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="20dp"
                                 android:layout_gravity="center"
+                                android:background="@color/colorSecondaryVariant"
                                 android:minWidth="0dp"
                                 android:padding="0dp"
-                                android:background="@color/colorSecondaryVariant"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -188,10 +188,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="20dp"
-                android:paddingVertical="20dp"
                 android:background="@color/backgroundColor"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="20dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -202,8 +202,8 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="fill_vertical"
                         android:layout_marginEnd="10dp"
+                        android:gravity="fill_vertical"
                         android:orientation="horizontal">
 
                         <TextView
@@ -220,9 +220,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_medium"
+                            android:text="27€"
                             android:textColor="@color/textPrimary"
-                            android:textSize="26sp"
-                            android:text="27€" />
+                            android:textSize="26sp" />
                     </LinearLayout>
 
                     <TextView
@@ -250,8 +250,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:visibility="gone"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/productPoggers"
@@ -277,25 +277,26 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingVertical="10dp"
-                android:paddingHorizontal="20dp"
                 android:background="@color/backgroundColor"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="10dp">
 
                 <LinearLayout
                     android:id="@+id/contactSellerContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:orientation="vertical"
                     android:layout_marginBottom="20dp"
-                    android:background="@drawable/bg_card_product">
+                    android:background="@drawable/bg_card_product"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -307,149 +308,231 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
                             android:fontFamily="@font/roboto_medium"
-                            android:textSize="16sp"
+                            android:text="@string/sendAMessage"
                             android:textColor="@color/textPrimary"
-                            android:text="@string/sendAMessage"/>
+                            android:textSize="16sp" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginHorizontal="2dp"
                         android:layout_height="42dp"
+                        android:layout_marginHorizontal="2dp"
+                        android:layout_marginTop="20dp"
                         android:orientation="horizontal">
 
                         <androidx.appcompat.widget.AppCompatEditText
                             android:id="@+id/inputText"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:text="@string/defaultMessageEx"
-                            android:hint="Mensagem"
                             android:layout_weight="1"
-                            android:fontFamily="@font/roboto"
-                            android:textSize="14sp"
                             android:background="@drawable/bg_input"
-                            android:paddingHorizontal="15dp"/>
+                            android:fontFamily="@font/roboto"
+                            android:hint="Mensagem"
+                            android:paddingHorizontal="15dp"
+                            android:text="@string/defaultMessageEx"
+                            android:textSize="14sp" />
 
                         <ImageButton
                             android:id="@+id/btnSend"
                             android:layout_width="42dp"
                             android:layout_height="42dp"
                             android:layout_gravity="center_vertical|end"
-                            android:background="@drawable/rounded_full_button"
                             android:layout_marginStart="8dp"
+                            android:background="@drawable/rounded_full_button"
                             android:contentDescription="Enviar mensagem_button"
                             android:src="@drawable/ic_send" />
                     </LinearLayout>
 
                 </LinearLayout>
+
             </LinearLayout>
 
-            <View style="@style/division"/>
+            <View style="@style/division" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingVertical="10dp"
                 android:layout_marginBottom="20dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingVertical="10dp">
 
                 <LinearLayout
                     android:id="@+id/descriptionTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
+                    android:clickable="true"
                     android:layout_marginHorizontal="10dp"
+                    android:layout_marginBottom="10dp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:fontFamily="@font/roboto_bold"
                         android:text="Descrição"
-                        android:textSize="28sp"
                         android:textColor="@color/textPrimary"
-                        android:fontFamily="@font/roboto_bold"/>
+                        android:textSize="28sp" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/icUp"
                         android:layout_width="34dp"
                         android:layout_height="34dp"
-                        app:tint="@color/textPrimary"
-                        android:src="@drawable/ic_up"/>
+                        android:src="@drawable/ic_down"
+                        app:tint="@color/textPrimary" />
                 </LinearLayout>
 
-                <View style="@style/division" android:layout_height="1dp"/>
+                <View
+                    style="@style/division"
+                    android:layout_height="1dp" />
 
                 <TextView
                     android:id="@+id/descriptionText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="10dp"
-                    android:text="Aqui vai o conteúdo completo da descrição..."
                     android:lineSpacingExtra="2dp"
-                    android:textSize="16sp"
-                    android:visibility="gone"
+                    android:paddingHorizontal="10dp"
+                    android:paddingTop="8dp"
+                    android:text="Aqui vai o conteúdo completo da descrição..."
                     android:textColor="@color/textPrimary"
-                    android:paddingTop="8dp" />
+                    android:textSize="16sp"
+                    android:visibility="visible" />
             </LinearLayout>
 
-            <View style="@style/division"/>
+            <View style="@style/division" />
 
             <LinearLayout
-                android:id="@+id/containerReviewsAll"
+                android:id="@+id/containerUser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/backgroundColor"
-                android:layout_marginBottom="20dp"
+                android:paddingVertical="20dp"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:paddingVertical="5dp"
-                    android:paddingHorizontal="15dp"
                     android:background="@drawable/bg_divisor_bottom"
-                    android:orientation="horizontal">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:paddingVertical="5dp">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="@string/reviews"
-                        android:textSize="28sp"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="Utilizador"
                         android:textColor="@color/textPrimary"
-                        android:fontFamily="@font/roboto_bold"/>
-
-                    <TextView
-                        android:id="@+id/seeAllReviews"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/seeAll"
-                        android:textSize="14sp"
-                        android:padding="10dp"
-                        android:textColor="@color/textSecondary"
-                        android:fontFamily="@font/roboto"/>
+                        android:textSize="28sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingVertical="5dp"
-                    android:paddingHorizontal="15dp"
+                    android:paddingHorizontal="10dp">
 
+                    <FrameLayout
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bg_avatar_user"
+                        android:clipToOutline="true">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/userAvatar"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:adjustViewBounds="true"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/img_xbox_series_x_text" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/userName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_medium"
+                            android:text="Diogo dioguinhoPJL"
+                            android:textColor="@color/textPrimary"
+                            android:textSize="@dimen/text_size_large_alt" />
+
+                        <TextView
+                            android:id="@+id/userCreateDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="No poggtech desde junho 2025"
+                            android:textColor="@color/textTertiary"
+                            android:textSize="@dimen/text_size_medium" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View style="@style/division" />
+
+            <LinearLayout
+                android:id="@+id/containerReviewsAll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@color/backgroundColor"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_divisor_bottom"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp"
+                    android:paddingVertical="5dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="@string/reviews"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="28sp" />
+
+                    <TextView
+                        android:id="@+id/seeAllReviews"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:padding="10dp"
+                        android:text="@string/seeAll"
+                        android:textColor="@color/textSecondary"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+
+                    android:paddingHorizontal="15dp"
+                    android:paddingVertical="5dp">
 
                     <TextView
                         android:id="@+id/productRating2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_bold"
                         android:text="4.2"
-                        android:textSize="22sp"
                         android:textColor="@color/textPrimary"
-                        android:fontFamily="@font/roboto_bold"/>
+                        android:textSize="22sp" />
 
                     <LinearLayout
                         android:id="@+id/starsContainer2"
@@ -465,30 +548,30 @@
                         android:id="@+id/reviewCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_medium"
                         android:text="1,524"
-                        android:textSize="15sp"
                         android:textColor="@color/textSecondary"
-                        android:fontFamily="@font/roboto_medium"/>
+                        android:textSize="15sp" />
                 </LinearLayout>
 
                 <TextView
                     android:id="@+id/noReviews"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:textSize="@dimen/text_normal"
-                    android:textColor="@color/textSecondary"
                     android:layout_marginVertical="10dp"
-                    android:visibility="visible"
-                    android:text="Não tem nenhuma review feita para esse produto."/>
+                    android:text="Não tem nenhuma review feita para esse produto."
+                    android:textAlignment="center"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="@dimen/text_normal"
+                    android:visibility="visible" />
 
                 <LinearLayout
                     android:id="@+id/containerReviews"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingVertical="5dp"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingVertical="5dp">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvReviews"
@@ -497,13 +580,13 @@
                         android:overScrollMode="never"
                         android:scrollbars="vertical"
                         tools:itemCount="4"
-                        tools:listitem="@layout/item_user_review"/>
+                        tools:listitem="@layout/item_user_review" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
-            <View style="@style/division"/>
+            <View style="@style/division" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -514,38 +597,38 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:paddingVertical="5dp"
+                    android:orientation="horizontal"
                     android:paddingHorizontal="15dp"
-                    android:orientation="horizontal">
+                    android:paddingVertical="5dp">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:fontFamily="@font/roboto_bold"
                         android:text="Do mesmo tipo"
-                        android:textSize="22sp"
                         android:textColor="@color/textPrimary"
-                        android:fontFamily="@font/roboto_bold"/>
+                        android:textSize="22sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/containerForYou"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingVertical="5dp"
                     android:layout_marginStart="10dp"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingVertical="5dp">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvForYou"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:overScrollMode="never"
-                        tools:itemCount="4"
                         android:orientation="horizontal"
+                        android:overScrollMode="never"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/item_product"/>
+                        tools:itemCount="4"
+                        tools:listitem="@layout/item_product" />
 
                 </LinearLayout>
 
@@ -558,17 +641,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_divisor_top"
+        android:orientation="horizontal"
         android:paddingHorizontal="10dp"
-        android:paddingVertical="20dp"
-        android:orientation="horizontal">
+        android:paddingVertical="20dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="140dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="10dp"
+            app:cardBackgroundColor="@color/backgroundColor"
             app:cardCornerRadius="15dp"
-            app:cardElevation="0dp"
-            app:cardBackgroundColor="@color/backgroundColor">
+            app:cardElevation="0dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -578,17 +661,17 @@
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:background="@color/colorDivider"
-                    android:gravity="center"
-                    android:layout_weight="1">
+                    android:gravity="center">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/minusProduct"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:padding="10dp"
-                        app:tint="@color/textPrimary"
-                        android:src="@drawable/ic_minus"/>
+                        android:src="@drawable/ic_minus"
+                        app:tint="@color/textPrimary" />
 
                 </RelativeLayout>
 
@@ -596,27 +679,27 @@
                     android:id="@+id/quantityProduct"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:textColor="@color/textPrimary"
-                    android:background="@color/colorSurface"
                     android:layout_weight="1"
+                    android:background="@color/colorSurface"
                     android:gravity="center"
+                    android:text="1"
                     android:textAlignment="center"
-                    android:text="1"/>
+                    android:textColor="@color/textPrimary" />
 
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:background="@color/colorPrimary"
-                    android:gravity="center"
-                    android:layout_weight="1">
+                    android:gravity="center">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/plusProduct"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:padding="10dp"
-                        app:tint="@color/colorOnPrimary"
-                        android:src="@drawable/ic_add"/>
+                        android:src="@drawable/ic_add"
+                        app:tint="@color/colorOnPrimary" />
 
                 </RelativeLayout>
 
@@ -628,8 +711,8 @@
             android:id="@+id/actionPrimaryProduct"
             style="@style/Button"
             android:layout_width="0dp"
-            android:layout_marginStart="10dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
             android:layout_weight="1"
             android:text="@string/add_cart"
             android:textAllCaps="false"

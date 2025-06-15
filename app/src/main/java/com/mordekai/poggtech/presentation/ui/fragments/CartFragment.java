@@ -157,7 +157,7 @@ public class CartFragment extends Fragment implements CartProductAdapter.OnProdu
                     }
 
                     updatePrice();
-                }, 600);
+                }, 300);
             }
 
             @Override
@@ -174,7 +174,7 @@ public class CartFragment extends Fragment implements CartProductAdapter.OnProdu
                     finishOrder.setVisibility(View.GONE);
                     forYouContainer.setVisibility(View.VISIBLE);
 
-                }, 600);
+                }, 300);
             }
         });
     }

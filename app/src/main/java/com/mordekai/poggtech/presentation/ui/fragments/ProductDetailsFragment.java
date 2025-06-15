@@ -25,6 +25,7 @@ import com.mordekai.poggtech.domain.ProductManager;
 import com.mordekai.poggtech.domain.ReviewManager;
 import com.mordekai.poggtech.presentation.ui.activity.MainActivity;
 import com.mordekai.poggtech.presentation.ui.bottomsheets.ProductAddedBottomSheet;
+import com.mordekai.poggtech.presentation.viewmodel.ReviewViewModel;
 import com.mordekai.poggtech.utils.ProductLoader;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 import com.mordekai.poggtech.utils.SnackbarUtil;
@@ -92,6 +93,7 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
     private User user;
     private Product product;
     private MessageViewModel messageViewModel;
+    private ReviewViewModel reviewViewModel;
     private int productId;
     private int quantityAdd = 1;
     private ShimmerFrameLayout shimmerLayout;
@@ -105,6 +107,7 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
 
         SharedPrefHelper sharedPrefHelper = new SharedPrefHelper(requireContext());
         user = sharedPrefHelper.getUser();
+
         cartManager = new CartManager(RetrofitClient.getRetrofitInstance().create(ApiProduct.class));
         messageManager = new MessageManager(RetrofitClient.getRetrofitInstance().create(ApiMessage.class));
 
@@ -117,12 +120,22 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
             }
         }).get(MessageViewModel.class);
 
+        ReviewManager rvMgr = new ReviewManager(RetrofitClient.getRetrofitInstance().create(ApiReview.class));
+        reviewViewModel = new ViewModelProvider(this, new ViewModelProvider.Factory() {
+            @NonNull
+            @Override
+            public <T extends androidx.lifecycle.ViewModel> T create(@NonNull Class<T> modelClass) {
+                return (T) new ReviewViewModel(rvMgr);
+            }
+        }).get(ReviewViewModel.class);
+
 
         if (getArguments() != null) {
             productId = getArguments().getInt("productId");
         }
 
         startComponents(view);
+        startUser(view);
         verifyProductIsSaved(productId, user.getUserId(), 1);
 
         ApiProduct apiProduct = RetrofitClient.getRetrofitInstance().create(ApiProduct.class);
@@ -177,18 +190,17 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
     }
 
     private void getReviews(int productId) {
-        reviewManager.getReviews(productId, 4, new RepositoryCallback<List<Review>>() {
+        reviewViewModel.loadReviews(productId, 4);
+    }
 
-            @Override
-            public void onSuccess(List<Review> result) {
-                reviewAdapter.updateReviews(result);
-            }
+    private void startUser(View view) {
+        AppCompatImageView userAvatar = view.findViewById(R.id.userAvatar);
+        TextView userName = view.findViewById(R.id.userName);
+        TextView userCreateDate = view.findViewById(R.id.userCreateDate);
 
-            @Override
-            public void onFailure(Throwable t) {
-                Log.e("ProductDetailsFragment", "Erro ao buscar reviews", t);
-            }
-        });
+        Utils.loadImageBasicAuth(userAvatar, user.getAvatar());
+        userName.setText(user.getName());
+        userCreateDate.setText(String.format("%s %s", getString(R.string.inAppSince), user.getCreatedAt()));
     }
 
     private void fetchProduct(int productId, View view) {
@@ -363,7 +375,7 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
         getActivity().findViewById(R.id.btnBackHeader).setVisibility(View.VISIBLE);
         getActivity().findViewById(R.id.headerContainer).setVisibility(View.VISIBLE);
 
-        setupMessageObservers();
+        setupObservers();
     }
 
     @SuppressLint("DefaultLocale")
@@ -412,6 +424,7 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
         if(product.getSeller_type().equals("admin")) {
             view.findViewById(R.id.containerSeller).setVisibility(View.VISIBLE);
             view.findViewById(R.id.containerReviewsAll).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.containerUser).setVisibility(View.GONE);
         } else {
             view.findViewById(R.id.containerReviewsAll).setVisibility(View.GONE);
         }
@@ -427,7 +440,7 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
             reviewCount.setText(String.valueOf(product.getReviewCount()));
         }
 
-            // Verifica o dono do produto, para não deixar o próprio vendedor comprar o produto dele
+        // Verifica o dono do produto, para não deixar o próprio vendedor comprar o produto dele
         if (product.getUser_id() != user.getUserId()) {
             if (product.getSeller_type().equals("admin")) {
                 actionButton.setVisibility(View.VISIBLE);
@@ -439,6 +452,7 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
                 contactSellerContainer.setVisibility(View.VISIBLE);
             }
         } else {
+            containerBuy.setVisibility(View.GONE);
             actionButton.setBackgroundResource(R.drawable.bg_button_unable);
             actionButton.setVisibility(View.VISIBLE);
             actionButton.setEnabled(false);
@@ -479,7 +493,7 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
         }
     }
 
-    private void setupMessageObservers() {
+    private void setupObservers() {
         messageViewModel.getCurrentChat().observe(getViewLifecycleOwner(), chat -> {
             if (chat != null) {
                 chatProduct = chat;
@@ -510,6 +524,9 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
             sendMessageToChat();
         });
 
+        reviewViewModel.reviews.observe(getViewLifecycleOwner(), reviews -> {
+            reviewAdapter.updateReviews(reviews);
+        });
     }
 
     private void addToSaved(int productId) {

@@ -25,6 +25,7 @@ public class Product implements Serializable {
     private String seller_type;
     private int views;
     private int favorites_count;
+    private String status;
 
 
     // GET and SETTERS
@@ -109,4 +110,10 @@ public class Product implements Serializable {
     public int getQuantity() { return quantity; }
 
     public void setQuantity(int quantity) { this.quantity = quantity; }
+
+    public String getStatus() { return status; }
+
+    public boolean isAvailable() {
+        return Objects.equals(status, "available");
+    }
 }

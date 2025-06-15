@@ -13,6 +13,9 @@ public class Review {
     private String created_at;
     private String time_ago;
 
+    public Review() {
+    }
+
     public Review(int review_id, int user_id, int product_id, int rating, String comment, String created_at) {
         this.review_id = review_id;
         this.user_id = user_id;
@@ -55,6 +58,22 @@ public class Review {
 
     public String getTimeAgo() {
         return time_ago;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public void setProduct_id(int productId) {
+        this.product_id = productId;
+    }
+
+    public void setUser_id(int userId) {
+        this.user_id = userId;
     }
 }
 

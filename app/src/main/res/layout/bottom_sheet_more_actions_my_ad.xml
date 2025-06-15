@@ -24,8 +24,8 @@
         android:layout_marginTop="15dp"
         android:orientation="vertical"
         android:paddingHorizontal="10dp"
-        android:layoutAnimation="@anim/layout_animation_fade_slide_up"
         app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        android:layoutAnimation="@anim/layout_animation_fade_slide_up"
         tools:layout_editor_absoluteX="20dp">
 
         <androidx.appcompat.widget.AppCompatButton

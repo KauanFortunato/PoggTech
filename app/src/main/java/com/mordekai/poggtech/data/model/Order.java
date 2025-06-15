@@ -33,4 +33,5 @@ public class Order {
     public int getTotal_products() { return total_products; }
 
     public String getCreated_at_format() { return created_at_format; }
+
 }

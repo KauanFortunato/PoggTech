@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">PoggTech</string>
     <string name="poggers" translatable="false">poggers</string>
+    <string name="english">English</string>
+    <string name="portuguese">Português</string>
+
     <string name="login">Login</string>
     <string name="signUp">Cadastrar</string>
     <string name="account">Conta</string>
@@ -77,7 +80,7 @@
     <string name="sendAMessage">Envie uma mensagem ao vendedor</string>
     <string name="defaultMessageEx">Oi, esse item está disponível?</string>
     <string name="soldBy">Vendido por</string>
-
+    <string name="inAppSince">Usuário da poggtech desde</string>
 
     <!-- Chat -->
     <string name="chat" translatable="false">Chat</string>

@@ -145,16 +145,6 @@ public class MyAdAdapter extends RecyclerView.Adapter<MyAdAdapter.ViewHolder> {
         });
     }
 
-    private void showDeleteConfirmation(Product product, int position, View view) {
-        DeleteProductBottomSheet bottomSheet = new DeleteProductBottomSheet(new DeleteProductBottomSheet.OnDeleteConfirmedListener() {
-            @Override
-            public void onDeleteConfirmed() {
-                deleteProduct(product, position, view);
-            }
-        });
-        bottomSheet.show(fragmentManager, bottomSheet.getTag());
-    }
-
     private void openEditScreen(Product product, View view) {
         Bundle args = new Bundle();
         args.putSerializable("product", product);
@@ -180,14 +170,17 @@ public class MyAdAdapter extends RecyclerView.Adapter<MyAdAdapter.ViewHolder> {
     }
 
     private void showMoreActions(Product product, int position, View view) {
-        MoreActionsMyProduct bottomSheet = new MoreActionsMyProduct(
+        MoreActionsMyProduct bottomSheet = new MoreActionsMyProduct( product.isAvailable(),
                 () -> {
                     // ação para editar
                     openEditScreen(product, view);
                 },
                 () -> {
                     // ação para deletar
-                    deleteProduct(product, position, view);
+                    Utils util = new Utils();
+                    util.showDialog(view.getContext(), "Tem a certeza que quer deletar este produto?", "Isso apagar todos os dados do seu produto", "Confirmar", v -> {
+                        deleteProduct(product, position, view);
+                    });
                 },
                 () -> {
                     // ação para marcar como vendido
