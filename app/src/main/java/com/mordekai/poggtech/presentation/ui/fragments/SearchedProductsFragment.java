@@ -94,7 +94,7 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
                 }
             });
 
-            NavController navController = NavHostFragment.findNavController(this);
+            NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
             navController.navigate(R.id.productDetailsFragment, bundle);
         });
 

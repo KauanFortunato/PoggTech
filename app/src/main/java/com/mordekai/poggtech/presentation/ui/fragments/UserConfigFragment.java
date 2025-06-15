@@ -27,6 +27,8 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.model.ApiResponse;
@@ -36,6 +38,7 @@ import com.mordekai.poggtech.data.repository.FirebaseUserRepository;
 import com.mordekai.poggtech.data.repository.MySqlUserRepository;
 import com.mordekai.poggtech.domain.FCMManager;
 import com.mordekai.poggtech.domain.UserManager;
+import com.mordekai.poggtech.presentation.ui.activity.MainActivity;
 import com.mordekai.poggtech.utils.BottomNavVisibilityController;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
@@ -217,7 +220,8 @@ public class UserConfigFragment extends Fragment {
 
             ((BottomNavVisibilityController) requireActivity()).showBottomNav();
 
-            requireActivity().getSupportFragmentManager().popBackStack();
+            NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
+            navController.popBackStack();
         });
 
         if(user.getIsGoogle()) {

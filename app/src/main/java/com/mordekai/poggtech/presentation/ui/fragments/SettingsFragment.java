@@ -27,6 +27,7 @@ import com.mordekai.poggtech.data.repository.MySqlUserRepository;
 import com.mordekai.poggtech.domain.FCMManager;
 import com.mordekai.poggtech.domain.UserManager;
 import com.mordekai.poggtech.presentation.ui.activity.LoginActivity;
+import com.mordekai.poggtech.presentation.ui.activity.MainActivity;
 import com.mordekai.poggtech.presentation.ui.bottomsheets.ChangeLanguageBottomSheet;
 import com.mordekai.poggtech.presentation.ui.bottomsheets.ConfirmBottomSheet;
 import com.mordekai.poggtech.utils.BottomNavVisibilityController;
@@ -73,8 +74,8 @@ public class SettingsFragment extends Fragment {
                 v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
             }
 
-            NavController navController = NavHostFragment.findNavController(this);
-            navController.navigate(R.id.action_configFragment_to_userConfigFragment);
+            NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
+            navController.navigate(R.id.action_settingsFragment_to_userConfigFragment);
         });
 
         buttonLogout.setOnClickListener(v -> {
@@ -120,8 +121,8 @@ public class SettingsFragment extends Fragment {
                 v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
             }
 
-            NavController navController = NavHostFragment.findNavController(this);
-            navController.navigate(R.id.action_configFragment_to_settingsAppearanceFragment);
+            NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
+            navController.navigate(R.id.action_settingsFragment_to_settingsAppearanceFragment);
         });
 
         btn_back.setOnClickListener(v -> {
@@ -129,7 +130,7 @@ public class SettingsFragment extends Fragment {
                 v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
             }
 
-            NavController navController = NavHostFragment.findNavController(this);
+            NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
             navController.popBackStack();
         });
 

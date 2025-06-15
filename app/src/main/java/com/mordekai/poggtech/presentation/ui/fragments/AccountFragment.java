@@ -32,6 +32,7 @@ import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.InteractionManager;
 import com.mordekai.poggtech.domain.ProductManager;
 import com.mordekai.poggtech.presentation.ui.activity.LoginActivity;
+import com.mordekai.poggtech.presentation.ui.activity.MainActivity;
 import com.mordekai.poggtech.utils.BottomNavVisibilityController;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 import com.mordekai.poggtech.data.model.User;
@@ -164,23 +165,23 @@ public class AccountFragment extends Fragment
         });
 
         buttonConfig.setOnClickListener(v -> {
-            NavController navController = NavHostFragment.findNavController(this);
-            navController.navigate(R.id.action_account_to_configFragment);
+            NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
+            navController.navigate(R.id.action_accountFragment_to_settingsFragment);
         });
 
         buttonMyPurchases.setOnClickListener(v -> {
-            NavController navController = NavHostFragment.findNavController(this);
-            navController.navigate(R.id.action_account_to_ordersFragment);
+            NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
+            navController.navigate(R.id.action_accountFragment_to_ordersFragment);
         });
 
         buttonMyAds.setOnClickListener(v -> {
-            NavController navController = NavHostFragment.findNavController(this);
+            NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
             navController.navigate(R.id.action_accountFragment_to_myAdsFragment);
         });
 
         walletButton.setOnClickListener(v -> {
-            NavController navController = NavHostFragment.findNavController(this);
-            navController.navigate(R.id.action_account_to_WalletFragment);
+            NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
+            navController.navigate(R.id.action_accountFragment_to_walletFragment);
         });
     }
 
@@ -240,7 +241,7 @@ public class AccountFragment extends Fragment
             }
         });
 
-        NavController navController = NavHostFragment.findNavController(this);
+        NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
         navController.navigate(R.id.action_accountFragment_to_productDetailsFragment, bundle);
     }
 }

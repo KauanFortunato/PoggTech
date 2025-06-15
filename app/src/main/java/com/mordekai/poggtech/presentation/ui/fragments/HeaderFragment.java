@@ -95,7 +95,7 @@ public class HeaderFragment extends Fragment {
                 showButtonBack();
 
                 searchProd.postDelayed(() -> {
-                    NavController navController = NavHostFragment.findNavController(this);
+                    NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
                     navController.navigate(R.id.searchFragment);
                 }, 100);
             }
@@ -141,7 +141,7 @@ public class HeaderFragment extends Fragment {
 
                 sharedPrefHelper.addSearchHistory(query);
 
-                NavController navController = NavHostFragment.findNavController(this);
+                NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
                 navController.navigate(R.id.action_searchFragment_to_searchedProductsFragment);
 
                 searchProd.postDelayed(() -> isUpdatingText = false, 100);
@@ -188,7 +188,7 @@ public class HeaderFragment extends Fragment {
 
             sharedPrefHelper.addSearchHistory(searchProd.getText().toString().trim());
 
-            NavController navController = NavHostFragment.findNavController(this);
+            NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
             navController.navigate(R.id.action_searchFragment_to_searchedProductsFragment);
 
             searchProd.postDelayed(() -> isUpdatingText = false, 100);
@@ -198,22 +198,12 @@ public class HeaderFragment extends Fragment {
     }
 
     private void handleBackNavigation() {
-        NavController navController = NavHostFragment.findNavController(this);
+        NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
         boolean forceBackHome = ((MainActivity) requireActivity()).shouldForceBackToHome();
 
-        if (forceBackHome) {
-            searchProd.setText("");
-
-            navController.popBackStack(R.id.home, false);
-
-            ((MainActivity) requireActivity()).setForceBackToHome(false);
-
-        } else {
-            boolean popped = navController.popBackStack();
-
-            if (!popped) {
-                navController.navigate(R.id.home);
-            }
+        boolean popped = navController.popBackStack();
+        if (!popped) {
+            navController.navigate(R.id.home);
         }
     }
 

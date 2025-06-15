@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.mordekai.poggtech.R;
+import com.mordekai.poggtech.presentation.ui.activity.MainActivity;
 import com.mordekai.poggtech.utils.NetworkUtil;
 import com.mordekai.poggtech.utils.SnackbarUtil;
 
@@ -42,7 +43,7 @@ public class OfflineFragment extends Fragment {
             NetworkUtil.isConnectedXampp(isConnected -> {
                 if(isConnected) {
                     if (NetworkUtil.isConnected(requireContext())) {
-                        NavController navController = NavHostFragment.findNavController(this);
+                        NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
                         navController.navigate(R.id.home);
                     } else {
                         if(tryAgainButton.isHapticFeedbackEnabled()) {

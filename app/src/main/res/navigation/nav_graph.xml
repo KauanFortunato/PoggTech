@@ -153,7 +153,7 @@
         android:label="Detalhes" >
         <action
             android:id="@+id/action_productDetailsFragment_to_cartFragment"
-            app:destination="@id/cartFragment" />
+            app:destination="@id/cart" />
         <action
             android:id="@+id/action_productDetailsFragment_to_chatDetailsFragment"
             app:destination="@id/chatDetailsFragment" />
@@ -163,7 +163,7 @@
     </fragment>
 
     <fragment
-        android:id="@+id/cartFragment"
+        android:id="@+id/cart"
         android:name="com.mordekai.poggtech.presentation.ui.fragments.CartFragment"
         android:label="Carrinho" />
 

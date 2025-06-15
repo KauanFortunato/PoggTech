@@ -10,7 +10,6 @@
         android:id="@+id/header"
         style="@style/Header"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -133,8 +132,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Idioma e Região"
-                android:textSize="@dimen/text_title" />
+                android:text="Idioma e Região" />
 
             <LinearLayout
                 style="@style/sectionConfig"

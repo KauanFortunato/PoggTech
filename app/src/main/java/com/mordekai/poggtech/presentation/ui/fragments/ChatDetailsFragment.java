@@ -21,6 +21,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,6 +33,7 @@ import com.mordekai.poggtech.data.model.User;
 import com.mordekai.poggtech.data.remote.ApiMessage;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.MessageManager;
+import com.mordekai.poggtech.presentation.ui.activity.MainActivity;
 import com.mordekai.poggtech.utils.MessageNotifier;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 import com.mordekai.poggtech.utils.Utils;
@@ -174,8 +176,10 @@ public class ChatDetailsFragment extends Fragment {
             if (btnBack.isHapticFeedbackEnabled()) {
                 btnBack.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
             }
+
             bottomNavigationView.setVisibility(View.VISIBLE);
-            requireActivity().getSupportFragmentManager().popBackStack();
+            NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
+            navController.popBackStack();
         });
     }
 

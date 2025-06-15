@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_account"
+    app:startDestination="@id/accountFragment">
+
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.AccountFragment"
+        android:label="AccountFragment" >
+        <action
+            android:id="@+id/action_accountFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_accountFragment_to_myAdsFragment"
+            app:destination="@id/myAdsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_accountFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_accountFragment_to_walletFragment"
+            app:destination="@id/walletFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_accountFragment_to_ordersFragment"
+            app:destination="@id/ordersFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/productDetailsFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.ProductDetailsFragment"
+        android:label="ProductDetailsFragment" >
+        <action
+            android:id="@+id/action_productDetailsFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_productDetailsFragment_to_chatDetailsFragment"
+            app:destination="@id/chatDetailsFragment" />
+        <action
+            android:id="@+id/action_productDetailsFragment_to_productManageFragment"
+            app:destination="@id/productManageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatDetailsFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.ChatDetailsFragment"
+        android:label="fragment_chat_detail"
+        tools:layout="@layout/fragment_chat_detail" />
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.CategoryFragment"
+        android:label="CategoryFragment" >
+        <action
+            android:id="@+id/action_categoryFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
+        <action
+            android:id="@+id/action_categoryFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.SearchFragment"
+        android:label="SearchFragment" >
+        <action
+            android:id="@+id/action_searchFragment_to_searchedProductsFragment4"
+            app:destination="@id/searchedProductsFragment4" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchedProductsFragment4"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.SearchedProductsFragment"
+        android:label="SearchedProductsFragment" >
+        <action
+            android:id="@+id/action_searchedProductsFragment4_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myAdsFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.MyAdsFragment"
+        android:label="MyAdsFragment" >
+        <action
+            android:id="@+id/action_myAdsFragment_to_newAdFragment"
+            app:destination="@id/newAdFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.SettingsFragment"
+        android:label="SettingsFragment" >
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsAppearanceFragment"
+            app:destination="@id/settingsAppearanceFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_settingsFragment_to_userConfigFragment"
+            app:destination="@id/userConfigFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsAppearanceFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.SettingsAppearanceFragment"
+        android:label="SettingsAppearanceFragment" />
+    <fragment
+        android:id="@+id/userConfigFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.UserConfigFragment"
+        android:label="UserConfigFragment" />
+    <fragment
+        android:id="@+id/walletFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.WalletFragment"
+        android:label="WalletFragment" />
+    <fragment
+        android:id="@+id/newAdFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.NewAdFragment"
+        android:label="NewAdFragment" >
+
+        <argument
+            android:name="product"
+            app:argType="com.mordekai.poggtech.data.model.Product"
+            app:nullable="true" />
+        
+    </fragment>
+    <fragment
+        android:id="@+id/ordersFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.OrdersFragment"
+        android:label="OrdersFragment" />
+    <fragment
+        android:id="@+id/productManageFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.ProductManageFragment"
+        android:label="fragment_manage_product"
+        tools:layout="@layout/fragment_manage_product" />
+</navigation>

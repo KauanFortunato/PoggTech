@@ -200,7 +200,7 @@ public class SearchFragment extends Fragment implements CategoryAdapter.OnCatego
         Bundle bundle = new Bundle();
         bundle.putParcelable("category", category);
 
-        NavController navController = NavHostFragment.findNavController(this);
+        NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
         navController.navigate(R.id.categoryFragment, bundle);
     }
 

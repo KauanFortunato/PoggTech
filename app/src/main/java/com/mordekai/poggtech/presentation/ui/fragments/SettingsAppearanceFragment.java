@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.HapticFeedbackConstants;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.mordekai.poggtech.R;
+import com.mordekai.poggtech.presentation.ui.activity.MainActivity;
 import com.mordekai.poggtech.utils.BottomNavVisibilityController;
 
 public class SettingsAppearanceFragment extends Fragment {
@@ -63,7 +65,8 @@ public class SettingsAppearanceFragment extends Fragment {
                 v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
             }
 
-            NavHostFragment.findNavController(this).popBackStack();
+            NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
+            navController.popBackStack();
         });
     }
 

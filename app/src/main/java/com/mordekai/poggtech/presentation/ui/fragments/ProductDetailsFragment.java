@@ -659,7 +659,7 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
             }
         });
 
-        NavController navController = NavHostFragment.findNavController(this);
-        navController.navigate(R.id.action_save_to_productDetailsFragment, bundle);
+        NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
+        navController.navigate(R.id.productDetailsFragment, bundle);
     }
 }

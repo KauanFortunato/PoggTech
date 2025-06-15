@@ -28,6 +28,7 @@ import com.mordekai.poggtech.data.model.Wallet;
 import com.mordekai.poggtech.data.remote.ApiWallet;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.WalletManager;
+import com.mordekai.poggtech.presentation.ui.activity.MainActivity;
 import com.mordekai.poggtech.utils.BottomNavVisibilityController;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
@@ -150,7 +151,7 @@ public class WalletFragment extends Fragment {
                 v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
             }
 
-            NavController navController = NavHostFragment.findNavController(this);
+            NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
             navController.popBackStack();
         });
 

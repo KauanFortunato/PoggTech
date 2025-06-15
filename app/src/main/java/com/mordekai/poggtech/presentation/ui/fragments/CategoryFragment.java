@@ -31,6 +31,7 @@ import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.InteractionManager;
 import com.mordekai.poggtech.domain.ProductManager;
+import com.mordekai.poggtech.presentation.ui.activity.MainActivity;
 import com.mordekai.poggtech.utils.BottomNavVisibilityController;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
@@ -75,7 +76,6 @@ public class CategoryFragment extends Fragment implements
         sharedPrefHelper = new SharedPrefHelper(requireContext());
         user = sharedPrefHelper.getUser();
 
-        ((BottomNavVisibilityController) requireActivity()).hideBottomNav();
 
         startComponentes(view);
 
@@ -98,7 +98,6 @@ public class CategoryFragment extends Fragment implements
     public void onResume() {
         super.onResume();
 
-        ((BottomNavVisibilityController) requireActivity()).hideBottomNav();
         showBackButton();
         buttonSelect(filterHigh);
         buttonSelect(filterLow);
@@ -248,8 +247,8 @@ public class CategoryFragment extends Fragment implements
             }
         });
 
-        NavController navController = NavHostFragment.findNavController(this);
-        navController.navigate(R.id.productDetailsFragment, bundle);
+        NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
+        navController.navigate(R.id.action_categoryFragment_to_productDetailsFragment, bundle);
     }
 
     @SuppressLint("NotifyDataSetChanged")

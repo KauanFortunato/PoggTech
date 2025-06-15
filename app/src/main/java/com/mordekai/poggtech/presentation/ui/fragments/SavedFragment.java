@@ -28,6 +28,7 @@ import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.CartManager;
 import com.mordekai.poggtech.domain.InteractionManager;
 import com.mordekai.poggtech.domain.ProductManager;
+import com.mordekai.poggtech.presentation.ui.activity.MainActivity;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
 import java.util.ArrayList;
@@ -153,7 +154,7 @@ public class SavedFragment extends Fragment implements SavedProductAdapter.OnPro
             }
         });
 
-        NavController navController = NavHostFragment.findNavController(this);
-        navController.navigate(R.id.action_save_to_productDetailsFragment, bundle);
+        NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
+        navController.navigate(R.id.productDetailsFragment, bundle);
     }
 }

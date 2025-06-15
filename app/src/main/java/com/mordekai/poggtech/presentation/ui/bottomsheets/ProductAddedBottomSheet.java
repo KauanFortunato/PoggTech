@@ -16,6 +16,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.mordekai.poggtech.R;
+import com.mordekai.poggtech.presentation.ui.activity.MainActivity;
 import com.mordekai.poggtech.utils.Utils;
 
 public class ProductAddedBottomSheet extends BottomSheetDialogFragment {
@@ -50,7 +51,7 @@ public class ProductAddedBottomSheet extends BottomSheetDialogFragment {
     }
 
     private void goToCart() {
-        NavController navController = NavHostFragment.findNavController(this);
-        navController.navigate(R.id.save);
+        NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
+        navController.navigate(R.id.productManageFragment);
     }
 }

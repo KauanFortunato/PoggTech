@@ -28,6 +28,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.model.Chat;
+import com.mordekai.poggtech.presentation.ui.activity.MainActivity;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -56,9 +57,8 @@ public class Utils {
         bundle.putString("product_price", String.valueOf(chat.getProductPrice()));
         bundle.putString("image_product", chat.getCoverProduct());
 
-        // TODO: Fazer com que a funcione a transicao do chat para o chat details e product para product details
-        NavController navController = NavHostFragment.findNavController(fragment);
-        navController.navigate(R.id.action_chatFragment_to_chatDetailsFragment, bundle);
+        NavController navController = ((MainActivity) fragment.getActivity()).getCurrentNavController();
+        navController.navigate(R.id.chatDetailsFragment, bundle);
     }
 
     public static File getFileFromUri(Context context, Uri uri) {

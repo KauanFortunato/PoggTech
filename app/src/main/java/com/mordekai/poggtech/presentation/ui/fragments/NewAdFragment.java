@@ -31,6 +31,8 @@ import static android.app.Activity.RESULT_OK;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -57,6 +59,7 @@ import com.mordekai.poggtech.data.model.User;
 import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.ProductManager;
+import com.mordekai.poggtech.presentation.ui.activity.MainActivity;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 import com.mordekai.poggtech.utils.SnackbarUtil;
 import com.mordekai.poggtech.utils.Utils;
@@ -485,7 +488,8 @@ public class NewAdFragment extends Fragment {
                 v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
             }
 
-            requireActivity().getSupportFragmentManager().popBackStack();
+            NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
+            navController.popBackStack();
         });
 
         PlaceSuggestionAdapter adapter = new PlaceSuggestionAdapter(prediction -> {
@@ -690,7 +694,8 @@ public class NewAdFragment extends Fragment {
             @Override
             public void onSuccess(Void result) {
                 SnackbarUtil.showSuccessSnackbar(requireView(), "Produto adicionado com sucesso!", requireContext());
-                requireActivity().getSupportFragmentManager().popBackStack();
+                NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
+                navController.popBackStack();
             }
 
             @Override
@@ -734,7 +739,8 @@ public class NewAdFragment extends Fragment {
                     @Override
                     public void onSuccess(Void result) {
                         SnackbarUtil.showSuccessSnackbar(requireView(), "Produto atualizado com sucesso!", requireContext());
-                        requireActivity().getSupportFragmentManager().popBackStack();
+                        NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
+                        navController.popBackStack();
                     }
 
                     @Override

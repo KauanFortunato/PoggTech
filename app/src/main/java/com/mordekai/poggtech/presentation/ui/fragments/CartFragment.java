@@ -16,7 +16,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,6 +38,7 @@ import com.mordekai.poggtech.domain.CartManager;
 import com.mordekai.poggtech.domain.InteractionManager;
 import com.mordekai.poggtech.domain.OrderManager;
 import com.mordekai.poggtech.domain.ProductManager;
+import com.mordekai.poggtech.presentation.ui.activity.MainActivity;
 import com.mordekai.poggtech.utils.ProductLoader;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
@@ -121,6 +121,13 @@ public class CartFragment extends Fragment implements CartProductAdapter.OnProdu
         );
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        swipeRefreshLayout.setRefreshing(true);
+        fetchCartProducts();
     }
 
     // Tipo 0 = Carrinho
@@ -292,7 +299,7 @@ public class CartFragment extends Fragment implements CartProductAdapter.OnProdu
             }
         });
 
-        NavController navController = NavHostFragment.findNavController(this);
-        navController.navigate(R.id.action_save_to_productDetailsFragment, bundle);
+        NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
+        navController.navigate(R.id.productDetailsFragment, bundle);
     }
 }

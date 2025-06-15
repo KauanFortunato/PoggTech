@@ -26,6 +26,7 @@ import com.mordekai.poggtech.data.model.User;
 import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.ProductManager;
+import com.mordekai.poggtech.presentation.ui.activity.MainActivity;
 import com.mordekai.poggtech.utils.BottomNavVisibilityController;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
@@ -106,7 +107,8 @@ public class MyAdsFragment extends Fragment {
                 v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
             }
 
-            requireActivity().getSupportFragmentManager().popBackStack();
+            NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
+            navController.popBackStack();
         });
 
         addNewProduct.setOnClickListener(v -> {
@@ -114,8 +116,8 @@ public class MyAdsFragment extends Fragment {
                 v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
             }
 
-            NavController navController = NavHostFragment.findNavController(this);
-            navController.navigate(R.id.newAdFragment);
+            NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
+            navController.navigate(R.id.action_myAdsFragment_to_newAdFragment);
         });
     }
 }

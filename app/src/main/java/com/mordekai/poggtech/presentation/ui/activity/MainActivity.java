@@ -12,10 +12,10 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -26,7 +26,12 @@ import com.mordekai.poggtech.utils.BottomNavVisibilityController;
 import com.mordekai.poggtech.utils.MessageNotifier;
 import com.mordekai.poggtech.utils.NetworkUtil;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements HeaderFragment.HeaderListener, BottomNavVisibilityController {
 
@@ -34,6 +39,10 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
     private BottomNavigationView bottomNavigationView;
     private NavController navController;
     private boolean forceBackToHome = false;
+
+    private final Map<Integer, Integer> navHostMap = new HashMap<>();
+    private final Map<Integer, NavController> navControllerMap = new HashMap<>();
+    private int currentNavHostId = R.id.nav_host_home;
 
     public void setForceBackToHome(boolean force) {
         this.forceBackToHome = force;
@@ -72,35 +81,59 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
 
         // Setup Navigation
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.nav_host_fragment);
-        navController = navHostFragment.getNavController();
+        navHostMap.put(R.id.home, R.id.nav_host_home);
+        navHostMap.put(R.id.save, R.id.nav_host_save);
+        navHostMap.put(R.id.chat, R.id.nav_host_chat);
+        navHostMap.put(R.id.account, R.id.nav_host_account);
+
+        // Inicializa os NavControllers para cada aba
+        navControllerMap.put(R.id.home, NavHostFragment.findNavController(
+                getSupportFragmentManager().findFragmentById(R.id.nav_host_home)));
+
+        navControllerMap.put(R.id.save, NavHostFragment.findNavController(
+                getSupportFragmentManager().findFragmentById(R.id.nav_host_save)));
+
+        navControllerMap.put(R.id.chat, NavHostFragment.findNavController(
+                getSupportFragmentManager().findFragmentById(R.id.nav_host_chat)));
+
+        navControllerMap.put(R.id.account, NavHostFragment.findNavController(
+                getSupportFragmentManager().findFragmentById(R.id.nav_host_account)));
+
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.home, R.id.account, R.id.save, R.id.chat
         ).build();
 
-        NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
-            int itemId = item.getItemId();
+            int tabId = item.getItemId();
+            int targetFragmentId = navHostMap.get(tabId);
 
-            if (itemId == R.id.chat) {
+            if (tabId == R.id.chat) {
                 SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
                 prefs.edit().putBoolean("has_new_message", false).apply();
                 clearChatBadge();
             }
 
-            boolean handled = NavigationUI.onNavDestinationSelected(item, navController);
+            // Oculta todos os hosts
+            for (int hostId : navHostMap.values()) {
+                findViewById(hostId).setVisibility(View.GONE);
+            }
 
-            // Controla a visibilidade do header manualmente
-            if (itemId == R.id.home) {
+            // Mostra o host da aba selecionada
+            findViewById(targetFragmentId).setVisibility(View.VISIBLE);
+            currentNavHostId = targetFragmentId;
+
+            NavController controller = navControllerMap.get(tabId);
+            controller.popBackStack(controller.getGraph().getStartDestinationId(), false);
+
+            if (tabId == R.id.home) {
                 showHeader();
             } else {
                 hideHeader();
             }
 
-            return handled;
+            return true;
         });
 
         // Verifica conexão com XAMPP
@@ -145,6 +178,19 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
         super.attachBaseContext(context);
     }
 
+    @Override
+    public void onBackPressed() {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(currentNavHostId);
+        if (currentFragment != null) {
+            NavController currentNav = NavHostFragment.findNavController(currentFragment);
+            if (!currentNav.popBackStack()) {
+                super.onBackPressed();
+            }
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     private void showChatBadge() {
         BadgeDrawable badge = bottomNavigationView.getOrCreateBadge(R.id.chat);
         badge.setVisible(true);
@@ -153,6 +199,11 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
 
     private void clearChatBadge() {
         bottomNavigationView.removeBadge(R.id.chat);
+    }
+
+    public NavController getCurrentNavController() {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(currentNavHostId);
+        return NavHostFragment.findNavController(currentFragment);
     }
 
     @Override

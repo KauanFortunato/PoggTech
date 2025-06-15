@@ -30,8 +30,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
             android:layout_marginVertical="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@+id/btn_back"
             android:text="Perfil"
             android:textAlignment="center" />
     </RelativeLayout>

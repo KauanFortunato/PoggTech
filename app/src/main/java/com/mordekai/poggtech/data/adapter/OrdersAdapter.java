@@ -75,7 +75,6 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
         private LinearLayout containerImages;
         private CardView cardContainer;
         private TextView otherProducts;
-        private AppCompatButton leaveReviewBtn;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -87,7 +86,6 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
             containerImages = itemView.findViewById(R.id.containerImages);
             cardContainer = itemView.findViewById(R.id.cardContainer);
             otherProducts = itemView.findViewById(R.id.otherProducts);
-            leaveReviewBtn = itemView.findViewById(R.id.leaveReviewBtn);
         }
 
         public void bind(Order order, View view) {
@@ -126,14 +124,6 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 
                 flexImages.addView(chipView);
             }
-
-            leaveReviewBtn.setOnClickListener(v -> {
-                if (v.isHapticFeedbackEnabled()) {
-                    v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-                }
-
-                showDialogLeaveReview(order);
-            });
         }
     }
 

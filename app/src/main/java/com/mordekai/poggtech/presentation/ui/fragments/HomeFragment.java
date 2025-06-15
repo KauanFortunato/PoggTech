@@ -35,6 +35,7 @@ import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.InteractionManager;
 import com.mordekai.poggtech.domain.ProductManager;
+import com.mordekai.poggtech.presentation.ui.activity.MainActivity;
 import com.mordekai.poggtech.utils.BottomNavVisibilityController;
 import com.mordekai.poggtech.utils.ProductLoader;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
@@ -437,8 +438,8 @@ public class HomeFragment extends Fragment
             }
         });
 
-        NavController navController = NavHostFragment.findNavController(this);
-        navController.navigate(R.id.action_homeFragment_to_productDetailsFragment3, bundle);
+        NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
+        navController.navigate(R.id.action_home_to_productDetailsFragment, bundle);
     }
 
     @Override
@@ -448,8 +449,8 @@ public class HomeFragment extends Fragment
         Fragment fragment = new CategoryFragment();
         fragment.setArguments(bundle);
 
-        NavController navController = NavHostFragment.findNavController(this);
-        navController.navigate(R.id.action_homeFragment_to_categoryFragment, bundle);
+        NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
+        navController.navigate(R.id.action_home_to_categoryFragment, bundle);
     }
 
     @Override
