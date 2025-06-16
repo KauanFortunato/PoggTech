@@ -29,6 +29,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.adapter.MessageAdapter;
 import com.mordekai.poggtech.data.model.Message;
+import com.mordekai.poggtech.data.model.MessageDateSeparator;
 import com.mordekai.poggtech.data.model.User;
 import com.mordekai.poggtech.data.remote.ApiMessage;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
@@ -124,7 +125,7 @@ public class ChatDetailsFragment extends Fragment {
         viewModel.getMessages().observe(getViewLifecycleOwner(), messages -> {
             boolean isNewMessage = messageList.size() != messages.size();
             messageList.clear();
-            messageList.addAll(messages);
+            messageList.addAll(insertDateSeparators(messages));
             messageAdapter.notifyDataSetChanged();
             if (isNewMessage) {
                 scrollToBottom();
@@ -202,6 +203,27 @@ public class ChatDetailsFragment extends Fragment {
             // Envia ao servidor (sem esperar resposta para atualizar a UI)
             viewModel.sendMessage(currentUser.getUserId(), chatWithId, chatChatId, messageText);
         }
+    }
+
+    private List<Message> insertDateSeparators(List<Message> originalMessages) {
+        List<Message> result = new ArrayList<>();
+        String lastDateLabel = "";
+
+        for (Message msg : originalMessages) {
+            if (msg instanceof MessageDateSeparator) continue; // proteção extra
+
+            String currentLabel = msg.getDate_label(); // ← você precisa garantir que o campo exista no model
+            if (currentLabel == null) currentLabel = "Desconhecido";
+
+            if (!currentLabel.equals(lastDateLabel)) {
+                result.add(new MessageDateSeparator(currentLabel));
+                lastDateLabel = currentLabel;
+            }
+
+            result.add(msg);
+        }
+
+        return result;
     }
 
 

@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.util.Base64;
 import android.view.Gravity;
 import android.view.View;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.bumptech.glide.Glide;
@@ -34,6 +36,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class Utils {
     public static void hideKeyboard(Fragment fragment) {
@@ -57,8 +64,15 @@ public class Utils {
         bundle.putString("product_price", String.valueOf(chat.getProductPrice()));
         bundle.putString("image_product", chat.getCoverProduct());
 
+        NavOptions navOptions = new NavOptions.Builder()
+                .setEnterAnim(R.anim.slide_in_right)
+                .setExitAnim(R.anim.slide_out_left)
+                .setPopEnterAnim(R.anim.slide_in_left)
+                .setPopExitAnim(R.anim.slide_out_right)
+                .build();
+
         NavController navController = ((MainActivity) fragment.getActivity()).getCurrentNavController();
-        navController.navigate(R.id.chatDetailsFragment, bundle);
+        navController.navigate(R.id.chatDetailsFragment, bundle, navOptions);
     }
 
     public static File getFileFromUri(Context context, Uri uri) {
@@ -179,4 +193,28 @@ public class Utils {
             Toast.makeText(context, "Digite um e-mail válido.", Toast.LENGTH_SHORT).show();
         }
     }
+
+    public static String formatDateToHuman(String dateString) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        try {
+            Date date = sdf.parse(dateString);
+            Calendar messageCal = Calendar.getInstance();
+            messageCal.setTime(date);
+
+            Calendar today = Calendar.getInstance();
+            Calendar yesterday = Calendar.getInstance();
+            yesterday.add(Calendar.DAY_OF_YEAR, -1);
+
+            if (DateUtils.isToday(date.getTime())) {
+                return "Hoje";
+            } else if (DateUtils.isToday(yesterday.getTimeInMillis()) && messageCal.get(Calendar.DAY_OF_YEAR) == yesterday.get(Calendar.DAY_OF_YEAR)) {
+                return "Ontem";
+            } else {
+                return new SimpleDateFormat("dd 'de' MMMM", new Locale("pt", "BR")).format(date);
+            }
+        } catch (ParseException e) {
+            return dateString;
+        }
+    }
+
 }

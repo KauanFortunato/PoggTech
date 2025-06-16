@@ -11,12 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.model.Message;
+import com.mordekai.poggtech.data.model.MessageDateSeparator;
 
 import java.util.List;
 
 public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_SENT = 1;
     private static final int TYPE_RECEIVED = 2;
+    private static final int TYPE_DATE_SEPARATOR = 3;
 
     private List<Message> messageList;
     private int currentUserId;
@@ -29,32 +31,38 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public int getItemViewType(int position) {
         Message message = messageList.get(position);
-        if (message.getSender_id() == currentUserId) {
-            return TYPE_SENT; // Mensagem enviada pelo utilizador (alinhada à direita)
+        if (message instanceof MessageDateSeparator) {
+            return TYPE_DATE_SEPARATOR;
+        } else if (message.getSender_id() == currentUserId) {
+            return TYPE_SENT;
         } else {
-            return TYPE_RECEIVED; // Mensagem recebida (alinhada à esquerda)
+            return TYPE_RECEIVED;
         }
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         if (viewType == TYPE_SENT) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message_sent, parent, false);
-            return new SentMessageViewHolder(view);
+            return new SentMessageViewHolder(inflater.inflate(R.layout.item_message_sent, parent, false));
+        } else if (viewType == TYPE_RECEIVED) {
+            return new ReceivedMessageViewHolder(inflater.inflate(R.layout.item_message_received, parent, false));
         } else {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message_received, parent, false);
-            return new ReceivedMessageViewHolder(view);
+            return new DateSeparatorViewHolder(inflater.inflate(R.layout.item_message_date_separator, parent, false));
         }
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Message message = messageList.get(position);
-        if (holder.getItemViewType() == TYPE_SENT) {
+        if (holder instanceof SentMessageViewHolder) {
             ((SentMessageViewHolder) holder).bind(message);
-        } else {
+        } else if (holder instanceof ReceivedMessageViewHolder) {
             ((ReceivedMessageViewHolder) holder).bind(message);
+        } else if (holder instanceof DateSeparatorViewHolder) {
+            ((DateSeparatorViewHolder) holder).bind((MessageDateSeparator) message);
         }
     }
 
@@ -108,4 +116,19 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             tvTimeReceived.setText(message.getTimestamp_format());
         }
     }
+
+    // ViewHolder para separadores de data
+    static class DateSeparatorViewHolder extends RecyclerView.ViewHolder {
+        TextView tvDateSeparator;
+
+        DateSeparatorViewHolder(View itemView) {
+            super(itemView);
+            tvDateSeparator = itemView.findViewById(R.id.tvDateSeparator);
+        }
+
+        void bind(MessageDateSeparator separator) {
+            tvDateSeparator.setText(separator.getDateLabel());
+        }
+    }
+
 }

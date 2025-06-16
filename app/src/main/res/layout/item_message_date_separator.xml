@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="10dp"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/tvDateSeparator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textSecondary"
+        android:background="@drawable/bg_separetor"
+        android:fontFamily="@font/roboto_medium"
+        android:textSize="13sp"
+        android:padding="8dp"
+        android:gravity="center"
+        android:text="Ontem" />
+
+</LinearLayout>

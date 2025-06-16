@@ -1,5 +1,7 @@
 package com.mordekai.poggtech.data.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Message {
 
     private int id_message;
@@ -39,6 +41,17 @@ public class Message {
     }
 
     // Getters e Setters
+
+    @SerializedName("date_label")
+    private String date_label;
+
+    public String getDate_label() {
+        return date_label;
+    }
+
+    public void setDate_label(String date_label) {
+        this.date_label = date_label;
+    }
 
 
     public boolean isPending() { return isPending; }
