@@ -8,10 +8,14 @@
     <fragment
         android:id="@+id/chatFragment"
         android:name="com.mordekai.poggtech.presentation.ui.fragments.ChatFragment"
-        android:label="ChatFragment" >
+        android:label="ChatFragment">
         <action
             android:id="@+id/action_chatFragment_to_chatDetailsFragment"
             app:destination="@id/chatDetailsFragment" />
+        <deepLink
+            android:id="@+id/deepLink"
+            app:action="android.intent.action.VIEW"
+            app:uri="poggtech://navigate/chat" />
     </fragment>
     <fragment
         android:id="@+id/chatDetailsFragment"

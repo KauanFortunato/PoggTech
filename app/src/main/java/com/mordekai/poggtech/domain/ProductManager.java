@@ -7,6 +7,7 @@ import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.ApiResponse;
 import com.mordekai.poggtech.data.model.Category;
 import com.mordekai.poggtech.data.model.Product;
+import com.mordekai.poggtech.data.model.ProductWithUser;
 import com.mordekai.poggtech.data.remote.ApiProduct;
 
 import java.util.ArrayList;
@@ -26,14 +27,14 @@ public class ProductManager {
         this.apiProduct = apiProduct;
     }
 
-    public void fetchProductById(int product_id, RepositoryCallback<Product> callback) {
+    public void fetchProductById(int product_id, RepositoryCallback<ProductWithUser> callback) {
         apiProduct.getProductById(product_id)
-                .enqueue(new Callback<ApiResponse<Product>>() {
+                .enqueue(new Callback<ApiResponse<ProductWithUser>>() {
                     @Override
-                    public void onResponse(Call<ApiResponse<Product>> call, Response<ApiResponse<Product>> response) {
+                    public void onResponse(Call<ApiResponse<ProductWithUser>> call, Response<ApiResponse<ProductWithUser>> response) {
                         if (response.isSuccessful() && response.body() != null) {
-                            Product product = response.body().getData();
-                            callback.onSuccess(product);
+                            ProductWithUser data = response.body().getData();
+                            callback.onSuccess(data);
                         } else {
                             Log.e("API_ERROR", "Código: " + response.code() + ", Erro: " + response.errorBody());
                             callback.onFailure(new Exception("Erro ao buscar produto"));
@@ -41,7 +42,7 @@ public class ProductManager {
                     }
 
                     @Override
-                    public void onFailure(Call<ApiResponse<Product>> call, Throwable t) {
+                    public void onFailure(Call<ApiResponse<ProductWithUser>> call, Throwable t) {
                         Log.e("API_ERROR", "Erro na requisição: " + t.getMessage(), t);
                         callback.onFailure(new Exception("Erro ao buscar produto: " + t.getMessage()));
                     }

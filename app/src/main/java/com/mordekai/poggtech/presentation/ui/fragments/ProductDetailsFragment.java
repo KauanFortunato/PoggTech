@@ -11,6 +11,7 @@ import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.ApiResponse;
 import com.mordekai.poggtech.data.model.Chat;
 import com.mordekai.poggtech.data.model.Product;
+import com.mordekai.poggtech.data.model.ProductWithUser;
 import com.mordekai.poggtech.data.model.Review;
 import com.mordekai.poggtech.data.model.User;
 import com.mordekai.poggtech.data.remote.ApiInteraction;
@@ -32,6 +33,7 @@ import com.mordekai.poggtech.utils.SnackbarUtil;
 import com.mordekai.poggtech.utils.BottomNavVisibilityController;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.HapticFeedbackConstants;
@@ -44,6 +46,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
@@ -92,6 +95,7 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
     private Chat chatProduct;
     private User user;
     private Product product;
+    private User sellerUser;
     private MessageViewModel messageViewModel;
     private ReviewViewModel reviewViewModel;
     private int productId;
@@ -135,7 +139,6 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
         }
 
         startComponents(view);
-        startUser(view);
         verifyProductIsSaved(productId, user.getUserId(), 1);
 
         ApiProduct apiProduct = RetrofitClient.getRetrofitInstance().create(ApiProduct.class);
@@ -189,6 +192,29 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
         return view;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        int productId = getArguments().getInt("productId", -1);
+        if (productId != -1) {
+            fetchProduct(productId, view);
+            getReviews(productId);
+
+            ProductLoader.loadForYouProducts(
+                    productManager,
+                    user.getUserId(),
+                    forYouAdapter,
+                    productList,
+                    favoriteIds,
+                    4,
+                    1,
+                    () -> {
+                    }
+            );
+        }
+    }
+
     private void getReviews(int productId) {
         reviewViewModel.loadReviews(productId, 4);
     }
@@ -198,17 +224,21 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
         TextView userName = view.findViewById(R.id.userName);
         TextView userCreateDate = view.findViewById(R.id.userCreateDate);
 
-        Utils.loadImageBasicAuth(userAvatar, user.getAvatar());
-        userName.setText(user.getName());
-        userCreateDate.setText(String.format("%s %s", getString(R.string.inAppSince), user.getCreatedAt()));
+        Utils.loadImageBasicAuth(userAvatar, sellerUser.getAvatar());
+        userName.setText(sellerUser.getName());
+        userCreateDate.setText(String.format("%s %s", getString(R.string.inAppSince), sellerUser.getCreatedAt()));
     }
 
     private void fetchProduct(int productId, View view) {
-        productManager.fetchProductById(productId, new RepositoryCallback<Product>() {
+        productManager.fetchProductById(productId, new RepositoryCallback<ProductWithUser>() {
             @Override
-            public void onSuccess(Product productDetails) {
-                if (productDetails != null) {
-                    product = productDetails;
+            public void onSuccess(ProductWithUser productWithUser) {
+                if (productWithUser != null) {
+                    product = productWithUser.getProduct();
+                    sellerUser = productWithUser.getUser();
+                    if(sellerUser != null) {
+                        startUser(view);
+                    }
                     updateUIWithProduct(view);
 
                     productManager.getProductImages(productId, new RepositoryCallback<List<String>>() {
@@ -330,6 +360,12 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
         minusProduct = view.findViewById(R.id.minusProduct);
         plusProduct = view.findViewById(R.id.plusProduct);
 
+        AppCompatImageView shareButton = view.findViewById(R.id.shareButton);
+
+        shareButton.setOnClickListener(v -> {
+            shareProduct(product.getProduct_id());
+        });
+
         quantityProduct.setText(String.valueOf(quantityAdd));
 
         minusProduct.setOnClickListener(v -> {
@@ -371,9 +407,7 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
             addToCart(productId);
         });
 
-        
-        getActivity().findViewById(R.id.btnBackHeader).setVisibility(View.VISIBLE);
-
+        ((MainActivity) getActivity()).showBackButton();
         setupObservers();
     }
 
@@ -420,7 +454,7 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
             }
         });
 
-        if(product.getSeller_type().equals("admin")) {
+        if(product.isPoggers()) {
             view.findViewById(R.id.containerSeller).setVisibility(View.VISIBLE);
             view.findViewById(R.id.containerReviewsAll).setVisibility(View.VISIBLE);
             view.findViewById(R.id.containerUser).setVisibility(View.GONE);
@@ -441,7 +475,7 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
 
         // Verifica o dono do produto, para não deixar o próprio vendedor comprar o produto dele
         if (product.getUser_id() != user.getUserId()) {
-            if (product.getSeller_type().equals("admin")) {
+            if (product.isPoggers()) {
                 actionButton.setVisibility(View.VISIBLE);
                 contactSellerContainer.setVisibility(View.GONE);
                 actionButton.setEnabled(true);
@@ -632,6 +666,18 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
         ProductAddedBottomSheet bottomSheet = new ProductAddedBottomSheet();
         bottomSheet.setArguments(bundle);
         bottomSheet.show(getChildFragmentManager(), bottomSheet.getTag());
+    }
+
+    private void shareProduct(int productId) {
+        String link = "http://poggers.ddns.net/PoggTech-APIs/public/product/" + productId;
+
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "Confira este produto: " + link);
+        sendIntent.setType("text/plain");
+
+        Intent shareIntent = Intent.createChooser(sendIntent, "Compartilhar produto via...");
+        startActivity(shareIntent);
     }
 
     @Override

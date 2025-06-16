@@ -30,7 +30,6 @@ tools:ignore="ScopedStorage" />
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -46,8 +45,27 @@ tools:ignore="ScopedStorage" />
             android:theme="@style/Theme.PoggTech"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
+            <!-- App Link real -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="http"
+                    android:host="poggers.ddns.net"
+                    android:pathPrefix="/PoggTech-APIs/public/product" />
+            </intent-filter>
 
+            <!-- Deep link interno opcional -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="poggtech"
+                    android:host="navigate" />
+            </intent-filter>
         </activity>
+
 
         <meta-data
             android:name="preloaded_fonts"

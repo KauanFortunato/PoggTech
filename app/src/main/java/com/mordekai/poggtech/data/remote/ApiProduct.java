@@ -3,6 +3,7 @@ package com.mordekai.poggtech.data.remote;
 import com.mordekai.poggtech.data.model.ApiResponse;
 import com.mordekai.poggtech.data.model.Category;
 import com.mordekai.poggtech.data.model.Product;
+import com.mordekai.poggtech.data.model.ProductWithUser;
 
 import java.util.List;
 
@@ -56,7 +57,7 @@ public interface ApiProduct {
     Call<ApiResponse<Void>> deleteProduct(@Path("product_id") int product_id);
 
     @GET("products/{product_id}")
-    Call<ApiResponse<Product>> getProductById(@Path("product_id") int product_id);
+    Call<ApiResponse<ProductWithUser>> getProductById(@Path("product_id") int product_id);
 
     @GET("products")
     Call<List<Product>> getAllProducts();

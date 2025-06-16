@@ -12,6 +12,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -78,6 +79,18 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // redireciona se for deep link
+        Intent intent = getIntent();
+        Uri data = intent.getData();
+        if (data != null) {
+            Intent mainIntent = new Intent(this, MainActivity.class);
+            mainIntent.setAction(Intent.ACTION_VIEW);
+            mainIntent.setData(data);
+            startActivity(mainIntent);
+            finish();
+            return;
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS)

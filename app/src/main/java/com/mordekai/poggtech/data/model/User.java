@@ -17,6 +17,7 @@ public class User {
     private String phone;
     private String created_at;
     private String error;
+    private String type;
     private String token;
     private boolean isGoogle;
 
@@ -92,6 +93,8 @@ public class User {
     public void setError(String error) {
         this.error = error;
     }
+
+    public String getType() { return type; }
 
     public String getToken() { return token; }
 

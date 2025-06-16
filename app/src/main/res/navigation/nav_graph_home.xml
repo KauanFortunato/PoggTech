@@ -55,6 +55,12 @@
         <action
             android:id="@+id/action_productDetailsFragment_to_productManageFragment"
             app:destination="@id/productManageFragment" />
+        <argument
+            android:name="productId"
+            app:argType="integer" />
+        <deepLink
+            app:uri="poggtech://navigate/product?id={productId}"
+            app:action="android.intent.action.VIEW" />
     </fragment>
 
     <fragment
