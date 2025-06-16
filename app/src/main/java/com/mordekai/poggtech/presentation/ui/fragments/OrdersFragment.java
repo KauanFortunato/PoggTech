@@ -44,7 +44,7 @@ public class OrdersFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_orders, container, false);
 
-        ((BottomNavVisibilityController) requireActivity()).hideBottomNav();
+        
 
         SharedPrefHelper sharedPrefHelper = new SharedPrefHelper(requireContext());
         user = sharedPrefHelper.getUser();
@@ -68,7 +68,7 @@ public class OrdersFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ((BottomNavVisibilityController) requireActivity()).hideBottomNav();
+        
     }
 
     private void getOrders(View view) {

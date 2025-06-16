@@ -21,7 +21,8 @@
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/headerContainer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
 
         <FrameLayout
             android:id="@+id/nav_host_container"

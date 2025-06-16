@@ -2,18 +2,21 @@ package com.mordekai.poggtech.presentation.ui.fragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -41,7 +44,9 @@ import com.mordekai.poggtech.utils.ProductLoader;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class HomeFragment extends Fragment
         implements ProductAdapter.OnProductClickListener,
@@ -51,9 +56,9 @@ public class HomeFragment extends Fragment
 
     private SharedPrefHelper sharedPrefHelper;
     private LinearLayout containerProductsHome, containerCategorias;
-    private LinearLayout popularContainer, forYouContainer, maybeYouLikeContainer;
+    private LinearLayout popularContainer, forYouContainer, maybeYouLikeContainer, promoProductsContainer;
     private RecyclerView rvForYou, rvPopular, rvContinueBuySkeleton, rvContinueBuy, rvMaybeYouLike, rvCategories;
-    private ProductAdapter forYouAdapter, popularAdapter, accessoryAdapter, maybeYouLikeAdapter;
+    private ProductAdapter forYouAdapter, popularAdapter, accessoryAdapter, maybeYouLikeAdapter, promoAdapter;
     private CategoryAdapter categoryAdapter;
     private ProductContinueAdapter productContinueAdapter;
     private ApiService apiService;
@@ -71,6 +76,8 @@ public class HomeFragment extends Fragment
     View fakeScrollbar, fakeScrollbarTrack;
     private SwipeRefreshLayout swipeRefreshLayout;
 
+    private final Set<Integer> loadedProductIds = new HashSet<>();
+
 
     @Nullable
     @Override
@@ -86,7 +93,7 @@ public class HomeFragment extends Fragment
         }
 
         startComponentes(view);
-        ((BottomNavVisibilityController) requireActivity()).showBottomNav();
+
         hideContainers();
 
         setupSkeletonLoader();
@@ -99,6 +106,7 @@ public class HomeFragment extends Fragment
         productContinueAdapter = new ProductContinueAdapter(new ArrayList<>(), user.getUserId(), this, this);
         apiProduct = RetrofitClient.getRetrofitInstance().create(ApiProduct.class);
         categoryAdapter = new CategoryAdapter(new ArrayList<>(), getContext(), this, R.layout.item_category);
+        promoAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), R.layout.item_product, this, this);
 
         rvCategories.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rvCategories.setAdapter(categoryAdapter);
@@ -117,6 +125,10 @@ public class HomeFragment extends Fragment
         rvForYou.setLayoutManager(new GridLayoutManager(getContext(),2));
         rvForYou.setNestedScrollingEnabled(false);
 
+        RecyclerView rvPromoProducts = view.findViewById(R.id.rvPromoProducts);
+        rvPromoProducts.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        rvPromoProducts.setAdapter(promoAdapter);
+
         apiProduct = RetrofitClient.getRetrofitInstance().create(ApiProduct.class);
         productManager = new ProductManager(apiProduct);
         forYouAdapter = new ProductAdapter(productForYouList, user.getUserId(), R.layout.item_product_match_parent, this, this);
@@ -128,19 +140,9 @@ public class HomeFragment extends Fragment
         getForYou();
         getContinueBuy();
 
-        ProductLoader.loadForYouProducts(
-                productManager,
-                user.getUserId(),
-                forYouAdapter,
-                productForYouList,
-                favoriteIds,
-                4,
-                1,
-                this::checkIfLoadingFinished
-        );
-
         maybeYouLike();
         getPopular();
+        getPromotionProducts();
         getCategories();
 
         return view;
@@ -153,13 +155,10 @@ public class HomeFragment extends Fragment
         if (!isVisible()) return;
 
         HeaderFragment.HeaderListener listener = (HeaderFragment.HeaderListener) getActivity();
-        ((BottomNavVisibilityController) requireActivity()).showBottomNav();
-
         if (listener != null) {
             listener.hideBackButton();
         }
 
-        // Garante que o headerContainer seja visível, mesmo se o fragmento estiver a ser restaurado
         View root = getActivity().findViewById(android.R.id.content);
         if (root != null) {
             root.post(() -> {
@@ -167,8 +166,13 @@ public class HomeFragment extends Fragment
                 if (headerContainer != null) {
                     headerContainer.setVisibility(View.VISIBLE);
                 }
+
             });
         }
+
+        new Handler().postDelayed(() -> {
+            loadHomeData();
+        }, 200);
     }
 
     private void getContinueBuy() {
@@ -200,13 +204,14 @@ public class HomeFragment extends Fragment
     }
 
     private void getForYou() {
-        productManager.getProductsFavCategories(user.getUserId(), 4, new RepositoryCallback<List<Product>>() {
+        productManager.getProductsFavCategories(user.getUserId(), 12, new RepositoryCallback<List<Product>>() {
             @Override
             public void onSuccess(List<Product> result) {
+                List<Product> filteredResult = filterNewProducts(result);
+                List<Product> limited = limitDisplay(filteredResult, 6);
                 productForYouList.clear();
-                productForYouList.addAll(result);
+                productForYouList.addAll(limited);
 
-                // Buscar os favoritos do utilizador antes de atualizar os adapters
                 productManager.fetchUserFavOrCart(user.getUserId(), 1, new RepositoryCallback<List<Integer>>() {
                     @Override
                     public void onSuccess(List<Integer> favorites) {
@@ -214,7 +219,7 @@ public class HomeFragment extends Fragment
                         favoriteIds.addAll(favorites);
 
                         updateAllAdapters();
-                        forYouAdapter.updateProducts(result);
+                        forYouAdapter.updateProducts(limited);
                         checkIfLoadingFinished();
                     }
 
@@ -235,10 +240,13 @@ public class HomeFragment extends Fragment
     }
 
     private void getPopular() {
-        productManager.getPopularProducts(false, 6, new RepositoryCallback<List<Product>>() {
+        productManager.getPopularProducts(false, 12, new RepositoryCallback<List<Product>>() {
             @Override
             public void onSuccess(List<Product> result) {
-                popularAdapter.updateProducts(result);
+                List<Product> filteredResult = filterNewProducts(result);
+                List<Product> limited = limitDisplay(filteredResult, 4);
+
+                popularAdapter.updateProducts(limited);
                 checkIfLoadingFinished();
             }
 
@@ -254,7 +262,10 @@ public class HomeFragment extends Fragment
         productManager.getProductsFromFavCategory(user.getUserId(), new RepositoryCallback<List<Product>>() {
             @Override
             public void onSuccess(List<Product> result) {
-                maybeYouLikeAdapter.updateProducts(result);
+                List<Product> filteredResult = filterNewProducts(result);
+                List<Product> limited = limitDisplay(filteredResult, 6);
+
+                maybeYouLikeAdapter.updateProducts(limited);
                 checkIfLoadingFinished();
             }
 
@@ -283,25 +294,43 @@ public class HomeFragment extends Fragment
         });
     }
 
+    private void getPromotionProducts() {
+        productManager.getPromotionProducts(20, 50, 0, 1, new RepositoryCallback<List<Product>>() {
+            @Override
+            public void onSuccess(List<Product> result) {
+                promoAdapter.updateProducts(result);
+                checkIfLoadingFinished();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("API_RESPONSE", "Erro ao buscar produtos", t);
+                checkIfLoadingFinished();
+            }
+        });
+    }
+
     @SuppressLint("NotifyDataSetChanged")
     public void updateAllAdapters() {
         forYouAdapter.setSavedIds(favoriteIds);
         popularAdapter.setSavedIds(favoriteIds);
         accessoryAdapter.setSavedIds(favoriteIds);
         maybeYouLikeAdapter.setSavedIds(favoriteIds);
+        promoAdapter.setSavedIds(favoriteIds);
 
         forYouAdapter.notifyDataSetChanged();
         popularAdapter.notifyDataSetChanged();
         accessoryAdapter.notifyDataSetChanged();
         productContinueAdapter.notifyDataSetChanged();
         maybeYouLikeAdapter.notifyDataSetChanged();
+        promoAdapter.notifyDataSetChanged();
     }
 
     private void checkIfLoadingFinished() {
         loadingCount++;
         Log.d("DEBUG", "loadingCount: " + loadingCount);
 
-        if (loadingCount >= 5) {
+        if (loadingCount >= 6) {
             containerProductsHome.setVisibility(View.VISIBLE);
 
             shimmerForYouSkeleton.stopShimmer();
@@ -311,7 +340,7 @@ public class HomeFragment extends Fragment
             containerCategorias.setVisibility(View.VISIBLE);
             showContainers();
 
-            swipeRefreshLayout.setRefreshing(false); // para o swipe
+            swipeRefreshLayout.setRefreshing(false);
         }
     }
 
@@ -328,6 +357,7 @@ public class HomeFragment extends Fragment
         rvContinueBuySkeleton = view.findViewById(R.id.rvContinueBuySkeleton);
         containerProductsHome = view.findViewById(R.id.containerProductsHome);
         containerCategorias = view.findViewById(R.id.containerCategorias);
+        promoProductsContainer = view.findViewById(R.id.promoProductsContainer);
         shimmerForYouSkeleton = view.findViewById(R.id.forYouSkeleton);
         shimmerCategories = view.findViewById(R.id.shimmerCategorias);
 
@@ -343,6 +373,38 @@ public class HomeFragment extends Fragment
         horizontalScrollViewCategories = view.findViewById(R.id.horizontalScrollViewCategories);
         fakeScrollbar = view.findViewById(R.id.fakeScrollbar);
         fakeScrollbarTrack = view.findViewById(R.id.fakeScrollbarTrack);
+        TextView seeMorePromo = view.findViewById(R.id.seeMorePromo);
+        TextView seeMorePop = view.findViewById(R.id.seeMorePop);
+
+        seeMorePromo.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("listType", "promotion");
+
+            NavOptions navOptions = new NavOptions.Builder()
+                    .setEnterAnim(R.anim.slide_in_right)
+                    .setExitAnim(R.anim.slide_out_left)
+                    .setPopEnterAnim(R.anim.slide_in_left)
+                    .setPopExitAnim(R.anim.slide_out_right)
+                    .build();
+
+            NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
+            navController.navigate(R.id.productListFragment, bundle, navOptions);
+        });
+
+        seeMorePop.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("listType", "popular");
+
+            NavOptions navOptions = new NavOptions.Builder()
+                    .setEnterAnim(R.anim.slide_in_right)
+                    .setExitAnim(R.anim.slide_out_left)
+                    .setPopEnterAnim(R.anim.slide_in_left)
+                    .setPopExitAnim(R.anim.slide_out_right)
+                    .build();
+
+            NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
+            navController.navigate(R.id.productListFragment, bundle, navOptions);
+        });
 
         HeaderFragment.HeaderListener listener = (HeaderFragment.HeaderListener) getActivity();
 
@@ -373,18 +435,21 @@ public class HomeFragment extends Fragment
             }
         });
 
-        getActivity().findViewById(R.id.bottomNavigationView).setVisibility(View.VISIBLE);
+        swipeRefreshLayout.setOnRefreshListener(this::loadHomeData);
 
-        swipeRefreshLayout.setOnRefreshListener(() -> {
-            showSkeletons();
+    }
 
-            loadingCount = 0;
-            getForYou();
-            getContinueBuy();
-            maybeYouLike();
-            getPopular();
-            getCategories();
-        });
+    private void loadHomeData() {
+        loadedProductIds.clear();
+        loadingCount = 0;
+
+        showSkeletons();
+        getForYou();
+        getContinueBuy();
+        maybeYouLike();
+        getPopular();
+        getCategories();
+        getPromotionProducts();
     }
 
     private void setupSkeletonLoader() {
@@ -398,6 +463,8 @@ public class HomeFragment extends Fragment
     }
 
     private void showSkeletons() {
+        loadedProductIds.clear();
+
         shimmerForYouSkeleton.setVisibility(View.VISIBLE);
         shimmerCategories.setVisibility(View.VISIBLE);
         shimmerForYouSkeleton.startShimmer();
@@ -413,12 +480,31 @@ public class HomeFragment extends Fragment
         popularContainer.setVisibility(View.GONE);
         forYouContainer.setVisibility(View.GONE);
         maybeYouLikeContainer.setVisibility(View.GONE);
+        promoProductsContainer.setVisibility(View.GONE);
     }
 
     private void showContainers() {
         popularContainer.setVisibility(View.VISIBLE);
         forYouContainer.setVisibility(View.VISIBLE);
         maybeYouLikeContainer.setVisibility(View.VISIBLE);
+        promoProductsContainer.setVisibility(View.VISIBLE);
+
+    }
+
+    private List<Product> limitDisplay(List<Product> list, int maxCount) {
+        return list.size() > maxCount ? list.subList(0, maxCount) : list;
+    }
+
+
+    private List<Product> filterNewProducts(List<Product> products) {
+        List<Product> uniqueProducts = new ArrayList<>();
+        for (Product product : products) {
+            if (!loadedProductIds.contains(product.getProduct_id())) {
+                loadedProductIds.add(product.getProduct_id());
+                uniqueProducts.add(product);
+            }
+        }
+        return uniqueProducts;
     }
 
     @Override

@@ -2,10 +2,10 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph_home"
-    app:startDestination="@id/home">
+    app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/home"
+        android:id="@+id/homeFragment"
         android:name="com.mordekai.poggtech.presentation.ui.fragments.HomeFragment"
         android:label="HomeFragment" >
         <action
@@ -25,6 +25,9 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_productListFragment"
+            app:destination="@id/productListFragment" />
     </fragment>
 
     <fragment
@@ -97,7 +100,19 @@
         android:label="OfflineFragment" >
         <action
             android:id="@+id/action_offlineFragment3_to_home"
-            app:destination="@id/home" />
+            app:destination="@id/homeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/productListFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.ProductListFragment"
+        android:label="ProductListFragment" >
+
+        <argument
+            android:name="listType"
+            app:argType="string"
+            android:defaultValue="popular" />
+
     </fragment>
 
 

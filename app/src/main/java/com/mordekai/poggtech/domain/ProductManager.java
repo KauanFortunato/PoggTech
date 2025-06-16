@@ -415,4 +415,27 @@ public class ProductManager {
             }
         });
     }
+
+    public void getPromotionProducts(int minDiscount, int maxDiscount, int quantity, int all, RepositoryCallback<List<Product>> callback) {
+        apiProduct.getPromotionProducts(minDiscount, maxDiscount, quantity, all).enqueue(new Callback<ApiResponse<List<Product>>>() {
+
+            @Override
+            public void onResponse(Call<ApiResponse<List<Product>>> call, Response<ApiResponse<List<Product>>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ApiResponse<List<Product>> apiResponse = response.body();
+
+                    if (apiResponse.isSuccess()) {
+                        callback.onSuccess(apiResponse.getData());
+                    } else {
+                        callback.onFailure(new Exception("Erro ao buscar produtos"));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<List<Product>>> call, Throwable t) {
+                callback.onFailure(new Exception("Erro ao buscar produtos"));
+            }
+        });
+    }
 }

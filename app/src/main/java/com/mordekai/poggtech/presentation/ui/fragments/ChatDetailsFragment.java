@@ -52,7 +52,6 @@ public class ChatDetailsFragment extends Fragment {
     private ImageButton btnSend, btnBack;
     private TextView nameUser, productName, productPrice, chatId;
     private ImageView imageProduct;
-    private BottomNavigationView bottomNavigationView;
 
     private int chatWithId, productId, chatChatId;
     private String chatWithName, productTitle, productPriceString, productImage;
@@ -144,20 +143,16 @@ public class ChatDetailsFragment extends Fragment {
     }
 
     private void initComponents(View view) {
-        bottomNavigationView = getActivity().findViewById(R.id.bottomNavigationView);
-
         imageProduct = view.findViewById(R.id.imageProduct);
         nameUser = view.findViewById(R.id.nameUser);
         productName = view.findViewById(R.id.productName);
         productPrice = view.findViewById(R.id.productPrice);
         btnBack = view.findViewById(R.id.btn_back);
         chatId = view.findViewById(R.id.chatId);
-        getActivity().findViewById(R.id.headerContainer).setVisibility(View.GONE);
 
         rvMessages = view.findViewById(R.id.rvMessage);
         etMessage = view.findViewById(R.id.etMessage);
         btnSend = view.findViewById(R.id.btnSend);
-        bottomNavigationView.setVisibility(View.GONE);
         btnSend.setVisibility(View.GONE);
 
         etMessage.requestFocus();
@@ -178,7 +173,6 @@ public class ChatDetailsFragment extends Fragment {
                 btnBack.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
             }
 
-            bottomNavigationView.setVisibility(View.VISIBLE);
             NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
             navController.popBackStack();
         });

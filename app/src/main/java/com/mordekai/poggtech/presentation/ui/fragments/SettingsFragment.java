@@ -43,8 +43,6 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
-        ((BottomNavVisibilityController) requireActivity()).hideBottomNav();
-        getActivity().findViewById(R.id.headerContainer).setVisibility(View.GONE);
 
         sharedPrefHelper = new SharedPrefHelper(requireContext());
         user = sharedPrefHelper.getUser();
@@ -56,9 +54,6 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
-        getActivity().findViewById(R.id.headerContainer).setVisibility(View.GONE);
-        ((BottomNavVisibilityController) requireActivity()).hideBottomNav();
     }
 
     public void startComponents(View view) {
@@ -98,7 +93,7 @@ public class SettingsFragment extends Fragment {
         });
 
         btnChangePass.setOnClickListener(v -> {
-            if(btnChangePass.isHapticFeedbackEnabled()) {
+            if (btnChangePass.isHapticFeedbackEnabled()) {
                 v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
             }
 
@@ -117,7 +112,7 @@ public class SettingsFragment extends Fragment {
         });
 
         btnChangeTheme.setOnClickListener(v -> {
-            if(btnChangeTheme.isHapticFeedbackEnabled()) {
+            if (btnChangeTheme.isHapticFeedbackEnabled()) {
                 v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
             }
 
@@ -126,7 +121,7 @@ public class SettingsFragment extends Fragment {
         });
 
         btn_back.setOnClickListener(v -> {
-            if(btn_back.isHapticFeedbackEnabled()) {
+            if (btn_back.isHapticFeedbackEnabled()) {
                 v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
             }
 
@@ -135,7 +130,7 @@ public class SettingsFragment extends Fragment {
         });
 
         btnChangeLanguage.setOnClickListener(v -> {
-            if(btnChangeLanguage.isHapticFeedbackEnabled()) {
+            if (btnChangeLanguage.isHapticFeedbackEnabled()) {
                 v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
             }
 

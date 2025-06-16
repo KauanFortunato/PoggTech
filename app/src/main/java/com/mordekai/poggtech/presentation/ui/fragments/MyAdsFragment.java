@@ -100,7 +100,7 @@ public class MyAdsFragment extends Fragment {
 
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
 
-        ((BottomNavVisibilityController) requireActivity()).hideBottomNav();
+        
 
         btnBack.setOnClickListener(v -> {
             if (btnBack.isHapticFeedbackEnabled()) {

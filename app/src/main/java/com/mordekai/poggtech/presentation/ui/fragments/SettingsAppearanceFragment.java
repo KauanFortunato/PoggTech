@@ -32,7 +32,7 @@ public class SettingsAppearanceFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings_appearance, container, false);
-        getActivity().findViewById(R.id.headerContainer).setVisibility(View.GONE);
+        
 
         preferences = requireActivity().getSharedPreferences("app_prefs", MODE_PRIVATE);
 
@@ -47,8 +47,8 @@ public class SettingsAppearanceFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        getActivity().findViewById(R.id.headerContainer).setVisibility(View.GONE);
-        ((BottomNavVisibilityController) requireActivity()).hideBottomNav();
+        
+        
     }
 
     private void setupViews(View view) {

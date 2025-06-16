@@ -92,6 +92,14 @@ public interface ApiProduct {
             @Path("quantity") int quantity
     );
 
+    @GET("products/promotions/{minDiscount}/{maxDiscount}/{quantity}/{all}")
+    Call<ApiResponse<List<Product>>> getPromotionProducts(
+            @Path("minDiscount") int minDiscount,
+            @Path("maxDiscount") int maxDiscount,
+            @Path("quantity") int quantity,
+            @Path("all") int all
+    );
+
     /*
      *   Cart
      * */

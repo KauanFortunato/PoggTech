@@ -210,15 +210,13 @@ public class UserConfigFragment extends Fragment {
                 openAvatarPicker();
             }
         });
-
-        ((BottomNavVisibilityController) requireActivity()).hideBottomNav();
+        
 
         btn_back.setOnClickListener(v -> {
             if (btn_back.isHapticFeedbackEnabled()) {
                 v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
             }
-
-            ((BottomNavVisibilityController) requireActivity()).showBottomNav();
+            
 
             NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
             navController.popBackStack();

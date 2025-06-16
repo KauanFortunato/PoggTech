@@ -26,7 +26,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
@@ -203,7 +202,7 @@ public class HeaderFragment extends Fragment {
 
         boolean popped = navController.popBackStack();
         if (!popped) {
-            navController.navigate(R.id.home);
+            navController.navigate(R.id.homeFragment);
         }
     }
 

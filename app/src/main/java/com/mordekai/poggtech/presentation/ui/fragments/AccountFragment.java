@@ -105,7 +105,7 @@ public class AccountFragment extends Fragment
 
         if (!isVisible()) return;
 
-        getActivity().findViewById(R.id.headerContainer).setVisibility(View.GONE);
+        
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -120,8 +120,6 @@ public class AccountFragment extends Fragment
         buttonConfig = view.findViewById(R.id.buttonConfig);
         buttonMyPurchases = view.findViewById(R.id.buttonMyPurchases);
         buttonMyAds = view.findViewById(R.id.buttonMyAds);
-
-        ((BottomNavVisibilityController) requireActivity()).showBottomNav();
 
         Utils.loadImageBasicAuth(userAvatar, user.getAvatar());
 

@@ -29,7 +29,6 @@ import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.ProductManager;
 import com.mordekai.poggtech.presentation.ui.activity.MainActivity;
-import com.mordekai.poggtech.utils.BottomNavVisibilityController;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 import com.mordekai.poggtech.utils.Utils;
 
@@ -39,7 +38,6 @@ import java.util.List;
 public class SearchFragment extends Fragment implements CategoryAdapter.OnCategoryClickListerner, HeaderFragment.HeaderListener {
 
     private SharedPrefHelper sharedPrefHelper;
-    private HistoryAdapter historyAdapter;
     private RecyclerView rvCategories;
     private TextView searchTitle;
     private EditText searchProd;
@@ -63,7 +61,7 @@ public class SearchFragment extends Fragment implements CategoryAdapter.OnCatego
         List<String> history = sharedPrefHelper.getSearchHistory();
         Log.d("History", history.toString());
 
-        ((BottomNavVisibilityController) requireActivity()).hideBottomNav();
+        
 
         startComponents(view);
 
@@ -108,7 +106,7 @@ public class SearchFragment extends Fragment implements CategoryAdapter.OnCatego
 
         if (!isVisible()) return;
 
-        ((BottomNavVisibilityController) requireActivity()).hideBottomNav();
+        
 
         refreshSearchHistory();
 
@@ -140,8 +138,6 @@ public class SearchFragment extends Fragment implements CategoryAdapter.OnCatego
         searchProd = getActivity().findViewById(R.id.searchProd);
         searchTitle = view.findViewById(R.id.searchTitle);
         rvCategories = view.findViewById(R.id.rvCategories);
-
-        getActivity().findViewById(R.id.bottomNavigationView).setVisibility(View.GONE);
 
         delHistory.setOnClickListener(v -> {
             if (delHistory.isHapticFeedbackEnabled()) {

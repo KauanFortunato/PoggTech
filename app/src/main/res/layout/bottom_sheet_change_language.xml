@@ -64,13 +64,33 @@
             android:paddingHorizontal="10dp"
             android:paddingVertical="20dp">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/english"
-                android:textColor="@color/textPrimary"
-                android:textSize="@dimen/text_normal" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/english"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="@dimen/text_normal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:letterSpacing="0.1"
+                    android:text="(Beta)"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textColor="@color/textPrimary"
+                    android:background="@drawable/bg_separetor"
+                    android:padding="5dp"
+                    android:textSize="@dimen/text_size_micro" />
+
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/icon_english"

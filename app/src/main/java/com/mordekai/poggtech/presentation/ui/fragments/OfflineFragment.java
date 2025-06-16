@@ -19,7 +19,6 @@ import com.mordekai.poggtech.utils.SnackbarUtil;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
 
 public class OfflineFragment extends Fragment {
     private AppCompatButton tryAgainButton;
@@ -44,7 +43,7 @@ public class OfflineFragment extends Fragment {
                 if(isConnected) {
                     if (NetworkUtil.isConnected(requireContext())) {
                         NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
-                        navController.navigate(R.id.home);
+                        navController.navigate(R.id.homeFragment);
                     } else {
                         if(tryAgainButton.isHapticFeedbackEnabled()) {
                             v.performHapticFeedback(HapticFeedbackConstants.REJECT);

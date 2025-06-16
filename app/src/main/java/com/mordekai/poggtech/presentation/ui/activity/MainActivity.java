@@ -44,20 +44,46 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
     private final Map<Integer, NavController> navControllerMap = new HashMap<>();
     private int currentNavHostId = R.id.nav_host_home;
 
+    private NavController.OnDestinationChangedListener currentNavListener;
+    private NavController currentNavController;
+
+
+    Set<Integer> fragmentsComHeaderEBottom = new HashSet<>(Arrays.asList(
+            R.id.homeFragment,
+            R.id.categoryFragment,
+            R.id.searchedProducts
+    ));
+
+    Set<Integer> fragmentsComApenasBottom = new HashSet<>(Arrays.asList(
+            R.id.accountFragment,
+            R.id.productManageFragment,
+            R.id.chatFragment
+    ));
+
+    Set<Integer> fragmentsComApenasHeader = new HashSet<>(Arrays.asList(
+            R.id.productDetailsFragment,
+            R.id.searchFragment
+    ));
+
+    Set<Integer> fragmentsSemHeaderENemBottom = new HashSet<>(Arrays.asList(
+            R.id.chatDetailsFragment,
+            R.id.offlineFragment,
+            R.id.myAdsFragment,
+            R.id.newAdFragment,
+            R.id.orderDetailsFragment,
+            R.id.ordersFragment,
+            R.id.settingsFragment,
+            R.id.settingsAppearanceFragment,
+            R.id.userConfigFragment,
+            R.id.walletFragment
+    ));
+
     public void setForceBackToHome(boolean force) {
         this.forceBackToHome = force;
     }
 
     public boolean shouldForceBackToHome() {
         return forceBackToHome;
-    }
-
-    public void showHeader() {
-        findViewById(R.id.headerContainer).setVisibility(View.VISIBLE);
-    }
-
-    public void hideHeader() {
-        findViewById(R.id.headerContainer).setVisibility(View.GONE);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O_MR1)
@@ -74,20 +100,25 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
         AppConfig.initialize(this);
 
         // Setup Header
-        headerFragment = new HeaderFragment();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.headerContainer, headerFragment)
-                .commit();
+        Fragment existingHeader = getSupportFragmentManager().findFragmentById(R.id.headerContainer);
+        if (existingHeader instanceof HeaderFragment) {
+            headerFragment = (HeaderFragment) existingHeader;
+        } else {
+            headerFragment = new HeaderFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.headerContainer, headerFragment)
+                    .commit();
+        }
 
         // Setup Navigation
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        navHostMap.put(R.id.home, R.id.nav_host_home);
+        navHostMap.put(R.id.homeFragment, R.id.nav_host_home);
         navHostMap.put(R.id.save, R.id.nav_host_save);
         navHostMap.put(R.id.chat, R.id.nav_host_chat);
         navHostMap.put(R.id.account, R.id.nav_host_account);
 
         // Inicializa os NavControllers para cada aba
-        navControllerMap.put(R.id.home, NavHostFragment.findNavController(
+        navControllerMap.put(R.id.homeFragment, NavHostFragment.findNavController(
                 getSupportFragmentManager().findFragmentById(R.id.nav_host_home)));
 
         navControllerMap.put(R.id.save, NavHostFragment.findNavController(
@@ -99,9 +130,14 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
         navControllerMap.put(R.id.account, NavHostFragment.findNavController(
                 getSupportFragmentManager().findFragmentById(R.id.nav_host_account)));
 
+        currentNavController = navControllerMap.get(R.id.homeFragment);
+        currentNavListener = (navController, destination, arguments) -> {
+            updateUiVisibilityBasedOnDestinationId(destination.getId());
+        };
+        currentNavController.addOnDestinationChangedListener(currentNavListener);
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.home, R.id.account, R.id.save, R.id.chat
+                R.id.homeFragment, R.id.account, R.id.save, R.id.chat
         ).build();
 
 
@@ -115,6 +151,11 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
                 clearChatBadge();
             }
 
+            // Remove listener do NavController antigo para evitar chamadas concorrentes
+            if (currentNavController != null && currentNavListener != null) {
+                currentNavController.removeOnDestinationChangedListener(currentNavListener);
+            }
+
             // Oculta todos os hosts
             for (int hostId : navHostMap.values()) {
                 findViewById(hostId).setVisibility(View.GONE);
@@ -124,17 +165,22 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
             findViewById(targetFragmentId).setVisibility(View.VISIBLE);
             currentNavHostId = targetFragmentId;
 
-            NavController controller = navControllerMap.get(tabId);
-            controller.popBackStack(controller.getGraph().getStartDestinationId(), false);
+            currentNavController = navControllerMap.get(tabId);
 
-            if (tabId == R.id.home) {
-                showHeader();
-            } else {
-                hideHeader();
+            // Adiciona listener para o NavController novo
+            currentNavController.addOnDestinationChangedListener(currentNavListener);
+
+            // Reseta pilha da aba
+            currentNavController.popBackStack(currentNavController.getGraph().getStartDestinationId(), false);
+
+            // Atualiza UI para o destino atual do NavController
+            if (currentNavController.getCurrentDestination() != null) {
+                updateUiVisibilityBasedOnDestinationId(currentNavController.getCurrentDestination().getId());
             }
 
             return true;
         });
+
 
         // Verifica conexão com XAMPP
         NetworkUtil.isConnectedXampp(isConnected -> {
@@ -152,11 +198,9 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
                 hideHeader();
                 hideBottomNav();
             } else {
-                showBottomNav();
-                showHeader();
+                updateUiVisibilityBasedOnCurrentDestination();
             }
         });
-
 
         MessageNotifier.setListener(this::showChatBadge);
     }
@@ -172,6 +216,7 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
             showChatBadge();
         }
 
+        updateUiVisibilityBasedOnCurrentDestination();
         MessageNotifier.setListener(this::showChatBadge);
     }
 
@@ -215,6 +260,47 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
         return NavHostFragment.findNavController(currentFragment);
     }
 
+    private void updateUiVisibilityBasedOnCurrentDestination() {
+        NavController nav = getCurrentNavController();
+        if (nav.getCurrentDestination() == null) return;
+
+        int currentDest = nav.getCurrentDestination().getId();
+
+        if (fragmentsComHeaderEBottom.contains(currentDest)) {
+            showHeader();
+            showBottomNav();
+        } else if (fragmentsComApenasBottom.contains(currentDest)) {
+            hideHeader();
+            showBottomNav();
+        } else if (fragmentsComApenasHeader.contains(currentDest)) {
+            showHeader();
+            hideBottomNav();
+        } else if (fragmentsSemHeaderENemBottom.contains(currentDest)) {
+            hideHeader();
+            hideBottomNav();
+        } else {
+            // fallback seguro
+            showHeader();
+            showBottomNav();
+        }
+    }
+
+    private void updateUiVisibilityBasedOnDestinationId(int destId) {
+        if (fragmentsComHeaderEBottom.contains(destId)) {
+            showHeader();
+            showBottomNav();
+        } else if (fragmentsComApenasBottom.contains(destId)) {
+            hideHeader();
+            showBottomNav();
+        } else if (fragmentsComApenasHeader.contains(destId)) {
+            showHeader();
+            hideBottomNav();
+        } else if (fragmentsSemHeaderENemBottom.contains(destId)) {
+            hideHeader();
+            hideBottomNav();
+        }
+    }
+
     @Override
     public void showBackButton() {
         if (headerFragment != null) {
@@ -236,6 +322,16 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
         }
     }
 
+    public void showHeader() {
+        findViewById(R.id.headerContainer).setVisibility(View.VISIBLE);
+    }
+
+    public void hideHeader() {
+        View header = findViewById(R.id.headerContainer);
+        header.setVisibility(View.GONE);
+        header.postDelayed( () -> header.setVisibility(View.GONE), 50);
+    }
+
     @Override
     public void showBottomNav() {
         findViewById(R.id.bottomNavigationView).setVisibility(View.VISIBLE);
@@ -243,6 +339,7 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
 
     @Override
     public void hideBottomNav() {
-        findViewById(R.id.bottomNavigationView).setVisibility(View.GONE);
+        View nav = findViewById(R.id.bottomNavigationView);
+        nav.setVisibility(View.GONE);
     }
 }

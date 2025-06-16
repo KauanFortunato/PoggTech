@@ -31,7 +31,6 @@ import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.InteractionManager;
 import com.mordekai.poggtech.domain.ProductManager;
 import com.mordekai.poggtech.presentation.ui.activity.MainActivity;
-import com.mordekai.poggtech.utils.BottomNavVisibilityController;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
 import java.util.ArrayList;
@@ -63,7 +62,6 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
         View view = inflater.inflate(R.layout.fragment_searched_products, container, false);
 
         ((MainActivity) requireActivity()).setForceBackToHome(true);
-        ((BottomNavVisibilityController) requireActivity()).showBottomNav();
 
         headerFragment = (HeaderFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.headerContainer);
 
@@ -114,7 +112,7 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
             headerFragment.closeSearchProd();
         }
         ((MainActivity) requireActivity()).setForceBackToHome(true);
-        ((BottomNavVisibilityController) requireActivity()).showBottomNav();
+        
         showBackButton();
 
         buttonSelect(filterHigh);
@@ -199,8 +197,6 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
         filterHigh = view.findViewById(R.id.filterHigh);
         filterLow = view.findViewById(R.id.filterLow);
 
-        getActivity().findViewById(R.id.headerContainer).setVisibility(View.VISIBLE);
-        getActivity().findViewById(R.id.bottomNavigationView).setVisibility(View.GONE);
 
         poggersFilter.setOnCheckedChangeListener((buttonView, isChecked) -> {
             applyCombinedFitlers();

@@ -371,9 +371,8 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
             addToCart(productId);
         });
 
-        ((BottomNavVisibilityController) requireActivity()).hideBottomNav();
+        
         getActivity().findViewById(R.id.btnBackHeader).setVisibility(View.VISIBLE);
-        getActivity().findViewById(R.id.headerContainer).setVisibility(View.VISIBLE);
 
         setupObservers();
     }

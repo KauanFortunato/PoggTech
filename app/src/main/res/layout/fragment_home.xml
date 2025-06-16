@@ -380,10 +380,12 @@
                                     android:text="Popular" />
 
                                 <TextView
+                                    android:id="@+id/seeMorePop"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginHorizontal="10dp"
                                     android:fontFamily="@font/roboto_medium"
+                                    android:clickable="true"
                                     android:text="Ver mais"
                                     android:textColor="@color/colorPrimaryVariant"
                                     android:textSize="15sp" />
@@ -406,6 +408,62 @@
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
+
+                    <View style="@style/division" />
+
+                    <!-- Produtos em Promoção -->
+                    <LinearLayout
+                        android:id="@+id/promoProductsContainer"
+                        style="@style/productContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingBottom="10dp">
+
+                        <!-- Título -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/productSectionTitle"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Produtos até 50%" />
+
+                            <TextView
+                                android:id="@+id/seeMorePromo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="10dp"
+                                android:fontFamily="@font/roboto_medium"
+                                android:text="Ver mais"
+                                android:clickable="true"
+                                android:textColor="@color/colorPrimaryVariant"
+                                android:textSize="15sp" />
+
+                        </LinearLayout>
+
+                        <!-- RecyclerView para Promoções -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingBottom="10dp">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rvPromoProducts"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                tools:listitem="@layout/item_product_match_parent" />
+                        </LinearLayout>
+                    </LinearLayout>
+
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
