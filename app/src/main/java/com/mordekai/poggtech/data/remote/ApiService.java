@@ -7,6 +7,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -25,6 +26,9 @@ public interface ApiService {
     // User
     @POST("user")
     Call<ApiResponse<Void>> registerUser(@Body User user);
+
+    @DELETE("user/delete/{firebase_uid}")
+    Call<ApiResponse<Void>> deleteUser(@Path("firebase_uid") String firebase_uid);
 
     @GET("user/{firebase_uid}")
     Call<ApiResponse<User>> getUser(@Path("firebase_uid") String firebaseUid);

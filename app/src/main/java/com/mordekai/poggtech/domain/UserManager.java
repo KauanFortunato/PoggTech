@@ -45,6 +45,33 @@ public class UserManager {
         });
     }
 
+    public void deleteUser(String firebaseUid, RepositoryCallback<Void> callback) {
+        mysqlRepo.deleteUser(firebaseUid, new RepositoryCallback<Void>() {
+
+            @Override
+            public void onSuccess(Void result) {
+                firebaseRepo.deleteUser(firebaseUid, new RepositoryCallback<Void>() {
+
+                    @Override
+                    public void onSuccess(Void result) {
+                        Log.d("Sucesso", "Usuário deletado com sucesso!");
+                        callback.onSuccess(result);
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+                        callback.onFailure(t);
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                callback.onFailure(t);
+            }
+        });
+    }
+
     public void createUser(User user, String password, RepositoryCallback<User> callback) {
         firebaseRepo.registerUser(user, password, new RepositoryCallback<String>() {
             @Override

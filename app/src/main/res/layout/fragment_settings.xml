@@ -77,6 +77,7 @@
                 <View style="@style/division" android:layout_height="1dp"/>
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/deleAccount"
                     style="@style/sectionConfigItem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -103,27 +104,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Alterar senha" />
-
-            </LinearLayout>
-
-            <TextView
-                style="@style/sectionConfigTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Notificações" />
-
-            <LinearLayout
-                style="@style/sectionConfig"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <androidx.appcompat.widget.AppCompatButton
-                    style="@style/sectionConfigItem"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Notificações push" />
 
             </LinearLayout>
 
@@ -185,6 +165,7 @@
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/privacyPolicy"
                     style="@style/sectionConfigItem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -193,6 +174,7 @@
                 <View style="@style/division" android:layout_height="1dp"/>
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/termsUse"
                     style="@style/sectionConfigItem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -201,6 +183,7 @@
                 <View style="@style/division" android:layout_height="1dp"/>
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/appVersion"
                     style="@style/sectionConfigItem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

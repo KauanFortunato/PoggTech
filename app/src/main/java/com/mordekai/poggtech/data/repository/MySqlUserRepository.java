@@ -22,6 +22,7 @@ public class MySqlUserRepository implements UserRepository {
     public void registerUser(User user, String password, RepositoryCallback<String> callback) {
         apiService.registerUser(user)
                 .enqueue(new Callback<ApiResponse<Void>>() {
+
                     @Override
                     public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
                         if (response.isSuccessful()) {
@@ -36,6 +37,26 @@ public class MySqlUserRepository implements UserRepository {
                         callback.onFailure(t);
                     }
                 });
+    }
+
+    @Override
+    public void deleteUser(String firebaseUid, RepositoryCallback<Void> callback) {
+        apiService.deleteUser(firebaseUid).enqueue(new Callback<ApiResponse<Void>>() {
+
+            @Override
+            public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(null);
+                } else {
+                    callback.onFailure(new Exception("Erro ao deletar no XAMPP: " + response.message()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
+                callback.onFailure(t);
+            }
+        });
     }
 
     @Override

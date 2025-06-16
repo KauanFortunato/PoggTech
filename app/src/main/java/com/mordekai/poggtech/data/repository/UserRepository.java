@@ -5,6 +5,7 @@ import com.mordekai.poggtech.data.model.User;
 
 public interface UserRepository {
     void registerUser(User user, String password, RepositoryCallback<String> callback);
+    void deleteUser(String firebaseUid, RepositoryCallback<Void> callback);
     void loginUser(String email, String password, RepositoryCallback<String> callback);
     void googleLogin(String idToken, RepositoryCallback<User> callback);
     void logoutUser();

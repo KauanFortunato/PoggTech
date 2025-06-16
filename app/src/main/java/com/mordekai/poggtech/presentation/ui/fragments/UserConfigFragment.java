@@ -346,7 +346,6 @@ public class UserConfigFragment extends Fragment {
         });
     }
 
-
 }
 
 

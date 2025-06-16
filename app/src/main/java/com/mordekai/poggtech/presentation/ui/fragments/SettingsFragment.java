@@ -1,21 +1,29 @@
 package com.mordekai.poggtech.presentation.ui.fragments;
 
+import androidx.appcompat.app.AlertDialog;
+
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ScrollView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.ApiResponse;
@@ -30,7 +38,6 @@ import com.mordekai.poggtech.presentation.ui.activity.LoginActivity;
 import com.mordekai.poggtech.presentation.ui.activity.MainActivity;
 import com.mordekai.poggtech.presentation.ui.bottomsheets.ChangeLanguageBottomSheet;
 import com.mordekai.poggtech.presentation.ui.bottomsheets.ConfirmBottomSheet;
-import com.mordekai.poggtech.utils.BottomNavVisibilityController;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 import com.mordekai.poggtech.utils.Utils;
 
@@ -62,6 +69,10 @@ public class SettingsFragment extends Fragment {
         AppCompatButton btnChangePass = view.findViewById(R.id.btnChangePass);
         AppCompatButton btnChangeTheme = view.findViewById(R.id.btnChangeTheme);
         AppCompatButton btnChangeLanguage = view.findViewById(R.id.btnChangeLanguage);
+        AppCompatButton termsUse = view.findViewById(R.id.termsUse);
+        AppCompatButton privacyPolicy = view.findViewById(R.id.privacyPolicy);
+        AppCompatButton appVersion = view.findViewById(R.id.appVersion);
+        AppCompatButton deleAccount = view.findViewById(R.id.deleAccount);
         ImageButton btn_back = view.findViewById(R.id.btn_back);
 
         btnEditPerfil.setOnClickListener(v -> {
@@ -137,6 +148,67 @@ public class SettingsFragment extends Fragment {
             ChangeLanguageBottomSheet bottomSheet = new ChangeLanguageBottomSheet();
             bottomSheet.show(requireActivity().getSupportFragmentManager(), bottomSheet.getTag());
         });
+
+        privacyPolicy.setOnClickListener(v -> {
+            String privacyText = "Aqui vai o conteúdo da política de privacidade...";
+            showInfoDialog("Política de Privacidade", privacyText, getContext());
+        });
+
+        termsUse.setOnClickListener(v -> {
+            String termsText = "Aqui vão os termos de uso...";
+            showInfoDialog("Termos de Uso", termsText, getContext());
+        });
+
+        appVersion.setOnClickListener(v -> {
+            if (appVersion.isHapticFeedbackEnabled()) {
+                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
+            }
+
+            try {
+                String versionName = requireContext()
+                        .getPackageManager()
+                        .getPackageInfo(requireContext().getPackageName(), 0)
+                        .versionName;
+
+                Toast.makeText(getContext(), getString(R.string.appVersion) + ": " + versionName, Toast.LENGTH_SHORT).show();
+
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+
+        });
+
+        deleAccount.setOnClickListener(v -> {
+            if (deleAccount.isHapticFeedbackEnabled()) {
+                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
+            }
+
+            Utils utils = new Utils();
+            utils.showDialog(view.getContext(),
+                    "Tem a certeza que quer deletar sua conta?",
+                    "Isso irá apagar tudo da sua conta incluindo: Produtos, reviews e wallet",
+                    "Confirmar",
+                    vws -> {
+                        deleteUser(user.getFireUid());
+                    });
+
+        });
+    }
+
+    private void deleteUser(String firebaseUserId) {
+        UserManager userManager = new UserManager(new FirebaseUserRepository(), new MySqlUserRepository(RetrofitClient.getRetrofitInstance().create(ApiService.class)));
+        userManager.deleteUser(firebaseUserId , new RepositoryCallback<Void>() {
+            @Override
+            public void onSuccess(Void result) {
+                Toast.makeText(getContext(), "Conta deletada com sucesso!", Toast.LENGTH_SHORT).show();
+                logOutUser();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Toast.makeText(getContext(), "Erro ao deletar conta", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void logOutUser() {
@@ -160,4 +232,30 @@ public class SettingsFragment extends Fragment {
         sharedPrefHelper.logOut();
         startActivity(new Intent(requireContext(), LoginActivity.class));
     }
+
+    private void showInfoDialog(String title, String message, Context context) {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
+
+        // ScrollView para suportar textos longos
+        ScrollView scrollView = new ScrollView(context);
+        scrollView.setPadding(60, 30, 60, 30); // mesmo padding que o anterior
+
+        TextView textView = new TextView(context);
+        textView.setText(message);
+        textView.setTextSize(14);
+        textView.setTextColor(context.getResources().getColor(R.color.textTertiary));
+        textView.setGravity(Gravity.START);
+        textView.setLineSpacing(1.4f, 1.4f);
+        scrollView.addView(textView);
+
+        builder.setTitle(title);
+        builder.setBackground(context.getResources().getDrawable(R.drawable.bg_card_product, null));
+        builder.setView(scrollView);
+
+        builder.setPositiveButton("Fechar", (dialog, which) -> dialog.dismiss());
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
 }

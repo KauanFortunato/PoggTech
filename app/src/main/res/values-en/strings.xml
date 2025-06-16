@@ -92,4 +92,5 @@
     <string name="updateAd">Update Ad</string>
     <string name="inAppSince">Poggtech user since</string>
     <string name="english">Inglês</string>
+    <string name="appVersion">App version</string>
 </resources>

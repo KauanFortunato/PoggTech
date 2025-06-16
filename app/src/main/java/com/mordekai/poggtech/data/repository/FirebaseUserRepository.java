@@ -33,6 +33,25 @@ public class FirebaseUserRepository implements UserRepository {
     }
 
     @Override
+    public void deleteUser(String firebaseUid, RepositoryCallback<Void> callback) {
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user != null) {
+            user.delete()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Log.d("DeleteUser", "Conta deletada com sucesso.");
+                            callback.onSuccess(null);
+                        } else {
+                            Log.e("DeleteUser", "Erro ao deletar conta", task.getException());
+                            callback.onFailure(new Exception("Erro ao deletar na Firebase: " + task.getException()));
+                        }
+                    });
+        } else {
+            callback.onFailure(new Exception("Erro: FirebaseUser é nulo"));
+        }
+    }
+
+    @Override
     public void loginUser(String email, String password, RepositoryCallback<String> callback) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {

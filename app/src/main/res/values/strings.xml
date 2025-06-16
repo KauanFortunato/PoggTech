@@ -81,6 +81,7 @@
     <string name="defaultMessageEx">Oi, esse item está disponível?</string>
     <string name="soldBy">Vendido por</string>
     <string name="inAppSince">Usuário da poggtech desde</string>
+    <string name="appVersion">Versão do app</string>
 
     <!-- Chat -->
     <string name="chat" translatable="false">Chat</string>
