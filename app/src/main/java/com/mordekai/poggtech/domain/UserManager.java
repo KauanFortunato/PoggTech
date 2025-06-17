@@ -132,11 +132,24 @@ public class UserManager {
                         if (firebaseUser != null) {
                             user.setAvatar(firebaseUser.getPhotoUrl() != null ? firebaseUser.getPhotoUrl().toString() : null);
                         }
+
                         mysqlRepo.registerUser(user, "senha_padrao", new RepositoryCallback<String>() {
                             @Override
                             public void onSuccess(String result) {
                                 Log.d("Sucesso", "Usuário registrado no XAMPP!");
-                                callback.onSuccess(user);
+
+                                mysqlRepo.getUser(user.getFireUid(), new RepositoryCallback<User>() {
+                                    @Override
+                                    public void onSuccess(User result) {
+                                        Log.d("Sucesso", "Usuário encontrado no XAMPP: " + result.getFireUid());
+                                        callback.onSuccess(result);
+                                    }
+
+                                    @Override
+                                    public void onFailure(Throwable t) {
+                                        callback.onFailure(t);
+                                    }
+                                });
                             }
 
                             @Override

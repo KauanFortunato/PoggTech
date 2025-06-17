@@ -184,6 +184,7 @@
 
                     <!-- Skeleton Loader para "Continuar a Comprar" -->
                     <LinearLayout
+                        android:id="@+id/containerContinueBuy"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/backgroundColor"

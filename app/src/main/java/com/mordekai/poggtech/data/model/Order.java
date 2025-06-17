@@ -11,6 +11,9 @@ public class Order implements Serializable {
     private String created_at_format;
     private List<String> images;
     private int total_products;
+    private String location;
+    private String user_name;
+    private String user_phone;
 
     public Order() {
     }
@@ -24,19 +27,60 @@ public class Order implements Serializable {
         this.total_products = images.size();
     }
 
-    public int getId() { return id; }
+    public int getId() {
+        return id;
+    }
 
-    public void setId(int id) { this.id = id; }
-    public double getTotal_amount() { return total_amount; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public String getStatus() { return status; }
+    public double getTotal_amount() {
+        return total_amount;
+    }
 
-    public String getCreated_at() { return created_at; }
+    public String getLocation() {
+        return location;
+    }
 
-    public List<String> getImages() { return images; }
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
-    public int getTotal_products() { return total_products; }
+    public String getUser_name() {
+        return user_name;
+    }
 
-    public String getCreated_at_format() { return created_at_format; }
+    public void setUser_name(String userName) {
+        this.user_name = userName;
+    }
+
+    public String getUser_phone() {
+        return user_phone;
+    }
+
+    public void setUser_phone(String userPhone) {
+        this.user_phone = userPhone;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public int getTotal_products() {
+        return total_products;
+    }
+
+    public String getCreated_at_format() {
+        return created_at_format;
+    }
 
 }

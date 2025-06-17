@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@color/backgroundColor"
+    android:gravity="center">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="40dp"
+        android:src="@drawable/ic_empty_ads"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/roboto_black"
+        android:textSize="@dimen/text_large"
+        android:letterSpacing="0.05"
+        android:textColor="@color/textPrimary"
+        android:text="Nada por aqui… ainda!"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="10dp"
+        android:textAlignment="center"
+        android:fontFamily="@font/roboto"
+        android:textSize="@dimen/text_normal"
+        android:textColor="@color/textTertiary"
+        android:text="Você ainda não cadastrou nenhum produto. Que tal começar agora mesmo e mostrar ao mundo o que tem a oferecer?"/>
+
+</LinearLayout>

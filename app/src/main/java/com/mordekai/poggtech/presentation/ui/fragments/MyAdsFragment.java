@@ -43,7 +43,6 @@ public class MyAdsFragment extends Fragment {
     private ImageButton btnBack;
     private AppCompatButton addNewProduct;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private TextView infoNoAdd;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,14 +58,14 @@ public class MyAdsFragment extends Fragment {
         rvMyAds.setNestedScrollingEnabled(false);
         rvMyAds.setAdapter(myAdAdapter);
 
-        getMyAds();
+        getMyAds(view);
 
-        swipeRefreshLayout.setOnRefreshListener(this::getMyAds);
+        swipeRefreshLayout.setOnRefreshListener(() -> getMyAds(view));
 
         return view;
     }
 
-    private void getMyAds() {
+    private void getMyAds(View view) {
         productManager.getMyProducts(user.getUserId(), new RepositoryCallback<List<Product>>() {
 
             @Override
@@ -76,9 +75,11 @@ public class MyAdsFragment extends Fragment {
                 myAdAdapter.notifyDataSetChanged();
 
                 if (products.isEmpty()) {
-                    infoNoAdd.setVisibility(View.VISIBLE);
+                    view.findViewById(R.id.emptyAds).setVisibility(View.VISIBLE);
+                    view.findViewById(R.id.containerMyAds).setVisibility(View.GONE);
                 } else {
-                    infoNoAdd.setVisibility(View.GONE);
+                    view.findViewById(R.id.emptyAds).setVisibility(View.GONE);
+                    view.findViewById(R.id.containerMyAds).setVisibility(View.VISIBLE);
                 }
 
                 swipeRefreshLayout.setRefreshing(false);
@@ -87,7 +88,8 @@ public class MyAdsFragment extends Fragment {
             @Override
             public void onFailure(Throwable t) {
                 Log.e("API_RESPONSE", "Erro ao buscar produtos", t);
-                infoNoAdd.setVisibility(View.VISIBLE);
+                view.findViewById(R.id.emptyAds).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.containerMyAds).setVisibility(View.GONE);
             }
         });
     }
@@ -96,7 +98,6 @@ public class MyAdsFragment extends Fragment {
         btnBack = view.findViewById(R.id.btn_back);
         addNewProduct = view.findViewById(R.id.addNewProduct);
         rvMyAds = view.findViewById(R.id.rvMyAds);
-        infoNoAdd = view.findViewById(R.id.infoNoAdd);
 
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
 

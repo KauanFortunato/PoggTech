@@ -8,6 +8,7 @@ import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -46,6 +47,7 @@ public class OrderDetailsFragment extends Fragment {
     private OrderDetailAdapter orderDetailAdapter;
     private ReviewViewModel reviewViewModel;
     private List<OrderItem> orderItems = new ArrayList<>();
+    private TextView userInfo, location;
 
     private User user;
     private SharedPrefHelper sharedPrefHelper;
@@ -115,6 +117,12 @@ public class OrderDetailsFragment extends Fragment {
     public void startComponent(View view) {
         rvOrdersDetails = view.findViewById(R.id.rvOrdersDetails);
         btn_back = view.findViewById(R.id.btn_back);
+        userInfo = view.findViewById(R.id.userInfo);
+        location = view.findViewById(R.id.location);
+
+        location.setText(order.getLocation());
+
+        userInfo.setText(order.getUser_name() + " - " + order.getUser_phone());
 
         btn_back.setOnClickListener( v -> {
             if(btn_back.isHapticFeedbackEnabled()) {

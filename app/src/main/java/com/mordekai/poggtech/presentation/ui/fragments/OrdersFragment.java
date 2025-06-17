@@ -81,7 +81,7 @@ public class OrdersFragment extends Fragment {
                     return;
                 }
                 orders = result;
-                ordersAdapter.updateOrders(orders);
+                ordersAdapter.updateOrders(result);
             }
 
             @Override

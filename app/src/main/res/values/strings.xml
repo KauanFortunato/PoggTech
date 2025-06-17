@@ -62,7 +62,7 @@
     <string name="sendEmail">Enviar email?</string>
     <string name="searchHistory">Histórico de Busca</string>
     <string name="categories">Categoria</string>
-    <string name="buy">Comprar</string>
+    <string name="checkout">Verificar</string>
     <string name="eur" translatable="false">EUR</string>
     <string name="deleteProduct">Deseja excluir este produto?</string>
     <string name="removeProduct">Deseja remover este produto?</string>

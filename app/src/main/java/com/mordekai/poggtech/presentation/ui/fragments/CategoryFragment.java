@@ -168,7 +168,7 @@ public class CategoryFragment extends Fragment implements
 
                     @Override
                     public void onFailure(Throwable t) {
-                        Toast.makeText(getContext(), "Erro ao buscar produtos favoritos", Toast.LENGTH_SHORT).show();
+                        Log.e("API_ERROR", "Erro ao buscar produtos: " + t.getMessage(), t);
                     }
                 });
             }

@@ -87,6 +87,8 @@ public class HomeFragment extends Fragment
         sharedPrefHelper = new SharedPrefHelper(requireContext());
         user = sharedPrefHelper.getUser();
 
+        Log.d("HomeFragment", "Usuário: " + user.getUserId());
+
         if (user == null) {
             Log.e("HomeFragment", "ERRO: Usuário está null! Verifica se o login foi completado.");
             return inflater.inflate(R.layout.fragment_home, container, false); // ou um layout de erro
@@ -137,14 +139,7 @@ public class HomeFragment extends Fragment
         apiInteraction = RetrofitClient.getRetrofitInstance().create(ApiInteraction.class);
         interactionManager = new InteractionManager(apiInteraction);
 
-        getForYou();
-        getContinueBuy();
-
-        maybeYouLike();
-        getPopular();
-        getPromotionProducts();
-        getCategories();
-
+        loadHomeData(view);
         return view;
     }
 
@@ -169,38 +164,6 @@ public class HomeFragment extends Fragment
 
             });
         }
-
-        new Handler().postDelayed(() -> {
-            loadHomeData();
-        }, 200);
-    }
-
-    private void getContinueBuy() {
-        new android.os.Handler().postDelayed(() -> {
-            productManager.getContinueBuy(user.getUserId(), new RepositoryCallback<List<Product>>() {
-                @Override
-                public void onSuccess(List<Product> result) {
-                    rvContinueBuySkeleton.setVisibility(View.GONE);
-
-                    if(result.size() >= 3) {
-                        rvContinueBuy.setVisibility(View.VISIBLE);
-
-                        productContinueAdapter.updateProducts(result);
-                        rvContinueBuy.setAdapter(productContinueAdapter);
-                    }
-
-                    checkIfLoadingFinished();
-                }
-
-                @Override
-                public void onFailure(Throwable t) {
-                    if (getContext() != null) {
-                        Log.e("API_RESPONSE", "Erro ao buscar produtos recomendados", t);
-                        checkIfLoadingFinished();
-                    }
-                }
-            });
-        }, 200);
     }
 
     private void getForYou() {
@@ -239,6 +202,37 @@ public class HomeFragment extends Fragment
         });
     }
 
+    private void getContinueBuy(View view) {
+        new android.os.Handler().postDelayed(() -> {
+            productManager.getContinueBuy(user.getUserId(), new RepositoryCallback<List<Product>>() {
+                @Override
+                public void onSuccess(List<Product> result) {
+                    rvContinueBuySkeleton.setVisibility(View.GONE);
+
+                    if(result.size() >= 3) {
+                        rvContinueBuy.setVisibility(View.VISIBLE);
+
+                        productContinueAdapter.updateProducts(result);
+                        rvContinueBuy.setAdapter(productContinueAdapter);
+                    } else {
+                        view.findViewById(R.id.containerContinueBuy).setVisibility(View.GONE);
+                    }
+
+                    checkIfLoadingFinished();
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    if (getContext() != null) {
+                        Log.e("API_RESPONSE", "Erro ao buscar produtos recomendados", t);
+                    }
+                    view.findViewById(R.id.containerContinueBuy).setVisibility(View.GONE);
+                    checkIfLoadingFinished();
+                }
+            });
+        }, 200);
+    }
+
     private void getPopular() {
         productManager.getPopularProducts(false, 12, new RepositoryCallback<List<Product>>() {
             @Override
@@ -262,6 +256,10 @@ public class HomeFragment extends Fragment
         productManager.getProductsFromFavCategory(user.getUserId(), new RepositoryCallback<List<Product>>() {
             @Override
             public void onSuccess(List<Product> result) {
+                if (result == null || result.isEmpty()) {
+                    checkIfLoadingFinished();
+                    return;
+                }
                 List<Product> filteredResult = filterNewProducts(result);
                 List<Product> limited = limitDisplay(filteredResult, 6);
 
@@ -290,6 +288,7 @@ public class HomeFragment extends Fragment
             @Override
             public void onFailure(Throwable t) {
                 Log.e("API_RESPONSE", "Erro ao buscar categorias", t);
+                checkIfLoadingFinished();
             }
         });
     }
@@ -330,7 +329,7 @@ public class HomeFragment extends Fragment
         loadingCount++;
         Log.d("DEBUG", "loadingCount: " + loadingCount);
 
-        if (loadingCount >= 6) {
+        if (loadingCount >= 5) {
             containerProductsHome.setVisibility(View.VISIBLE);
 
             shimmerForYouSkeleton.stopShimmer();
@@ -435,17 +434,17 @@ public class HomeFragment extends Fragment
             }
         });
 
-        swipeRefreshLayout.setOnRefreshListener(this::loadHomeData);
+        swipeRefreshLayout.setOnRefreshListener(() -> loadHomeData(view));
 
     }
 
-    private void loadHomeData() {
+    private void loadHomeData(View view) {
         loadedProductIds.clear();
         loadingCount = 0;
 
         showSkeletons();
         getForYou();
-        getContinueBuy();
+        getContinueBuy(view);
         maybeYouLike();
         getPopular();
         getCategories();

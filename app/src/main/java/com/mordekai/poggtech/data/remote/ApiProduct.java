@@ -52,7 +52,6 @@ public interface ApiProduct {
             @Part List<MultipartBody.Part> images
     );
 
-
     @DELETE("products/{product_id}")
     Call<ApiResponse<Void>> deleteProduct(@Path("product_id") int product_id);
 

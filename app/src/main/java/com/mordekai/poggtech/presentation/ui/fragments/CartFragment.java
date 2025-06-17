@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.adapter.CartProductAdapter;
 import com.mordekai.poggtech.data.adapter.ProductAdapter;
@@ -41,6 +43,7 @@ import com.mordekai.poggtech.domain.ProductManager;
 import com.mordekai.poggtech.presentation.ui.activity.MainActivity;
 import com.mordekai.poggtech.utils.ProductLoader;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
+import com.mordekai.poggtech.utils.SnackbarUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -217,37 +220,11 @@ public class CartFragment extends Fragment implements CartProductAdapter.OnProdu
         shimmerLayout.setVisibility(View.VISIBLE);
         shimmerLayout.startShimmer();
 
-        buy.setOnClickListener(v -> {
-            OrderRequest request = buildOrderRequest();
-            buttonProgress.setVisibility(View.VISIBLE);
-            buy.setText("");
+        buy.setOnClickListener(v -> showOrderInfoBottomSheet());
 
-            ApiOrder apiOrder = RetrofitClient.getRetrofitInstance().create(ApiOrder.class);
-            OrderManager orderManager = new OrderManager(apiOrder);
-
-            orderManager.RegisterOrder(request, new RepositoryCallback<ApiResponse<Integer>>() {
-
-                @Override
-                public void onSuccess(ApiResponse<Integer> result) {
-                    if (result.isSuccess()) {
-                        buying = true;
-                        finishOrder();
-                        buy.setText(getString(R.string.buy));
-                        Log.d("API_RESPONSE", result.getMessage());
-                    } else {
-                        Log.e("API_RESPONSE", result.getMessage());
-                    }
-                }
-
-                @Override
-                public void onFailure(Throwable t) {
-                    Log.e("API_RESPONSE", "Erro ao registrar compra", t);
-                }
-            });
-        });
     }
 
-    private OrderRequest buildOrderRequest() {
+    private OrderRequest buildOrderRequest(String location, String name, String phone) {
         List<OrderRequest.OrderItem> orderItems = new ArrayList<>();
 
         for (Product p : productList) {
@@ -258,8 +235,9 @@ public class CartFragment extends Fragment implements CartProductAdapter.OnProdu
             ));
         }
 
-        return new OrderRequest(user.getUserId(), orderItems);
+        return new OrderRequest(user.getUserId(), location, name, phone, orderItems);
     }
+
 
     @SuppressLint("NotifyDataSetChanged")
     private void finishOrder() {
@@ -268,6 +246,69 @@ public class CartFragment extends Fragment implements CartProductAdapter.OnProdu
         finishOrder.setVisibility(View.VISIBLE);
         containerBuy.setVisibility(View.GONE);
         emptyCart.setVisibility(View.GONE);
+    }
+
+    private void showOrderInfoBottomSheet() {
+        View sheetView = LayoutInflater.from(requireContext()).inflate(R.layout.bottom_sheet_order_info, null);
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext());
+        bottomSheetDialog.setContentView(sheetView);
+
+        EditText etLocation = sheetView.findViewById(R.id.etLocation);
+        EditText etUserName = sheetView.findViewById(R.id.etUserName);
+        EditText etPhone = sheetView.findViewById(R.id.etPhone);
+        AppCompatButton btnSubmit = sheetView.findViewById(R.id.btnSubmitOrder);
+
+        btnSubmit.setOnClickListener(v -> {
+            String location = etLocation.getText().toString().trim();
+            String name = etUserName.getText().toString().trim();
+            String phone = etPhone.getText().toString().trim();
+
+            if (location.isEmpty() || name.isEmpty() || phone.isEmpty()) {
+                SnackbarUtil.showErrorSnackbar(sheetView, "Preencha todos os campos", getContext());
+                return;
+            }
+
+            OrderRequest request = buildOrderRequest(location, name, phone);
+            bottomSheetDialog.dismiss();
+            submitOrder(request);
+        });
+
+        bottomSheetDialog.show();
+    }
+
+    private void submitOrder(OrderRequest request) {
+        buttonProgress.setVisibility(View.VISIBLE);
+        buy.setText("");
+
+        ApiOrder apiOrder = RetrofitClient.getRetrofitInstance().create(ApiOrder.class);
+        OrderManager orderManager = new OrderManager(apiOrder);
+
+        orderManager.RegisterOrder(request, new RepositoryCallback<ApiResponse<Integer>>() {
+            @Override
+            public void onSuccess(ApiResponse<Integer> result) {
+                if (result.isSuccess()) {
+                    buying = true;
+                    finishOrder();
+                    buy.setText(getString(R.string.checkout));
+                    buttonProgress.setVisibility(View.GONE);
+                    SnackbarUtil.showSuccessSnackbar(buy.getRootView(), "Compra realizada com sucesso!", getContext());
+                    Log.d("API_RESPONSE", result.getMessage());
+                } else {
+                    Log.e("API_RESPONSE", result.getMessage());
+                    buttonProgress.setVisibility(View.GONE);
+                    buy.setText(getString(R.string.checkout));
+                    SnackbarUtil.showErrorSnackbar(buy.getRootView(), "Erro ao fazer compra, verifique sua carteira", getContext());
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("API_RESPONSE", "Erro ao registrar compra", t);
+                buttonProgress.setVisibility(View.GONE);
+                buy.setText(getString(R.string.checkout));
+                SnackbarUtil.showErrorSnackbar(buy.getRootView(), "Erro ao conectar com servidor", getContext());
+            }
+        });
     }
 
     @Override

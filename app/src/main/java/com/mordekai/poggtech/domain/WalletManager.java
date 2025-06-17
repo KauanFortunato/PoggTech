@@ -68,4 +68,29 @@ public class WalletManager {
             }
         });
     }
+
+    public void deposit(int userId, float amount, RepositoryCallback<Void> callback) {
+        if (amount <= 0) {
+            callback.onFailure(new Exception("Valor inválido"));
+            return;
+        }
+        apiWallet.deposit(userId, amount).enqueue(new Callback<ApiResponse<Void>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ApiResponse<Void> apiResponse = response.body();
+                    if (apiResponse.isSuccess()) {
+                        callback.onSuccess(null);
+                    } else {
+                        callback.onFailure(new Exception("Erro ao depositar"));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
+                callback.onFailure(new Exception("Erro ao depositar"));
+            }
+        });
+    }
 }

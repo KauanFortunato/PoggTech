@@ -62,6 +62,7 @@
                 android:textSize="22sp" />
 
             <TextView
+                android:id="@+id/addMoney"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_bold"

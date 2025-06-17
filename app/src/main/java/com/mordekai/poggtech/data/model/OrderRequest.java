@@ -4,10 +4,16 @@ import java.util.List;
 
 public class OrderRequest {
     private int user_id;
+    private String location;
+    private String user_name;
+    private String user_phone;
     private List<OrderItem> items;
 
-    public OrderRequest(int user_id, List<OrderItem> items) {
+    public OrderRequest(int user_id, String location, String user_name, String user_phone, List<OrderItem> items) {
         this.user_id = user_id;
+        this.location = location;
+        this.user_name = user_name;
+        this.user_phone = user_phone;
         this.items = items;
     }
 

@@ -195,7 +195,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_button_confirm"
-                    android:text="@string/buy"
+                    android:text="@string/checkout"
                     android:textColor="@color/colorOnPrimary" />
 
                 <ProgressBar

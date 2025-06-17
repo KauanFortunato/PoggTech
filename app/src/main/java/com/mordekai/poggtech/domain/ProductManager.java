@@ -103,8 +103,7 @@ public class ProductManager {
                             } else {
                                 callback.onSuccess(new ArrayList<>());
                             }
-                        } else {
-                            callback.onFailure(new Exception("Erro ao buscar produtos"));
+
                         }
                     }
 
@@ -407,6 +406,8 @@ public class ProductManager {
                     } else {
                         callback.onFailure(new Exception("Erro ao buscar produtos"));
                     }
+                } else {
+                    callback.onFailure(new Exception("Erro ao buscar produtos"));
                 }
             }
 
