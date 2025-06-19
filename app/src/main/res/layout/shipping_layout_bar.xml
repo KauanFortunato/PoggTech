@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    android:paddingVertical="10dp"
+    android:paddingHorizontal="30dp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icon_confirmado"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_rounded_check"
+        app:tint="@color/textPrimary"
+        app:layout_constraintEnd_toStartOf="@+id/icon_enviado"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_confirmado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Confirmado"
+        android:textColor="@color/textTertiary"
+        android:textSize="@dimen/text_size_tiny"
+        android:fontFamily="@font/roboto"
+        app:layout_constraintEnd_toEndOf="@id/icon_confirmado"
+        app:layout_constraintStart_toStartOf="@id/icon_confirmado"
+        app:layout_constraintTop_toBottomOf="@id/icon_confirmado" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icon_enviado"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_package"
+        app:layout_constraintEnd_toStartOf="@+id/icon_transito"
+        app:layout_constraintStart_toEndOf="@+id/icon_confirmado"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_enviado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Enviado"
+        android:textColor="@color/textTertiary"
+        android:textSize="@dimen/text_size_tiny"
+        android:fontFamily="@font/roboto"
+        app:layout_constraintEnd_toEndOf="@id/icon_enviado"
+        app:layout_constraintStart_toStartOf="@id/icon_enviado"
+        app:layout_constraintTop_toBottomOf="@id/icon_enviado" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icon_transito"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_shipping"
+        app:layout_constraintEnd_toStartOf="@+id/icon_entregue"
+        app:layout_constraintStart_toEndOf="@+id/icon_enviado"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_transito"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Em Trânsito"
+        android:textColor="@color/textTertiary"
+        android:textSize="@dimen/text_size_tiny"
+        android:fontFamily="@font/roboto"
+        app:layout_constraintEnd_toEndOf="@id/icon_transito"
+        app:layout_constraintStart_toStartOf="@id/icon_transito"
+        app:layout_constraintTop_toBottomOf="@id/icon_transito" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icon_entregue"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_giving"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/icon_transito"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_entregue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Entregue"
+        android:maxLines="1"
+        android:textColor="@color/textTertiary"
+        android:textSize="@dimen/text_size_tiny"
+        android:fontFamily="@font/roboto"
+        app:layout_constraintEnd_toEndOf="@id/icon_entregue"
+        app:layout_constraintStart_toStartOf="@id/icon_entregue"
+        app:layout_constraintTop_toBottomOf="@id/icon_entregue" />
+
+
+    <View
+        android:id="@+id/line1"
+        android:layout_width="0dp"
+        android:layout_height="5dp"
+        android:background="@color/skeletonCenterColor"
+        app:layout_constraintBottom_toBottomOf="@id/icon_confirmado"
+        app:layout_constraintEnd_toStartOf="@id/icon_enviado"
+        app:layout_constraintStart_toEndOf="@id/icon_confirmado"
+        app:layout_constraintTop_toTopOf="@id/icon_confirmado" />
+
+    <View
+        android:id="@+id/line2"
+        android:layout_width="0dp"
+        android:layout_height="5dp"
+        android:background="@color/skeletonCenterColor"
+        app:layout_constraintBottom_toBottomOf="@id/icon_enviado"
+        app:layout_constraintEnd_toStartOf="@id/icon_transito"
+        app:layout_constraintStart_toEndOf="@id/icon_enviado"
+        app:layout_constraintTop_toTopOf="@id/icon_enviado" />
+
+    <View
+        android:id="@+id/line3"
+        android:layout_width="0dp"
+        android:layout_height="5dp"
+        android:background="@color/skeletonCenterColor"
+        app:layout_constraintBottom_toBottomOf="@id/icon_transito"
+        app:layout_constraintEnd_toStartOf="@id/icon_entregue"
+        app:layout_constraintStart_toEndOf="@id/icon_transito"
+        app:layout_constraintTop_toTopOf="@id/icon_transito" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

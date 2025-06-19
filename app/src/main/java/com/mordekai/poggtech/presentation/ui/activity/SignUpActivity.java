@@ -2,9 +2,12 @@ package com.mordekai.poggtech.presentation.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.HapticFeedbackConstants;
+import android.view.MotionEvent;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -26,9 +29,11 @@ public class SignUpActivity extends AppCompatActivity  {
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private ImageButton btnBack;
+    private boolean isPasswordVisible = false;
     private EditText inputEmail, inputPassword, inputName, inputLastName, inputConfirmPassword;
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +65,34 @@ public class SignUpActivity extends AppCompatActivity  {
             }
             startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
             finish();
+        });
+
+        inputPassword.setOnTouchListener((v, event) -> {
+            if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                int drawableEndPosition = inputPassword.getRight() - inputPassword.getCompoundDrawables()[2].getBounds().width();
+                if(event.getRawX() >= drawableEndPosition) {
+                    togglePasswordVisibility();
+                    if (inputPassword.isHapticFeedbackEnabled()) {
+                        v.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
+                    }
+                    return true;
+                }
+            }
+            return false;
+        });
+
+        inputConfirmPassword.setOnTouchListener((v, event) -> {
+            if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                int drawableEndPosition = inputConfirmPassword.getRight() - inputConfirmPassword.getCompoundDrawables()[2].getBounds().width();
+                if(event.getRawX() >= drawableEndPosition) {
+                    togglePasswordVisibility();
+                    if (inputConfirmPassword.isHapticFeedbackEnabled()) {
+                        v.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
+                    }
+                    return true;
+                }
+            }
+            return false;
         });
 
         findViewById(R.id.buttonSignUp).setOnClickListener(view -> {
@@ -110,6 +143,25 @@ public class SignUpActivity extends AppCompatActivity  {
 
             CreateAccount(user, password);
         });
+    }
+
+    private void togglePasswordVisibility() {
+        if (isPasswordVisible) {
+            inputPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            inputPassword.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_key, 0, R.drawable.ic_eye_off, 0);
+
+            inputConfirmPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            inputConfirmPassword.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_key, 0, R.drawable.ic_eye_off, 0);
+        } else {
+            inputPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            inputPassword.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_key, 0, R.drawable.ic_eye_on, 0);
+
+            inputConfirmPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            inputConfirmPassword.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_key, 0, R.drawable.ic_eye_on, 0);
+        }
+        isPasswordVisible = !isPasswordVisible;
+        inputPassword.setSelection(inputPassword.getText().length());
+        inputConfirmPassword.setSelection(inputPassword.getText().length());
     }
 
     private void CreateAccount(User user, String password) {

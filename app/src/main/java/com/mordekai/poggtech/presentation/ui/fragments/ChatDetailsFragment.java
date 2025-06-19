@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -96,6 +97,7 @@ public class ChatDetailsFragment extends Fragment {
             productPrice.setText(productPriceString + " €");
             chatId.setText("ID: " + chatChatId);
 
+            //  ! Imagem não esta sendo carregada
             Utils.loadImageBasicAuth(imageProduct, productImage);
 
             viewModel.markMessagesAsRead(chatChatId, currentUser.getUserId());
@@ -173,8 +175,15 @@ public class ChatDetailsFragment extends Fragment {
                 btnBack.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
             }
 
+            NavOptions navOptions = new NavOptions.Builder()
+                    .setEnterAnim(R.anim.slide_in_left)
+                    .setExitAnim(R.anim.slide_out_right)
+                    .setPopEnterAnim(R.anim.slide_out_right)
+                    .setPopExitAnim(R.anim.slide_in_left)
+                    .build();
+
             NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
-            navController.popBackStack();
+            navController.navigate(R.id.chatFragment, null, navOptions);
         });
     }
 

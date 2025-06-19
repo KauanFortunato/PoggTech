@@ -140,7 +140,9 @@
                     android:textColor="@color/colorPrimaryVariant" />
 
             </LinearLayout>
+
         </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout

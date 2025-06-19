@@ -104,6 +104,40 @@
             </LinearLayout>
 
             <View
+                style="@style/division"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout7" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textColor="@color/textPrimary"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="@dimen/text_size_large_alt"
+                    android:text="Status de envio"/>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <include layout="@layout/shipping_layout_bar" />
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+
+
+            <View
                 android:id="@+id/view"
                 style="@style/division"
                 app:layout_constraintEnd_toEndOf="parent"

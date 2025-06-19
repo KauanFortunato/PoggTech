@@ -177,7 +177,6 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
         fetchProduct(productId, view);
         getReviews(productId);
 
-        // ToDo: Carregar os produtos da mesma categoria que o produto atual
         ProductLoader.loadForYouProducts(
                 productManager,
                 user.getUserId(),

@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,11 +25,11 @@ import com.mordekai.poggtech.data.remote.ApiOrder;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.OrderManager;
 import com.mordekai.poggtech.presentation.ui.activity.MainActivity;
-import com.mordekai.poggtech.utils.BottomNavVisibilityController;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class OrdersFragment extends Fragment {
 
@@ -44,12 +45,10 @@ public class OrdersFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_orders, container, false);
 
-        
-
         SharedPrefHelper sharedPrefHelper = new SharedPrefHelper(requireContext());
         user = sharedPrefHelper.getUser();
 
-        ApiOrder apiOrder = RetrofitClient.getRetrofitInstance().create(ApiOrder.class);
+        ApiOrder apiOrder = Objects.requireNonNull(RetrofitClient.getRetrofitInstance()).create(ApiOrder.class);
         orderManager = new OrderManager(apiOrder);
 
         startComponents(view);
@@ -108,8 +107,15 @@ public class OrdersFragment extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putSerializable("order", order);
 
+        NavOptions navOptions = new NavOptions.Builder()
+                .setEnterAnim(R.anim.slide_in_right)
+                .setExitAnim(R.anim.slide_out_left)
+                .setPopEnterAnim(R.anim.slide_in_left)
+                .setPopExitAnim(R.anim.slide_out_right)
+                .build();
+
         NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
-        navController.navigate(R.id.action_ordersFragment_to_orderDetailsFragment, bundle);
+        navController.navigate(R.id.orderDetailsFragment, bundle, navOptions);
     }
 
 }

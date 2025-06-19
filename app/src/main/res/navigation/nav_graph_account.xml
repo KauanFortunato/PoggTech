@@ -44,6 +44,9 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_accountFragment_to_productListFragment"
+            app:destination="@id/productListFragment" />
     </fragment>
     <fragment
         android:id="@+id/productDetailsFragment"
@@ -180,5 +183,16 @@
         <action
             android:id="@+id/action_offlineFragment5_to_accountFragment"
             app:destination="@id/accountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/productListFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.ProductListFragment"
+        android:label="ProductListFragment" >
+
+        <argument
+            android:name="listType"
+            app:argType="string"
+            android:defaultValue="popular" />
+
     </fragment>
 </navigation>

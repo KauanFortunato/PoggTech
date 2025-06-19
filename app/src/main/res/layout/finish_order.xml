@@ -40,6 +40,7 @@
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnOrderDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_button_confirm"
@@ -48,9 +49,10 @@
             android:elevation="0dp"
             android:textSize="16sp"
             android:letterSpacing="0.04"
-            android:text="My order Detail"/>
+            android:text="My order details"/>
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/continueBuy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"

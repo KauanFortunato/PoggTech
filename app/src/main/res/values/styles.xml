@@ -243,6 +243,14 @@
         <item name="android:layout_marginStart">10dp</item>
     </style>
 
+    <!-- ================= PEDIDOS ================= -->
+
+    <style name="OrderIcons">
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:background">@drawable/bg_item_filter</item>
+    </style>
+
     <!-- ================= FILTROS E OFERTAS ================= -->
     <style name="itemFilterButton">
         <item name="android:layout_width">wrap_content</item>

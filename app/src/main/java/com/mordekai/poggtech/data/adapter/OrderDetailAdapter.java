@@ -69,7 +69,7 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView productImage;
-        private TextView titleProduct, category, price;
+        private TextView titleProduct, category, price, quantity;
         private AppCompatButton leaveReviewBtn;
 
         public ViewHolder(@NonNull View itemView) {
@@ -79,6 +79,7 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
             category = itemView.findViewById(R.id.category);
             price = itemView.findViewById(R.id.price);
             leaveReviewBtn = itemView.findViewById(R.id.leaveReviewBtn);
+            quantity = itemView.findViewById(R.id.quantity);
         }
 
         public void bind(OrderItem orderItem) {
@@ -87,6 +88,7 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
             titleProduct.setText(orderItem.getProduct_title());
             category.setText(orderItem.getProduct_category());
             price.setText(String.format("%.2f€", orderItem.getUnit_price()));
+            quantity.setText(String.valueOf(orderItem.getQuantity()));
 
             leaveReviewBtn.setOnClickListener(v -> {
                 if (v.isHapticFeedbackEnabled()) {

@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import androidx.appcompat.widget.AppCompatButton;
 
 import androidx.annotation.NonNull;
@@ -55,6 +56,7 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 
 public class UserConfigFragment extends Fragment {
 
@@ -113,7 +115,27 @@ public class UserConfigFragment extends Fragment {
                 enableEditingMode(editContact);
 
             } else {
-                if(!editName.getText().toString().isEmpty()){
+                boolean isAvaliable = true;
+
+                String contact = editContact.getText().toString().trim();
+
+                if (contact.isEmpty()) {
+                    editContact.setError("Campo obrigatório");
+                    isAvaliable = false;
+                } else if (!contact.matches("\\d+")) {
+                    editContact.setError("Apenas números são permitidos");
+                    isAvaliable = false;
+                } else if (contact.length() != 9) {
+                    editContact.setError("O número deve conter exatamente 9 dígitos");
+                    isAvaliable = false;
+                }
+
+                if (editContact.getText().toString().isEmpty()) {
+                    editContact.setError("Campo obrigatório");
+                    isAvaliable = false;
+                }
+
+                if (isAvaliable) {
 
                     isEditing = false;
                     buttonEditPersonInfo.setText(R.string.edit);
@@ -128,10 +150,6 @@ public class UserConfigFragment extends Fragment {
 
                     // Salvar alterações no servidor ou localmente
                     saveUserChanges();
-                } else {
-                    if(editName.getText().toString().isEmpty()){
-                        editName.setError("Campo obrigatório");
-                    }
                 }
             }
         });
@@ -206,23 +224,23 @@ public class UserConfigFragment extends Fragment {
                 v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
             }
 
-            if(isEditing) {
+            if (isEditing) {
                 openAvatarPicker();
             }
         });
-        
+
 
         btn_back.setOnClickListener(v -> {
             if (btn_back.isHapticFeedbackEnabled()) {
                 v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
             }
-            
+
 
             NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
             navController.popBackStack();
         });
 
-        if(user.getIsGoogle()) {
+        if (user.getIsGoogle()) {
             providerLogin.setImageResource(R.drawable.ic_google);
             providerLogin.setVisibility(View.VISIBLE);
         } else {

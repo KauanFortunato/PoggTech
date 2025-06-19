@@ -1,7 +1,5 @@
 package com.mordekai.poggtech.presentation.ui.fragments;
 
-import static androidx.lifecycle.AndroidViewModel_androidKt.getApplication;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.HapticFeedbackConstants;
@@ -9,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -91,6 +88,7 @@ public class OrderDetailsFragment extends Fragment {
         };
 
         orderItems();
+        setupShippingLayout(view);
         return view;
     }
 
@@ -124,13 +122,74 @@ public class OrderDetailsFragment extends Fragment {
 
         userInfo.setText(order.getUser_name() + " - " + order.getUser_phone());
 
-        btn_back.setOnClickListener( v -> {
-            if(btn_back.isHapticFeedbackEnabled()) {
+        btn_back.setOnClickListener(v -> {
+            if (btn_back.isHapticFeedbackEnabled()) {
                 btn_back.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
             }
 
             NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
             navController.popBackStack();
         });
+    }
+
+    public void setupShippingLayout(View view) {
+        AppCompatImageView icon_confirmado, icon_enviado, icon_transito, icon_entregue;
+        TextView text_confirmado,text_enviado, text_transito, text_entregue;
+        View line1, line2, line3;
+        icon_confirmado = view.findViewById(R.id.icon_confirmado);
+        text_confirmado = view.findViewById(R.id.text_confirmado);
+        icon_enviado = view.findViewById(R.id.icon_enviado);
+        text_enviado = view.findViewById(R.id.text_enviado);
+        icon_transito = view.findViewById(R.id.icon_transito);
+        text_transito = view.findViewById(R.id.text_transito);
+        icon_entregue = view.findViewById(R.id.icon_entregue);
+        text_entregue = view.findViewById(R.id.text_entregue);
+
+        line1 = view.findViewById(R.id.line1);
+        line2 = view.findViewById(R.id.line2);
+        line3 = view.findViewById(R.id.line3);
+
+        switch (order.getShipping_status()) {
+            case "confirmado":
+                icon_confirmado.setColorFilter(getResources().getColor(R.color.colorSecondary));
+                text_confirmado.setTextColor(getResources().getColor(R.color.colorSecondary));
+                break;
+            case "enviado":
+                icon_confirmado.setColorFilter(getResources().getColor(R.color.colorSecondary));
+                text_confirmado.setTextColor(getResources().getColor(R.color.colorSecondary));
+
+                line1.setBackgroundColor(view.getContext().getColor(R.color.colorSecondary));
+                icon_enviado.setColorFilter(getResources().getColor(R.color.colorSecondary));
+                text_enviado.setTextColor(getResources().getColor(R.color.colorSecondary));
+                break;
+            case "transito":
+                icon_confirmado.setColorFilter(getResources().getColor(R.color.colorSecondary));
+                text_confirmado.setTextColor(getResources().getColor(R.color.colorSecondary));
+
+                line1.setBackgroundColor(view.getContext().getColor(R.color.colorSecondary));
+                icon_enviado.setColorFilter(getResources().getColor(R.color.colorSecondary));
+                text_enviado.setTextColor(getResources().getColor(R.color.colorSecondary));
+
+                line2.setBackgroundColor(view.getContext().getColor(R.color.colorSecondary));
+                icon_transito.setColorFilter(getResources().getColor(R.color.colorSecondary));
+                text_transito.setTextColor(getResources().getColor(R.color.colorSecondary));
+                break;
+            case "entregue":
+                icon_confirmado.setColorFilter(getResources().getColor(R.color.colorSecondary));
+                text_confirmado.setTextColor(getResources().getColor(R.color.colorSecondary));
+
+                line1.setBackgroundColor(view.getContext().getColor(R.color.colorSecondary));
+                icon_enviado.setColorFilter(getResources().getColor(R.color.colorSecondary));
+                text_enviado.setTextColor(getResources().getColor(R.color.colorSecondary));
+
+                line2.setBackgroundColor(view.getContext().getColor(R.color.colorSecondary));
+                icon_transito.setColorFilter(getResources().getColor(R.color.colorSecondary));
+                text_transito.setTextColor(getResources().getColor(R.color.colorSecondary));
+
+                line3.setBackgroundColor(view.getContext().getColor(R.color.colorSecondary));
+                icon_entregue.setColorFilter(getResources().getColor(R.color.colorSecondary));
+                text_entregue.setTextColor(getResources().getColor(R.color.colorSecondary));
+                break;
+        }
     }
 }

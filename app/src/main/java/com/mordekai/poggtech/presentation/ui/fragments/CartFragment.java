@@ -1,7 +1,13 @@
 package com.mordekai.poggtech.presentation.ui.fragments;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,17 +21,27 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.gms.common.api.Status;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.adapter.CartProductAdapter;
+import com.mordekai.poggtech.data.adapter.PlaceSuggestionAdapter;
 import com.mordekai.poggtech.data.adapter.ProductAdapter;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.ApiResponse;
@@ -44,6 +60,7 @@ import com.mordekai.poggtech.presentation.ui.activity.MainActivity;
 import com.mordekai.poggtech.utils.ProductLoader;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 import com.mordekai.poggtech.utils.SnackbarUtil;
+import com.mordekai.poggtech.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +85,7 @@ public class CartFragment extends Fragment implements CartProductAdapter.OnProdu
     private ProductAdapter forYouAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ShimmerFrameLayout shimmerLayout;
-    private AppCompatButton buy;
+    private AppCompatButton buy, btnOrderDetail, continueBuy;
     private ProgressBar buttonProgress;
     private boolean buying = false;
 
@@ -80,6 +97,10 @@ public class CartFragment extends Fragment implements CartProductAdapter.OnProdu
 
         sharedPrefHelper = new SharedPrefHelper(requireContext());
         user = sharedPrefHelper.getUser();
+
+        if (!Places.isInitialized()) {
+            Places.initialize(requireContext(), getString(R.string.google_api_key));
+        }
 
         initComponents(view);
 
@@ -98,7 +119,6 @@ public class CartFragment extends Fragment implements CartProductAdapter.OnProdu
         cartManager = new CartManager(apiProduct);
 
         swipeRefreshLayout.setOnRefreshListener(this::fetchCartProducts);
-
 
         // Adapter de produtos recomendados
         rvForYou.setLayoutManager(new GridLayoutManager(getContext(), 2));
@@ -131,6 +151,23 @@ public class CartFragment extends Fragment implements CartProductAdapter.OnProdu
         super.onResume();
         swipeRefreshLayout.setRefreshing(true);
         fetchCartProducts();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1001) {
+            if (resultCode == RESULT_OK) {
+                Place place = Autocomplete.getPlaceFromIntent(data);
+                String address = place.getAddress();
+
+                EditText localProductEditText = requireView().findViewById(R.id.etLocation);
+                localProductEditText.setText(address);
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+                Status status = Autocomplete.getStatusFromIntent(data);
+            }
+        }
     }
 
     // Tipo 0 = Carrinho
@@ -203,6 +240,7 @@ public class CartFragment extends Fragment implements CartProductAdapter.OnProdu
     }
 
     private void initComponents(View view) {
+
         // Componentes
         shimmerLayout = view.findViewById(R.id.shimmerLayout);
         rvItemsCart = view.findViewById(R.id.rvItemsCart);
@@ -216,9 +254,28 @@ public class CartFragment extends Fragment implements CartProductAdapter.OnProdu
         forYouContainer = view.findViewById(R.id.forYouContainer);
         finishOrder = view.findViewById(R.id.finishOrder);
         buttonProgress = view.findViewById(R.id.buttonProgress);
+        btnOrderDetail = view.findViewById(R.id.btnOrderDetail);
+        continueBuy = view.findViewById(R.id.continueBuy);
 
         shimmerLayout.setVisibility(View.VISIBLE);
         shimmerLayout.startShimmer();
+
+        NavOptions navOptions = new NavOptions.Builder()
+                .setEnterAnim(R.anim.slide_in_right)
+                .setExitAnim(R.anim.slide_out_left)
+                .setPopEnterAnim(R.anim.slide_in_left)
+                .setPopExitAnim(R.anim.slide_out_right)
+                .build();
+
+        btnOrderDetail.setOnClickListener(v -> {
+            NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
+            navController.navigate(R.id.ordersFragment, null, navOptions);
+        });
+
+        continueBuy.setOnClickListener(v -> {
+            NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
+            navController.navigate(R.id.homeFragment, null, navOptions);
+        });
 
         buy.setOnClickListener(v -> showOrderInfoBottomSheet());
 
@@ -238,7 +295,6 @@ public class CartFragment extends Fragment implements CartProductAdapter.OnProdu
         return new OrderRequest(user.getUserId(), location, name, phone, orderItems);
     }
 
-
     @SuppressLint("NotifyDataSetChanged")
     private void finishOrder() {
         productList.clear();
@@ -257,11 +313,26 @@ public class CartFragment extends Fragment implements CartProductAdapter.OnProdu
         EditText etUserName = sheetView.findViewById(R.id.etUserName);
         EditText etPhone = sheetView.findViewById(R.id.etPhone);
         AppCompatButton btnSubmit = sheetView.findViewById(R.id.btnSubmitOrder);
+        etUserName.setText(user.getName());
+        etPhone.setText(user.getPhone());
 
         btnSubmit.setOnClickListener(v -> {
+            boolean isAvaliable = true;
+
             String location = etLocation.getText().toString().trim();
             String name = etUserName.getText().toString().trim();
             String phone = etPhone.getText().toString().trim();
+
+            if (phone.isEmpty()) {
+                etPhone.setError("Campo obrigatório");
+                isAvaliable = false;
+            } else if (!phone.matches("\\d+")) {
+                etPhone.setError("Apenas números são permitidos");
+                isAvaliable = false;
+            } else if (phone.length() != 9) {
+                etPhone.setError("O número deve conter exatamente 9 dígitos");
+                isAvaliable = false;
+            }
 
             if (location.isEmpty() || name.isEmpty() || phone.isEmpty()) {
                 SnackbarUtil.showErrorSnackbar(sheetView, "Preencha todos os campos", getContext());
@@ -274,6 +345,71 @@ public class CartFragment extends Fragment implements CartProductAdapter.OnProdu
         });
 
         bottomSheetDialog.show();
+
+        // Setando o google place API
+        final boolean[] shouldIgnoreTextChange = {false};
+        RecyclerView locationRecycler = sheetView.findViewById(R.id.locationSuggestionsRecycler);
+        PlacesClient placesClient = Places.createClient(requireContext());
+
+        PlaceSuggestionAdapter adapter = new PlaceSuggestionAdapter(prediction -> {
+            shouldIgnoreTextChange[0] = true;
+
+            etLocation.setText(prediction.getFullText(null).toString());
+            locationRecycler.setVisibility(View.GONE);
+            etLocation.clearFocus();
+
+            Utils.hideKeyboard(this);
+        });
+
+        locationRecycler.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+        locationRecycler.setAdapter(adapter);
+
+        etLocation.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (shouldIgnoreTextChange[0]) {
+                    shouldIgnoreTextChange[0] = false;
+                    return;
+                }
+
+                if (s.length() < 2) {
+                    locationRecycler.setVisibility(View.GONE);
+                    return;
+                }
+
+                FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
+                        .setQuery(s.toString())
+                        .build();
+
+                placesClient.findAutocompletePredictions(request)
+                        .addOnSuccessListener(response -> {
+                            adapter.setPredictions(response.getAutocompletePredictions());
+                            locationRecycler.setVisibility(View.VISIBLE);
+                        })
+                        .addOnFailureListener(exception -> {
+                            Log.e("Places", "Erro: " + exception.getMessage());
+                        });
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        etLocation.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                locationRecycler.setVisibility(View.GONE);
+
+                if (TextUtils.isEmpty(etLocation.getText().toString())) {
+                    etLocation.setError("Campo obrigatório");
+                }
+            }
+        });
     }
 
     private void submitOrder(OrderRequest request) {

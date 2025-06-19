@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -339,8 +340,8 @@
                     android:id="@+id/locationSuggestionsRecycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:layout_marginTop="8dp"/>
+                    android:layout_marginTop="8dp"
+                    tools:listitem="@layout/item_place_suggestion"/>
 
                 <TextView
                     style="@style/Label_Edit_Text"

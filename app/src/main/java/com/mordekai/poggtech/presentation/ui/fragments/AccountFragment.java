@@ -104,8 +104,6 @@ public class AccountFragment extends Fragment
         super.onResume();
 
         if (!isVisible()) return;
-
-        
     }
 
     @SuppressLint("ClickableViewAccessibility")

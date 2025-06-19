@@ -249,29 +249,11 @@
                 android:background="@color/backgroundColor"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    style="@style/productSectionTitle"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/productSectionTitle"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/paraVoce" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:fontFamily="@font/roboto_medium"
-                        android:text="Ver mais"
-                        android:textColor="@color/colorPrimaryVariant"
-                        android:textSize="15sp" />
-
-                </LinearLayout>
+                    android:text="@string/paraVoce" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

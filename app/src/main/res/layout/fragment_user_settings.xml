@@ -111,6 +111,7 @@
                             style="@style/ConfigTextTitle"
                             android:text="@string/nome"
                             android:textSize="13sp" />
+
                         <EditText
                             android:id="@+id/editName"
                             style="@style/ConfigText"

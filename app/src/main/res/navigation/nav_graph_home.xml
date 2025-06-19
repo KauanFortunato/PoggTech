@@ -86,7 +86,11 @@
     <fragment
         android:id="@+id/chatDetailsFragment"
         android:name="com.mordekai.poggtech.presentation.ui.fragments.ChatDetailsFragment"
-        android:label="fragment_chat_detail" />
+        android:label="fragment_chat_detail" >
+        <action
+            android:id="@+id/action_chatDetailsFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/searchedProductsFragment"
@@ -120,6 +124,10 @@
             android:defaultValue="popular" />
 
     </fragment>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.ChatFragment"
+        android:label="ChatFragment" />
 
 
 </navigation>

@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_productManageFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
+        <action
+            android:id="@+id/action_productManageFragment_to_ordersFragment"
+            app:destination="@id/ordersFragment" />
     </fragment>
     <fragment
         android:id="@+id/productDetailsFragment"
@@ -70,6 +73,23 @@
             android:id="@+id/action_offlineFragment_to_productManageFragment"
             app:destination="@id/productManageFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/ordersFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.OrdersFragment"
+        android:label="OrdersFragment" >
+        <action
+            android:id="@+id/action_ordersFragment_to_orderDetailsFragment2"
+            app:destination="@id/orderDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderDetailsFragment"
+        android:name="com.mordekai.poggtech.presentation.ui.fragments.OrderDetailsFragment"
+        android:label="OrderDetailsFragment">
 
+        <argument
+            android:name="order"
+            app:argType="com.mordekai.poggtech.data.model.Order"
+            app:nullable="false" />
 
+    </fragment>
 </navigation>

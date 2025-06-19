@@ -54,7 +54,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
         private FlexboxLayout flexImages;
         private LinearLayout containerImages;
         private CardView cardContainer;
-        private TextView otherProducts;
+        private TextView otherProducts, status;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,6 +66,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
             containerImages = itemView.findViewById(R.id.containerImages);
             cardContainer = itemView.findViewById(R.id.cardContainer);
             otherProducts = itemView.findViewById(R.id.otherProducts);
+            status = itemView.findViewById(R.id.status);
         }
 
         public void bind(Order order, View view) {
@@ -73,6 +74,19 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
             totalAmount.setText(String.format("%.2f€", order.getTotal_amount()));
             totalItems.setText(String.format("%d items", order.getTotal_products()));
             orderId.setText(String.format("Order id: %d", order.getId()));
+            status.setText(order.getStatus().substring(0, 1).toUpperCase() + order.getStatus().substring(1).toLowerCase());
+
+            switch (status.getText().toString()) {
+                case "pendente":
+                    status.setBackgroundResource(R.drawable.bg_pending);
+                    break;
+                case "pago":
+                    status.setBackgroundResource(R.drawable.bg_complete);
+                    break;
+                case "cancelado":
+                    status.setBackgroundResource(R.drawable.bg_error);
+                    break;
+            }
 
             if (order.getTotal_products() > 3) {
                 otherProducts.setText(String.format("+%d", order.getTotal_products() - 3));

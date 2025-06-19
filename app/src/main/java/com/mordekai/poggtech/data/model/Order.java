@@ -7,6 +7,7 @@ public class Order implements Serializable {
     private int id;
     private double total_amount;
     private String status;
+    private String shipping_status;
     private String created_at;
     private String created_at_format;
     private List<String> images;
@@ -65,6 +66,10 @@ public class Order implements Serializable {
 
     public String getStatus() {
         return status;
+    }
+
+    public String getShipping_status() {
+        return shipping_status;
     }
 
     public String getCreated_at() {
