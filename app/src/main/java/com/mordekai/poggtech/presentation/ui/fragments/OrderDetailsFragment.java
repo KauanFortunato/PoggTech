@@ -43,7 +43,7 @@ public class OrderDetailsFragment extends Fragment {
     private Order order;
     private OrderDetailAdapter orderDetailAdapter;
     private ReviewViewModel reviewViewModel;
-    private List<OrderItem> orderItems = new ArrayList<>();
+    private final List<OrderItem> orderItems = new ArrayList<>();
     private TextView userInfo, location;
 
     private User user;

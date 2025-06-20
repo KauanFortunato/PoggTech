@@ -43,7 +43,7 @@
             android:background="@drawable/bg_edit_text"
             android:drawableEnd="@drawable/ic_search"
             android:elevation="0dp"
-            android:hint="@string/pesquisaHint"
+            android:hint="@string/search_hint"
             android:inputType="text"
             android:paddingHorizontal="15dp"
             app:layout_constraintBottom_toBottomOf="parent"

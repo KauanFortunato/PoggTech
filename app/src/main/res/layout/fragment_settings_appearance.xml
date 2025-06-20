@@ -18,10 +18,10 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
             android:layout_marginBottom="10dp"
             android:background="@android:color/transparent"
-            android:contentDescription="@string/voltar"
+            android:contentDescription="@string/back"
             android:src="@drawable/ic_back" />
 
         <TextView
@@ -33,7 +33,7 @@
             android:layout_marginVertical="15dp"
             android:layout_marginStart="20dp"
             android:layout_toEndOf="@+id/btn_back"
-            android:text="Perfil"
+            android:text="@string/profile"
             android:textAlignment="center" />
     </RelativeLayout>
 
@@ -54,6 +54,7 @@
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
+            android:focusable="true"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="10dp">
@@ -62,7 +63,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Claro"
+                android:text="@string/light"
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/text_normal" />
 
@@ -80,6 +81,7 @@
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
+            android:focusable="true"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="10dp">
@@ -88,7 +90,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Escuro"
+                android:text="@string/dark"
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/text_normal" />
 
@@ -120,7 +122,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Usar definições do sistema"
+                    android:text="@string/system_default"
                     android:textColor="@color/textPrimary"
                     android:textSize="@dimen/text_normal" />
 
@@ -134,7 +136,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Corresponder às definições do dispositivo"
+                android:text="@string/label_system_default"
                 android:textSize="@dimen/text_small" />
         </LinearLayout>
 

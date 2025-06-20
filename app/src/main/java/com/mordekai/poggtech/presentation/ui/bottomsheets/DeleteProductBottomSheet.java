@@ -6,7 +6,6 @@ import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -17,7 +16,6 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.mordekai.poggtech.R;
-import com.mordekai.poggtech.utils.Utils;
 
 public class DeleteProductBottomSheet extends BottomSheetDialogFragment {
 
@@ -25,7 +23,7 @@ public class DeleteProductBottomSheet extends BottomSheetDialogFragment {
         void onDeleteConfirmed();
     }
 
-    private OnDeleteConfirmedListener listener;
+    private final OnDeleteConfirmedListener listener;
 
     public DeleteProductBottomSheet(OnDeleteConfirmedListener listener) {
         this.listener = listener;
@@ -48,7 +46,7 @@ public class DeleteProductBottomSheet extends BottomSheetDialogFragment {
 
             String title = args.getString("title") != null
                     ? args.getString("title")
-                    : getString(R.string.deleteProduct);
+                    : getString(R.string.do_delete_product);
             textViewTitle.setText(title);
 
             String confirmText = args.getString("button_confirm") != null
@@ -58,13 +56,13 @@ public class DeleteProductBottomSheet extends BottomSheetDialogFragment {
 
             String cancelText = args.getString("button_cancel") != null
                     ? args.getString("button_cancel")
-                    : getString(R.string.cancelar);
+                    : getString(R.string.cancel);
             buttonCancel.setText(cancelText);
         } else {
             Log.w("ProductAddedBottomSheet", "Argumentos não encontrados");
-            textViewTitle.setText(getString(R.string.removeProduct));
+            textViewTitle.setText(getString(R.string.remove_product));
             buttonConfirm.setText(getString(R.string.delete));
-            buttonCancel.setText(getString(R.string.cancelar));
+            buttonCancel.setText(getString(R.string.cancel));
         }
 
         buttonConfirm.setOnClickListener(v -> {

@@ -20,8 +20,8 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private static final int TYPE_RECEIVED = 2;
     private static final int TYPE_DATE_SEPARATOR = 3;
 
-    private List<Message> messageList;
-    private int currentUserId;
+    private final List<Message> messageList;
+    private final int currentUserId;
 
     public MessageAdapter(List<Message> messageList, int currentUserId) {
         this.messageList = messageList;

@@ -50,7 +50,7 @@ public class OfflineFragment extends Fragment {
                         }
                         SnackbarUtil.showErrorSnackbar(requireActivity().getWindow().getDecorView().getRootView(), "Não foi possível conectar ao servidor", requireContext());
                         tryAgainButton.setEnabled(true);
-                        tryAgainButton.setText(R.string.tentarNovamente);
+                        tryAgainButton.setText(R.string.try_again);
                     }
                 } else {
                     if(tryAgainButton.isHapticFeedbackEnabled()) {
@@ -58,7 +58,7 @@ public class OfflineFragment extends Fragment {
                     }
                     SnackbarUtil.showErrorSnackbar(requireActivity().getWindow().getDecorView().getRootView(), "Não foi possível conectar ao servidor", requireContext());
                     tryAgainButton.setEnabled(true);
-                    tryAgainButton.setText(R.string.tentarNovamente);
+                    tryAgainButton.setText(R.string.try_again);
                 }
             });
         });

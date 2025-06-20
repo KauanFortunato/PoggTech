@@ -34,7 +34,7 @@ public class ProductSearchedAdapter extends RecyclerView.Adapter<ProductSearched
     private final List<Product> products;
     private List<Integer> favoriteIds = new ArrayList<>();
     private final User user;
-    private OnProductClickListener productClickListener;
+    private final OnProductClickListener productClickListener;
 
     public ProductSearchedAdapter(List<Product> products, User user, OnProductClickListener productClickListener) {
         this.products = products;
@@ -81,7 +81,7 @@ public class ProductSearchedAdapter extends RecyclerView.Adapter<ProductSearched
         }
 
         holder.priceBefore.setText(String.format("%s %.2f€",
-                holder.itemView.getContext().getString(R.string.antes),
+                holder.itemView.getContext().getString(R.string.before),
                 product.getPriceBefore() != null ? product.getPriceBefore() : 0f));
 
         holder.discount.setText(String.format("%d%% %s",

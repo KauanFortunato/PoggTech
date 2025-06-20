@@ -81,7 +81,7 @@ public class CartFragment extends Fragment implements CartProductAdapter.OnProdu
     private TextView totalPrice, subtotal;
     private FrameLayout emptyCart, finishOrder;
     private LinearLayout containerBuy, forYouContainer;
-    private List<Integer> favoriteIds = new ArrayList<>();
+    private final List<Integer> favoriteIds = new ArrayList<>();
     private ProductAdapter forYouAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ShimmerFrameLayout shimmerLayout;

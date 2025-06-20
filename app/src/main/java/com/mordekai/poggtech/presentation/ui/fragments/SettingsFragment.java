@@ -90,7 +90,7 @@ public class SettingsFragment extends Fragment {
             }
 
             Bundle bundle = new Bundle();
-            bundle.putString("title", getString(R.string.logoutInfo));
+            bundle.putString("title", getString(R.string.logout_info));
 
             ConfirmBottomSheet confirmBottomSheet = new ConfirmBottomSheet(new ConfirmBottomSheet.OnClickConfirmed() {
                 @Override
@@ -109,7 +109,7 @@ public class SettingsFragment extends Fragment {
             }
 
             Bundle bundle = new Bundle();
-            bundle.putString("title", getString(R.string.sendEmail));
+            bundle.putString("title", getString(R.string.send_email));
 
             ConfirmBottomSheet confirmBottomSheet = new ConfirmBottomSheet(new ConfirmBottomSheet.OnClickConfirmed() {
                 @Override
@@ -170,7 +170,7 @@ public class SettingsFragment extends Fragment {
                         .getPackageInfo(requireContext().getPackageName(), 0)
                         .versionName;
 
-                Toast.makeText(getContext(), getString(R.string.appVersion) + ": " + versionName, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.app_version) + ": " + versionName, Toast.LENGTH_SHORT).show();
 
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();

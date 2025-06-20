@@ -47,7 +47,7 @@ import java.util.List;
 public class ChatDetailsFragment extends Fragment {
     private RecyclerView rvMessages;
     private MessageAdapter messageAdapter;
-    private List<Message> messageList = new ArrayList<>();
+    private final List<Message> messageList = new ArrayList<>();
 
     private EditText etMessage;
     private ImageButton btnSend, btnBack;

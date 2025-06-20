@@ -27,7 +27,7 @@ public class UserManager {
                 getUser(result, new RepositoryCallback<User>() {
                     @Override
                     public void onSuccess(User user) {
-                        Log.d("Sucesso", "Usuário encontrado: " + user.getFireUid());
+                        Log.d("Sucesso", "Utilizador encontrado: " + user.getFireUid());
                         callback.onSuccess(user);
                     }
 
@@ -54,7 +54,7 @@ public class UserManager {
 
                     @Override
                     public void onSuccess(Void result) {
-                        Log.d("Sucesso", "Usuário deletado com sucesso!");
+                        Log.d("Sucesso", "Utilizador deletado com sucesso!");
                         callback.onSuccess(result);
                     }
 
@@ -76,13 +76,13 @@ public class UserManager {
         firebaseRepo.registerUser(user, password, new RepositoryCallback<String>() {
             @Override
             public void onSuccess(String uid) {
-                Log.d("UserManager", "Usuário criado com sucesso no Firebase: " + uid);
+                Log.d("UserManager", "Utilizador criado com sucesso no Firebase: " + uid);
                 user.setFireUid(uid);
 
                 mysqlRepo.registerUser(user, password, new RepositoryCallback<String>() {
                     @Override
                     public void onSuccess(String result) {
-                        Log.d("Sucesso", "Usuário criado com sucesso no XAMPP: " + result);
+                        Log.d("Sucesso", "Utilizador criado com sucesso no XAMPP: " + result);
 
                         loginUser(user.getEmail(), password, new RepositoryCallback<User>() {
                             @Override
@@ -115,19 +115,19 @@ public class UserManager {
         firebaseRepo.googleLogin(idToken, new RepositoryCallback<User>() {
             @Override
             public void onSuccess(User user) {
-                // Verifica se o usuário já existe no XAMPP
+                // Verifica se o utilizador já existe no XAMPP
                 mysqlRepo.getUser(user.getFireUid(), new RepositoryCallback<User>() {
                     @Override
                     public void onSuccess(User existingUser) {
-                        // Se o usuário já existe no XAMPP, retorna os dados armazenados
-                        Log.d("Sucesso", "Usuário encontrado no XAMPP: " + existingUser.getFireUid());
+                        // Se o utilizador já existe no XAMPP, retorna os dados armazenados
+                        Log.d("Sucesso", "Utilizador encontrado no XAMPP: " + existingUser.getFireUid());
                         callback.onSuccess(existingUser);
                     }
 
                     @Override
                     public void onFailure(Throwable t) {
-                        // Se o usuário não existe no XAMPP, cria um novo registro
-                        Log.d("Info", "Usuário não encontrado no XAMPP. Criando novo...");
+                        // Se o utilizador não existe no XAMPP, cria um novo registro
+                        Log.d("Info", "Utilizador não encontrado no XAMPP. Criando novo...");
                         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                         if (firebaseUser != null) {
                             user.setAvatar(firebaseUser.getPhotoUrl() != null ? firebaseUser.getPhotoUrl().toString() : null);
@@ -136,12 +136,12 @@ public class UserManager {
                         mysqlRepo.registerUser(user, "senha_padrao", new RepositoryCallback<String>() {
                             @Override
                             public void onSuccess(String result) {
-                                Log.d("Sucesso", "Usuário registrado no XAMPP!");
+                                Log.d("Sucesso", "Utilizador registrado no XAMPP!");
 
                                 mysqlRepo.getUser(user.getFireUid(), new RepositoryCallback<User>() {
                                     @Override
                                     public void onSuccess(User result) {
-                                        Log.d("Sucesso", "Usuário encontrado no XAMPP: " + result.getFireUid());
+                                        Log.d("Sucesso", "Utilizador encontrado no XAMPP: " + result.getFireUid());
                                         callback.onSuccess(result);
                                     }
 
@@ -154,7 +154,7 @@ public class UserManager {
 
                             @Override
                             public void onFailure(Throwable t) {
-                                Log.e("Erro", "Falha ao registrar usuário no XAMPP", t);
+                                Log.e("Erro", "Falha ao registrar utilizador no XAMPP", t);
                                 callback.onFailure(t);
                             }
                         });

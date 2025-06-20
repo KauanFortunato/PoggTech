@@ -217,7 +217,7 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
 
     private void showRemoveConfirmation(int productId, View view, int position) {
         Bundle bundle = new Bundle();
-        bundle.putString("title", view.getContext().getString(R.string.removeProduct));
+        bundle.putString("title", view.getContext().getString(R.string.remove_product));
         bundle.putString("button_confirm", view.getContext().getString(R.string.remove));
 
         DeleteProductBottomSheet bottomSheet = new DeleteProductBottomSheet(new DeleteProductBottomSheet.OnDeleteConfirmedListener() {

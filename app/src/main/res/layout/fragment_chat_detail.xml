@@ -38,7 +38,7 @@
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     android:background="@drawable/rounded_menu"
-                    android:contentDescription="@string/voltar"
+                    android:contentDescription="@string/back"
                     android:src="@drawable/ic_back"/>
 
                 <TextView
@@ -52,7 +52,7 @@
                     android:ellipsize="end"
                     android:textColor="@color/textPrimary"
                     android:layout_marginHorizontal="10dp"
-                    android:text="Dioguinho PJL"/>
+                    android:text="--_--_--_--_--_--_"/>
 
                 <ImageButton
                     android:id="@+id/moreOptions"
@@ -82,7 +82,7 @@
                         android:layout_height="match_parent"
                         android:adjustViewBounds="true"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/xbox_series_x"/>
+                        android:src="@drawable/placeholder_image_error"/>
                 </FrameLayout>
 
                 <LinearLayout
@@ -98,7 +98,7 @@
                         android:textColor="@color/textSecondary"
                         android:fontFamily="@font/roboto_medium"
                         android:textSize="15sp"
-                        android:text="Microsoft Xbox Series X preto"/>
+                        android:text="-----------"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -112,7 +112,7 @@
                             android:textColor="@color/textPrimary"
                             android:fontFamily="@font/roboto_bold"
                             android:textSize="17sp"
-                            android:text="533,99 €"/>
+                            android:text="---,--€"/>
 
                         <TextView
                             android:id="@+id/chatId"
@@ -121,7 +121,7 @@
                             android:textColor="@color/textTertiary"
                             android:fontFamily="@font/roboto"
                             android:textSize="11sp"
-                            android:text="ID: 123"/>
+                            android:text="ID: ---"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -166,7 +166,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginHorizontal="8dp"
-                android:hint="Mensagem"
+                android:hint="@string/message"
                 android:inputType="textCapSentences"
                 android:background="@drawable/bg_edit_text"
                 android:textSize="16sp"
@@ -177,7 +177,7 @@
                 android:layout_width="42dp"
                 android:layout_height="42dp"
                 android:background="@drawable/rounded_full_button"
-                android:contentDescription="Enviar mensagem_button"
+                android:contentDescription="@string/send_a_message"
                 android:src="@drawable/ic_send"/>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

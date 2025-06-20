@@ -31,10 +31,10 @@ public class MoreActionsMyProduct extends BottomSheetDialogFragment {
         void onMarkAsSoldConfirmedListener();
     }
 
-    private OnEditConfirmedListener editListener;
-    private OnDeleteConfirmedListener deleteListener;
-    private OnMarkAsSoldConfirmedListener markAsSoldListener;
-    private boolean isAvailable;
+    private final OnEditConfirmedListener editListener;
+    private final OnDeleteConfirmedListener deleteListener;
+    private final OnMarkAsSoldConfirmedListener markAsSoldListener;
+    private final boolean isAvailable;
 
     public MoreActionsMyProduct(boolean isAvailable, OnEditConfirmedListener editListener,
                                 OnDeleteConfirmedListener deleteListener,

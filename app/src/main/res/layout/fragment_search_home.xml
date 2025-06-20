@@ -42,7 +42,7 @@
                         android:fontFamily="@font/roboto_medium"
                         android:textSize="15sp"
                         android:textColor="@color/textPrimary"
-                        android:text="@string/searchHistory"/>
+                        android:text="@string/search_history"/>
 
                     <TextView
                         android:id="@+id/delHistory"
@@ -52,7 +52,7 @@
                         android:fontFamily="@font/roboto_bold"
                         android:textColor="@color/colorPrimaryVariant"
                         android:textSize="12sp"
-                        android:text="Limpar tudo"/>
+                        android:text="@string/clear_all"/>
                 </LinearLayout>
 
                 <LinearLayout

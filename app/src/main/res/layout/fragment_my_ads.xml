@@ -25,10 +25,10 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_alignParentBottom="true"
-                android:layout_marginLeft="12dp"
+                android:layout_marginStart="12dp"
                 android:layout_marginBottom="10dp"
                 android:background="@android:color/transparent"
-                android:contentDescription="@string/voltar"
+                android:contentDescription="@string/back"
                 android:src="@drawable/ic_back" />
 
             <TextView
@@ -85,7 +85,7 @@
         android:layout_height="wrap_content"
         android:elevation="4dp"
         android:background="@drawable/bg_button_confirm"
-        android:text="Adicionar produto"
+        android:text="@string/add_product"
         android:fontFamily="@font/roboto_medium"
         android:textAllCaps="false"
         android:textColor="@color/colorOnPrimary"

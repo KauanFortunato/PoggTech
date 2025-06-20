@@ -24,7 +24,7 @@ import okhttp3.internal.Util;
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryViewHolder> {
 
     private List<String> imageUrls;
-    private Context context;
+    private final Context context;
 
     public GalleryAdapter(Context context, List<String> imageUrls) {
         this.context = context;

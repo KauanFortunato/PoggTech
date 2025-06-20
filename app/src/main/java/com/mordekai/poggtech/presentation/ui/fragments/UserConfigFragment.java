@@ -29,7 +29,6 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.model.ApiResponse;
@@ -40,7 +39,6 @@ import com.mordekai.poggtech.data.repository.MySqlUserRepository;
 import com.mordekai.poggtech.domain.FCMManager;
 import com.mordekai.poggtech.domain.UserManager;
 import com.mordekai.poggtech.presentation.ui.activity.MainActivity;
-import com.mordekai.poggtech.utils.BottomNavVisibilityController;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
 import com.mordekai.poggtech.data.remote.ApiService;
@@ -108,7 +106,7 @@ public class UserConfigFragment extends Fragment {
 
             if (!isEditing) {
                 isEditing = true;
-                buttonEditPersonInfo.setText(R.string.salvar);
+                buttonEditPersonInfo.setText(R.string.save);
                 buttonCancelPersonInfo.setVisibility(View.VISIBLE);
 
                 enableEditingMode(editName);
@@ -300,8 +298,8 @@ public class UserConfigFragment extends Fragment {
                 if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
                     sharedPrefHelper.saveUser(user);
 
-                    SnackbarUtil.showSuccessSnackbar(requireView(), "Usuário atualizado!", requireContext());
-                    Log.d("API_SUCCESS", "Usuário atualizado com sucesso: " + response.body().getMessage());
+                    SnackbarUtil.showSuccessSnackbar(requireView(), "Utilizador atualizado!", requireContext());
+                    Log.d("API_SUCCESS", "Utilizador atualizado com sucesso: " + response.body().getMessage());
                 } else {
                     Log.e("API_ERROR", "Erro na atualização: " + (response.body() != null ? response.body().getMessage() : "Erro desconhecido"));
                 }

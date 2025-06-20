@@ -15,7 +15,7 @@ import com.mordekai.poggtech.data.model.Category;
 import java.util.List;
 
 public class CategoryFormAdapter extends RecyclerView.Adapter<CategoryFormAdapter.ViewHolder> {
-    private List<Category> categories;
+    private final List<Category> categories;
 
     public CategoryFormAdapter(List<Category> categories) {
         this.categories = categories;

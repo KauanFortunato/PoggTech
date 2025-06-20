@@ -26,7 +26,7 @@ public class MySqlUserRepository implements UserRepository {
                     @Override
                     public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
                         if (response.isSuccessful()) {
-                            callback.onSuccess("Usuário criado");
+                            callback.onSuccess("Utilizador criado");
                         } else {
                             callback.onFailure(new Exception("Erro ao salvar no XAMPP: " + response.message()));
                         }
@@ -70,7 +70,7 @@ public class MySqlUserRepository implements UserRepository {
 
                     if(apiResponse.isSuccess()) {
                         User user = apiResponse.getData();
-                        Log.d("Sucesso", "Usuário encontrado no XAMPP: " + user.getName());
+                        Log.d("Sucesso", "Utilizador encontrado no XAMPP: " + user.getName());
 
                         callback.onSuccess(user);
                     } else {
@@ -78,7 +78,7 @@ public class MySqlUserRepository implements UserRepository {
                     }
 
                 } else {
-                    callback.onFailure(new Exception("Erro ao buscar usuário no Servidor"));
+                    callback.onFailure(new Exception("Erro ao buscar utilizador no Servidor"));
                 }
             }
 

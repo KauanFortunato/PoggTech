@@ -10,13 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.model.Payments;
-import com.mordekai.poggtech.data.model.Product;
 
 import java.util.List;
 
 public class PaymentsAdapter extends RecyclerView.Adapter<PaymentsAdapter.ViewHolder> {
 
-    private List<Payments> payments;
+    private final List<Payments> payments;
 
     public PaymentsAdapter(List<Payments> payments) {
         this.payments = payments;
@@ -61,7 +60,7 @@ public class PaymentsAdapter extends RecyclerView.Adapter<PaymentsAdapter.ViewHo
 
         public void bind(Payments payment, View view) {
             paymentDate.setText(payment.getCreatedAtFormatted());
-            numberPayment.setText(view.getContext().getString(R.string.numPedido) + ": " + String.valueOf(payment.getOrderId()));
+            numberPayment.setText(view.getContext().getString(R.string.num_pedido) + ": " + payment.getOrderId());
             amount.setText(String.format("-EUR %.2f€", payment.getAmount()));
 
             switch (payment.getStatus()) {

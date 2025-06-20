@@ -21,7 +21,7 @@
             android:layout_marginLeft="12dp"
             android:layout_marginBottom="6dp"
             android:background="@android:color/transparent"
-            android:contentDescription="@string/voltar"
+            android:contentDescription="@string/back"
             android:src="@drawable/ic_back" />
 
         <TextView
@@ -33,7 +33,7 @@
             android:layout_marginVertical="10dp"
             android:layout_marginStart="20dp"
             android:layout_toEndOf="@+id/btn_back"
-            android:text="Perfil"
+            android:text="@string/profile"
             android:textAlignment="center" />
     </RelativeLayout>
 
@@ -81,7 +81,7 @@
                             android:layout_height="match_parent"
                             android:adjustViewBounds="true"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/img_xbox_series_x_text" />
+                            android:src="@drawable/placeholder_image_error" />
 
                         <LinearLayout
                             android:id="@+id/containerEditImage"
@@ -109,7 +109,7 @@
 
                         <TextView
                             style="@style/ConfigTextTitle"
-                            android:text="@string/nome"
+                            android:text="@string/name"
                             android:textSize="13sp" />
 
                         <EditText
@@ -126,14 +126,14 @@
                             android:enabled="false"
                             android:focusable="false"
                             android:focusableInTouchMode="false"
-                            android:text="@string/primeiroNome"
+                            android:text="@string/first_name_example"
                             android:textSize="18sp" />
 
                         <TextView
                             android:id="@+id/titleContact"
                             style="@style/ConfigTextTitle"
                             android:layout_marginTop="20dp"
-                            android:text="@string/contacto"
+                            android:text="@string/contact"
                             android:textSize="13sp" />
 
                         <EditText
@@ -150,7 +150,7 @@
                             android:maxLines="1"
                             android:focusableInTouchMode="false"
                             android:inputType="number"
-                            android:text="@string/contactoExample"
+                            android:text="@string/contacto_example"
                             android:textSize="18sp" />
 
                     </LinearLayout>
@@ -187,7 +187,7 @@
                         android:layout_marginBottom="5dp"
                         android:layout_toEndOf="@id/buttonEditPersonInfo"
                         android:backgroundTint="@color/colorOnSurface"
-                        android:text="@string/cancelar"
+                        android:text="@string/cancel"
                         android:textAllCaps="false"
                         android:textColor="@color/colorSurface"
                         android:textSize="12sp"
@@ -226,7 +226,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_bold"
-                            android:text="@string/enderecoEmail"
+                            android:text="@string/email_address"
                             android:textAllCaps="false"
                             android:textSize="18sp" />
 
@@ -234,7 +234,7 @@
                             android:id="@+id/titleEmail"
                             style="@style/ConfigTextTitle"
                             android:layout_marginTop="12dp"
-                            android:text="@string/enderecoEmail" />
+                            android:text="@string/email_address" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -251,7 +251,7 @@
                                 android:ellipsize="end"
                                 android:maxLines="1"
                                 android:paddingEnd="10dp"
-                                android:text="@string/emailExample"
+                                android:text="@string/email_example"
                                 android:textAllCaps="false" />
 
                             <ImageView

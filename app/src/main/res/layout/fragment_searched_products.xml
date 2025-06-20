@@ -70,12 +70,12 @@
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/filterHigh"
                         style="@style/itemFilterButton"
-                        android:text="Mais Caro" />
+                        android:text="@string/more_expensive" />
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/filterLow"
                         style="@style/itemFilterButton"
-                        android:text="Mais Barato" />
+                        android:text="@string/cheaper" />
 
                 </LinearLayout>
 
@@ -131,7 +131,7 @@
                 android:fontFamily="@font/roboto"
                 android:textSize="@dimen/text_normal"
                 android:textColor="@color/textTertiary"
-                android:text="Desculpe-nos tente procurar por outros produtos... Obrigado."/>
+                android:text="@string/search_failed"/>
 
         </LinearLayout>
 

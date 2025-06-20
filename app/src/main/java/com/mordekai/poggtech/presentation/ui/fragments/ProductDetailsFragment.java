@@ -12,7 +12,6 @@ import com.mordekai.poggtech.data.model.ApiResponse;
 import com.mordekai.poggtech.data.model.Chat;
 import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.model.ProductWithUser;
-import com.mordekai.poggtech.data.model.Review;
 import com.mordekai.poggtech.data.model.User;
 import com.mordekai.poggtech.data.remote.ApiInteraction;
 import com.mordekai.poggtech.data.remote.ApiMessage;
@@ -30,7 +29,6 @@ import com.mordekai.poggtech.presentation.viewmodel.ReviewViewModel;
 import com.mordekai.poggtech.utils.ProductLoader;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 import com.mordekai.poggtech.utils.SnackbarUtil;
-import com.mordekai.poggtech.utils.BottomNavVisibilityController;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -52,7 +50,6 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
@@ -76,8 +73,8 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
     private ProductAdapter forYouAdapter;
     private RecyclerView rvReviews, rvForYou;
     private AppCompatButton actionButton;
-    private List<Product> productList = new ArrayList<>();
-    private List<Integer> favoriteIds = new ArrayList<>();
+    private final List<Product> productList = new ArrayList<>();
+    private final List<Integer> favoriteIds = new ArrayList<>();
     private ImageButton btnSend;
     private AppCompatImageView saveButton, minusProduct, plusProduct;
     private TextView quantityProduct;
@@ -225,7 +222,7 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
 
         Utils.loadImageBasicAuth(userAvatar, sellerUser.getAvatar());
         userName.setText(sellerUser.getName());
-        userCreateDate.setText(String.format("%s %s", getString(R.string.inAppSince), sellerUser.getCreatedAt()));
+        userCreateDate.setText(String.format("%s %s", getString(R.string.in_app_since), sellerUser.getCreatedAt()));
     }
 
     private void fetchProduct(int productId, View view) {
@@ -492,7 +489,7 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
         }
 
         if (product.getDiscountPercentage() != null && product.getDiscountPercentage() > 0) {
-            priceBefore.setText(String.format("%s %.2f€", getString(R.string.antes),
+            priceBefore.setText(String.format("%s %.2f€", getString(R.string.before),
                     product.getPriceBefore() != null ? product.getPriceBefore() : 0f));
             discount.setText(String.format("-%d%%",
                     product.getDiscountPercentage() != null ? product.getDiscountPercentage().intValue() : 0));

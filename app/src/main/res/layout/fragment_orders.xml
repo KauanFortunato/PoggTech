@@ -36,7 +36,7 @@
             android:layout_gravity="bottom"
             android:layout_marginBottom="15dp"
             android:gravity="center_horizontal|center_vertical"
-            android:text="@string/yourOrders"
+            android:text="@string/your_orders"
             android:textAlignment="center" />
     </RelativeLayout>
 

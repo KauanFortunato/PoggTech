@@ -64,13 +64,13 @@ public class HomeFragment extends Fragment
     private ApiService apiService;
     private ApiProduct apiProduct;
     private ApiInteraction apiInteraction;
-    private List<Product> productList = new ArrayList<>();
-    private List<Product> productForYouList = new ArrayList<>();
+    private final List<Product> productList = new ArrayList<>();
+    private final List<Product> productForYouList = new ArrayList<>();
     private ProductManager productManager;
     private InteractionManager interactionManager;
     private User user;
     private int loadingCount = 0;
-    private List<Integer> favoriteIds = new ArrayList<>();
+    private final List<Integer> favoriteIds = new ArrayList<>();
     private ShimmerFrameLayout shimmerCategories, shimmerForYouSkeleton;
     HorizontalScrollView horizontalScrollViewCategories;
     View fakeScrollbar, fakeScrollbarTrack;
@@ -87,10 +87,10 @@ public class HomeFragment extends Fragment
         sharedPrefHelper = new SharedPrefHelper(requireContext());
         user = sharedPrefHelper.getUser();
 
-        Log.d("HomeFragment", "Usuário: " + user.getUserId());
+        Log.d("HomeFragment", "Utilizador: " + user.getUserId());
 
         if (user == null) {
-            Log.e("HomeFragment", "ERRO: Usuário está null! Verifica se o login foi completado.");
+            Log.e("HomeFragment", "ERRO: Utilizador está null! Verifica se o login foi completado.");
             return inflater.inflate(R.layout.fragment_home, container, false); // ou um layout de erro
         }
 

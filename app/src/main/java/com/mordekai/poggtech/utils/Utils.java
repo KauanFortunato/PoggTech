@@ -21,7 +21,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.model.GlideUrl;
@@ -123,26 +122,26 @@ public class Utils {
 
         final EditText inputEmail = new EditText(context);
         inputEmail.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-        inputEmail.setHint(R.string.digiteEmail);
+        inputEmail.setHint(R.string.write_email);
         layout.addView(inputEmail);
 
         TextView infoText = new TextView(context);
-        infoText.setText(R.string.mensagemRecuperarSenha);
+        infoText.setText(R.string.message_recovery_pass);
         infoText.setTextSize(14); // Tamanho do texto
         infoText.setTextColor(context.getResources().getColor(R.color.textTertiary));
         infoText.setPadding(0, 25, 0, 0);
         infoText.setGravity(Gravity.CENTER);
         layout.addView(infoText);
 
-        builder.setTitle(R.string.recuperarSenha);
+        builder.setTitle(R.string.recovey_pass);
         builder.setBackground(context.getResources().getDrawable(R.drawable.bg_card_product, null));
         builder.setView(layout);
 
-        builder.setPositiveButton(R.string.enviar, (dialog, which) -> {
+        builder.setPositiveButton(R.string.send, (dialog, which) -> {
             String email = inputEmail.getText().toString();
             resetUserPassword(email, context);
         });
-        builder.setNegativeButton(R.string.cancelar, (dialog, which) -> dialog.cancel());
+        builder.setNegativeButton(R.string.cancel, (dialog, which) -> dialog.cancel());
 
         AlertDialog dialog = builder.create();
         dialog.show();
@@ -173,7 +172,7 @@ public class Utils {
                 listener.onClick(null);
             }
         });
-        builder.setNegativeButton(R.string.cancelar, (dialog, which) -> dialog.cancel());
+        builder.setNegativeButton(R.string.cancel, (dialog, which) -> dialog.cancel());
 
         AlertDialog dialog = builder.create();
         dialog.show();
@@ -184,9 +183,9 @@ public class Utils {
             FirebaseAuth.getInstance().sendPasswordResetEmail(email)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                            Toast.makeText(context, R.string.checkEmail, Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, R.string.check_email, Toast.LENGTH_LONG).show();
                         } else {
-                            Toast.makeText(context, R.string.falhaCheckEmail, Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, R.string.falha_check_email, Toast.LENGTH_LONG).show();
                         }
                     });
         } else {

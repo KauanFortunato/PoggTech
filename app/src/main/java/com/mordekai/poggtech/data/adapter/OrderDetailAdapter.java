@@ -23,8 +23,8 @@ import java.util.List;
 
 public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.ViewHolder> {
 
-    private List<OrderItem> orderItems;
-    private FragmentManager fragmentManager;
+    private final List<OrderItem> orderItems;
+    private final FragmentManager fragmentManager;
 
     public interface OnReviewSentListener {
         void onReviewSent(int product_id, int rating, String reviewText);
@@ -68,9 +68,12 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView productImage;
-        private TextView titleProduct, category, price, quantity;
-        private AppCompatButton leaveReviewBtn;
+        private final ImageView productImage;
+        private final TextView titleProduct;
+        private final TextView category;
+        private final TextView price;
+        private final TextView quantity;
+        private final AppCompatButton leaveReviewBtn;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

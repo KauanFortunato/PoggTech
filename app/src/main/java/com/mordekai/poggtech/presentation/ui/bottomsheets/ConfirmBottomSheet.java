@@ -21,7 +21,7 @@ public class ConfirmBottomSheet extends BottomSheetDialogFragment {
         void onConfirmed();
     }
 
-    private ConfirmBottomSheet.OnClickConfirmed listener;
+    private final ConfirmBottomSheet.OnClickConfirmed listener;
 
     public ConfirmBottomSheet(ConfirmBottomSheet.OnClickConfirmed listener) {
         this.listener = listener;

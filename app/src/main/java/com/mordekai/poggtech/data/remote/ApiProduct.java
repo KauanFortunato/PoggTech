@@ -77,7 +77,7 @@ public interface ApiProduct {
     @GET("products/suggestions/{query}")
     Call<ApiResponse<List<String>>> getSuggestions(@Path("query") String query);
 
-    // Produtos do usuário
+    // Produtos do utilizador
     @GET("products/my/{user_id}")
     Call<ApiResponse<List<Product>>> getMyProducts(@Path("user_id") int user_id);
 

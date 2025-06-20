@@ -39,10 +39,10 @@ public class SignUpActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        // Verificar se o usuário já está logado
+        // Verificar se o Utilizador já está logado
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
-            // Usuário já está logado, redirecionar para a tela principal
+            // Utilizador já está logado, redirecionar para a tela principal
             startActivity(new Intent(SignUpActivity.this, MainActivity.class));
             finish();
             return;
@@ -171,7 +171,7 @@ public class SignUpActivity extends AppCompatActivity  {
         userManager.createUser(user, password, new RepositoryCallback<User>() {
             @Override
             public void onSuccess(User result) {
-                Log.d("Sucesso", "Usuário criado com sucesso! Response: " + result.getName());
+                Log.d("Sucesso", "Utilizador criado com sucesso! Response: " + result.getName());
 
                 SharedPrefHelper sharedPrefHelper = new SharedPrefHelper(SignUpActivity.this);
                 sharedPrefHelper.saveUser(result);
@@ -182,8 +182,8 @@ public class SignUpActivity extends AppCompatActivity  {
 
             @Override
             public void onFailure(Throwable t) {
-                Log.e("Erro", "Falha ao criar usuário", t);
-                Toast.makeText(SignUpActivity.this, "Falha ao criar usuário", Toast.LENGTH_SHORT).show();
+                Log.e("Erro", "Falha ao criar Utilizador", t);
+                Toast.makeText(SignUpActivity.this, "Falha ao criar Utilizador", Toast.LENGTH_SHORT).show();
             }
         });
     }

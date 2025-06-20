@@ -20,7 +20,7 @@ import java.util.List;
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     private final List<Chat> chats;
     private final int userId;
-    private OnChatClickListener listener;
+    private final OnChatClickListener listener;
 
     public interface OnChatClickListener {
         void onChatClick(Chat chat);

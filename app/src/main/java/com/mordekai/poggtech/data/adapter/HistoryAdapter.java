@@ -19,8 +19,8 @@ import java.util.List;
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
 
     private List<String> historyList;
-    private SharedPrefHelper sharedPrefHelper;
-    private OnHistoryClickListener listener;
+    private final SharedPrefHelper sharedPrefHelper;
+    private final OnHistoryClickListener listener;
 
     public HistoryAdapter(List<String> historyList, SharedPrefHelper sharedPrefHelper, OnHistoryClickListener listener) {
         this.historyList = historyList;

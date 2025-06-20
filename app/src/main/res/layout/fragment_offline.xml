@@ -21,7 +21,7 @@
             android:id="@+id/imageView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/naoTemInternet"
+            android:contentDescription="@string/no_have_internet"
             app:srcCompat="@drawable/cat_lost_connection"/>
 
         <TextView
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:fontFamily="@font/open_sans_bold"
-            android:text="@string/naoTemInternet"
+            android:text="@string/no_have_internet"
             android:textAlignment="center"
             android:textColor="@color/textPrimary"
             android:textSize="26sp" />
@@ -42,7 +42,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="30dp"
             android:fontFamily="@font/roboto"
-            android:text="@string/verfInternet"
+            android:text="@string/verif_internet"
             android:textColor="@color/textTertiary"
             android:textSize="15sp" />
 
@@ -60,7 +60,7 @@
                 android:layout_margin="10dp"
                 android:textSize="12sp"
                 android:background="@drawable/rounded_button_background_color"
-                android:text="@string/tentarNovamente"
+                android:text="@string/try_again"
                 android:textColor="@color/backgroundColor" />
 
             <ProgressBar

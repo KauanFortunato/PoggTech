@@ -1,114 +1,182 @@
 <resources>
     <string name="app_name">PoggTech</string>
     <string name="poggers" translatable="false">poggers</string>
-    <string name="english">English</string>
+    <string name="english">Inglês</string>
     <string name="portuguese">Português</string>
 
-    <string name="login">Login</string>
-    <string name="signUp">Cadastrar</string>
+    <string name="login">Iniciar sessão</string>
+    <string name="signUp">Registar</string>
     <string name="account">Conta</string>
-    <string name="yourOrders">Suas compras</string>
-    <string name="enviar">Enviar</string>
-    <string name="enderecoEmail">Endereço de email</string>
-    <string name="digiteEmail">Digite seu e-mail</string>
-    <string name="palavraPasse">Palavra passe</string>
-    <string name="esqueceuSenha">Esqueceu a senha?</string>
-    <string name="googleLogin">Entrar com Google</string>
-    <string name="naoTemConta">Criar uma conta</string>
-    <string name="entrar">Iniciar Sessão</string>
-    <string name="cadastro">Cadastro</string>
-    <string name="nome">Nome</string>
-    <string name="sobrenome">Sobrenome</string>
-    <string name="confirmarPalavraPasse">Confirmar Palavra passe</string>
-    <string name="settings">Configurações</string>
-    <string name="infoPessoais">Informações pessoais</string>
-    <string name="contacto">Contacto</string>
+    <string name="your_orders">As tuas compras</string>
+    <string name="send">Enviar</string>
+    <string name="email_address">Endereço de e-mail</string>
+    <string name="write_email">Introduz o teu e-mail</string>
+    <string name="palavraPasse">Palavra-passe</string>
+    <string name="forgot_pass">Esqueceste-te da palavra-passe?</string>
+    <string name="google_login">Entrar com o Google</string>
+    <string name="no_account">Criar uma conta</string>
+    <string name="to_enter">Iniciar sessão</string>
+    <string name="registration">Registo</string>
+    <string name="name">Nome</string>
+    <string name="last_name">Apelido</string>
+    <string name="confirm_pass">Confirmar palavra-passe</string>
+    <string name="settings">Definições</string>
+    <string name="personal_info">Informações pessoais</string>
+    <string name="contact">Contacto</string>
     <string name="edit">Editar</string>
-    <string name="voltar">Voltar</string>
-    <string name="redefinir">Redefinir Passe</string>
-    <string name="pesquisaHint">Do que estás a procura?</string>
-    <string name="salvar">Salvar</string>
-    <string name="cancelar">Cancelar</string>
-    <string name="logout">Sair da Conta</string>
-    <string name="logoutInfo">Quer sair da conta?</string>
-    <string name="tentarNovamente">Tentar Novamente</string>
-    <string name="verfInternet">Verifique a sua conexão de Internet</string>
-    <string name="naoTemInternet" translatable="false">Ops! Conexão perdida</string>
-    <string name="carrinho">Carrinho</string>
-    <string name="salvos">Salvos</string>
-    <string name="inicio">Início</string>
-    <string name="minhasCompras">Compras</string>
+    <string name="back">Voltar</string>
+    <string name="reset">Redefinir palavra-passe</string>
+    <string name="search_hint">O que procuras?</string>
+    <string name="save">Guardar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="logout">Terminar sessão</string>
+    <string name="logout_info">Queres terminar sessão?</string>
+    <string name="try_again">Tentar novamente</string>
+    <string name="verif_internet">Verifica a tua ligação à Internet</string>
+    <string name="no_have_internet" translatable="false">Ops! Ligação perdida</string>
+    <string name="cart">Carrinho</string>
+    <string name="saved">Guardados</string>
+    <string name="init">Início</string>
+    <string name="my_orders">Compras</string>
     <string name="wallet">Carteira</string>
-    <string name="meusAnuncios">Anúncios</string>
-    <string name="linkDeRecuperacao">Um link para redefinir sua senha será enviado para o e-mail cadastrado em sua conta</string>
+    <string name="my_ads">Anúncios</string>
+    <string name="recovery_link">Um link para redefinir a tua palavra-passe será enviado para o e-mail registado na tua conta</string>
     <string name="remove">Remover</string>
-    <string name="noSavedProducts">Você não tem produtos salvos</string>
-    <string name="noCartProducts">Seu carrinho está vázio</string>
-    <string name="noChat">Você não tem nenhum chat</string>
-    <string name="recuperarSenha">Recuperar senha</string>
-    <string name="mensagemRecuperarSenha">Você receberá um e-mail para redefinir sua senha.</string>
-    <string name="checkEmail">Check o seu email</string>
-    <string name="falhaCheckEmail">Falha ao enviar e-mail de recuperação</string>
-    <string name="antes">Antes</string>
-    <string name="infoPoggersProduct">Os preços dos produtos vendidos pela PoggTech, que são “poggers” já incluem IVA.</string>
-    <string name="iniciarChat">Iniciar chat</string>
-    <string name="productImg">Imagem do produto</string>
+    <string name="no_saved_roducts">Não tens produtos guardados</string>
+    <string name="no_cart_products">O teu carrinho está vazio</string>
+    <string name="no_chat">Ainda não tens nenhuma conversa</string>
+    <string name="recovey_pass">Recuperar palavra-passe</string>
+    <string name="message_recovery_pass">Receberás um e-mail para redefinir a tua palavra-passe.</string>
+    <string name="check_email">Verifica o teu e-mail</string>
+    <string name="falha_check_email">Falha ao enviar o e-mail de recuperação</string>
+    <string name="before">Antes</string>
+    <string name="info_poggers_product">Os preços dos produtos vendidos pela PoggTech, que são “poggers”, já incluem IVA.</string>
+    <string name="init_chat">Iniciar conversa</string>
+    <string name="product_img">Imagem do produto</string>
     <string name="discount">de desconto</string>
-    <string name="choose">Escolha</string>
+    <string name="choose">Escolher</string>
     <string name="ok" translatable="false">Ok</string>
-    <string name="goToCart">Ir ao carrinho</string>
-    <string name="addedToCart">Adicionado ao carrinho</string>
+    <string name="go_to_cart">Ir para o carrinho</string>
+    <string name="added_to_cart">Adicionado ao carrinho</string>
     <string name="confirm">Confirmar</string>
-    <string name="sendEmail">Enviar email?</string>
-    <string name="searchHistory">Histórico de Busca</string>
-    <string name="categories">Categoria</string>
-    <string name="checkout">Verificar</string>
+    <string name="send_email">Enviar e-mail?</string>
+    <string name="search_history">Histórico de pesquisa</string>
+    <string name="categories">Categorias</string>
+    <string name="checkout">Finalizar compra</string>
     <string name="eur" translatable="false">EUR</string>
-    <string name="deleteProduct">Deseja excluir este produto?</string>
-    <string name="removeProduct">Deseja remover este produto?</string>
-    <string name="delete">Excluir</string>
-    <string name="numPedido">N° do pedido</string>
-    <string name="stats">Status</string>
+    <string name="do_delete_product">Desejas eliminar este produto?</string>
+    <string name="remove_product">Desejas remover este produto?</string>
+    <string name="delete">Eliminar</string>
+    <string name="num_pedido">N.º do pedido</string>
+    <string name="stats">Estado</string>
     <string name="ads">Anúncios</string>
-    <string name="clearAll">Limpar tudo</string>
-    <string name="orderIn">Pedido em</string>
-    <string name="continueShopping">Continuar comprando...</string>
+    <string name="clear_all">Limpar tudo</string>
+    <string name="order_in">Pedido em</string>
+    <string name="continue_shopping">Continuar a comprar...</string>
     <string name="track">Seguir</string>
-    <string name="leaveReview">Fazer review</string>
-    <string name="seeAll">Ver todas ></string>
+    <string name="leave_review">Fazer avaliação</string>
+    <string name="see_all">Ver todos ></string>
     <string name="reviews">Avaliações</string>
-    <string name="sendAMessage">Envie uma mensagem ao vendedor</string>
-    <string name="defaultMessageEx">Oi, esse item está disponível?</string>
-    <string name="soldBy">Vendido por</string>
-    <string name="inAppSince">Usuário da poggtech desde</string>
-    <string name="appVersion">Versão do app</string>
+    <string name="send_a_message">Envia uma mensagem ao vendedor</string>
+    <string name="default_message_ex">Olá, este artigo ainda está disponível?</string>
+    <string name="sold_by">Vendido por</string>
+    <string name="in_app_since">Utilizador da PoggTech desde</string>
+    <string name="app_version">Versão da app</string>
 
     <!-- Chat -->
     <string name="chat" translatable="false">Chat</string>
-    <string name="compra">Comprando</string>
-    <string name="venda">Vendendo</string>
+    <string name="compra">A comprar</string>
+    <string name="venda">A vender</string>
 
     <!-- Home -->
-    <string name="paraVoce">Ofertas para si</string>
-    <string name="consolas" translatable="false">Consolas</string>
-    <string name="jogos">Jogos</string>
-    <string name="acessorios">Acessorios</string>
+    <string name="for_you">Ofertas para ti</string>
+    <string name="consoles" translatable="false">Consolas</string>
+    <string name="games">Jogos</string>
+    <string name="accessory">Acessórios</string>
 
     <!-- Examples texts -->
-    <string name="primeiroNome" translatable="false">Kauan</string>
-    <string name="ultimoNome" translatable="false">Fortunato</string>
-    <string name="contactoExample" translatable="false">123 XXX XXX</string>
-    <string name="emailExample" translatable="false">meuemailboladao@gmail.com</string>
-    <string name="numContaExample">Número Da Conta: 1A2B3C</string>
-    <string name="termosDeCondicoes">Ao acessar a PogTech, concorda em cumprir estes termos de serviço e política de privacidade.</string>
+    <string name="first_name_example" translatable="false">Kauan</string>
+    <string name="last_name_example" translatable="false">Fortunato</string>
+    <string name="contacto_example" translatable="false">123 XXX XXX</string>
+    <string name="email_example" translatable="false">meuemailboladao@gmail.com</string>
+    <string name="num_conta_example">Número da conta: 1A2B3C</string>
+    <string name="terms_of_conditions">Ao aceder à PoggTech, estás a concordar com os nossos termos de serviço e política de privacidade.</string>
 
     <!-- Descriptions -->
     <string name="menu_lateral">Menu lateral</string>
     <string name="menu_lateral_perfil">Ícone de perfil</string>
-    <string name="add_saved">Adicionar aos salvos</string>
+    <string name="add_saved">Guardar nos favoritos</string>
     <string name="add_cart">Adicionar ao carrinho</string>
 
     <!-- Erros -->
-    <string name="erroGoogleAuth">Erro ao autenticar com Google</string>
+    <string name="erro_google_auth">Erro ao autenticar com o Google</string>
     <string name="updateAd">Atualizar anúncio</string>
+    <string name="terms_login">Confirmo que li e concordo com os Termos e Condições de Uso do PoggTech</string>
+    <string name="contact_us">Contacte-nos</string>
+    <string name="or">Ou</string>
+    <string name="system_default">Usar definições do sistema</string>
+    <string name="label_system_default">Corresponder às definições do dispositivo</string>
+    <string name="tag_beta">(Beta)</string>
+    <string name="do_want_exclude_product">Deseja excluir este produto?</string>
+    <string name="exclude">Excluir</string>
+    <string name="review">Avaliação</string>
+    <string name="label_review">Escreve a tua avaliação...</string>
+    <string name="edit_product">Editar produto</string>
+    <string name="mark_as_sold">Marcar como vendido</string>
+    <string name="delete_product">Eliminar produto</string>
+    <string name="location">Localização</string>
+    <string name="phone_number">Telemóvel</string>
+    <string name="finish_order">Finalizar Pedido</string>
+    <string name="empty_ads_title">Nada por aqui… ainda!</string>
+    <string name="empty_ads_label">Ainda não registaste nenhum produto. Que tal começares agora e mostrares ao mundo o que tens para oferecer?</string>
+    <string name="maybe_you_like">Talvez gostes</string>
+    <string name="filters">Filtros</string>
+    <string name="more_expensive">Mais Caro</string>
+    <string name="cheaper">Mais Barato</string>
+    <string name="message">Mensagem</string>
+    <string name="explore_our_categories">Explora as nossas categorias</string>
+    <string name="continue_buy">Continua as tuas compras</string>
+    <string name="popular">Popular</string>
+    <string name="see_more">Ver mais</string>
+    <string name="products_up_to_fifty">Produtos até 50%</string>
+    <string name="add_product">Adicionar produto</string>
+    <string name="create_new_product">Criar novo anúncio</string>
+    <string name="add_photos">Adiciona fotos</string>
+    <string name="add_more">Adiciona mais</string>
+    <string name="first_image_label">A primeira imagem que adicionares será a imagem de capa do produto</string>
+    <string name="ad_title">Título do anúncio*</string>
+    <string name="min_fourteen_label">No mínimo 14 caracteres</string>
+    <string name="price_mandatory_label">Preço*</string>
+    <string name="category_mandatory_label">Escolhe uma categoria*</string>
+    <string name="description_mandatory_label">Descrição*</string>
+    <string name="description_new_ad_label">Escreve o que gostarias de ler se fosses tu a ver este anúncio</string>
+    <string name="min_description_label">No mínimo 40 caracteres</string>
+    <string name="localization_mandatory_label">Localização*</string>
+    <string name="ex_localization">ex. Braga</string>
+    <string name="name_mandatory_label">Nome*</string>
+    <string name="email_mandatory_label">Email*</string>
+    <string name="telephone_contact">Contacto telefónico</string>
+    <string name="post_an_add_button">Publicar anúncio</string>
+    <string name="completed">Concluído</string>
+    <string name="delivery_address">Morada de entrega</string>
+    <string name="shipping_status">Estado de envio</string>
+    <string name="products_purchasing">Produtos comprados</string>
+    <string name="description">Descrição</string>
+    <string name="user">Utilizador</string>
+    <string name="search_failed">Desculpa, tenta procurar por outros produtos... Obrigado.</string>
+    <string name="light">Claro</string>
+    <string name="profile">Perfil</string>
+    <string name="dark">Escuro</string>
+    <string name="wallet_balance">Saldo da Carteira</string>
+    <string name="plus_add_label">+ Adicionar</string>
+    <string name="balance">Saldo</string>
+    <string name="transactions">Transações</string>
+    <string name="no_transaction_label">Não há nenhuma transação registada</string>
+    <string name="confirmed">Confirmado</string>
+    <string name="sent">Enviado</string>
+    <string name="in_transit">Em trânsito</string>
+    <string name="delivered">Entregue</string>
+    <string name="finish_order_button_main">Detalhes do meu pedido</string>
+    <string name="finish_order_secondary_button">Continuar a comprar</string>
+
 </resources>

@@ -111,9 +111,9 @@ public class LoginActivity extends AppCompatActivity {
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
-            Log.d("Auth", "Usuário já autenticado: " + currentUser.getEmail());
+            Log.d("Auth", "Utilizador já autenticado: " + currentUser.getEmail());
         } else {
-            Log.d("Auth", "Nenhum usuário autenticado");
+            Log.d("Auth", "Nenhum utilizador autenticado");
         }
 
         buttonProgressGoogle = findViewById(R.id.buttonProgressGoogle);
@@ -128,10 +128,10 @@ public class LoginActivity extends AppCompatActivity {
             initiateGoogleLogin();
         });
 
-        // Verificar se o usuário já está logado
+        // Verificar se o utilizador já está logado
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
-            // Usuário já está logado, redirecionar para a tela principal
+            // Utilizador já está logado, redirecionar para a tela principal
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
             return;
@@ -175,21 +175,21 @@ public class LoginActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(email)) {
             inputEmail.setError("Digite o email");
             buttonProgress.setVisibility(View.GONE);
-            buttonLogin.setText(R.string.entrar);
+            buttonLogin.setText(R.string.to_enter);
             buttonLogin.setEnabled(true);
             return;
         }
         if (TextUtils.isEmpty(password)) {
             inputPassword.setError("Digite a senha");
             buttonProgress.setVisibility(View.GONE);
-            buttonLogin.setText(R.string.entrar);
+            buttonLogin.setText(R.string.to_enter);
             buttonLogin.setEnabled(true);
             return;
         }
         if(!checkboxTerms.isChecked()) {
             SnackbarUtil.showErrorSnackbar(getWindow().getDecorView().getRootView(), "Você precisa aceitar os termos de uso", LoginActivity.this);
             buttonProgress.setVisibility(View.GONE);
-            buttonLogin.setText(R.string.entrar);
+            buttonLogin.setText(R.string.to_enter);
             buttonLogin.setEnabled(true);
             return;
         }
@@ -204,10 +204,10 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(User result) {
                         buttonProgress.setVisibility(View.GONE);
-                        buttonLogin.setText(R.string.entrar);
+                        buttonLogin.setText(R.string.to_enter);
                         buttonLogin.setEnabled(true);
 
-                        Log.d("Sucesso", "Usuário logado com sucesso! Response: " + result.getName());
+                        Log.d("Sucesso", "Utilizador logado com sucesso! Response: " + result.getName());
 
                         // Envia o token de dispositivo para o servidor
                         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -227,7 +227,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Throwable t) {
                         buttonProgress.setVisibility(View.GONE);
-                        buttonLogin.setText(R.string.entrar);
+                        buttonLogin.setText(R.string.to_enter);
                         buttonLogin.setEnabled(true);
 
                         SnackbarUtil.showErrorSnackbar(getWindow().getDecorView().getRootView(), "Erro: " . concat(t.getMessage()), LoginActivity.this);
@@ -236,7 +236,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
             } else {
                 buttonProgress.setVisibility(View.GONE);
-                buttonLogin.setText(R.string.entrar);
+                buttonLogin.setText(R.string.to_enter);
                 buttonLogin.setEnabled(true);
                 SnackbarUtil.showErrorSnackbar(getWindow().getDecorView().getRootView(), "Não foi possível conectar ao servidor", LoginActivity.this);
             }
@@ -301,10 +301,10 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onError(GetCredentialException e) {
                         // Lógica para erro
-                        buttonGoogle.setText(R.string.googleLogin);
+                        buttonGoogle.setText(R.string.google_login);
                         buttonProgressGoogle.setVisibility(View.GONE);
-                        SnackbarUtil.showErrorSnackbar(getWindow().getDecorView().getRootView(), getString(R.string.erroGoogleAuth), LoginActivity.this);
-                        Log.e("Auth", getString(R.string.erroGoogleAuth), e);
+                        SnackbarUtil.showErrorSnackbar(getWindow().getDecorView().getRootView(), getString(R.string.erro_google_auth), LoginActivity.this);
+                        Log.e("Auth", getString(R.string.erro_google_auth), e);
                     }
                 }
         );
@@ -345,7 +345,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onSuccess(User user) {
                 Log.d("Auth", "Login bem-sucedido! Nome: " + user.getName() + ", Email: " + user.getEmail());
 
-                buttonGoogle.setText(R.string.googleLogin);
+                buttonGoogle.setText(R.string.google_login);
                 buttonProgressGoogle.setVisibility(View.GONE);
                 user.setIsGoogle(true);
                 saveToken(user);

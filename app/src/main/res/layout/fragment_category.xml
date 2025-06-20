@@ -31,7 +31,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_bold"
                     android:letterSpacing="0.02"
-                    android:text="Explore Consolas"
+                    android:text="-----"
                     android:textColor="@color/textPrimary"
                     android:textSize="@dimen/text_extra_large"
                     app:layout_collapseMode="parallax" />
@@ -114,17 +114,17 @@
                                     style="@style/itemFilterButton"
                                     android:fontFamily="@font/roboto_bold"
                                     android:textColor="@color/colorPrimaryVariant"
-                                    android:text="Filtros" />
+                                    android:text="@string/filters" />
 
                                 <androidx.appcompat.widget.AppCompatButton
                                     android:id="@+id/filterHigh"
                                     style="@style/itemFilterButton"
-                                    android:text="Mais Caro" />
+                                    android:text="@string/more_expensive" />
 
                                 <androidx.appcompat.widget.AppCompatButton
                                     android:id="@+id/filterLow"
                                     style="@style/itemFilterButton"
-                                    android:text="Mais Barato" />
+                                    android:text="@string/cheaper" />
                             </LinearLayout>
 
                         </HorizontalScrollView>

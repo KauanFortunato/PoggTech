@@ -3,14 +3,14 @@
 
     <item
         android:id="@+id/homeFragment"
-        android:title="@string/inicio"
+        android:title="@string/init"
         android:icon="@drawable/nav_icon_home"
         android:titleCondensed="Iní" />
 
     <item
         android:id="@+id/save"
         android:icon="@drawable/nav_icon_cart"
-        android:title="@string/carrinho"
+        android:title="@string/cart"
         android:titleCondensed="Cart" />
 
     <item

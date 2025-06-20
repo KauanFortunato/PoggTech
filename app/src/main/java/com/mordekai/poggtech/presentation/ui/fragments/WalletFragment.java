@@ -21,7 +21,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -30,19 +29,14 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.adapter.PaymentsAdapter;
-import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.Payments;
 import com.mordekai.poggtech.data.model.User;
 import com.mordekai.poggtech.data.model.Wallet;
-import com.mordekai.poggtech.data.remote.ApiReview;
 import com.mordekai.poggtech.data.remote.ApiWallet;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
-import com.mordekai.poggtech.domain.ReviewManager;
 import com.mordekai.poggtech.domain.WalletManager;
 import com.mordekai.poggtech.presentation.ui.activity.MainActivity;
-import com.mordekai.poggtech.presentation.viewmodel.ReviewViewModel;
 import com.mordekai.poggtech.presentation.viewmodel.WalletViewModel;
-import com.mordekai.poggtech.utils.BottomNavVisibilityController;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
 import java.util.ArrayList;
@@ -59,7 +53,6 @@ public class WalletFragment extends Fragment {
     private List<Payments> payments;
     private Wallet wallet;
     private TextView balance, emptyTransactions;
-    private WalletManager walletManager;
     private PaymentsAdapter paymentsAdapter;
     private ShimmerFrameLayout shimmerPayments;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -116,7 +109,7 @@ public class WalletFragment extends Fragment {
     private void setupObservers(View view) {
         walletViewModel.getWalletLiveData().observe(getViewLifecycleOwner(), wlt -> {
             wallet = wlt;
-            balance.setText(String.format("%s %2f", getString(R.string.eur), wallet.getBalance()));
+            balance.setText(String.format("%s %.2f", getString(R.string.eur), wallet.getBalance()));
         });
 
         walletViewModel.getWalletError().observe(getViewLifecycleOwner(), errorMessage -> {
@@ -229,7 +222,7 @@ public class WalletFragment extends Fragment {
             }
         });
 
-        builder.setNegativeButton(R.string.cancelar, (dialog, which) -> dialog.cancel());
+        builder.setNegativeButton(R.string.cancel, (dialog, which) -> dialog.cancel());
 
         AlertDialog dialog = builder.create();
         dialog.show();

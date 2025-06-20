@@ -21,7 +21,7 @@
         android:textSize="@dimen/text_large"
         android:letterSpacing="0.05"
         android:textColor="@color/textPrimary"
-        android:text="Nothing in Your Cart?"/>
+        android:text="@string/empty_cart_title"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -31,6 +31,6 @@
         android:fontFamily="@font/roboto"
         android:textSize="@dimen/text_normal"
         android:textColor="@color/textTertiary"
-        android:text="That's okay, take your time and browse throught our products until you find what you're looking for."/>
+        android:text="@string/empty_cart_label"/>
 
 </LinearLayout>

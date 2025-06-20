@@ -16,10 +16,10 @@
             android:id="@+id/productImage"
             android:layout_width="match_parent"
             android:layout_height="220dp"
-            android:contentDescription="@string/productImg"
+            android:contentDescription="@string/product_img"
             android:layout_gravity="center"
             android:scaleType="centerCrop"
-            android:src="@drawable/img_xbox_series_x_text"/>
+            android:src="@drawable/placeholder_image_error"/>
 
     </FrameLayout>
 

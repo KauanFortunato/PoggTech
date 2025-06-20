@@ -32,14 +32,14 @@
             android:id="@+id/buttonEdit"
             style="@style/AppButton.TransparentStartIcon"
             android:drawableStart="@drawable/ic_pencil_square"
-            android:text="Editar produto" />
+            android:text="@string/edit_product" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonCheck"
             style="@style/AppButton.TransparentStartIcon"
             android:drawableStart="@drawable/ic_check"
             android:drawableTint="@color/textPrimary"
-            android:text="Marcar como vendido" />
+            android:text="@string/mark_as_sold" />
 
         <View style="@style/division" android:layout_height="1dp" android:layout_marginTop="5dp"/>
 
@@ -48,7 +48,7 @@
             style="@style/AppButton.TransparentStartIcon"
             android:drawableStart="@drawable/ic_trash_outline"
             android:layout_marginTop="10dp"
-            android:text="Deletar produto"
+            android:text="@string/delete_product"
             android:drawableTint="@color/colorError"
             android:textColor="@color/colorError"/>
 

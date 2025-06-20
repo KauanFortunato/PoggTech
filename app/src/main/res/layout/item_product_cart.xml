@@ -42,7 +42,7 @@
                 android:clipToOutline="true"
                 android:adjustViewBounds="true"
                 android:background="@drawable/bg_image_product"
-                android:src="@drawable/img_xbox_series_x_text" />
+                android:src="@drawable/placeholder_image_error" />
 
             <!-- Informações do Produto -->
             <LinearLayout

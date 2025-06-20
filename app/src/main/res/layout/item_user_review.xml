@@ -34,7 +34,7 @@
                     android:layout_height="match_parent"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/img_xbox_series_x_text"/>
+                    android:src="@drawable/placeholder_image_error"/>
             </FrameLayout>
 
             <LinearLayout

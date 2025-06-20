@@ -73,7 +73,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_bold"
-                        android:text="Olá, KAUAN"
+                        android:text="---, ----"
                         android:layout_gravity="center"
                         android:textAlignment="center"
                         android:textColor="@color/textPrimary"
@@ -125,7 +125,7 @@
                             android:layout_marginTop="10dp"
                             android:lineSpacingExtra="4dp"
                             android:maxLines="2"
-                            android:text="@string/minhasCompras"
+                            android:text="@string/my_orders"
                             android:textAlignment="center"
                             android:textColor="@color/textPrimary"
                             android:textSize="12sp" />
@@ -161,7 +161,7 @@
 
                             android:lineSpacingExtra="4dp"
                             android:maxLines="2"
-                            android:text="@string/meusAnuncios"
+                            android:text="@string/my_ads"
                             android:textAlignment="center"
                             android:textColor="@color/textPrimary"
                             android:textSize="12sp" />
@@ -253,7 +253,7 @@
                     style="@style/productSectionTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/paraVoce" />
+                    android:text="@string/for_you" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

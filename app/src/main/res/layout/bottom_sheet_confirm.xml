@@ -25,10 +25,10 @@
 
         <TextView
             android:id="@+id/textViewTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Enviar email?"
+            android:text="@string/send_email"
             android:textSize="18sp"
             android:textColor="@color/textPrimary"
             android:fontFamily="@font/roboto_bold"/>
@@ -60,7 +60,7 @@
         android:fontFamily="@font/roboto"
         android:textAllCaps="false"
         android:textColor="@color/textPrimary"
-        android:text="@string/cancelar"
+        android:text="@string/cancel"
         android:layout_marginTop="8dp"/>
 
 </LinearLayout>

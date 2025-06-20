@@ -44,7 +44,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="20dp"
-                            android:text="Explore nossas categorias"
+                            android:text="@string/explore_our_categories"
                             android:textColor="@color/textPrimary" />
 
                         <LinearLayout
@@ -197,7 +197,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_bold"
-                            android:text="Continue as suas compras"
+                            android:text="@string/continue_buy"
                             android:textColor="@color/textPrimary" />
 
                         <com.facebook.shimmer.ShimmerFrameLayout
@@ -255,7 +255,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="@string/paraVoce" />
+                                    android:text="@string/for_you" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -339,7 +339,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Talves gostes" />
+                                    android:text="@string/maybe_you_like" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -378,16 +378,17 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Popular" />
+                                    android:text="@string/popular" />
 
                                 <TextView
                                     android:id="@+id/seeMorePop"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginHorizontal="10dp"
+                                    android:focusable="true"
                                     android:fontFamily="@font/roboto_medium"
                                     android:clickable="true"
-                                    android:text="Ver mais"
+                                    android:text="@string/see_more"
                                     android:textColor="@color/colorPrimaryVariant"
                                     android:textSize="15sp" />
 
@@ -433,15 +434,16 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Produtos até 50%" />
+                                android:text="@string/products_up_to_fifty" />
 
                             <TextView
                                 android:id="@+id/seeMorePromo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginHorizontal="10dp"
+                                android:focusable="true"
                                 android:fontFamily="@font/roboto_medium"
-                                android:text="Ver mais"
+                                android:text="@string/see_more"
                                 android:clickable="true"
                                 android:textColor="@color/colorPrimaryVariant"
                                 android:textSize="15sp" />

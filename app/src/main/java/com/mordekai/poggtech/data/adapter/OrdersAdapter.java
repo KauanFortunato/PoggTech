@@ -19,7 +19,7 @@ import com.mordekai.poggtech.data.model.Order;
 import java.util.List;
 
 public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder> {
-    private List<Order> orders;
+    private final List<Order> orders;
 
     private final OnOrderClicked onOrderClicked;
 
@@ -49,12 +49,15 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView date, orderId;
-        private TextView totalAmount, totalItems;
-        private FlexboxLayout flexImages;
-        private LinearLayout containerImages;
-        private CardView cardContainer;
-        private TextView otherProducts, status;
+        private final TextView date;
+        private final TextView orderId;
+        private final TextView totalAmount;
+        private final TextView totalItems;
+        private final FlexboxLayout flexImages;
+        private final LinearLayout containerImages;
+        private final CardView cardContainer;
+        private final TextView otherProducts;
+        private final TextView status;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -70,7 +73,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
         }
 
         public void bind(Order order, View view) {
-            date.setText(String.format("%s %s", view.getContext().getString(R.string.orderIn), order.getCreated_at_format()));
+            date.setText(String.format("%s %s", view.getContext().getString(R.string.order_in), order.getCreated_at_format()));
             totalAmount.setText(String.format("%.2f€", order.getTotal_amount()));
             totalItems.setText(String.format("%d items", order.getTotal_products()));
             orderId.setText(String.format("Order id: %d", order.getId()));

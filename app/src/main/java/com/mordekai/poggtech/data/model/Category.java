@@ -4,13 +4,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Category implements Parcelable {
-    private int category_id;
+    private final int category_id;
 
     private String name;
 
-    private String description;
+    private final String description;
 
-    private String createdAt;
+    private final String createdAt;
 
     private String error;
 

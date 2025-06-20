@@ -29,7 +29,7 @@ import java.util.List;
 
 public class MyAdAdapter extends RecyclerView.Adapter<MyAdAdapter.ViewHolder> {
 
-    private List<Product> products;
+    private final List<Product> products;
     FragmentManager fragmentManager;
     private int expandedPosition = -1;
 
@@ -73,10 +73,16 @@ public class MyAdAdapter extends RecyclerView.Adapter<MyAdAdapter.ViewHolder> {
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView productImage, moreBtn;
-        private TextView productTitle, productType, productPrice;
-        private TextView productViews, productReleaseDate, productFav, productLastUpdate;
-        private View expandableLayout;
+        private final ImageView productImage;
+        private final ImageView moreBtn;
+        private final TextView productTitle;
+        private final TextView productType;
+        private final TextView productPrice;
+        private final TextView productViews;
+        private final TextView productReleaseDate;
+        private final TextView productFav;
+        private final TextView productLastUpdate;
+        private final View expandableLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

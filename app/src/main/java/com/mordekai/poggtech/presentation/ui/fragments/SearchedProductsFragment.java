@@ -51,9 +51,9 @@ public class SearchedProductsFragment extends Fragment implements HeaderFragment
     private RecyclerView searchedProducts;
     private ApiProduct apiProduct;
     private ProductManager productManager;
-    private List<Integer> favoriteIds = new ArrayList<>();
+    private final List<Integer> favoriteIds = new ArrayList<>();
     private List<Product> allProducts = new ArrayList<>();
-    private List<Product> filteredProducts = new ArrayList<>();
+    private final List<Product> filteredProducts = new ArrayList<>();
 
 
     @Nullable

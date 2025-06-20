@@ -22,7 +22,7 @@
         android:textSize="@dimen/text_large"
         android:letterSpacing="0.05"
         android:textColor="@color/textPrimary"
-        android:text="Order Placed!"/>
+        android:text="@string/finish_order_title"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -31,7 +31,7 @@
         android:fontFamily="@font/roboto"
         android:textSize="@dimen/text_normal"
         android:textColor="@color/textTertiary"
-        android:text="Your order has been successfully processed and is on its way to you soon."/>
+        android:text="@string/finish_order_label"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,7 +49,7 @@
             android:elevation="0dp"
             android:textSize="16sp"
             android:letterSpacing="0.04"
-            android:text="My order details"/>
+            android:text="@string/finish_order_button_main"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/continueBuy"
@@ -62,7 +62,7 @@
             android:textSize="16sp"
             android:letterSpacing="0.04"
             android:background="@drawable/bg_button_secundary"
-            android:text="Continue Shopping"/>
+            android:text="@string/finish_order_secondary_button"/>
 
     </LinearLayout>
 

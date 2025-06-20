@@ -25,5 +25,5 @@
         android:textColor="@color/textPrimary"
         android:fontFamily="@font/roboto_bold"
         android:textAlignment="center"
-        android:text="@string/consolas"/>
+        android:text="@string/consoles"/>
 </LinearLayout>

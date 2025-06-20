@@ -30,9 +30,9 @@ public class ProductManageFragment extends Fragment {
 
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             if (position == 0) {
-                tab.setText(getString(R.string.carrinho));
+                tab.setText(getString(R.string.cart));
             } else {
-                tab.setText(getString(R.string.salvos));
+                tab.setText(getString(R.string.saved));
             }
         }).attach();
 

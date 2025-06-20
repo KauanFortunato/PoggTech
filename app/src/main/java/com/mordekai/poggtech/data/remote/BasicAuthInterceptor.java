@@ -12,7 +12,7 @@ import android.util.Log;
 
 public class BasicAuthInterceptor implements Interceptor {
 
-    private String credentials;
+    private final String credentials;
 
     @SuppressLint("NewApi")
     public BasicAuthInterceptor(String user, String password) {

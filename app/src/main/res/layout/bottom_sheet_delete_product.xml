@@ -25,10 +25,10 @@
 
         <TextView
             android:id="@+id/textViewTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Deseja excluir este produto?"
+            android:text="@string/do_want_exclude_product"
             android:textSize="18sp"
             android:textColor="@color/textPrimary"
             android:fontFamily="@font/roboto_bold"/>
@@ -50,7 +50,7 @@
         android:fontFamily="@font/roboto_medium"
         android:background="@drawable/bg_button_delete"
         android:textColor="@color/colorOnError"
-        android:text="Excluir" />
+        android:text="@string/exclude" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonCancel"
@@ -60,7 +60,7 @@
         android:fontFamily="@font/roboto"
         android:textAllCaps="false"
         android:textColor="@color/textPrimary"
-        android:text="@string/cancelar"
+        android:text="@string/cancel"
         android:layout_marginTop="8dp"/>
 
 </LinearLayout>

@@ -70,7 +70,7 @@
                                 android:ellipsize="end"
                                 android:fontFamily="@font/roboto_medium"
                                 android:maxLines="2"
-                                android:text="God of War, Jogo de Playstation 2"
+                                android:text="-----------"
                                 android:textColor="@color/textPrimary"
                                 android:textSize="19sp" />
 
@@ -89,7 +89,7 @@
                                     android:layout_gravity="center_vertical"
                                     android:layout_marginEnd="2dp"
                                     android:fontFamily="@font/roboto_medium"
-                                    android:text="4.3"
+                                    android:text="-.-"
                                     android:textColor="@color/textTertiary"
                                     android:textSize="13sp" />
 
@@ -117,7 +117,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/roboto_medium"
-                                android:text="Jogos"
+                                android:text="@string/games"
                                 android:textColor="@color/textSecondary"
                                 android:textSize="16sp" />
 
@@ -212,7 +212,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_medium"
-                            android:text="18"
+                            android:text="--"
                             android:textColor="@color/textPrimary"
                             android:textSize="40sp" />
 
@@ -221,7 +221,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_medium"
-                            android:text="27€"
+                            android:text="--€"
                             android:textColor="@color/textPrimary"
                             android:textSize="26sp" />
                     </LinearLayout>
@@ -231,7 +231,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto"
-                        android:text="-10%"
+                        android:text="-%"
                         android:textColor="@color/colorError"
                         android:textSize="34sp" />
                 </LinearLayout>
@@ -241,7 +241,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_medium"
-                    android:text="Antes 22,30€"
+                    android:text="--- --,--€"
                     android:textColor="@color/textSecondary"
                     android:textSize="15sp" />
 
@@ -267,7 +267,7 @@
                         android:layout_width="270dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto"
-                        android:text="@string/infoPoggersProduct"
+                        android:text="@string/info_poggers_product"
                         android:textColor="@color/textPrimary"
                         android:textSize="15sp" />
 
@@ -309,7 +309,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
                             android:fontFamily="@font/roboto_medium"
-                            android:text="@string/sendAMessage"
+                            android:text="@string/send_a_message"
                             android:textColor="@color/textPrimary"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -330,7 +330,7 @@
                             android:fontFamily="@font/roboto"
                             android:hint="Mensagem"
                             android:paddingHorizontal="15dp"
-                            android:text="@string/defaultMessageEx"
+                            android:text="@string/default_message_ex"
                             android:textSize="14sp" />
 
                         <ImageButton
@@ -371,7 +371,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:fontFamily="@font/roboto_bold"
-                        android:text="Descrição"
+                        android:text="@string/description"
                         android:textColor="@color/textPrimary"
                         android:textSize="28sp" />
 
@@ -394,7 +394,7 @@
                     android:lineSpacingExtra="2dp"
                     android:paddingHorizontal="10dp"
                     android:paddingTop="8dp"
-                    android:text="Aqui vai o conteúdo completo da descrição..."
+                    android:text="------------"
                     android:textColor="@color/textPrimary"
                     android:textSize="16sp"
                     android:visibility="visible" />
@@ -424,7 +424,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:fontFamily="@font/roboto_bold"
-                        android:text="Utilizador"
+                        android:text="@string/user"
                         android:textColor="@color/textPrimary"
                         android:textSize="28sp" />
                 </LinearLayout>
@@ -447,7 +447,7 @@
                             android:layout_height="match_parent"
                             android:adjustViewBounds="true"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/img_xbox_series_x_text" />
+                            android:src="@drawable/placeholder_image_error" />
                     </FrameLayout>
 
                     <LinearLayout
@@ -461,7 +461,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_medium"
-                            android:text="Diogo dioguinhoPJL"
+                            android:text="----------- ---------"
                             android:textColor="@color/textPrimary"
                             android:textSize="@dimen/text_size_large_alt" />
 
@@ -469,7 +469,7 @@
                             android:id="@+id/userCreateDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="No poggtech desde junho 2025"
+                            android:text="---------------"
                             android:textColor="@color/textTertiary"
                             android:textSize="@dimen/text_size_medium" />
                     </LinearLayout>
@@ -512,7 +512,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto"
                         android:padding="10dp"
-                        android:text="@string/seeAll"
+                        android:text="@string/see_all"
                         android:textColor="@color/textSecondary"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -683,7 +683,7 @@
                     android:layout_weight="1"
                     android:background="@color/colorSurface"
                     android:gravity="center"
-                    android:text="1"
+                    android:text="-"
                     android:textAlignment="center"
                     android:textColor="@color/textPrimary" />
 

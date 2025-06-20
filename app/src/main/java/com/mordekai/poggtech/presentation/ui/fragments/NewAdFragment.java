@@ -88,8 +88,8 @@ public class NewAdFragment extends Fragment {
     private User user;
 
     private Button addImagesButton, addImagesButtonAgain;
-    private ArrayList<Uri> selectedImageUris = new ArrayList<>();
-    private List<String> imageUrls = new ArrayList<>();
+    private final ArrayList<Uri> selectedImageUris = new ArrayList<>();
+    private final List<String> imageUrls = new ArrayList<>();
     private LinearLayout layoutImageExamples, layoutUserImages, imagePreviewContainer;
 
     private Product productBeingEdited = null;

@@ -21,7 +21,7 @@ import java.util.List;
 
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder> {
 
-    private List<Review> reviews;
+    private final List<Review> reviews;
 
     public ReviewAdapter(List<Review> reviews) {
         this.reviews = reviews;
@@ -55,9 +55,11 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView comment, userName, commentDate;
-        private LinearLayout starsContainer;
-        private AppCompatImageView userAvatar;
+        private final TextView comment;
+        private final TextView userName;
+        private final TextView commentDate;
+        private final LinearLayout starsContainer;
+        private final AppCompatImageView userAvatar;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

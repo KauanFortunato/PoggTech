@@ -20,7 +20,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:adjustViewBounds="true"
-            android:background="@drawable/bg_image_product"
+            android:background="@drawable/placeholder_image_error"
             android:clipToOutline="true"
             android:scaleType="centerCrop"
             android:src="@drawable/img_xbox_series_x_text"
@@ -93,7 +93,7 @@
                     android:background="@drawable/bg_button_secundary"
                     android:fontFamily="@font/roboto"
                     android:paddingHorizontal="10dp"
-                    android:text="@string/leaveReview"
+                    android:text="@string/leave_review"
                     android:textAllCaps="false"
                     android:textColor="@color/textPrimary" />
             </LinearLayout>

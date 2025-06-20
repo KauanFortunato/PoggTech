@@ -34,7 +34,7 @@
                     android:clipToOutline="true"
                     android:background="@drawable/bg_image_product"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/img_xbox_series_x_text" />
+                    android:src="@drawable/placeholder_image_error" />
 
                 <!-- Informações do Produto -->
                 <LinearLayout
@@ -55,7 +55,7 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:maxLines="2"
-                        android:text="Xbox Series X"
+                        android:text="-------------"
                         android:textColor="@color/textPrimary"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -66,7 +66,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Consolas"
+                        android:text="@string/consoles"
                         android:textColor="@color/textTertiary"
                         android:textSize="15sp" />
 
@@ -150,7 +150,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
                             android:fontFamily="@font/roboto_medium"
-                            android:text="23 visualizações"
+                            android:text="-- visualizações"
                             android:textColor="@color/textSecondary"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -174,7 +174,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
                             android:fontFamily="@font/roboto_medium"
-                            android:text="123 salvos"
+                            android:text="--- salvos"
                             android:textColor="@color/textSecondary"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -206,7 +206,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
                             android:fontFamily="@font/roboto_medium"
-                            android:text="08/12/25 17:21"
+                            android:text="--/--/-- --:--"
                             android:textColor="@color/textSecondary"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -231,7 +231,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
                             android:fontFamily="@font/roboto_medium"
-                            android:text="05/12/25 23:44"
+                            android:text="--/--/-- --:--"
                             android:textColor="@color/textSecondary"
                             android:textSize="14sp" />
                     </LinearLayout>

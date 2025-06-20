@@ -16,9 +16,9 @@ import java.util.List;
 public class SharedPrefHelper {
     private static final String PREF_NAME = "UserPrefs";
 
-    private SharedPreferences sharedPref;
-    private SharedPreferences.Editor editor;
-    private Gson gson;
+    private final SharedPreferences sharedPref;
+    private final SharedPreferences.Editor editor;
+    private final Gson gson;
 
     public SharedPrefHelper(Context context) {
         sharedPref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);

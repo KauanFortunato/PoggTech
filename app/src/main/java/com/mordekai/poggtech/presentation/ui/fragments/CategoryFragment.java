@@ -50,7 +50,7 @@ public class CategoryFragment extends Fragment implements
     private ProductAdapter productAdapter;
     private ProductManager productManager;
     private List<Product> productList = new ArrayList<>();
-    private List<Integer> favoriteIds = new ArrayList<>();
+    private final List<Integer> favoriteIds = new ArrayList<>();
     private InteractionManager interactionManager;
     private ApiInteraction apiInteraction;
     private HeaderFragment headerFragment;
@@ -58,7 +58,7 @@ public class CategoryFragment extends Fragment implements
     private AppCompatButton filterHigh, filterLow;
     private Switch poggersFilter;
     private boolean highPrice = false, lowPrice = false;
-    private List<Product> filteredProducts = new ArrayList<>();
+    private final List<Product> filteredProducts = new ArrayList<>();
 
 
     private TextView categoryTitle;

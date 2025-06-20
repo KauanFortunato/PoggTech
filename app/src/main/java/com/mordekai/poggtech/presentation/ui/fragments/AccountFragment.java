@@ -54,10 +54,10 @@ public class AccountFragment extends Fragment
     private User user;
     private RecyclerView rvForYou;
     private ProductAdapter forYouAdapter;
-    private List<Product> productList = new ArrayList<>();
+    private final List<Product> productList = new ArrayList<>();
     private ApiProduct apiProduct;
     private ProductManager productManager;
-    private List<Integer> favoriteIds = new ArrayList<>();
+    private final List<Integer> favoriteIds = new ArrayList<>();
     private ApiInteraction apiInteraction;
 
 
@@ -103,7 +103,8 @@ public class AccountFragment extends Fragment
     public void onResume() {
         super.onResume();
 
-        if (!isVisible()) return;
+        if (!isVisible()) {
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")

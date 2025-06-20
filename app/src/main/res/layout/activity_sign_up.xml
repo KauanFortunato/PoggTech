@@ -23,7 +23,7 @@
             android:layout_marginLeft="12dp"
             android:layout_marginBottom="6dp"
             android:background="@android:color/transparent"
-            android:contentDescription="@string/voltar"
+            android:contentDescription="@string/back"
             android:src="@drawable/ic_back"
             android:tint="@color/colorOnBackground"
             tools:ignore="UseAppTint" />
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:text="@string/cadastro"
+            android:text="@string/registration"
             android:textAlignment="center" />
     </RelativeLayout>
 
@@ -52,12 +52,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/Label_Edit_Text"
-            android:text="@string/nome" />
+            android:text="@string/name" />
 
         <EditText
             android:id="@+id/inputNome"
             style="@style/Edit_Text"
-            android:hint="@string/nome"
+            android:autofillHints=""
+            android:hint="@string/name"
             android:drawableStart="@drawable/ic_persona_outline"
             android:drawablePadding="10dp"
             android:drawableTint="@color/edit_text_icon_color"
@@ -70,18 +71,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/Label_Edit_Text"
-            android:text="@string/sobrenome" />
+            android:text="@string/last_name" />
 
         <EditText
             android:id="@+id/inputSobrenome"
             style="@style/Edit_Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:autofillHints=""
             android:drawableStart="@drawable/ic_persona_outline"
             android:drawablePadding="10dp"
             android:drawableTint="@color/edit_text_icon_color"
 
-            android:hint="@string/sobrenome"
+            android:hint="@string/last_name"
             android:inputType="textEmailAddress" />
 
         <TextView
@@ -89,12 +91,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/Label_Edit_Text"
-            android:text="@string/enderecoEmail" />
+            android:text="@string/email_address" />
 
         <EditText
             android:id="@+id/inputEmail"
             style="@style/Edit_Text"
-            android:hint="@string/enderecoEmail"
+            android:autofillHints=""
+            android:hint="@string/email_address"
             android:drawableStart="@drawable/ic_email"
             android:drawablePadding="10dp"
             android:drawableTint="@color/edit_text_icon_color"
@@ -112,6 +115,7 @@
         <EditText
             android:id="@+id/inputPassword"
             style="@style/Edit_Text"
+            android:autofillHints=""
             android:hint="@string/palavraPasse"
             android:inputType="textPassword"
             android:drawableStart="@drawable/ic_key"
@@ -126,12 +130,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/Label_Edit_Text"
-            android:text="@string/confirmarPalavraPasse" />
+            android:text="@string/confirm_pass" />
 
         <EditText
             android:id="@+id/inputConfirmPassword"
             style="@style/Edit_Text"
-            android:hint="@string/confirmarPalavraPasse"
+            android:autofillHints=""
+            android:hint="@string/confirm_pass"
             android:inputType="textPassword"
             android:drawableStart="@drawable/ic_key"
             android:drawablePadding="10dp"

@@ -22,7 +22,7 @@
             android:adjustViewBounds="true"
             android:clipToOutline="true"
             android:background="@drawable/bg_image_product"
-            android:src="@drawable/img_xbox_series_x_text"
+            android:src="@drawable/placeholder_image_error"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -88,7 +88,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         } else {
             holder.seller.setVisibility(View.VISIBLE);
             holder.sellerAdmin.setVisibility(View.GONE);
-            holder.seller.setText(String.format("%s %s", holder.seller.getContext().getString(R.string.soldBy), product.getUser_name()));
+            holder.seller.setText(String.format("%s %s", holder.seller.getContext().getString(R.string.sold_by), product.getUser_name()));
         }
 
         if (savedIds.contains(product.getProduct_id())) {

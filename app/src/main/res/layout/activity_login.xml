@@ -38,7 +38,7 @@
             style="@style/Label_Edit_Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/enderecoEmail" />
+            android:text="@string/email_address" />
 
         <EditText
             android:id="@+id/inputEmail"
@@ -46,7 +46,7 @@
             android:drawableStart="@drawable/ic_email"
             android:drawablePadding="15dp"
             android:drawableTint="@color/edit_text_icon_color"
-            android:hint="@string/enderecoEmail"
+            android:hint="@string/email_address"
             android:inputType="textEmailAddress"
             android:textColorHighlight="@color/textTertiary" />
 
@@ -82,7 +82,7 @@
                 android:textColor="@color/textTertiary"
                 android:textIsSelectable="false"
                 android:textSize="12sp"
-                android:text="Confirmo que li e concordo com os Termos e Condições de Uso do PoggTech"
+                android:text="@string/terms_login"
                 android:layout_marginTop="5dp"/>
 
             <FrameLayout
@@ -96,7 +96,7 @@
                     style="@style/Button"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:text="@string/entrar"
+                    android:text="@string/to_enter"
                     android:textAllCaps="false"
                     android:textColor="@color/colorOnPrimary" />
 
@@ -120,7 +120,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_medium_italic"
-                    android:text="@string/esqueceuSenha"
+                    android:text="@string/forgot_pass"
                     android:textColor="@color/colorPrimaryVariant"
                     android:textSize="13sp" />
 
@@ -135,7 +135,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="@font/roboto_medium_italic"
-                    android:text="@string/naoTemConta"
+                    android:text="@string/no_account"
                     android:textSize="13sp"
                     android:textColor="@color/colorPrimaryVariant" />
 
@@ -168,7 +168,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ou"
+                android:text="@string/or"
                 android:textColor="@color/textTertiary" />
 
             <View
@@ -200,7 +200,7 @@
                     android:layout_marginVertical="5dp"
                     android:drawableStart="@drawable/ic_google"
                     android:paddingHorizontal="10dp"
-                    android:text="@string/googleLogin"
+                    android:text="@string/google_login"
                     android:textAllCaps="false"
                     android:textColor="@color/textPrimary" />
 
@@ -218,7 +218,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Contate-nos" />
+                android:text="@string/contact_us" />
         </LinearLayout>
     </LinearLayout>
 

@@ -21,7 +21,7 @@
         android:textSize="@dimen/text_large"
         android:letterSpacing="0.05"
         android:textColor="@color/textPrimary"
-        android:text="Nothing in Your Orders?"/>
+        android:text="@string/empty_order_title"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -31,6 +31,6 @@
         android:fontFamily="@font/roboto"
         android:textSize="@dimen/text_normal"
         android:textColor="@color/textTertiary"
-        android:text="No problem, go and buy something you like. Thanks..."/>
+        android:text="@string/empty_order_label"/>
 
 </LinearLayout>

@@ -14,10 +14,10 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
             android:layout_marginBottom="9dp"
             android:background="@android:color/transparent"
-            android:contentDescription="@string/voltar"
+            android:contentDescription="@string/back"
             android:src="@drawable/ic_close" />
 
         <TextView
@@ -28,7 +28,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginVertical="15dp"
-            android:text="Criar novo anúncio"
+            android:text="@string/create_new_product"
             android:textAlignment="center" />
     </RelativeLayout>
 
@@ -86,7 +86,7 @@
                     android:textColor="@color/textPrimary"
                     android:fontFamily="@font/roboto_bold"
                     android:textSize="18sp"
-                    android:text="Adicione fotos"
+                    android:text="@string/add_photos"
                     android:background="@android:color/transparent"/>
 
             </LinearLayout>
@@ -108,7 +108,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textColor="@color/textPrimary"
@@ -120,7 +120,7 @@
                         android:id="@+id/addImagesButtonAgain"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Adicione mais"
+                        android:text="@string/add_more"
                         android:textColor="@color/textPrimary"
                         android:padding="10dp"
                         android:fontFamily="@font/roboto_bold"
@@ -156,7 +156,7 @@
                         android:fontFamily="@font/roboto"
                         android:textSize="12sp"
                         android:textColor="@color/textSecondary"
-                        android:text="A primeira imagem que você adicionar será a imagem de capa do produto"/>
+                        android:text="@string/first_image_label"/>
 
                 </LinearLayout>
 
@@ -178,7 +178,7 @@
                         android:fontFamily="@font/roboto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Titulo do anúncio*" />
+                        android:text="@string/ad_title" />
 
                     <EditText
                         android:id="@+id/titleProduct"
@@ -198,11 +198,11 @@
                             style="@style/Label_Edit_Text"
                             android:textColor="@color/textSecondary"
                             android:fontFamily="@font/roboto"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_margin="0dp"
-                            android:text="No minímo 14 caracteres" />
+                            android:text="@string/min_fourteen_label" />
 
                         <TextView
                             android:id="@+id/titleProductLabelCount"
@@ -223,7 +223,7 @@
                     android:fontFamily="@font/roboto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Preço*" />
+                    android:text="@string/price_mandatory_label" />
 
                 <EditText
                     android:id="@+id/priceProduct"
@@ -239,7 +239,7 @@
                     android:fontFamily="@font/roboto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Escolha uma categoria*" />
+                    android:text="@string/category_mandatory_label" />
 
                 <Spinner
                     android:id="@+id/classSelector"
@@ -260,7 +260,7 @@
                         android:fontFamily="@font/roboto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Descrição*" />
+                        android:text="@string/description_mandatory_label" />
 
                     <EditText
                         android:id="@+id/descriptionProduct"
@@ -270,7 +270,7 @@
                         android:layout_height="wrap_content"
                         android:minLines="5"
                         android:gravity="top|start"
-                        android:hint="Escreve o que gostarias de ler se fosses tu a ver este anúncio"
+                        android:hint="@string/description_new_ad_label"
                         android:inputType="textMultiLine"
                         android:maxLines="10"
                         android:scrollbars="vertical"
@@ -286,11 +286,11 @@
                             style="@style/Label_Edit_Text"
                             android:textColor="@color/textSecondary"
                             android:fontFamily="@font/roboto"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_margin="0dp"
-                            android:text="No minímo 40 caracteres" />
+                            android:text="@string/min_description_label" />
 
                         <TextView
                             android:id="@+id/descriptionProductLabelCount"
@@ -319,7 +319,7 @@
                     android:textColor="@color/textPrimary"
                     android:textSize="20sp"
                     android:fontFamily="@font/roboto_bold"
-                    android:text="Contacto"/>
+                    android:text="@string/contact"/>
 
                 <TextView
                     style="@style/Label_Edit_Text"
@@ -327,13 +327,13 @@
                     android:fontFamily="@font/roboto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Localização*" />
+                    android:text="@string/localization_mandatory_label" />
 
                 <EditText
                     android:id="@+id/localProduct"
                     style="@style/Edit_Text"
                     android:textSize="15sp"
-                    android:hint="p. ex. Braga"
+                    android:hint="@string/ex_localization"
                     android:textColorHighlight="@color/textTertiary" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -349,7 +349,7 @@
                     android:fontFamily="@font/roboto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nome*" />
+                    android:text="@string/name_mandatory_label" />
 
                 <EditText
                     android:id="@+id/nomeUser"
@@ -364,7 +364,7 @@
                     android:fontFamily="@font/roboto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Email*" />
+                    android:text="@string/email_mandatory_label" />
 
                 <EditText
                     android:id="@+id/emailUser"
@@ -381,7 +381,7 @@
                     android:fontFamily="@font/roboto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Contacto telefónico" />
+                    android:text="@string/telephone_contact" />
 
                 <EditText
                     android:id="@+id/contactUser"
@@ -403,7 +403,7 @@
                     style="@style/Button"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:text="Publicar anúncio"
+                    android:text="@string/post_an_add_button"
                     android:textAllCaps="false"
                     android:textColor="@color/colorOnPrimary" />
 

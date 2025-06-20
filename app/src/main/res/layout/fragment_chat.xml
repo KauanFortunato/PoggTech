@@ -95,7 +95,7 @@
                     android:drawableStart="@drawable/ic_search"
                     android:drawablePadding="10dp"
                     android:elevation="1dp"
-                    android:hint="@string/pesquisaHint"
+                    android:hint="@string/search_hint"
                     android:inputType="text"
                     android:padding="8dp"
                     app:layout_constraintBottom_toBottomOf="parent" />

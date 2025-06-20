@@ -32,6 +32,7 @@
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
+            android:focusable="true"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingHorizontal="10dp"
@@ -59,6 +60,7 @@
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
+            android:focusable="true"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingHorizontal="10dp"
@@ -83,7 +85,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:letterSpacing="0.1"
-                    android:text="(Beta)"
+                    android:text="@string/tag_beta"
                     android:fontFamily="@font/roboto_bold"
                     android:textColor="@color/textPrimary"
                     android:background="@drawable/bg_separetor"
@@ -106,6 +108,7 @@
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
+            android:focusable="true"
             android:gravity="center_vertical"
             android:orientation="vertical"
             android:paddingHorizontal="10dp"
@@ -115,13 +118,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                tools:ignore="UseCompoundDrawables">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Usar definições do sistema"
+                    android:text="@string/system_default"
                     android:textColor="@color/textPrimary"
                     android:textSize="@dimen/text_normal" />
 
@@ -135,7 +139,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Corresponder às definições do dispositivo"
+                android:text="@string/label_system_default"
                 android:textSize="@dimen/text_small" />
         </LinearLayout>
 

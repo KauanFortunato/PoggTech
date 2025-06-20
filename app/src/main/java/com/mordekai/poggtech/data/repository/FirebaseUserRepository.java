@@ -78,7 +78,7 @@ public class FirebaseUserRepository implements UserRepository {
 
                         if (firebaseUser != null) {
                             firebaseUser.reload().addOnCompleteListener(reloadTask -> {
-                                // Agora os dados do usuário estão atualizados
+                                // Agora os dados do utilizador estão atualizados
                                 FirebaseUser updatedUser = FirebaseAuth.getInstance().getCurrentUser();
 
                                 if (updatedUser != null) {
@@ -88,7 +88,7 @@ public class FirebaseUserRepository implements UserRepository {
                                     user.setEmail(updatedUser.getEmail());
                                     user.setName(updatedUser.getDisplayName());
 
-                                    Log.d("Auth", "Usuário atualizado! Nome: " + user.getName() + ", Email: " + user.getEmail());
+                                    Log.d("Auth", "Utilizador atualizado! Nome: " + user.getName() + ", Email: " + user.getEmail());
 
                                     callback.onSuccess(user);
                                 } else {
@@ -104,12 +104,10 @@ public class FirebaseUserRepository implements UserRepository {
                 });
     }
 
-
-
     @Override
     public void logoutUser() {
         firebaseAuth.signOut();
-        Log.d("Sucesso", "Usuário deslogado com sucesso!");
+        Log.d("Sucesso", "Utilizador deslogado com sucesso!");
     }
 
     public void getUser(String firebaseUid, RepositoryCallback<User> callback) {

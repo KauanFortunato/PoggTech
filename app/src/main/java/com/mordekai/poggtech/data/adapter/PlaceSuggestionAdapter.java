@@ -17,7 +17,7 @@ import java.util.List;
 public class PlaceSuggestionAdapter extends RecyclerView.Adapter<PlaceSuggestionAdapter.ViewHolder> {
 
     private List<AutocompletePrediction> predictions = new ArrayList<>();
-    private OnPlaceClickListener listener;
+    private final OnPlaceClickListener listener;
 
     public interface OnPlaceClickListener {
         void onPlaceClick(AutocompletePrediction prediction);
