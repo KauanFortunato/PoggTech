@@ -99,14 +99,6 @@ public class AccountFragment extends Fragment
     }
 
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        if (!isVisible()) {
-        }
-    }
-
     @SuppressLint("ClickableViewAccessibility")
     private void StartComponents(View view) {
         helloUser = view.findViewById(R.id.helloUser);
