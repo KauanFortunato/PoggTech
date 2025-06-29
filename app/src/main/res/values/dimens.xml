@@ -54,6 +54,7 @@
     <dimen name="radius_medium">8dp</dimen>
     <dimen name="radius_large">12dp</dimen>
     <dimen name="radius_xlarge">16dp</dimen>
+    <dimen name="radius_xxlarge">20dp</dimen>
     <dimen name="radius_circular">999dp</dimen> <!-- For fully rounded corners -->
 
 </resources>

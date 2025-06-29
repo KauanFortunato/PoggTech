@@ -1,4 +1,4 @@
-package com.mordekai.poggtech.data.model;
+package com.mordekai.poggtech.data.remote.request;
 
 import java.util.List;
 

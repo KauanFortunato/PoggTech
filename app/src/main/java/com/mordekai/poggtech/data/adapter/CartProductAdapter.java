@@ -156,7 +156,7 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
 
             @Override
             public void onFailure(Throwable t) {
-                Toast.makeText(view.getContext(), "Erro ao adicionar ao carrinho", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

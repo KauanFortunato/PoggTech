@@ -108,7 +108,7 @@ public class MyAdAdapter extends RecyclerView.Adapter<MyAdAdapter.ViewHolder> {
             productViews.setText(String.format("%d visualizações", product.getViews()));
             productReleaseDate.setText(product.getCreated_at());
             productFav.setText(String.format("%d salvos", product.getSaved_count()));
-            productLastUpdate.setText(product.getUpdated_at());
+            productLastUpdate.setText(String.format("%.1f", product.getRating()));
 
             moreBtn.setOnClickListener(v -> {
                 if(moreBtn.isHapticFeedbackEnabled()) {

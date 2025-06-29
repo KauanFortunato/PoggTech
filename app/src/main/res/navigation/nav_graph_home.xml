@@ -122,12 +122,18 @@
             android:name="listType"
             app:argType="string"
             android:defaultValue="popular" />
+        <action
+            android:id="@+id/action_productListFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
 
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
         android:name="com.mordekai.poggtech.presentation.ui.fragments.ChatFragment"
         android:label="ChatFragment" />
-
 
 </navigation>

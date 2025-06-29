@@ -3,7 +3,7 @@ package com.mordekai.poggtech.data.remote;
 import com.mordekai.poggtech.data.model.ApiResponse;
 import com.mordekai.poggtech.data.model.Order;
 import com.mordekai.poggtech.data.model.OrderItem;
-import com.mordekai.poggtech.data.model.OrderRequest;
+import com.mordekai.poggtech.data.remote.request.OrderRequest;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import retrofit2.http.Path;
 public interface ApiOrder {
 
     @POST("order/register")
-    Call<ApiResponse<Integer>> registerOrder(@Body OrderRequest orderRequest);
+    Call<ApiResponse<Integer>>  registerOrder(@Body OrderRequest orderRequest);
 
     @GET("order/{user_id}")
     Call<ApiResponse<List<Order>>> getOrders(

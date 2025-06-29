@@ -159,5 +159,44 @@
     <string name="sent">Sent</string>
     <string name="in_transit">In transit</string>
     <string name="delivered">Delivered</string>
+    <string name="empty_order_title">Nothing in your orders?</string>
+    <string name="empty_order_label">No problem, go and buy something you like. Thanks...</string>
+    <string name="empty_cart_title">Nothing in Your Cart?</string>
+    <string name="empty_cart_label">That\'s okay, take your time and browse throught our products until you find what you\'re looking for.</string>
+    <string name="empty_saved_title">Nothing in Your Saved?</string>
+    <string name="empty_saved_label">That\'s okay, take your time and browse throught our products until you find what you\'re looking for.</string>
+    <string name="finish_order_title">Order Placed!</string>
+    <string name="finish_order_label">Your order has been successfully processed and is on its way to you soon.</string>
+    <string name="user_disabled">User disabled</string>
 
+    <string name="edit_profile">Edit profile</string>
+    <string name="change_email">Change email</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="security">Security</string>
+    <string name="change_pass">Change password</string>
+    <string name="language_region">Language and region</string>
+    <string name="choose_language">Choose language</string>
+    <string name="appearance">Appearance</string>
+    <string name="theme">Theme</string>
+    <string name="about">About</string>
+    <string name="privacy_policy">Privacy of policy</string>
+    <string name="terms_use">Terms of use</string>
+    <string name="new_email">Current email</string>
+    <string name="current_password">Current password</string>
+
+    <string name="privacyText">"Your privacy is important to us. This policy explains how we collect, use, and protect your personal information.\n\n" +
+        "1. **Information We Collect:** We may collect your name, email address, and app usage data.\n\n" +
+        "2. **How We Use Your Information:** We use your data to improve the user experience, provide support, and send important notifications.\n\n" +
+        "3. **Data Sharing:** We do not sell or share your personal information with third parties, except when required by law.\n\n" +
+        "4. **Security:** We implement technical and organizational measures to protect your data against unauthorized access.\n\n" +
+        "5. **User Rights:** You can request access to or deletion of your personal data at any time.\n\n" +
+        "By using this app, you agree to the terms of this privacy policy."</string>
+
+    <string name="termsText">Welcome to our app! By using this service, you agree to the following terms:\n\n" +
+        "1. **Proper Use:** You agree to use the app legally and respectfully.\n\n" +
+        "2. **User Account:** You are responsible for maintaining the confidentiality of your login credentials. Do not share your access with others.\n\n" +
+        "3. **Content:** All app content is protected by copyright and may not be reproduced without permission.\n\n" +
+        "4. **Account Suspension:** We reserve the right to suspend or delete accounts that violate our policies or terms.\n\n" +
+        "5. **Changes to Terms:** We may update these terms at any time. You will be notified of any significant changes.\n\n" +
+        "If you do not agree with the terms, please do not use the app.</string>
 </resources>

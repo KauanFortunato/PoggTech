@@ -71,18 +71,12 @@ public class UserConfigFragment extends Fragment {
     private SharedPrefHelper sharedPrefHelper;
     private User user;
 
-    private UserManager userManager;
-    private FCMManager fcmManager;
     private boolean isEditing = false;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_settings, container, false);
-
-        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-        fcmManager = new FCMManager(apiService);
-        userManager = new UserManager(new FirebaseUserRepository(), new MySqlUserRepository(apiService));
 
         sharedPrefHelper = new SharedPrefHelper(requireContext());
         user = sharedPrefHelper.getUser();

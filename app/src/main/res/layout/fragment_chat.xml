@@ -86,11 +86,11 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <EditText
-                    android:id="@+id/searchProd"
+                    android:id="@+id/chatSearch"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_marginBottom="8dp"
-                    android:autofillHints="produtopesquisa"
+                    android:autofillHints="chatpesquisa"
                     android:background="@drawable/rounded_menu_stroke"
                     android:drawableStart="@drawable/ic_search"
                     android:drawablePadding="10dp"

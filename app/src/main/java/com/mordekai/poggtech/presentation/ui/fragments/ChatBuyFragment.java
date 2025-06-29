@@ -9,6 +9,7 @@ import com.mordekai.poggtech.data.model.User;
 import com.mordekai.poggtech.data.remote.ApiMessage;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
 import com.mordekai.poggtech.domain.MessageManager;
+import com.mordekai.poggtech.utils.ChatSearchable;
 import com.mordekai.poggtech.utils.MessageNotifier;
 import com.mordekai.poggtech.utils.NotificationFlagHelper;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
@@ -28,7 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatBuyFragment extends Fragment {
+public class ChatBuyFragment extends Fragment implements ChatSearchable {
     private SharedPrefHelper sharedPrefHelper;
     private User user;
     private ChatAdapter chatAdapter;
@@ -37,6 +38,8 @@ public class ChatBuyFragment extends Fragment {
     private ApiMessage apiMessage;
     private List<Chat> chatList;
     private TextView textNoChats;
+    private List<Chat> originalChatList = new ArrayList<>();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -77,6 +80,8 @@ public class ChatBuyFragment extends Fragment {
         }
 
         MessageNotifier.setListener(() -> fetchUserChats());
+
+        fetchUserChats();
     }
 
     @Override
@@ -89,6 +94,9 @@ public class ChatBuyFragment extends Fragment {
         messageManager.getUserChatsBuy(user.getUserId(), new RepositoryCallback<List<Chat>>() {
             @Override
             public void onSuccess(List<Chat> chats) {
+                originalChatList.clear();
+                originalChatList.addAll(chats);
+
                 chatList.clear();
 
                 if (chats.isEmpty()) {
@@ -116,4 +124,28 @@ public class ChatBuyFragment extends Fragment {
         rvChats = view.findViewById(R.id.rvChats);
         textNoChats = view.findViewById(R.id.textNoChats);
     }
+
+    @Override
+    public void onSearchQueryChanged(String query) {
+        chatList.clear();
+
+        if (query == null || query.trim().isEmpty()) {
+            chatList.addAll(originalChatList); // mostrar tudo se pesquisa estiver vazia
+        } else {
+            String lowerQuery = query.toLowerCase();
+            for (Chat chat : originalChatList) {
+
+                // Filtra nome do utilizador, nome do produto e ultima mensagem
+                if ((chat.getChatWithName() != null && chat.getChatWithName().toLowerCase().contains(lowerQuery)) ||
+                                (chat.getLastMessage() != null && chat.getLastMessage().toLowerCase().contains(lowerQuery)) ||
+                                (chat.getProductTitle() != null && chat.getProductTitle().toLowerCase().contains(lowerQuery))
+                ) {
+                    chatList.add(chat);
+                }
+            }
+        }
+
+        chatAdapter.notifyDataSetChanged();
+    }
+
 }

@@ -7,7 +7,7 @@
     <string name="login">Iniciar sessão</string>
     <string name="signUp">Registar</string>
     <string name="account">Conta</string>
-    <string name="your_orders">As tuas compras</string>
+    <string name="your_orders">Pedidos</string>
     <string name="send">Enviar</string>
     <string name="email_address">Endereço de e-mail</string>
     <string name="write_email">Introduz o teu e-mail</string>
@@ -82,6 +82,7 @@
     <string name="sold_by">Vendido por</string>
     <string name="in_app_since">Utilizador da PoggTech desde</string>
     <string name="app_version">Versão da app</string>
+    <string name="user_disabled">Utilizador desativado</string>
 
     <!-- Chat -->
     <string name="chat" translatable="false">Chat</string>
@@ -178,4 +179,44 @@
     <string name="delivered">Entregue</string>
     <string name="finish_order_button_main">Detalhes do meu pedido</string>
     <string name="finish_order_secondary_button">Continuar a comprar</string>
+    <string name="empty_order_title">Nada nos seus pedidos?</string>
+    <string name="empty_order_label">No problem, go and buy something you like. Thanks...</string>
+    <string name="empty_cart_title">Nada no seu carrinho?</string>
+    <string name="empty_cart_label">Tudo bem, reserve algum tempo e navegue pelos nossos produtos até encontrar o que procura.</string>
+    <string name="empty_saved_title">Nada nos seus salvos?</string>
+    <string name="empty_saved_label">Tudo bem, reserve algum tempo e navegue pelos nossos produtos até encontrar o que procura.</string>
+
+    <string name="finish_order_title">Pedido feito!</string>
+    <string name="finish_order_label">O seu pedido foi processado com sucesso e estará a caminho em breve.</string>
+    <string name="edit_profile">Editar perfil</string>
+    <string name="change_email">Alterar email</string>
+    <string name="delete_account">Excluir conta</string>
+    <string name="security">Segurança</string>
+    <string name="change_pass">Alterar senha</string>
+    <string name="language_region">Idioma e Região</string>
+    <string name="choose_language">Escolher idioma</string>
+    <string name="appearance">Aparência</string>
+    <string name="theme">Tema</string>
+    <string name="about">Sobre</string>
+    <string name="privacy_policy">Política de privacidade</string>
+    <string name="terms_use">Termos de uso</string>
+    <string name="new_email">Novo email</string>
+    <string name="current_password">Palavra-passe atual</string>
+
+
+    <string name="privacyText">"A sua privacidade é importante para nós. Esta política explica como recolhemos, usamos e protegemos as suas informações pessoais.\n\n" +
+        "1. **Informações que recolhemos:** Podemos recolher o seu nome, endereço de e-mail, e dados de utilização da aplicação.\n\n" +
+        "2. **Como usamos essas informações:** Utilizamos os dados para melhorar a experiência do utilizador, fornecer suporte e enviar notificações importantes.\n\n" +
+        "3. **Partilha de dados:** Não vendemos nem partilhamos as suas informações pessoais com terceiros, exceto quando exigido por lei.\n\n" +
+        "4. **Segurança:** Aplicamos medidas técnicas e organizacionais para proteger os seus dados contra acessos não autorizados.\n\n" +
+        "5. **Direitos do utilizador:** Pode solicitar a eliminação dos seus dados ou aceder às informações que armazenamos sobre si.\n\n" +
+        "Ao utilizar a aplicação, está a concordar com esta política."</string>
+
+    <string name="termsText">Bem-vindo à nossa aplicação! Ao utilizar este serviço, está a aceitar os seguintes termos:\n\n" +
+        "1. **Uso adequado:** Compromete-se a utilizar a aplicação de forma legal e respeitosa.\n\n" +
+        "2. **Conta de utilizador:** É responsável por manter a segurança das suas credenciais. Não partilhe o seu acesso com terceiros.\n\n" +
+        "3. **Conteúdo:** Todo o conteúdo da aplicação é protegido por direitos de autor e não pode ser reproduzido sem permissão.\n\n" +
+        "4. **Suspensão de conta:** Podemos suspender ou eliminar contas que violem os nossos termos ou políticas.\n\n" +
+        "5. **Alterações nos termos:** Reservamo-nos o direito de modificar estes termos a qualquer momento. Será notificado de quaisquer alterações significativas.\n\n" +
+        "Se não concordar com os termos, por favor, não utilize a aplicação.</string>
 </resources>

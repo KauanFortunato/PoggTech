@@ -32,7 +32,6 @@ public class SettingsAppearanceFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings_appearance, container, false);
-        
 
         preferences = requireActivity().getSharedPreferences("app_prefs", MODE_PRIVATE);
 
@@ -46,9 +45,6 @@ public class SettingsAppearanceFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
-        
-        
     }
 
     private void setupViews(View view) {

@@ -21,7 +21,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
@@ -38,6 +37,7 @@ import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRe
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.adapter.CartProductAdapter;
@@ -45,7 +45,7 @@ import com.mordekai.poggtech.data.adapter.PlaceSuggestionAdapter;
 import com.mordekai.poggtech.data.adapter.ProductAdapter;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.ApiResponse;
-import com.mordekai.poggtech.data.model.OrderRequest;
+import com.mordekai.poggtech.data.remote.request.OrderRequest;
 import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.model.User;
 import com.mordekai.poggtech.data.remote.ApiInteraction;
@@ -268,11 +268,17 @@ public class CartFragment extends Fragment implements CartProductAdapter.OnProdu
                 .build();
 
         btnOrderDetail.setOnClickListener(v -> {
+            BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.bottomNavigationView);
+            bottomNavigationView.setSelectedItemId(R.id.account);
+
             NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
             navController.navigate(R.id.ordersFragment, null, navOptions);
         });
 
         continueBuy.setOnClickListener(v -> {
+            BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.bottomNavigationView);
+            bottomNavigationView.setSelectedItemId(R.id.homeFragment);
+
             NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
             navController.navigate(R.id.homeFragment, null, navOptions);
         });

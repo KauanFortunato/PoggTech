@@ -36,6 +36,7 @@ import com.mordekai.poggtech.domain.FCMManager;
 import com.mordekai.poggtech.domain.UserManager;
 import com.mordekai.poggtech.presentation.ui.activity.LoginActivity;
 import com.mordekai.poggtech.presentation.ui.activity.MainActivity;
+import com.mordekai.poggtech.presentation.ui.bottomsheets.ChangeEmailBottomSheet;
 import com.mordekai.poggtech.presentation.ui.bottomsheets.ChangeLanguageBottomSheet;
 import com.mordekai.poggtech.presentation.ui.bottomsheets.ConfirmBottomSheet;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
@@ -73,6 +74,7 @@ public class SettingsFragment extends Fragment {
         AppCompatButton privacyPolicy = view.findViewById(R.id.privacyPolicy);
         AppCompatButton appVersion = view.findViewById(R.id.appVersion);
         AppCompatButton deleAccount = view.findViewById(R.id.deleAccount);
+        AppCompatButton changeEmail = view.findViewById(R.id.changeEmail);
         ImageButton btn_back = view.findViewById(R.id.btn_back);
 
         btnEditPerfil.setOnClickListener(v -> {
@@ -150,12 +152,12 @@ public class SettingsFragment extends Fragment {
         });
 
         privacyPolicy.setOnClickListener(v -> {
-            String privacyText = "Aqui vai o conteúdo da política de privacidade...";
+            String privacyText = getString(R.string.privacyText);
             showInfoDialog("Política de Privacidade", privacyText, getContext());
         });
 
         termsUse.setOnClickListener(v -> {
-            String termsText = "Aqui vão os termos de uso...";
+            String termsText = getString(R.string.termsText);
             showInfoDialog("Termos de Uso", termsText, getContext());
         });
 
@@ -193,11 +195,21 @@ public class SettingsFragment extends Fragment {
                     });
 
         });
+
+        changeEmail.setOnClickListener(v -> {
+            if (changeEmail.isHapticFeedbackEnabled()) {
+                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
+            }
+
+            ChangeEmailBottomSheet bottomSheet = new ChangeEmailBottomSheet();
+            bottomSheet.show(requireActivity().getSupportFragmentManager(), bottomSheet.getTag());
+        });
+
     }
 
     private void deleteUser(String firebaseUserId) {
         UserManager userManager = new UserManager(new FirebaseUserRepository(), new MySqlUserRepository(RetrofitClient.getRetrofitInstance().create(ApiService.class)));
-        userManager.deleteUser(firebaseUserId , new RepositoryCallback<Void>() {
+        userManager.deleteUser(firebaseUserId, new RepositoryCallback<Void>() {
             @Override
             public void onSuccess(Void result) {
                 Toast.makeText(getContext(), "Conta deletada com sucesso!", Toast.LENGTH_SHORT).show();
@@ -230,7 +242,12 @@ public class SettingsFragment extends Fragment {
 
         userManager.logoutUser();
         sharedPrefHelper.logOut();
-        startActivity(new Intent(requireContext(), LoginActivity.class));
+
+        Intent intent = new Intent(getContext(), LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+//        startActivity(new Intent(requireContext(), LoginActivity.class));
+
     }
 
     private void showInfoDialog(String title, String message, Context context) {

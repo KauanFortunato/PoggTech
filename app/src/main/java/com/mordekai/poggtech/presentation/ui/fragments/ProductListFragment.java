@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,16 +16,20 @@ import com.mordekai.poggtech.data.adapter.ProductAdapter;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.Product;
 import com.mordekai.poggtech.data.model.User;
+import com.mordekai.poggtech.data.remote.ApiInteraction;
 import com.mordekai.poggtech.data.remote.ApiProduct;
 import com.mordekai.poggtech.data.remote.RetrofitClient;
+import com.mordekai.poggtech.domain.InteractionManager;
 import com.mordekai.poggtech.domain.ProductManager;
+import com.mordekai.poggtech.presentation.ui.activity.MainActivity;
 import com.mordekai.poggtech.utils.SharedPrefHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductListFragment extends Fragment {
+public class ProductListFragment extends Fragment implements ProductAdapter.OnProductClickListener, ProductAdapter.OnSavedChangedListener,  HeaderFragment.HeaderListener {
 
+    private HeaderFragment headerFragment;
     private RecyclerView recyclerView;
     private ProductAdapter productAdapter;
     private ProductManager productManager;
@@ -36,12 +41,15 @@ public class ProductListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product_list, container, false);
 
+        headerFragment = (HeaderFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.headerContainer);
+        showBackButton();
+
         sharedPrefHelper = new SharedPrefHelper(requireContext());
         user = sharedPrefHelper.getUser();
 
         recyclerView = view.findViewById(R.id.recyclerViewProducts);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        productAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), R.layout.item_product, null, null);
+        productAdapter = new ProductAdapter(new ArrayList<>(), user.getUserId(), R.layout.item_product, this, this);
         recyclerView.setAdapter(productAdapter);
 
         productManager = new ProductManager(RetrofitClient.getRetrofitInstance().create(ApiProduct.class));
@@ -51,6 +59,13 @@ public class ProductListFragment extends Fragment {
         loadProductsByType();
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        showBackButton();
     }
 
     private void loadProductsByType() {
@@ -83,6 +98,57 @@ public class ProductListFragment extends Fragment {
                     }
                 });
                 break;
+        }
+    }
+
+    @Override
+    public void onProductClick(Product product) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("productId", product.getProduct_id());
+
+        InteractionManager interactionManager = new InteractionManager(RetrofitClient.getRetrofitInstance().create(ApiInteraction.class));
+
+
+        interactionManager.userInteraction(product.getProduct_id(), user.getUserId(), "view", new RepositoryCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("API_RESPONSE", "Interaction result: " + result);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("API_RESPONSE", "Error in userInteraction", t);
+            }
+        });
+
+        NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
+        navController.navigate(R.id.action_productListFragment_to_productDetailsFragment, bundle);
+    }
+
+    @Override
+    public void onSaveChanged() {
+        productAdapter.notifyDataSetChanged();
+    }
+
+
+    @Override
+    public void showBackButton() {
+        if (headerFragment != null) {
+            headerFragment.showButtonBack();
+        }
+    }
+
+    @Override
+    public void hideBackButton() {
+        if (headerFragment != null) {
+            headerFragment.hideButtonBack();
+        }
+    }
+
+    @Override
+    public void closeSearchProd() {
+        if (headerFragment != null) {
+            headerFragment.closeSearchProd();
         }
     }
 }

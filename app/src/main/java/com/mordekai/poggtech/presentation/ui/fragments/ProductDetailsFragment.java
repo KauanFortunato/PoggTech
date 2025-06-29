@@ -1,6 +1,7 @@
 package com.mordekai.poggtech.presentation.ui.fragments;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.mordekai.poggtech.R;
@@ -232,7 +233,7 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
                 if (productWithUser != null) {
                     product = productWithUser.getProduct();
                     sellerUser = productWithUser.getUser();
-                    if(sellerUser != null) {
+                    if (sellerUser != null) {
                         startUser(view);
                     }
                     updateUIWithProduct(view);
@@ -319,7 +320,8 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
                     text
             );
 
-            Utils.goToChat(this, chatProduct);
+            BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.bottomNavigationView);
+            bottomNavigationView.setSelectedItemId(R.id.chat);
         }
     }
 
@@ -433,7 +435,7 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
 
         LinearLayout descriptionTitle = view.findViewById(R.id.descriptionTitle);
         descriptionTitle.setOnClickListener(v -> {
-            if(descriptionText.isHapticFeedbackEnabled()) {
+            if (descriptionText.isHapticFeedbackEnabled()) {
                 descriptionText.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
             }
 
@@ -450,11 +452,12 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
             }
         });
 
-        if(product.isPoggers()) {
+        if (product.isPoggers()) {
             view.findViewById(R.id.containerSeller).setVisibility(View.VISIBLE);
             view.findViewById(R.id.containerReviewsAll).setVisibility(View.VISIBLE);
             view.findViewById(R.id.containerUser).setVisibility(View.GONE);
         } else {
+            view.findViewById(R.id.productRatingContainer).setVisibility(View.GONE);
             view.findViewById(R.id.containerReviewsAll).setVisibility(View.GONE);
         }
 
@@ -597,6 +600,21 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
             @Override
             public void onSuccess(ApiResponse<Void> result) {
                 if (result.isSuccess()) {
+
+                    InteractionManager interactionManager = new InteractionManager(RetrofitClient.getRetrofitInstance().create(ApiInteraction.class));
+
+                    interactionManager.userInteraction(product.getProduct_id(), user.getUserId(), "fav", new RepositoryCallback<String>() {
+                        @Override
+                        public void onSuccess(String result) {
+                            Log.d("API_RESPONSE", "Interaction result: " + result);
+                        }
+
+                        @Override
+                        public void onFailure(Throwable t) {
+                            Log.e("API_RESPONSE", "Error in userInteraction", t);
+                        }
+                    });
+
                     showBottomSheet();
                 } else {
                     SnackbarUtil.showErrorSnackbar(getView(), result.getMessage(), getContext());

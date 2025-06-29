@@ -76,7 +76,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
             date.setText(String.format("%s %s", view.getContext().getString(R.string.order_in), order.getCreated_at_format()));
             totalAmount.setText(String.format("%.2f€", order.getTotal_amount()));
             totalItems.setText(String.format("%d items", order.getTotal_products()));
-            orderId.setText(String.format("Order id: %d", order.getId()));
+            orderId.setText(String.format("ID do pedido: %d", order.getId()));
             status.setText(order.getStatus().substring(0, 1).toUpperCase() + order.getStatus().substring(1).toLowerCase());
 
             switch (status.getText().toString()) {

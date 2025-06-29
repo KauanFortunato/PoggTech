@@ -29,7 +29,7 @@ public class CartManager {
                 if (response.body() != null) {
                     callback.onSuccess(response.body());
                 } else {
-                    callback.onFailure(new Exception("Erro ao adicionar aos favoritos/carrinho: " + response.message()));
+                    callback.onFailure(new Exception("Não há mais produtos disponíveis"));
                 }
             }
 

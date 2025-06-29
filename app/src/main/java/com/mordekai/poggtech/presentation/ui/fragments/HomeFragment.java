@@ -64,7 +64,6 @@ public class HomeFragment extends Fragment
     private ApiService apiService;
     private ApiProduct apiProduct;
     private ApiInteraction apiInteraction;
-    private final List<Product> productList = new ArrayList<>();
     private final List<Product> productForYouList = new ArrayList<>();
     private ProductManager productManager;
     private InteractionManager interactionManager;

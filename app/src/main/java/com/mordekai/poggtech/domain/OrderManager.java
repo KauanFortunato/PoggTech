@@ -6,14 +6,12 @@ import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.ApiResponse;
 import com.mordekai.poggtech.data.model.Order;
 import com.mordekai.poggtech.data.model.OrderItem;
-import com.mordekai.poggtech.data.model.OrderRequest;
-import com.mordekai.poggtech.data.model.Wallet;
+import com.mordekai.poggtech.data.remote.request.OrderRequest;
 import com.mordekai.poggtech.data.remote.ApiOrder;
 
 import java.io.IOException;
 import java.util.List;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

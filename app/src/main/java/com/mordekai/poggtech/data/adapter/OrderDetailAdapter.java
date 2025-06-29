@@ -1,5 +1,6 @@
 package com.mordekai.poggtech.data.adapter;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
@@ -85,13 +86,14 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
             quantity = itemView.findViewById(R.id.quantity);
         }
 
+        @SuppressLint("DefaultLocale")
         public void bind(OrderItem orderItem) {
             Utils.loadImageBasicAuth(productImage, orderItem.getProduct_cover());
 
             titleProduct.setText(orderItem.getProduct_title());
             category.setText(orderItem.getProduct_category());
             price.setText(String.format("%.2f€", orderItem.getUnit_price()));
-            quantity.setText(String.valueOf(orderItem.getQuantity()));
+            quantity.setText(String.format("x%d", orderItem.getQuantity()));
 
             leaveReviewBtn.setOnClickListener(v -> {
                 if (v.isHapticFeedbackEnabled()) {

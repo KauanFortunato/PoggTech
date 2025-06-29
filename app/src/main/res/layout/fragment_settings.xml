@@ -50,7 +50,7 @@
                 style="@style/sectionConfigTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Conta" />
+                android:text="@string/account" />
 
             <LinearLayout
                 style="@style/sectionConfig"
@@ -64,15 +64,16 @@
                     style="@style/sectionConfigItem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Editar perfil" />
+                    android:text="@string/edit_profile" />
 
                 <View style="@style/division" android:layout_height="1dp"/>
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/changeEmail"
                     style="@style/sectionConfigItem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Alterar email" />
+                    android:text="@string/change_email" />
 
                 <View style="@style/division" android:layout_height="1dp"/>
 
@@ -81,7 +82,7 @@
                     style="@style/sectionConfigItem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Excluir conta" />
+                    android:text="@string/delete_account" />
 
             </LinearLayout>
 
@@ -90,7 +91,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Segurança" />
+                android:text="@string/security" />
 
             <LinearLayout
                 style="@style/sectionConfig"
@@ -103,7 +104,7 @@
                     style="@style/sectionConfigItem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Alterar senha" />
+                    android:text="@string/change_pass" />
 
             </LinearLayout>
 
@@ -112,7 +113,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Idioma e Região" />
+                android:text="@string/language_region" />
 
             <LinearLayout
                 style="@style/sectionConfig"
@@ -125,7 +126,7 @@
                     style="@style/sectionConfigItem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Escolher idioma" />
+                    android:text="@string/choose_language" />
             </LinearLayout>
 
             <TextView
@@ -133,7 +134,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Aparência" />
+                android:text="@string/appearance" />
 
             <LinearLayout
                 style="@style/sectionConfig"
@@ -146,7 +147,7 @@
                     style="@style/sectionConfigItem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Tema" />
+                    android:text="@string/theme" />
 
             </LinearLayout>
 
@@ -156,7 +157,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Sobre" />
+                android:text="@string/about" />
 
             <LinearLayout
                 style="@style/sectionConfig"
@@ -169,7 +170,7 @@
                     style="@style/sectionConfigItem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Política de privacidade" />
+                    android:text="@string/privacy_policy" />
 
                 <View style="@style/division" android:layout_height="1dp"/>
 
@@ -178,7 +179,7 @@
                     style="@style/sectionConfigItem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Termos de uso" />
+                    android:text="@string/terms_use" />
 
                 <View style="@style/division" android:layout_height="1dp"/>
 
@@ -187,7 +188,7 @@
                     style="@style/sectionConfigItem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Versão do app" />
+                    android:text="@string/app_version" />
 
             </LinearLayout>
 

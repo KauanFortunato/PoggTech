@@ -15,6 +15,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.adapter.OrdersAdapter;
@@ -38,6 +39,7 @@ public class OrdersFragment extends Fragment {
     private OrderManager orderManager;
     private User user;
     private AppCompatImageView btnBack;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
 
     @Nullable
@@ -61,6 +63,11 @@ public class OrdersFragment extends Fragment {
         rvOrders.setAdapter(ordersAdapter);
 
         getOrders(view);
+
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+
+        swipeRefreshLayout.setOnRefreshListener(() -> getOrders(view));
+
         return view;
     }
 
@@ -79,8 +86,11 @@ public class OrdersFragment extends Fragment {
                     view.findViewById(R.id.emptyOrder).setVisibility(View.VISIBLE);
                     return;
                 }
-                orders = result;
+                orders.clear();
+                orders.addAll(result);
                 ordersAdapter.updateOrders(result);
+
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override

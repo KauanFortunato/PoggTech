@@ -9,8 +9,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -20,9 +22,24 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.mordekai.poggtech.R;
+import com.mordekai.poggtech.data.callback.RepositoryCallback;
+import com.mordekai.poggtech.data.model.ApiResponse;
+import com.mordekai.poggtech.data.model.User;
+import com.mordekai.poggtech.data.remote.ApiService;
+import com.mordekai.poggtech.data.remote.RetrofitClient;
+import com.mordekai.poggtech.data.repository.FirebaseUserRepository;
+import com.mordekai.poggtech.data.repository.MySqlUserRepository;
+import com.mordekai.poggtech.domain.FCMManager;
+import com.mordekai.poggtech.domain.UserManager;
 import com.mordekai.poggtech.presentation.ui.fragments.HeaderFragment;
 import com.mordekai.poggtech.presentation.ui.fragments.ProductDetailsFragment;
 import com.mordekai.poggtech.presentation.ui.fragments.ProductDetailsFragmentArgs;
@@ -30,6 +47,8 @@ import com.mordekai.poggtech.utils.AppConfig;
 import com.mordekai.poggtech.utils.BottomNavVisibilityController;
 import com.mordekai.poggtech.utils.MessageNotifier;
 import com.mordekai.poggtech.utils.NetworkUtil;
+import com.mordekai.poggtech.utils.SharedPrefHelper;
+import com.mordekai.poggtech.utils.SnackbarUtil;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -57,7 +76,8 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
     Set<Integer> fragmentsComHeaderEBottom = new HashSet<>(Arrays.asList(
             R.id.homeFragment,
             R.id.categoryFragment,
-            R.id.searchedProducts
+            R.id.searchedProductsFragment,
+            R.id.productListFragment
     ));
 
     Set<Integer> fragmentsComApenasBottom = new HashSet<>(Arrays.asList(
@@ -177,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
             currentNavController.addOnDestinationChangedListener(currentNavListener);
 
             // Reseta pilha da aba
-            currentNavController.popBackStack(currentNavController.getGraph().getStartDestinationId(), false);
+//            currentNavController.popBackStack(currentNavController.getGraph().getStartDestinationId(), false);
 
             // Atualiza UI para o destino atual do NavController
             if (currentNavController.getCurrentDestination() != null) {
@@ -209,6 +229,9 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
         });
 
         MessageNotifier.setListener(this::showChatBadge);
+
+        View rootView = findViewById(android.R.id.content);
+        isUserBlock(rootView);
     }
 
     @Override
@@ -224,6 +247,9 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
 
         updateUiVisibilityBasedOnCurrentDestination();
         MessageNotifier.setListener(this::showChatBadge);
+
+        View rootView = findViewById(android.R.id.content);
+        isUserBlock(rootView);
     }
 
     @Override
@@ -372,6 +398,76 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
             hideHeader();
             hideBottomNav();
         }
+    }
+
+    private void isUserBlock(View view) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user != null) {
+            user.getIdToken(true) // Força atualização do token
+                    .addOnSuccessListener(new OnSuccessListener<GetTokenResult>() {
+                        @Override
+                        public void onSuccess(GetTokenResult result) {
+                            // Token atualizado com sucesso. Usuário ainda está ativo
+                            // Continue normalmente no app
+                            Log.d("AuthCheck", "Usuário ainda ativo.");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            if (e instanceof FirebaseAuthException) {
+                                FirebaseAuthException authException = (FirebaseAuthException) e;
+                                if ("ERROR_USER_DISABLED".equals(authException.getErrorCode())) {
+                                    // Usuário foi desativado
+                                    FirebaseAuth.getInstance().signOut();
+                                    SnackbarUtil.showErrorSnackbar(view, getString(R.string.user_disabled), getApplicationContext());
+                                    Toast.makeText(getApplicationContext(),
+                                            "Sua conta foi bloqueada.",
+                                            Toast.LENGTH_LONG).show();
+
+                                    logOutUser();
+                                } else {
+                                    Log.e("AuthCheck", "Outro erro: " + authException.getErrorCode());
+                                }
+                            } else {
+                                Log.e("AuthCheck", "Erro desconhecido ao verificar token", e);
+                            }
+                        }
+                    });
+        }
+    }
+
+    private void logOutUser() {
+        SharedPrefHelper sharedPrefHelper = new SharedPrefHelper(this);
+        User user = sharedPrefHelper.getUser();
+
+
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        UserManager userManager = new UserManager(new FirebaseUserRepository(), new MySqlUserRepository(apiService));
+        FCMManager fcmManager = new FCMManager(apiService);
+
+        fcmManager.removeToken(user.getUserId(), user.getToken(), new RepositoryCallback<ApiResponse>() {
+            @Override
+            public void onSuccess(ApiResponse result) {
+                Log.d("FCM_TOKEN", "Token removido com sucesso!");
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("FCM_TOKEN", "Erro ao remover token: " + t.getMessage());
+            }
+        });
+
+
+        userManager.logoutUser();
+        sharedPrefHelper.logOut();
+
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+//        startActivity(new Intent(requireContext(), LoginActivity.class));
+
     }
 
     @Override

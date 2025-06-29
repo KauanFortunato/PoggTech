@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -88,6 +89,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         } else {
             holder.seller.setVisibility(View.VISIBLE);
             holder.sellerAdmin.setVisibility(View.GONE);
+            holder.productRatingContainer.setVisibility(View.GONE);
             holder.seller.setText(String.format("%s %s", holder.seller.getContext().getString(R.string.sold_by), product.getUser_name()));
         }
 
@@ -214,6 +216,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         TextView discount;
         TextView textUnavailable;
         TextView rating;
+        LinearLayout  productRatingContainer;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -229,6 +232,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             discount = itemView.findViewById(R.id.discount);
             textUnavailable = itemView.findViewById(R.id.textUnavailable);
             rating = itemView.findViewById(R.id.rating);
+            productRatingContainer = itemView.findViewById(R.id.productRatingContainer);
         }
     }
 }

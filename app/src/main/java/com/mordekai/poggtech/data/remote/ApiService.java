@@ -2,6 +2,7 @@ package com.mordekai.poggtech.data.remote;
 
 import com.mordekai.poggtech.data.model.ApiResponse;
 import com.mordekai.poggtech.data.model.User;
+import com.mordekai.poggtech.data.remote.request.UpdateEmailRequest;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -35,6 +36,9 @@ public interface ApiService {
 
     @PUT("user")
     Call<ApiResponse<Void>> updateUser(@Body User user);
+
+    @PUT("user/email/")
+    Call<ApiResponse<Void>> updateEmail(@Body UpdateEmailRequest request);
 
     @Multipart
     @POST("user/avatar")

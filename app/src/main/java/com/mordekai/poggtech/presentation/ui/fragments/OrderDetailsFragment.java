@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.mordekai.poggtech.R;
 import com.mordekai.poggtech.data.adapter.OrderDetailAdapter;
@@ -41,6 +42,7 @@ public class OrderDetailsFragment extends Fragment {
     private RecyclerView rvOrdersDetails;
     private AppCompatImageView btn_back;
     private Order order;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private OrderDetailAdapter orderDetailAdapter;
     private ReviewViewModel reviewViewModel;
     private final List<OrderItem> orderItems = new ArrayList<>();
@@ -87,12 +89,15 @@ public class OrderDetailsFragment extends Fragment {
             reviewViewModel.createReview(review, getContext());
         };
 
-        orderItems();
-        setupShippingLayout(view);
+        orderItems(view);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+
+        swipeRefreshLayout.setOnRefreshListener(() -> orderItems(view));
+
         return view;
     }
 
-    public void orderItems() {
+    public void orderItems(View view) {
         OrderManager orderManager = new OrderManager(RetrofitClient.getRetrofitInstance().create(ApiOrder.class));
         orderManager.GetOrderItems(order.getId(), new RepositoryCallback<List<OrderItem>>() {
             @Override
@@ -102,6 +107,10 @@ public class OrderDetailsFragment extends Fragment {
                     orderItems.addAll(result);
                     Log.d("API_RESPONSE", "Itens recebidos: " + orderItems.size());
                     orderDetailAdapter.updateOrderItems(result);
+
+                    setupShippingLayout(view);
+
+                    swipeRefreshLayout.setRefreshing(false);
                 }
             }
 

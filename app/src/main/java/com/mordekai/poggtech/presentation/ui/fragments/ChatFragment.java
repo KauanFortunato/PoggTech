@@ -1,9 +1,12 @@
 package com.mordekai.poggtech.presentation.ui.fragments;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mordekai.poggtech.R;
+import com.mordekai.poggtech.utils.ChatSearchable;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
@@ -12,6 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 public class ChatFragment extends Fragment {
 
@@ -64,6 +68,24 @@ public class ChatFragment extends Fragment {
             isCompraSelected = false;
             updateButtonStyle(false);
             loadFragment(new ChatSellFragment());
+        });
+
+        EditText chatSearch = view.findViewById(R.id.chatSearch);
+
+        chatSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Fragment current = fragmentManager.findFragmentById(R.id.fragmentContainer);
+                if (current instanceof ChatSearchable) {
+                    ((ChatSearchable) current).onSearchQueryChanged(s.toString());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
         });
 
         return view;
