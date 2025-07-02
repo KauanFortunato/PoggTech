@@ -53,13 +53,6 @@
                     android:textColor="@color/textPrimary"
                     android:layout_marginHorizontal="10dp"
                     android:text="--_--_--_--_--_--_"/>
-
-                <ImageButton
-                    android:id="@+id/moreOptions"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/ic_more_horiz"/>
             </LinearLayout>
 
             <LinearLayout

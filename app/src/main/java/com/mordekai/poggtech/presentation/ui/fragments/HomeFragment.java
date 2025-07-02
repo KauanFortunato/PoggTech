@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -169,10 +170,9 @@ public class HomeFragment extends Fragment
         productManager.getProductsFavCategories(user.getUserId(), 12, new RepositoryCallback<List<Product>>() {
             @Override
             public void onSuccess(List<Product> result) {
-                List<Product> filteredResult = filterNewProducts(result);
-                List<Product> limited = limitDisplay(filteredResult, 6);
+                List<Product> uniqueLimited = getUniqueLimitedProducts(result, 6);
                 productForYouList.clear();
-                productForYouList.addAll(limited);
+                productForYouList.addAll(uniqueLimited);
 
                 productManager.fetchUserFavOrCart(user.getUserId(), 1, new RepositoryCallback<List<Integer>>() {
                     @Override
@@ -181,7 +181,7 @@ public class HomeFragment extends Fragment
                         favoriteIds.addAll(favorites);
 
                         updateAllAdapters();
-                        forYouAdapter.updateProducts(limited);
+                        forYouAdapter.updateProducts(uniqueLimited);
                         checkIfLoadingFinished();
                     }
 
@@ -236,10 +236,8 @@ public class HomeFragment extends Fragment
         productManager.getPopularProducts(false, 12, new RepositoryCallback<List<Product>>() {
             @Override
             public void onSuccess(List<Product> result) {
-                List<Product> filteredResult = filterNewProducts(result);
-                List<Product> limited = limitDisplay(filteredResult, 4);
-
-                popularAdapter.updateProducts(limited);
+                List<Product> uniqueLimited = getUniqueLimitedProducts(result, 6);
+                popularAdapter.updateProducts(uniqueLimited);
                 checkIfLoadingFinished();
             }
 
@@ -259,10 +257,9 @@ public class HomeFragment extends Fragment
                     checkIfLoadingFinished();
                     return;
                 }
-                List<Product> filteredResult = filterNewProducts(result);
-                List<Product> limited = limitDisplay(filteredResult, 6);
+                List<Product> uniqueLimited = getUniqueLimitedProducts(result, 6);
 
-                maybeYouLikeAdapter.updateProducts(limited);
+                maybeYouLikeAdapter.updateProducts(uniqueLimited);
                 checkIfLoadingFinished();
             }
 
@@ -390,6 +387,10 @@ public class HomeFragment extends Fragment
         });
 
         seeMorePop.setOnClickListener(v -> {
+            if(seeMorePop.isHapticFeedbackEnabled()) {
+                seeMorePop.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+            }
+
             Bundle bundle = new Bundle();
             bundle.putString("listType", "popular");
 
@@ -434,6 +435,25 @@ public class HomeFragment extends Fragment
         });
 
         swipeRefreshLayout.setOnRefreshListener(() -> loadHomeData(view));
+
+        view.findViewById(R.id.banner).setOnClickListener(v -> {
+            if(view.isHapticFeedbackEnabled()) {
+                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+            }
+
+            Bundle bundle = new Bundle();
+            bundle.putString("listType", "promotion");
+
+            NavOptions navOptions = new NavOptions.Builder()
+                    .setEnterAnim(R.anim.slide_in_right)
+                    .setExitAnim(R.anim.slide_out_left)
+                    .setPopEnterAnim(R.anim.slide_in_left)
+                    .setPopExitAnim(R.anim.slide_out_right)
+                    .build();
+
+            NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
+            navController.navigate(R.id.productListFragment, bundle, navOptions);
+        });
 
     }
 
@@ -488,22 +508,23 @@ public class HomeFragment extends Fragment
         promoProductsContainer.setVisibility(View.VISIBLE);
 
     }
+    private List<Product> getUniqueLimitedProducts(List<Product> inputList, int maxCount) {
+        List<Product> result = new ArrayList<>();
 
-    private List<Product> limitDisplay(List<Product> list, int maxCount) {
-        return list.size() > maxCount ? list.subList(0, maxCount) : list;
-    }
+        for (Product product : inputList) {
+            if (product == null || product.getProduct_id() == 0) continue;
 
-
-    private List<Product> filterNewProducts(List<Product> products) {
-        List<Product> uniqueProducts = new ArrayList<>();
-        for (Product product : products) {
             if (!loadedProductIds.contains(product.getProduct_id())) {
                 loadedProductIds.add(product.getProduct_id());
-                uniqueProducts.add(product);
+                result.add(product);
             }
+
+            if (result.size() >= maxCount) break;
         }
-        return uniqueProducts;
+
+        return result;
     }
+
 
     @Override
     public void onProductClick(Product product) {

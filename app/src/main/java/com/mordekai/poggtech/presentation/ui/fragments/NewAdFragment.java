@@ -715,7 +715,8 @@ public class NewAdFragment extends Fragment {
         // Imagens já existentes (mantidas)
         List<RequestBody> existingImagesParts = new ArrayList<>();
         for (String url : imageUrls) {
-            existingImagesParts.add(RequestBody.create(MediaType.parse("text/plain"), url));
+            String fileName = url.substring(url.lastIndexOf("/") + 1);
+            existingImagesParts.add(RequestBody.create(MediaType.parse("text/plain"), fileName));
         }
 
         // Novas imagens
@@ -750,6 +751,5 @@ public class NewAdFragment extends Fragment {
                 }
         );
     }
-
 
 }

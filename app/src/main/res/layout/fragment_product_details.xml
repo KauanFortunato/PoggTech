@@ -505,16 +505,6 @@
                         android:text="@string/reviews"
                         android:textColor="@color/textPrimary"
                         android:textSize="28sp" />
-
-                    <TextView
-                        android:id="@+id/seeAllReviews"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto"
-                        android:padding="10dp"
-                        android:text="@string/see_all"
-                        android:textColor="@color/textSecondary"
-                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -582,54 +572,6 @@
                         android:scrollbars="vertical"
                         tools:itemCount="4"
                         tools:listitem="@layout/item_user_review" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <View style="@style/division" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="15dp"
-                    android:paddingVertical="5dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/roboto_bold"
-                        android:text="Do mesmo tipo"
-                        android:textColor="@color/textPrimary"
-                        android:textSize="22sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/containerForYou"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingVertical="5dp">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvForYou"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:overScrollMode="never"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:itemCount="4"
-                        tools:listitem="@layout/item_product" />
 
                 </LinearLayout>
 

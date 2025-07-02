@@ -111,12 +111,6 @@
                                 android:orientation="horizontal">
 
                                 <androidx.appcompat.widget.AppCompatButton
-                                    style="@style/itemFilterButton"
-                                    android:fontFamily="@font/roboto_bold"
-                                    android:textColor="@color/colorPrimaryVariant"
-                                    android:text="@string/filters" />
-
-                                <androidx.appcompat.widget.AppCompatButton
                                     android:id="@+id/filterHigh"
                                     style="@style/itemFilterButton"
                                     android:text="@string/more_expensive" />

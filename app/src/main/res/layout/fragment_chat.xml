@@ -54,14 +54,6 @@
                     android:background="@drawable/bg_button_unselected"
                     android:textColor="@color/textPrimary" />
             </LinearLayout>
-
-
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="center_vertical|end"
-                app:tint="@color/textPrimary"
-                app:srcCompat="@drawable/ic_more_vert" />
         </LinearLayout>
     </LinearLayout>
 

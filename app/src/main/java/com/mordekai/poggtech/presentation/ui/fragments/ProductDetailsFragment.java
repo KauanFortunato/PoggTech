@@ -63,16 +63,14 @@ import java.util.List;
 
 import okhttp3.ResponseBody;
 
-public class ProductDetailsFragment extends Fragment implements ProductAdapter.OnProductClickListener,
-        ProductAdapter.OnSavedChangedListener {
+public class ProductDetailsFragment extends Fragment {
 
     private TextView titleProduct, category, price, priceDecimal, discount, priceBefore,
-            productPoggers, productRating1, productRating2, reviewCount, noReviews, seeAllReviews;
+            productPoggers, productRating1, productRating2, reviewCount, noReviews;
     private EditText inputText;
     private LinearLayout contactSellerContainer, containerReviews, containerBuy;
     private LinearLayout starsContainer, starsContainer2;
-    private ProductAdapter forYouAdapter;
-    private RecyclerView rvReviews, rvForYou;
+    private RecyclerView rvReviews;
     private AppCompatButton actionButton;
     private final List<Product> productList = new ArrayList<>();
     private final List<Integer> favoriteIds = new ArrayList<>();
@@ -164,28 +162,11 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
             }
         });
 
-        rvForYou.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        rvForYou.setNestedScrollingEnabled(false);
-
-        forYouAdapter = new ProductAdapter(productList, user.getUserId(), R.layout.item_product, this, this);
-        rvForYou.setAdapter(forYouAdapter);
-
         // Buscar os detalhes do produto
         Log.d("ProductDetailsFragment", "productId: " + productId);
         fetchProduct(productId, view);
         getReviews(productId);
 
-        ProductLoader.loadForYouProducts(
-                productManager,
-                user.getUserId(),
-                forYouAdapter,
-                productList,
-                favoriteIds,
-                4,
-                1,
-                () -> {
-                }
-        );
         return view;
     }
 
@@ -197,18 +178,6 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
         if (productId != -1) {
             fetchProduct(productId, view);
             getReviews(productId);
-
-            ProductLoader.loadForYouProducts(
-                    productManager,
-                    user.getUserId(),
-                    forYouAdapter,
-                    productList,
-                    favoriteIds,
-                    4,
-                    1,
-                    () -> {
-                    }
-            );
         }
     }
 
@@ -351,8 +320,6 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
         rvReviews = view.findViewById(R.id.rvReviews);
         contentView = view.findViewById(R.id.contentView);
         shimmerLayout = view.findViewById(R.id.shimmerLayout);
-        rvForYou = view.findViewById(R.id.rvForYou);
-        seeAllReviews = view.findViewById(R.id.seeAllReviews);
 
         quantityProduct = view.findViewById(R.id.quantityProduct);
         minusProduct = view.findViewById(R.id.minusProduct);
@@ -692,33 +659,5 @@ public class ProductDetailsFragment extends Fragment implements ProductAdapter.O
 
         Intent shareIntent = Intent.createChooser(sendIntent, "Compartilhar produto via...");
         startActivity(shareIntent);
-    }
-
-    @Override
-    public void onSaveChanged() {
-        forYouAdapter.setSavedIds(favoriteIds);
-        forYouAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onProductClick(Product product) {
-        Bundle bundle = new Bundle();
-        bundle.putInt("productId", product.getProduct_id());
-
-        InteractionManager interactionManager = new InteractionManager(RetrofitClient.getRetrofitInstance().create(ApiInteraction.class));
-        interactionManager.userInteraction(product.getProduct_id(), user.getUserId(), "view", new RepositoryCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                Log.d("API_RESPONSE", "Interaction result: " + result);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                Log.e("API_RESPONSE", "Error in userInteraction", t);
-            }
-        });
-
-        NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
-        navController.navigate(R.id.productDetailsFragment, bundle);
     }
 }
