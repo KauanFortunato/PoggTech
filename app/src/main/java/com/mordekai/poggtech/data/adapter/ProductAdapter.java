@@ -86,6 +86,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         if(product.getSeller_type().equals("admin")) {
             holder.sellerAdmin.setVisibility(View.VISIBLE);
             holder.seller.setVisibility(View.GONE);
+
+            if(product.getQuantity() <= 10) {
+                holder.warning.setVisibility(View.VISIBLE);
+            } else {
+                holder.warning.setVisibility(View.GONE);
+            }
         } else {
             holder.seller.setVisibility(View.VISIBLE);
             holder.sellerAdmin.setVisibility(View.GONE);
@@ -213,7 +219,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         TextView productPrice;
         TextView sellerAdmin;
         TextView seller;
-        TextView discount;
+        TextView discount, warning;
         TextView textUnavailable;
         TextView rating;
         LinearLayout  productRatingContainer;
@@ -229,7 +235,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             productPrice = itemView.findViewById(R.id.productPrice);
             sellerAdmin = itemView.findViewById(R.id.sellerAdmin);
             seller = itemView.findViewById(R.id.seller);
+
             discount = itemView.findViewById(R.id.discount);
+            warning = itemView.findViewById(R.id.warning);
+
             textUnavailable = itemView.findViewById(R.id.textUnavailable);
             rating = itemView.findViewById(R.id.rating);
             productRatingContainer = itemView.findViewById(R.id.productRatingContainer);

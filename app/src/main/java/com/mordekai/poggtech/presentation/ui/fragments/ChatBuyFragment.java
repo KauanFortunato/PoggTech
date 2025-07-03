@@ -17,6 +17,7 @@ import com.mordekai.poggtech.utils.Utils;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +42,7 @@ public class ChatBuyFragment extends Fragment implements ChatSearchable {
     private TextView textNoChats;
     private List<Chat> originalChatList = new ArrayList<>();
 
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -90,10 +93,18 @@ public class ChatBuyFragment extends Fragment implements ChatSearchable {
         MessageNotifier.clearListener();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        fetchUserChats();
+    }
+
     private void fetchUserChats() {
         messageManager.getUserChatsBuy(user.getUserId(), new RepositoryCallback<List<Chat>>() {
             @Override
             public void onSuccess(List<Chat> chats) {
+                swipeRefreshLayout.setRefreshing(false);
+
                 originalChatList.clear();
                 originalChatList.addAll(chats);
 
@@ -111,6 +122,8 @@ public class ChatBuyFragment extends Fragment implements ChatSearchable {
 
             @Override
             public void onFailure(Throwable t) {
+                swipeRefreshLayout.setRefreshing(false);
+
                 Log.e("API_RESPONSE", "Erro ao buscar chats", t);
 
                 textNoChats.setVisibility(View.VISIBLE);
@@ -123,6 +136,9 @@ public class ChatBuyFragment extends Fragment implements ChatSearchable {
     private void initComponents(View view) {
         rvChats = view.findViewById(R.id.rvChats);
         textNoChats = view.findViewById(R.id.textNoChats);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+
+        swipeRefreshLayout.setOnRefreshListener(() -> fetchUserChats());
     }
 
     @Override

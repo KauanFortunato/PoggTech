@@ -175,15 +175,8 @@ public class ChatDetailsFragment extends Fragment {
                 btnBack.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
             }
 
-            NavOptions navOptions = new NavOptions.Builder()
-                    .setEnterAnim(R.anim.slide_in_left)
-                    .setExitAnim(R.anim.slide_out_right)
-                    .setPopEnterAnim(R.anim.slide_out_right)
-                    .setPopExitAnim(R.anim.slide_in_left)
-                    .build();
-
             NavController navController = ((MainActivity) requireActivity()).getCurrentNavController();
-            navController.navigate(R.id.chatFragment, null, navOptions);
+            navController.popBackStack();
         });
     }
 

@@ -245,18 +245,27 @@
                     android:textColor="@color/textSecondary"
                     android:textSize="15sp" />
 
-
                 <LinearLayout
                     android:id="@+id/containerSeller"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/stock"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="textEnd"
+                        android:fontFamily="@font/roboto"
+                        android:layout_marginBottom="5dp"
+                        android:text="Em estoque 10"
+                        android:textColor="@color/textTertiary"
+                        android:textSize="15sp" />
 
                     <TextView
                         android:id="@+id/productPoggers"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_black"
                         android:text="@string/poggers"

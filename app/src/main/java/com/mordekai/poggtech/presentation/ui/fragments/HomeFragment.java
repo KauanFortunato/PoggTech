@@ -508,6 +508,7 @@ public class HomeFragment extends Fragment
         promoProductsContainer.setVisibility(View.VISIBLE);
 
     }
+
     private List<Product> getUniqueLimitedProducts(List<Product> inputList, int maxCount) {
         List<Product> result = new ArrayList<>();
 
@@ -524,7 +525,6 @@ public class HomeFragment extends Fragment
 
         return result;
     }
-
 
     @Override
     public void onProductClick(Product product) {

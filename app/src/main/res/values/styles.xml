@@ -270,18 +270,26 @@
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
-    <style name="discount">
+    <style name="BaseTagProduct">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/text_size_small_alt</item>
         <item name="android:fontFamily">@font/roboto</item>
-        <item name="android:textColor">@color/colorOnError</item>
-        <item name="android:background">@drawable/bg_discount</item>
         <item name="android:paddingTop">3dp</item>
         <item name="android:paddingBottom">3dp</item>
         <item name="android:paddingStart">5dp</item>
         <item name="android:paddingEnd">5dp</item>
         <item name="android:layout_margin">5dp</item>
+    </style>
+
+    <style name="discount" parent="BaseTagProduct">
+        <item name="android:textColor">@color/colorOnError</item>
+        <item name="android:background">@drawable/bg_discount</item>
+    </style>
+
+    <style name="warning" parent="BaseTagProduct">
+        <item name="android:textColor">@color/colorOnError</item>
+        <item name="android:background">@drawable/bg_warning</item>
     </style>
 
     <!-- ================= OUTROS ================= -->

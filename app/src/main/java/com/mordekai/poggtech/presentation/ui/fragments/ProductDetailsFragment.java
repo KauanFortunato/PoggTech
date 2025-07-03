@@ -66,7 +66,7 @@ import okhttp3.ResponseBody;
 public class ProductDetailsFragment extends Fragment {
 
     private TextView titleProduct, category, price, priceDecimal, discount, priceBefore,
-            productPoggers, productRating1, productRating2, reviewCount, noReviews;
+            productRating1, productRating2, reviewCount, noReviews;
     private EditText inputText;
     private LinearLayout contactSellerContainer, containerReviews, containerBuy;
     private LinearLayout starsContainer, starsContainer2;
@@ -302,7 +302,6 @@ public class ProductDetailsFragment extends Fragment {
         priceDecimal = view.findViewById(R.id.priceDecimal);
         discount = view.findViewById(R.id.discount);
         priceBefore = view.findViewById(R.id.priceBefore);
-        productPoggers = view.findViewById(R.id.productPoggers);
         actionButton = view.findViewById(R.id.actionPrimaryProduct);
         inputText = view.findViewById(R.id.inputText);
         contactSellerContainer = view.findViewById(R.id.contactSellerContainer);
@@ -423,6 +422,17 @@ public class ProductDetailsFragment extends Fragment {
             view.findViewById(R.id.containerSeller).setVisibility(View.VISIBLE);
             view.findViewById(R.id.containerReviewsAll).setVisibility(View.VISIBLE);
             view.findViewById(R.id.containerUser).setVisibility(View.GONE);
+
+            TextView stock = view.findViewById(R.id.stock);
+            stock.setText(String.format("Em estoque: %d", product.getQuantity()));
+
+            if (product.getQuantity() <= 10) {
+                stock.setTextColor(getResources().getColor(R.color.colorError));
+            } else {
+                if(product.getQuantity() <= 20) {
+                    stock.setTextColor(getResources().getColor(R.color.colorAccent));
+                }
+            }
         } else {
             view.findViewById(R.id.productRatingContainer).setVisibility(View.GONE);
             view.findViewById(R.id.containerReviewsAll).setVisibility(View.GONE);

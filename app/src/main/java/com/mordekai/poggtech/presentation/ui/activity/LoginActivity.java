@@ -256,7 +256,9 @@ public class LoginActivity extends AppCompatActivity {
                                 SharedPrefHelper sharedPrefHelper = new SharedPrefHelper(LoginActivity.this);
                                 sharedPrefHelper.saveUser(user);
 
-                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
                                 finish();
                             }
 
@@ -265,7 +267,9 @@ public class LoginActivity extends AppCompatActivity {
                                 SharedPrefHelper sharedPrefHelper = new SharedPrefHelper(LoginActivity.this);
                                 sharedPrefHelper.saveUser(user);
 
-                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
                                 finish();
                             }
                         });
