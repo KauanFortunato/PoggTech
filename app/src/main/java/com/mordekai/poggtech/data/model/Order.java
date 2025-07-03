@@ -15,6 +15,7 @@ public class Order implements Serializable {
     private String location;
     private String user_name;
     private String user_phone;
+    private Boolean is_refund_pending;
 
     public Order() {
     }
@@ -88,4 +89,5 @@ public class Order implements Serializable {
         return created_at_format;
     }
 
+    public Boolean getIsRefundPending() { return is_refund_pending; }
 }

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    android:paddingVertical="10dp"
+    android:paddingHorizontal="30dp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icon_pendente"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_undo"
+        app:tint="@color/textPrimary"
+        app:layout_constraintEnd_toStartOf="@+id/icon_aprovado"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_pendente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Pendente"
+        android:textColor="@color/textTertiary"
+        android:textSize="@dimen/text_size_tiny"
+        android:fontFamily="@font/roboto"
+        app:layout_constraintEnd_toEndOf="@id/icon_pendente"
+        app:layout_constraintStart_toStartOf="@id/icon_pendente"
+        app:layout_constraintTop_toBottomOf="@id/icon_pendente" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icon_aprovado"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_rounded_check"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/icon_pendente"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_aprovado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Aprovado"
+        android:textColor="@color/textTertiary"
+        android:textSize="@dimen/text_size_tiny"
+        android:fontFamily="@font/roboto"
+        app:layout_constraintEnd_toEndOf="@id/icon_aprovado"
+        app:layout_constraintStart_toStartOf="@id/icon_aprovado"
+        app:layout_constraintTop_toBottomOf="@id/icon_aprovado" />
+
+    <View
+        android:id="@+id/lineRf1"
+        android:layout_width="0dp"
+        android:layout_height="5dp"
+        android:background="@color/skeletonCenterColor"
+        app:layout_constraintBottom_toBottomOf="@id/icon_pendente"
+        app:layout_constraintEnd_toStartOf="@id/icon_aprovado"
+        app:layout_constraintStart_toEndOf="@id/icon_pendente"
+        app:layout_constraintTop_toTopOf="@id/icon_pendente" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

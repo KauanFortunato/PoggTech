@@ -6,6 +6,7 @@ import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.ApiResponse;
 import com.mordekai.poggtech.data.model.Order;
 import com.mordekai.poggtech.data.model.OrderItem;
+import com.mordekai.poggtech.data.model.RefundRequest;
 import com.mordekai.poggtech.data.remote.request.OrderRequest;
 import com.mordekai.poggtech.data.remote.ApiOrder;
 
@@ -92,6 +93,45 @@ public class OrderManager {
             @Override
             public void onFailure(Call<ApiResponse<List<OrderItem>>> call, Throwable t) {
                 callback.onFailure(new Exception("Erro ao buscar itens do pedido"));
+            }
+        });
+    }
+
+    public void SetRefundRequest(int order_id, int user_id, String reason, int status, RepositoryCallback<ApiResponse<Void>> callback) {
+        apiOrder.setRefundRequest(order_id, user_id, reason, status).enqueue(new Callback<ApiResponse<Void>>() {
+
+            @Override
+            public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
+                if(response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onFailure(new Exception("Erro ao enviar solicitação de reembolso"));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
+                callback.onFailure(new Exception("Erro ao enviar solicitação de reembolso"));
+            }
+        });
+    }
+
+    public void GetRefundRequest(int order_id, RepositoryCallback<RefundRequest> callback) {
+        apiOrder.getRefundRequest(order_id).enqueue(new Callback<ApiResponse<RefundRequest>>() {
+
+            @Override
+            public void onResponse(Call<ApiResponse<RefundRequest>> call, Response<ApiResponse<RefundRequest>> response) {
+                if(response.isSuccessful() && response.body() != null) {
+                    RefundRequest refund = response.body().getData();
+                    callback.onSuccess(refund);
+                } else {
+                    callback.onFailure(new Exception("Erro ao buscar solicitação de reembolso"));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<RefundRequest>> call, Throwable t) {
+                callback.onFailure(new Exception("Erro ao buscar solicitação de reembolso"));
             }
         });
     }

@@ -123,6 +123,7 @@
                     android:paddingVertical="20dp">
 
                     <TextView
+                        android:id="@+id/titleShipping"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="15dp"
@@ -133,10 +134,34 @@
                         android:textSize="@dimen/text_size_large_alt" />
 
                     <FrameLayout
+                        android:id="@+id/statusShipping"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                         <include layout="@layout/shipping_layout_bar" />
+
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/titleRefund"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="Estado de reembolso"
+                        android:textColor="@color/textPrimary"
+                        android:visibility="gone"
+                        android:textSize="@dimen/text_size_large_alt" />
+
+                    <FrameLayout
+                        android:id="@+id/statusRefund"
+                        android:layout_width="match_parent"
+                        android:visibility="gone"
+                        android:layout_height="wrap_content">
+
+                        <include layout="@layout/refund_layout_bar" />
 
                     </FrameLayout>
 

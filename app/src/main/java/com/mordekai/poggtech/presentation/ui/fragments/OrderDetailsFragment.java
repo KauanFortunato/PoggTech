@@ -6,6 +6,7 @@ import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,7 @@ import com.mordekai.poggtech.data.adapter.OrderDetailAdapter;
 import com.mordekai.poggtech.data.callback.RepositoryCallback;
 import com.mordekai.poggtech.data.model.Order;
 import com.mordekai.poggtech.data.model.OrderItem;
+import com.mordekai.poggtech.data.model.RefundRequest;
 import com.mordekai.poggtech.data.model.Review;
 import com.mordekai.poggtech.data.model.User;
 import com.mordekai.poggtech.data.remote.ApiOrder;
@@ -47,6 +49,7 @@ public class OrderDetailsFragment extends Fragment {
     private ReviewViewModel reviewViewModel;
     private final List<OrderItem> orderItems = new ArrayList<>();
     private TextView userInfo, location;
+    private RefundRequest refundRequest;
 
     private User user;
     private SharedPrefHelper sharedPrefHelper;
@@ -89,7 +92,9 @@ public class OrderDetailsFragment extends Fragment {
             reviewViewModel.createReview(review, getContext());
         };
 
+
         orderItems(view);
+        getRefund(view);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
 
         swipeRefreshLayout.setOnRefreshListener(() -> orderItems(view));
@@ -108,8 +113,6 @@ public class OrderDetailsFragment extends Fragment {
                     Log.d("API_RESPONSE", "Itens recebidos: " + orderItems.size());
                     orderDetailAdapter.updateOrderItems(result);
 
-                    setupShippingLayout(view);
-
                     swipeRefreshLayout.setRefreshing(false);
                 }
             }
@@ -117,6 +120,26 @@ public class OrderDetailsFragment extends Fragment {
             @Override
             public void onFailure(Throwable t) {
                 Log.e("API_FAILURE", "Falha na comunicação com a API", t);
+            }
+        });
+    }
+
+    public void getRefund(View view) {
+        OrderManager orderManager = new OrderManager(RetrofitClient.getRetrofitInstance().create(ApiOrder.class));
+        orderManager.GetRefundRequest(order.getId(), new RepositoryCallback<RefundRequest>() {
+
+            @Override
+            public void onSuccess(RefundRequest result) {
+                if (result != null) {
+                    refundRequest = result;
+                    setupRefundLayout(view);
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("API_FAILURE", "Falha na comunicação com a API", t);
+                setupShippingLayout(view);
             }
         });
     }
@@ -142,6 +165,11 @@ public class OrderDetailsFragment extends Fragment {
     }
 
     public void setupShippingLayout(View view) {
+        FrameLayout statusShipping = view.findViewById(R.id.statusShipping);
+        statusShipping.setVisibility(View.VISIBLE);
+        TextView titleShipping = view.findViewById(R.id.titleShipping);
+        titleShipping.setVisibility(View.VISIBLE);
+
         AppCompatImageView icon_confirmado, icon_enviado, icon_transito, icon_entregue;
         TextView text_confirmado,text_enviado, text_transito, text_entregue;
         View line1, line2, line3;
@@ -201,4 +229,48 @@ public class OrderDetailsFragment extends Fragment {
                 break;
         }
     }
+
+    public void setupRefundLayout(View view) {
+        FrameLayout statusRefund = view.findViewById(R.id.statusRefund);
+        statusRefund.setVisibility(View.VISIBLE);
+        TextView titleRefund = view.findViewById(R.id.titleRefund);
+        titleRefund.setVisibility(View.VISIBLE);
+
+        AppCompatImageView icon_pendente, icon_aprovado;
+        TextView text_pendente, text_aprovado;
+        View lineRf1;
+        icon_pendente = view.findViewById(R.id.icon_pendente);
+        text_pendente = view.findViewById(R.id.text_pendente);
+        icon_aprovado = view.findViewById(R.id.icon_aprovado);
+        text_aprovado = view.findViewById(R.id.text_aprovado);
+
+        lineRf1 = view.findViewById(R.id.lineRf1);
+
+        switch (refundRequest.getStatus()) {
+            case "pendente":
+                icon_pendente.setColorFilter(getResources().getColor(R.color.colorSecondary));
+                text_pendente.setTextColor(getResources().getColor(R.color.colorSecondary));
+                break;
+            case "aprovado":
+                lineRf1.setBackgroundColor(view.getContext().getColor(R.color.colorSecondary));
+
+                icon_pendente.setColorFilter(getResources().getColor(R.color.colorSecondary));
+                text_pendente.setTextColor(getResources().getColor(R.color.colorSecondary));
+
+                icon_aprovado.setColorFilter(getResources().getColor(R.color.colorSecondary));
+                text_aprovado.setTextColor(getResources().getColor(R.color.colorSecondary));
+                break;
+            case "rejeitado":
+                lineRf1.setBackgroundColor(view.getContext().getColor(R.color.colorError));
+
+                icon_pendente.setColorFilter(getResources().getColor(R.color.colorSecondary));
+                text_pendente.setTextColor(getResources().getColor(R.color.colorSecondary));
+
+                icon_aprovado.setImageResource(R.drawable.ic_error_exclamation);
+                icon_aprovado.setColorFilter(getResources().getColor(R.color.colorError));
+                text_aprovado.setTextColor(getResources().getColor(R.color.colorError));
+                break;
+        }
+    }
+
 }
